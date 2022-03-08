@@ -1,7 +1,11 @@
 import React from "react";
 
 const AboutScreen = () => {
-  return <div>About</div>;
+  return (
+    <>
+      <div> AboutScreen</div>
+    </>
+  );
 };
 
 export default AboutScreen;
