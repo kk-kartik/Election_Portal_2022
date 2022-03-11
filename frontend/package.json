@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "/election_portal",
   "dependencies": {
+    "@primer/react": "^35.0.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

@@ -8,7 +8,7 @@ function App() {
   return (
     <BrowserRouter basename={BASEURL}>
       <Routes>
-        <Route path="/" exact element={<PreElectionScreen />} />
+        <Route path="/*" exact element={<PreElectionScreen />} />
         <Route path="/admin" exact element={<AdminScreen />} />
         <Route path="/nominate" exact element={<CandidateNominateScreen />} />
       </Routes>
