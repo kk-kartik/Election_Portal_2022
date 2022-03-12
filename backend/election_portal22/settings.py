@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import environ
+
+# Import the environment variables
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--zewv%x0y6f5vo%%p9z_=6d#v*^7xzk59^+k^f4*=6njj_n_b6'
+# SECRET_KEY = 'django-insecure--zewv%x0y6f5vo%%p9z_=6d#v*^7xzk59^+k^f4*=6njj_n_b6'
+SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_auth_adfs',
+    'main',
 ]
 
 MIDDLEWARE = [
@@ -47,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_auth_adfs.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'election_portal22.urls'
@@ -121,3 +131,23 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTHENTICATION_BACKENDS = (
+   'django_auth_adfs.backend.AdfsAuthCodeBackend',
+   'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTH_ADFS = {
+    "TENANT_ID": env("TENANT_ID"),
+    "CLIENT_ID": env("CLIENT_ID"),
+    "RELYING_PARTY_ID": env("RELYING_PARTY_ID"),
+    "AUDIENCE": env("AUDIENCE"),
+    "LOGIN_EXEMPT_URLS": ["api/", "public/","admin/"],
+    "CLIENT_SECRET": env("CLIENT_SECRET")
+}
+
+LOGIN_URL = "django_auth_adfs:login"
+LOGIN_REDIRECT_URL = "/"
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+CUSTOM_FAILED_RESPONSE_VIEW = 'dot.path.to.custom.views.login_failed'
