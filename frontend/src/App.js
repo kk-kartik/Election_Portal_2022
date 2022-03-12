@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { BASEURL } from "./config/constants";
 import PreElectionScreen from "./screens/pre_election/PreElectionScreen";
-import AdminScreen from "./screens/admin/AdminScreen";
+import AdminScreen from "./screens/Admin/AdminScreen";
 import CandidateNominateScreen from "./screens/candidatenominationscreen/CandidateNominateScreen";
 
 function App() {
