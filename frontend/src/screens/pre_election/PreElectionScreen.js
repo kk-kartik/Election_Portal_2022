@@ -3,15 +3,15 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import AboutScreen from "./AboutScreen";
 import Footer from "../../components/Footer/Footer";
 import NominationScreen from "./NominationScreen";
-import TopNav from "../../components/Navbars/TopNav";
-import BlockchainMessage from "../../components/BlockchainMessage"
-import HomeRouteNavBar from "../../components/Navbars/HomeRouteNavBar"
+import TopNav from "../../components/Home/TopNav/TopNav";
+import BlockchainMessage from "../../components/Home/BlockchainMessage/BlockchainMessage"
+import HomeRouteNavBar from "../../components/Home/HomeRouteNavbar/HomeRouteNavBar"
 import StatsScreen from "./StatsScreen";
 import RulesScreen from "./RulesScreen";
 import OrganisersScreen from "./OrganisersScreen";
 const Layout = () => {
   return (
-    <div>
+    <div className="md:ml-20 mt-12 mr-4 ml-4">
       <Outlet/>
     </div>
   );

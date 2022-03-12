@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { NavLink, Link } from "react-router-dom";
 import styles from "./RouteNavbar.module.css";
-const RouteNavbar2 = (props) => {
+const RouteNavbar = (props) => {
   const mobNav = useRef();
   const mobNavActive = useRef();
   const nabDiv = useRef();
@@ -85,4 +85,4 @@ const RouteNavbar2 = (props) => {
     </div>
   );
 };
-export default RouteNavbar2;
+export default RouteNavbar;

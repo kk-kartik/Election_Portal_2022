@@ -1,9 +1,9 @@
-import RouteNavbar2 from "./RouteNavbar"
-import Datebox from "../Datebox";
+import RouteNavbar from "../../Navbars/RouteNavbar"
+import Datebox from "../Datebox/Datebox";
 
 const HomeRouteNavBar = () => {
     return(
-        <RouteNavbar2 
+        <RouteNavbar 
         text={["About","Nominations","Statistics","Rules and Regulations","Organisers"]}
         routes={["about", "nominations", "stats", "rules","organisers"]}
         onOpenMenu={()=>{
@@ -16,7 +16,7 @@ const HomeRouteNavBar = () => {
       >
         <h1 className="font-normal text-3xl">Gymkhana Elections 2021</h1>
         <Datebox></Datebox>
-      </RouteNavbar2>
+      </RouteNavbar>
     );
 }
 export default HomeRouteNavBar;

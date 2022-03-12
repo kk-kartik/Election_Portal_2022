@@ -37,11 +37,18 @@
     font-size: 16px;
   }
 
+
+  @media only screen and (max-width: 892px) {
+    .dateBox {
+      right: 1%;
+    }
+  }
+
   @media only screen and (max-width: 768px) {
     .dateBox {
       width: 77.9px;
       height: 88.54px;
-      right: 5%;
+      right: 12%;
       top: 70%;
     }
     .date {
@@ -55,4 +62,10 @@
       padding-top: 6px;
       padding-bottom: 6px;
     }
+}
+
+@media only screen and (max-width: 400px) {
+  .dateBox {
+    right: 5%;
+  }
 }
