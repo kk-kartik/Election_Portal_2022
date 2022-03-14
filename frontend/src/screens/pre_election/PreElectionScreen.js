@@ -29,14 +29,13 @@ const PreElectionScreen = () => {
         </div>
         <Routes>
           <Route path="/" element={<Layout/>}>
-            <Route path="/" exact element={<AboutScreen />} />
+            <Route index path="/" exact element={<AboutScreen />} />
             <Route path="about" element={<AboutScreen />} />
             <Route path="nominations/*" exact element={<NominationScreen />} />
             <Route path="stats" exact element={<StatsScreen/>} />
             <Route path="rules" exact element={<RulesScreen/>} />
             <Route path="organisers" exact element={<OrganisersScreen/>} />
           </Route>
-          {/* setup react router for different sections here */}
         </Routes>
       </div>
       <Footer />
