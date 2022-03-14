@@ -30,7 +30,6 @@ const PreElectionScreen = () => {
         <Routes>
           <Route path="/" element={<Layout/>}>
             <Route path="/" exact element={<AboutScreen />} />
-            <Route path="about" element={<AboutScreen />} />
             <Route path="nominations/*" exact element={<NominationScreen />} />
             <Route path="stats" exact element={<StatsScreen/>} />
             <Route path="rules" exact element={<RulesScreen/>} />

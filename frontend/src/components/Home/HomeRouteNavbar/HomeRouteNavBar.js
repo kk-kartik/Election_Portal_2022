@@ -5,7 +5,7 @@ const HomeRouteNavBar = () => {
     return(
         <RouteNavbar 
         text={["About","Nominations","Statistics","Rules and Regulations","Organisers"]}
-        routes={["about", "nominations", "stats", "rules","organisers"]}
+        routes={["", "nominations", "stats", "rules","organisers"]}
         onOpenMenu={()=>{
           document.getElementById("datebox").style.display = "none";
         }}

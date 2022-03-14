@@ -1,25 +1,24 @@
 import React from "react";
 import styles from "./TopNav.module.css";
 import {Avatar} from "@primer/react";
-import LogoSVG from "./LogoSVG";
-import GlobeSVG from "./GlobeSVG";
-
-// import profile from "../public/svgs/profile.svg";
+import LogoSVG from "./logo.svg";
+import GlobeSVG from "./globe.svg";
+import profile from "./profile.svg"
 const TopNav = () => {
   return (
     <div className={`flex pl-4 pr-4 md:pl-16 md:pr-16 my-3`}>
       <div>
-        <LogoSVG/>
+        <img src={LogoSVG} />
       </div>
       <div className={styles.cont}>
         <div className={styles.btn}>
           <div>
-            <GlobeSVG/>
+          <img src={GlobeSVG} />
           </div>
           <div>EN</div>
         </div>
         <div className={styles.login}>
-          <Avatar src={"svgs/profile.svg"} size={38} />
+          <Avatar src={profile} size={38} />
           <div className={`hidden sm:flex`}>Login</div>
           <svg
             className={`flex sm:hidden`}
