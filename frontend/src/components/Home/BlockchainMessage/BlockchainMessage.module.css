@@ -1,0 +1,27 @@
+.main {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+    background-color: #fee8f1;
+  }
+  
+  .text {
+    display: flex;
+    flex-direction: row;
+    color: #f71873;
+    justify-content: center;
+    text-align: center;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 20px;
+  }
+  .svgg {
+    padding-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
