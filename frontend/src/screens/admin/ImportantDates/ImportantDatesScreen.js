@@ -41,7 +41,7 @@ const ImportantDatesScreen = () => {
                 <td className="text-left py-3 px-4">
                   <Link
                     to={{
-                      pathname: `/sac/add`,
+                      pathname: `/admin/importantdates/add`,
                     }}
                   >
                     <button className="hover:text-blue-500">Edit</button>
