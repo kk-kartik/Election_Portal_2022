@@ -4,13 +4,12 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-asgiref = "==3.5.0"
-"backports.zoneinfo" = "==0.2.1"
-sqlparse = "==0.4.2"
-Django = "*"
+django-environ = "==0.8.1"
+environ = "==1.0"
+Django = "==4.0.2"
 djangorestframework = "*"
-pillow = "*"
 gunicorn = "*"
+pycryptodome = "*"
 
 [dev-packages]
 

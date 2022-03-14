@@ -1,0 +1,78 @@
+import os
+import pickle
+import base64
+from pathlib import Path
+from Crypto.Hash import SHA256
+from Crypto.PublicKey import RSA
+from Crypto.Signature import pss
+from Crypto.Cipher import PKCS1_v1_5
+
+
+keys_dir = Path(__file__).resolve().parent/"keys"
+passphrase = os.environ.get("PASSPHRASE",None)
+public_key = keys_dir/"public_key.pem"
+private_key = keys_dir/"private_key.pem"
+
+
+def read_rsa_key():
+    with open(private_key,"r") as key_file:
+        key_pem = key_file.read()
+    return key_pem
+
+def get_ne_pair():
+    key_pem = read_rsa_key()
+    key = RSA.import_key(key_pem,passphrase)
+    return {"N":key.n,"E":key.e}
+
+
+# return bytes string
+def sign(data):
+    key_pem = read_rsa_key()
+    key = RSA.import_key(key_pem,passphrase)
+    h = SHA256.new(pickle.dumps(data))
+    return pss.new(key).sign(h)
+
+#signature should be a bytes string -> return True/False 
+def verify(data,signature):
+    key_pem = read_rsa_key()
+    key = RSA.import_key(key_pem,passphrase)
+    h = SHA256.new(pickle.dumps(data))
+    try:
+        pss.new(key).verify(h, signature)
+        return True
+    except(ValueError, TypeError):
+        return False
+
+#data should be bytes string -> bytes string
+def decrypt(encrypted_data):
+    key_pem = read_rsa_key()
+    key = RSA.import_key(key_pem,passphrase)
+    decryptor = PKCS1_v1_5.new(key)
+
+    return decryptor.decrypt(base64.b64decode(encrypted_data))
+
+#Helper function to test decrypt method,expects bytes string
+def encrypt(data):
+    key_pem = read_rsa_key()
+    key = RSA.import_key(key_pem,passphrase)
+    pubKey = key.publickey()
+    encryptor = PKCS1_v1_5.new(pubKey)
+    encrypted = encryptor.encrypt(data)
+    return base64.b64encode(encrypted)
+
+
+# Helper function required to generate admin keys,run once per election
+def generate_keys():
+    keypair = RSA.generate(2048)
+    pub_key = keypair.publickey()
+
+    with open(private_key,"wb") as file:
+        file.write(keypair.export_key("PEM",passphrase))
+        file.close()
+    
+    with open(public_key,"wb") as file:
+        file.write(pub_key.export_key("PEM"))
+        file.close()
+    
+
+    

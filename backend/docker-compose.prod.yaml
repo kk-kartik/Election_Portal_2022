@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 
 services:
   backend:
@@ -10,7 +10,7 @@ services:
     image: django-backend
     command: sh -c "/app/scripts/migrate_and_run"
     volumes:
-            - "./db.sqlite3:/app/db.sqlite3"
+        - "./db:/app/db"
     ports:
       - 8000:8000
     env_file:
