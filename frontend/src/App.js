@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/*" exact element={<PreElectionScreen />} />
         <Route path="/register" exact element={<RegisterScreen />} />
-        <Route path="/admin" exact element={<AdminScreen />} />
+        <Route path="/admin/*" exact element={<AdminScreen />} />
         <Route path="/nominate/*" exact element={<CandidateNominateScreen />} />
         <Route path="/nominate/post" exact element={<CandidatePositionForm />} />
       </Routes>
