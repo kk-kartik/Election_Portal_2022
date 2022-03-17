@@ -48,13 +48,13 @@ const RouteNavbar = (props) => {
     linksMob = [...linksMob, <NavLink id={i} className={activeClassFunc2} to={`${props.routes[i]}`}> {props.text[i]} </NavLink>]
 }
   return (
-    <div className={`${styles.routeNavbar} relative`}>
+    <div className={`${styles.routeNavbar} relative pl-1 sm:pl-5`}>
       {props.children}
       <div className={`${styles.links} hidden md:flex mt-4`}>
         {linksDesktop}
       </div>
 
-      <div className={width + " flex md:hidden"} ref={nabDiv}>
+      <div className={`${width} flex md:hidden ${styles.linkCont}`} ref={nabDiv}>
         <div className="flex flex-col">
           <div className={`flex flex-col`} ref={mobNavActive}>
             {linksMob}
