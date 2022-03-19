@@ -139,12 +139,12 @@ AUTHENTICATION_BACKENDS = (
 )
 
 AUTH_ADFS = {
-    "TENANT_ID": env("TENANT_ID"),
-    "CLIENT_ID": env("CLIENT_ID"),
-    "RELYING_PARTY_ID": env("RELYING_PARTY_ID"),
-    "AUDIENCE": env("AUDIENCE"),
+    "TENANT_ID": env("MY_TENANT_ID"),
+    "CLIENT_ID": env("MY_CLIENT_ID"),
+    "RELYING_PARTY_ID": env("MY_RELYING_PARTY_ID"),
+    "AUDIENCE": env("MY_AUDIENCE"),
     "LOGIN_EXEMPT_URLS": ["api/", "public/","admin/"],
-    "CLIENT_SECRET": env("CLIENT_SECRET")
+    "CLIENT_SECRET": env("MY_CLIENT_SECRET")
 }
 
 LOGIN_URL = "django_auth_adfs:login"
