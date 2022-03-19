@@ -5,5 +5,6 @@ export const ImportantDates = {
     ["Date", "date"],
     ["Priority", "number"],
     ["File", "file"],
+    ["Image", "file"],
   ],
 };
