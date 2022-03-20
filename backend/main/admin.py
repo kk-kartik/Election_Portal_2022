@@ -11,7 +11,7 @@ class VoterAdmin(admin.ModelAdmin):
 
 @admin.register(Election)
 class ElectionAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Election._meta.get_fields()]
+    list_display = ['id','name','name_slug']
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
@@ -25,13 +25,13 @@ class CandidateAdmin(admin.ModelAdmin):
 class FAQsAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Faq._meta.get_fields()]
 
-@admin.register(Imporatant_dates)
-class Imporatant_datesAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Imporatant_dates._meta.get_fields()]
+@admin.register(Imporatant_date)
+class Imporatant_dateAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Imporatant_date._meta.get_fields()]
 
-@admin.register(Statistics)
-class StatisticsAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Statistics._meta.get_fields()]
+@admin.register(Statistic)
+class StatisticAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Statistic._meta.get_fields()]
 
 
 

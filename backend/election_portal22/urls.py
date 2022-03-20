@@ -19,5 +19,5 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('oauth2/', include('django_auth_adfs.urls')),
-    path('election/',include('main.urls'))
+    path('<str:name_slug>/api/',include('main.urls'))
 ]

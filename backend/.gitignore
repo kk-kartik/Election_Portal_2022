@@ -15,3 +15,6 @@ migrations
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+# Local files #
+activate.sh

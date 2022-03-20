@@ -54,6 +54,7 @@ class EUser(models.Model):
 
 class Election(models.Model):
     name = models.CharField(max_length=250)
+    name_slug = models.SlugField(max_length=100,unique=True)
     organization = models.CharField(max_length=250)
     description = models.TextField()
     website_link = models.URLField()
@@ -63,6 +64,9 @@ class Election(models.Model):
     start_date_time = models.DateTimeField()
     end_date_time = models.DateTimeField() #should be greater than start date
 
+    def __str__(self) -> str:
+        return self.name
+
 class Voter(models.Model):
     user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='voter_ids')
     is_voted = models.BooleanField(default=False)
@@ -71,7 +75,7 @@ class Voter(models.Model):
     election_creator = models.OneToOneField(EUser,null=True,on_delete=models.SET_NULL,related_name='created_by')
 
 class Position(models.Model):
-    title = models.CharField(max_length=250)
+    title = models.CharField(max_length=250,unique=True)
     debate_date_time = models.DateTimeField()
     max_votes = models.PositiveIntegerField()
     voting_instructions = models.JSONField()
@@ -94,12 +98,12 @@ class Faq(models.Model):
     question = models.TextField()
     answer = models.TextField()
 
-class Imporatant_dates(models.Model):
+class Imporatant_date(models.Model):
     title = models.CharField(max_length=250)
     date = models.DateTimeField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='important_dates')
 
-class Statistics(models.Model):
+class Statistic(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='statistics')
     stat_cnt = models.JSONField()
     stat_total = models.JSONField()
