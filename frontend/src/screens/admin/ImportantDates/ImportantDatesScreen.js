@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getImportantDates } from "../../../actions/importantDates";
 
 const ImportantDatesScreen = () => {
+  const importantDates = useSelector((state) => state.importantDates);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getImportantDates());
+  }, [dispatch]);
   return (
     <>
+      {console.log(importantDates)}
       <h1 className="text-3xl text-black pb-6">Important Dates</h1>
-
       <div className="mt-6">
         <Link
           className="px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded"
@@ -33,7 +40,6 @@ const ImportantDatesScreen = () => {
                 </th>
               </tr>
             </thead>
-
             <tbody className="text-gray-700">
               <tr>
                 <td className="text-left py-3 px-4"> Election Date</td>

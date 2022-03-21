@@ -1,2 +1,5 @@
-export const BASEURL = "http://localhost:3000/election_portal";
-export const BASEAPIURL = "http://localhost:8000/election";
+export const BASEURL = "/election_portal";
+export const BASEAPIURL = "http://localhost:8000";
+
+// Important Dates Constants
+export const GET_IMPORTANT_DATES = "GET_IMPORTANT_DATES";
