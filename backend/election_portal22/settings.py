@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['swc.iitg.ac.in']
 
 
 # Application definition
@@ -126,8 +126,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/elections_api/static/'
+MEDIA_URL = "/ekections_api/media/"
+STATICFILES_DIRS=[BASE_DIR/"static"]
+STATIC_ROOT = BASE_DIR/"assets"
+MEDIA_ROOT = BASE_DIR/"media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -149,6 +152,6 @@ AUTH_ADFS = {
 }
 
 LOGIN_URL = "django_auth_adfs:login"
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/elections_api"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 CUSTOM_FAILED_RESPONSE_VIEW = 'dot.path.to.custom.views.login_failed'

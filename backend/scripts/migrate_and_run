@@ -2,5 +2,5 @@
 
 [[ "$DEBUG" = "true" || "$DEBUG" = "True" ]] &&
 echo "\n------------DEBUG MODE------------\n" && python manage.py makemigrations && python manage.py migrate && gunicorn $app.wsgi:application --bind 0.0.0.0:8000 --log-level=debug --timeout 180  --workers 1 ||
-    echo "\n------------PROD MODE------------\n" && python manage.py migrate && gunicorn $app.wsgi:application --bind 0.0.0.0:8000 --log-level=debug --timeout 180  --workers 4
+    echo "\n------------PROD MODE------------\n" && python manage.py collectstatic --no-input && python manage.py migrate && gunicorn $app.wsgi:application --bind 0.0.0.0:8000 --log-level=debug --timeout 180  --workers 4
 

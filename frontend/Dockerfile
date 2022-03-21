@@ -17,6 +17,5 @@ COPY . .
 
 # Create production build of React App
 RUN yarn build
-RUN mkdir build/$PUBLIC_DIR
-RUN mv ./build/static ./build/$PUBLIC_DIR
+RUN mv ./build/static ./build/staging_pre_election
 
