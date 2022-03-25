@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.generics import GenericAPIView
-from rest_framework import renderers,permissions
-from rest_framework.response import status
+from rest_framework import renderers,permissions,status
 from .utils import *
+from rest_framework.response import Response
 
 # Create your views here.
 class RetrieveNEpairAPIView(GenericAPIView):
@@ -10,7 +10,7 @@ class RetrieveNEpairAPIView(GenericAPIView):
     permission_classes = (permissions.AllowAny,) # TODO change permission classes to authencticted only
     authentication_classes = []
 
-    def post(self,request,*args,**kwargs):
+    def get(self,request,*args,**kwargs):
         ne_pair = get_ne_pair()
         return Response(ne_pair,status=status.HTTP_200_OK)
 
@@ -21,6 +21,7 @@ class SignAPIView(GenericAPIView):
 
     def post(self,request,*args,**kwargs):
         data = request.data.get("blinded_vote",None)
+        print(data)
         if not data :
             return Response({"detail":"Invalid data type"},status=status.HTTP_400_BAD_REQUEST)
         signed_data = sign(data)

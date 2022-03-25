@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('oauth2/', include('django_auth_adfs.urls')),
     path('<str:name_slug>/api/',include('main.urls'))
+    path('api/encryption/',include('encryption.urls'))
 ]

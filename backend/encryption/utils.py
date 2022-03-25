@@ -6,6 +6,7 @@ from Crypto.Hash import SHA256
 from Crypto.PublicKey import RSA
 from Crypto.Signature import pss
 from Crypto.Cipher import PKCS1_v1_5
+import binascii
 
 
 keys_dir = Path(__file__).resolve().parent/"keys"
@@ -22,7 +23,7 @@ def read_rsa_key():
 def get_ne_pair():
     key_pem = read_rsa_key()
     key = RSA.import_key(key_pem,passphrase)
-    return {"N":key.n,"E":key.e}
+    return {"N":str(key.n),"E":str(key.e)}
 
 
 # return bytes string
@@ -30,7 +31,9 @@ def sign(data):
     key_pem = read_rsa_key()
     key = RSA.import_key(key_pem,passphrase)
     h = SHA256.new(pickle.dumps(data))
-    return pss.new(key).sign(h)
+    signed = pss.new(key).sign(h)
+    print(signed)
+    return str(int(binascii.hexlify(signed),16))
 
 #signature should be a bytes string -> return True/False 
 def verify(data,signature):
