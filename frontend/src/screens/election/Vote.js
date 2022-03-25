@@ -30,8 +30,8 @@ function Vote() {
     const encryptedData = encryptVote(vote);
     console.log("Encrypted data", encryptedData);
     const blindedData = blindVote(encryptedData, keys_res.data);
-    console.log("Blinded data", blindedData);
-
+    console.log("Blinded data", blindedData.blindedVote);
+    console.log(blindedData.r)
     const sign_res = await signVote(blindedData.blindedVote);
     console.log("Sign api response", sign_res);
     if (sign_res.isError) {
@@ -42,16 +42,15 @@ function Vote() {
     const isVerified = verifySign(
       blindedData.r,
       encryptedData,
-      sign_res.data.signed_data,
+      sign_res.data.signed,
       keys_res.data
     );
+    console.log(isVerified)
     if (isVerified) {
       setVerified(true);
     }
-
-    console.log(isVerified);
     setNEpair(keys_res.data);
-    setsignedVote(sign_res.data.signed_data);
+    setsignedVote(sign_res.data.signed);
     setblindData(blindedData);
     setencryptedVote(encryptedData);
   };

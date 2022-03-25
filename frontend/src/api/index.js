@@ -1,9 +1,14 @@
 import axios from "axios";
-import { BASEURL, BASEAPIURL } from "../constants";
+import { BASEURL, BASEAPIURL, VALIDAPIURL} from "../constants";
+
 
 export const API = axios.create({
   baseURL: `${BASEAPIURL}`,
   withCredentials: true,
+});
+
+export const VALIDAPI = axios.create({
+  baseURL: `${VALIDAPIURL}`
 });
 
 // Important Dates API

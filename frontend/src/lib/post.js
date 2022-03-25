@@ -1,10 +1,10 @@
-import { API } from "../api";
+import {  VALIDAPI as API } from "../api";
 
 export const signVote = async (vote, access_token = null) => {
   try {
     const res = await API.post(
-      "/api/encryption/sign_vote/",
-      { blinded_vote: vote },
+      "/sign_vote/",
+      { blinded_vote: vote.toString() },
       {
         headers: { Authorization: `JWT ${access_token}` },
       }

@@ -5,13 +5,7 @@
 /.pnp
 .pnp.js
 
-# testing
-/coverage
 
-# production
-/build
-
-public/staging_pre_election/*
 
 # misc
 .DS_Store
@@ -25,4 +19,4 @@ yarn-debug.log*
 yarn-error.log*
 
 yarn.lock
-
+package-lock.json

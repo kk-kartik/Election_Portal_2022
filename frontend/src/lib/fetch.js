@@ -1,8 +1,8 @@
-import { API } from "../api";
+import { VALIDAPI as API } from "../api";
 
 export const getNEpair = async (access_token = null) => {
   try {
-    const res = await API.get("/api/encryption/retrieve_ne_pair/", {
+    const res = await API.get("/retrieve_ne_pair/", {
       headers: { Authorization: `JWT ${access_token}` },
     });
     return { status: res.status, data: res.data, isError: false };

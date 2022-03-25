@@ -1,10 +1,11 @@
 export const BASEURL = process.env.REACT_APP_BASEURL;
-export const BASEAPIURL = process.env.BASEAPIURL;
+export const BASEAPIURL = process.env.REACT_APP_BASEAPIURL;
+export const VALIDAPIURL = process.env.REACT_APP_VALIDAPIURL;
 
 // Important Dates Constants
 export const GET_IMPORTANT_DATES = "GET_IMPORTANT_DATES";
-export const BASEURL = "http://localhost:3000/election_portal";
-export const BASEAPIURL = "http://127.0.0.1:8000";
+// export const BASEURL = "http://localhost:3000/election_portal";
+// export const BASEAPIURL = "http://127.0.0.1:8000";
 export const publicKey =
   "-----BEGIN PUBLIC KEY-----\
 MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoogsA5LkudlR2hLgTZ7H\
