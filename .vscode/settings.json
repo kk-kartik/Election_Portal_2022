@@ -1,5 +1,0 @@
-{
-    "github-actions.workflows.pinned.workflows": [".github/workflows/frontend.yml", ".github/workflows/backend.yml",".github/workflows/validator.yml"],
-    "github-actions.workflows.pinned.refresh.enabled": true,
-    "github-actions.workflows.pinned.refresh.interval": 65,
-}

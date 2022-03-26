@@ -22,4 +22,7 @@ jobs:
         port: ${{ secrets.SSH_PORT }}
         username: ${{ secrets.SSH_USERNAME }}
         script: |
-            whoami
+            cd /webapps/Election_Portal_2022
+            git pull origin main
+            cd /frontend
+            docker-compose up -d --build
