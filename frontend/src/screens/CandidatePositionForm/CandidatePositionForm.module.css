@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .cont {
   width: fit-content;
   margin-top: 10%;
@@ -44,3 +45,56 @@
   .input:focus{
     outline: none;
   } 
+=======
+.cont {
+  width: fit-content;
+  margin-top: 10%;
+  }
+.button {
+    background: #f9f9f9;
+    border: 1px solid rgba(27, 31, 35, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0px 1px 0px rgba(27, 31, 35, 0.1);
+    border-radius: 6px;
+    color: #959da5;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 600;
+  }
+  .button2 {
+    background: #2b00ff;
+    border: 1px solid rgba(27, 31, 35, 0.1);
+    box-sizing: border-box;
+    box-shadow: 0px 1px 0px rgba(27, 31, 35, 0.1);
+    border-radius: 6px;
+    color: #ffffff;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-weight: 600;
+    margin-right: 2%;
+  }
+  
+
+  .input {
+    padding-left: 2%;
+    padding-right: 2%;
+    height: 2.5rem;
+    background: #ffffff;
+    border: 1px solid #dbdde0;
+    box-sizing: border-box;
+    box-shadow: inset 0px 1px 2px rgba(27, 31, 35, 0.075);
+    border-radius: 6px;
+  }
+  .input {
+    outline: none;
+    border: 1px solid #DDDDDD;
+  }
+  .input:focus{
+    box-shadow: 0 0 5px #a7c3f5;
+    border: 1px solid #a7c3f5;
+  }
+>>>>>>> 853124e9cc070250a0dd884a3d696c90311ba8f6
