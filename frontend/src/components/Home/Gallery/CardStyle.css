@@ -1,0 +1,32 @@
+:root {
+  --CARD_WIDTH: 15rem;
+  --CARD_HEIGHT: 19.2rem;
+}
+
+.front {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  width: var(--CARD_WIDTH);
+  height: var(--CARD_HEIGHT);
+  border-radius: 1rem;
+  background-position: center center;
+  background-size: cover;
+}
+
+.title {
+  position: relative;
+  padding: 0rem 1rem 0.5rem 1.5rem;
+  border-radius: 1rem;
+  color: white;
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.smallTitle {
+  font-size: 75%;
+  padding-bottom: 2rem;
+  font-style: italic;
+}
