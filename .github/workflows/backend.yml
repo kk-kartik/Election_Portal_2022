@@ -24,5 +24,5 @@ jobs:
         script: |
             cd /webapps/Election_Portal_2022
             git pull origin main
-            cd /frontend
+            cd /backend
             docker-compose up -d --build
