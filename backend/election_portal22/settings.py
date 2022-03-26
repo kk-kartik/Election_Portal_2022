@@ -137,10 +137,10 @@ MEDIA_ROOT = BASE_DIR/"media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTHENTICATION_BACKENDS = (
-   'django_auth_adfs.backend.AdfsAuthCodeBackend',
-   'django.contrib.auth.backends.ModelBackend',
-)
+# AUTHENTICATION_BACKENDS = (
+#    'django_auth_adfs.backend.AdfsAuthCodeBackend',
+#    'django.contrib.auth.backends.ModelBackend',
+# )
 
 AUTH_ADFS = {
     "TENANT_ID": env("MY_TENANT_ID"),
@@ -151,7 +151,7 @@ AUTH_ADFS = {
     "CLIENT_SECRET": env("MY_CLIENT_SECRET")
 }
 
-LOGIN_URL = "django_auth_adfs:login"
-LOGIN_REDIRECT_URL = "/elections_api"
+# LOGIN_URL = "django_auth_adfs:login"
+# LOGIN_REDIRECT_URL = "/elections_api"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 CUSTOM_FAILED_RESPONSE_VIEW = 'dot.path.to.custom.views.login_failed'
