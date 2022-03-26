@@ -1,5 +1,6 @@
 name: Validator deployment
 on:
+    workflow_dispatch:
     push:
         paths:
             - "vote-validator/**"

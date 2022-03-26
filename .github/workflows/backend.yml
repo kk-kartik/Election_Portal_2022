@@ -1,5 +1,6 @@
 name: Backend Deployment
 on:
+    workflow_dispatch:
     push:
         paths:
             - "backend/**"
