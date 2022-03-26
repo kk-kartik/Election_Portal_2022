@@ -3,7 +3,7 @@ from .models import *
 
 @admin.register(EUser)
 class EUserAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in EUser._meta.get_fields()]
+    list_display = ['name']
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):

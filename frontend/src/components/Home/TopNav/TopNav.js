@@ -4,11 +4,14 @@ import {Avatar} from "@primer/react";
 import LogoSVG from "./logo.svg";
 import GlobeSVG from "./globe.svg";
 import profile from "./profile.svg"
+import { Link } from "react-router-dom";
 const TopNav = () => {
   return (
     <div className={`flex pl-4 pr-4 md:pl-16 md:pr-16 my-3`}>
       <div>
-        <img src={LogoSVG} />
+        <Link to="/">
+          <img src={LogoSVG} />
+        </Link>
       </div>
       <div className={styles.cont}>
         <div className={styles.btn}>

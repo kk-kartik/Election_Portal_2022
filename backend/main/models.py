@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import User
 
 STATUS_CHOICES = (
     ('pending','To be started'),
@@ -51,6 +52,10 @@ class EUser(models.Model):
     hostel = models.CharField(choices=HOSTELS,max_length=50)
     branch = models.CharField(choices=BRANCH,max_length=50)
     email = models.EmailField(unique=True)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='euser')
+
+    def __str__(self) -> str:
+        return self.name
 
 class Election(models.Model):
     name = models.CharField(max_length=250)
@@ -71,8 +76,8 @@ class Voter(models.Model):
     user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='voter_ids')
     is_voted = models.BooleanField(default=False)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='voters')
-    election_organizers = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='organizers')
-    election_creator = models.OneToOneField(EUser,null=True,on_delete=models.SET_NULL,related_name='created_by')
+    election_organizers = models.ForeignKey(Election,null=True,on_delete=models.SET_NULL,related_name='organizers') # change the name of field to election
+    election_creator = models.OneToOneField(Election,null=True,on_delete=models.SET_NULL,related_name='created_by')
 
 class Position(models.Model):
     title = models.CharField(max_length=250,unique=True)
