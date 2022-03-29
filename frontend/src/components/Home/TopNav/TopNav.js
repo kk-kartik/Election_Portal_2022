@@ -3,9 +3,21 @@ import styles from "./TopNav.module.css";
 import {Avatar} from "@primer/react";
 import LogoSVG from "./logo.svg";
 import GlobeSVG from "./globe.svg";
-import profile from "./profile.svg"
+import profile from "./profile.svg";
+import dropdown from "./drop.svg";
 import { Link } from "react-router-dom";
-const TopNav = () => {
+const TopNav = (props) => {
+  let loginComp = <div className={`hidden sm:flex`}>Login</div>;
+  if(props.loggedIn === true){
+    loginComp = 
+    <div className={`hidden sm:flex flex-col`}>
+      <div className={`decoration-stone-800 flex items-center`}>
+        Sarath
+        <img src={dropdown} className={`mr-0 ml-auto`}></img>
+      </div>
+      <div className={`decoration-gray-600`}>Candidate</div>
+    </div>;
+  }
   return (
     <div className={`flex pl-4 pr-4 md:pl-16 md:pr-16 my-3`}>
       <div>
@@ -22,7 +34,7 @@ const TopNav = () => {
         </div>
         <div className={styles.login}>
           <Avatar src={profile} size={38} />
-          <div className={`hidden sm:flex`}>Login</div>
+          {loginComp}
           <svg
             className={`flex sm:hidden`}
             width="16"
