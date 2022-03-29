@@ -22,7 +22,7 @@ function App() {
   return (
     <BrowserRouter basename={BASEURL}>
       <Routes>
-        <Route path="/*" exact element={<PreElectionScreen />} />
+        <Route path="/*" exact element={<Pre />} />
         <Route path="/election/*" exact element={<ElectionScreen />} />
         <Route path="/admin/*" exact element={<AdminScreen />} />
         {/* Route of the VOTING PORTAL */}
