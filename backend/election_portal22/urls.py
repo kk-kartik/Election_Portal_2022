@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('oauth2/', include('django_auth_adfs.urls')),
-    path('election/',include('main.urls'))
+    path('elections_api/admin/', admin.site.urls),
+    path('elections_api/oauth2/', include('django_auth_adfs.urls')),
+    path('elections_api/<str:name_slug>api/',include('main.urls'))
 ]

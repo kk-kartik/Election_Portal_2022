@@ -70,7 +70,6 @@ const PreElectionScreen = () => {
                             },
                           ],
                         },
-                        
                       ],
                     },
                     {
@@ -112,7 +111,6 @@ const PreElectionScreen = () => {
                             },
                           ],
                         },
-                        
                       ],
                     },
                   ]}

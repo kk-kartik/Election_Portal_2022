@@ -2,7 +2,10 @@ import React from "react";
 import {Helmet} from 'react-helmet';
 import styles from "./CandidatePositionForm.module.css";
 import TopNav from "../../components/Home/TopNav/TopNav";
+// import { useNavigate } from "react-router-dom";
+
 const CandidatePositionForm = () => {
+
   return (
     <div className="">
         <Helmet>
@@ -39,10 +42,16 @@ const CandidatePositionForm = () => {
           </form>
         </div>
         <br />
-
-        <button className={styles.button2}> Continue </button>
+    
+        <button className={styles.button2} onClick={(e) => {
+      e.preventDefault();
+      window.location.href='/election_portal/nominate';
+      }}> Continue </button>
         
-        <button className={styles.button}> Cancel </button>
+        <button className={styles.button} onClick={(e) => {
+      e.preventDefault();
+      window.location.href='/election_portal';
+      }} > Cancel </button>
       </div>
       
         

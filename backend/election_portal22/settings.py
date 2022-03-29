@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['swc.iitg.ac.in']
 
 
 # Application definition
@@ -44,19 +44,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'django_auth_adfs',
     'main',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django_auth_adfs.middleware.LoginRequiredMiddleware',
+    # 'django_auth_adfs.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'election_portal22.urls'
@@ -86,7 +90,7 @@ WSGI_APPLICATION = 'election_portal22.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db'/'db.sqlite3',
     }
 }
 
@@ -125,29 +129,38 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
+STATIC_URL = '/elections_api/static/'
+MEDIA_URL = "/ekections_api/media/"
+STATICFILES_DIRS=[BASE_DIR/"static"]
+STATIC_ROOT = BASE_DIR/"assets"
+MEDIA_ROOT = BASE_DIR/"media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTHENTICATION_BACKENDS = (
-   'django_auth_adfs.backend.AdfsAuthCodeBackend',
-   'django.contrib.auth.backends.ModelBackend',
-)
+# AUTHENTICATION_BACKENDS = (
+#    'django_auth_adfs.backend.AdfsAuthCodeBackend',
+#    'django.contrib.auth.backends.ModelBackend',
+# )
 
 AUTH_ADFS = {
-    "TENANT_ID": env("TENANT_ID"),
-    "CLIENT_ID": env("CLIENT_ID"),
-    "RELYING_PARTY_ID": env("RELYING_PARTY_ID"),
-    "AUDIENCE": env("AUDIENCE"),
+    "TENANT_ID": env("MY_TENANT_ID"),
+    "CLIENT_ID": env("MY_CLIENT_ID"),
+    "RELYING_PARTY_ID": env("MY_RELYING_PARTY_ID"),
+    "AUDIENCE": env("MY_AUDIENCE"),
     "LOGIN_EXEMPT_URLS": ["api/", "public/","admin/"],
-    "CLIENT_SECRET": env("CLIENT_SECRET")
+    "CLIENT_SECRET": env("MY_CLIENT_SECRET")
 }
 
-LOGIN_URL = "django_auth_adfs:login"
-LOGIN_REDIRECT_URL = "/"
+# LOGIN_URL = "django_auth_adfs:login"
+# LOGIN_REDIRECT_URL = "/elections_api"
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 CUSTOM_FAILED_RESPONSE_VIEW = 'dot.path.to.custom.views.login_failed'
+
+CORS_ALLOW_CREDENTIALS = True
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ORIGIN_ALLOW_ALL = True
+    ALLOWED_HOSTS = ["*"]

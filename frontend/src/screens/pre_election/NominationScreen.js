@@ -10,7 +10,7 @@ const NominationScreen = (props) => {
       <StepList />
       <div className="grid grid-cols-12 gap-4 lg:mr-12">
         <div className="col-span-12 md:col-span-3">
-          <SideBarSection posts = {props.posts}/>
+          <SideBarSection posts={props.posts} />
         </div>
         <div className="col-span-12 md:col-span-9">
           <Routes>

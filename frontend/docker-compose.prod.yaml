@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+  web:
+    build:
+        context: .
+    ports:
+      - "3011:3000"
+    command: sh -c "cd /app && serve -s build"
+    env_file:
+      - .env.production
