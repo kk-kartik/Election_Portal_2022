@@ -2,7 +2,7 @@ import React from "react";
 
 const OrganizerCard = () => {
   return (
-    <div className="border-2 w-fit p-4 rounded-md mt-8 ml-4">
+    <div className="border-2 w-fit p-4 rounded-md mt-8 mr-4">
       <div className="box-border pointer-events-none border-8 border-white w-full h-64 bg-gray-100">
         <img
           src="https://i.pinimg.com/originals/ef/0d/ec/ef0dec7cb8b80b65ae925ccb9286f567.jpg"

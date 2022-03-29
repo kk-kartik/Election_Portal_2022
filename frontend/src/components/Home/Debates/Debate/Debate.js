@@ -4,7 +4,7 @@ import calender from "./calender.svg";
 import clock from "./clock.svg";
 const Debate = () => {
   return (
-    <div className={`${styles.card} ml-auto mr-auto`}>
+    <div className={`${styles.card} my-1 ml-auto mr-auto`}>
       <div className="p-6">
         <h3 className="font-semibold text-lg pb-4 text-gray-800">
           {" "}
@@ -35,18 +35,27 @@ const Debate = () => {
           </tr>
         </table>
         <div className="p-4">
-          <button className={styles.btn}> <div>
-              
-               <table className="ml-auto mr-auto"> <tr> 
-              <td> <img src={calender} alt="calender" className={styles.image} /> 
+          <button className={styles.btn}>
+            {" "}
+            <div>
+              <table className="ml-auto mr-auto">
+                {" "}
+                <tr>
+                  <td>
+                    {" "}
+                    <img
+                      src={calender}
+                      alt="calender"
+                      className={styles.image}
+                    />
                   </td>
-                <td> &nbsp; Add to Calender 
-                    </td></tr> </table>
-              </div>
-                    </button>
+                  <td> &nbsp; Add to Calender</td>
+                </tr>{" "}
+              </table>
+            </div>
+          </button>
           <p className="text-center text-gray-400 pt-2 ">100 attending</p>
         </div>
-       
       </div>
     </div>
   );
