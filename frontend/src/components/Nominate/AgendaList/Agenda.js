@@ -9,6 +9,7 @@ const Agenda = (props) => {
         setClicked(!clicked);        
     }
     let count = props.count;
+    let title = props.title;
     let agenda = <div className={props.cClass}>
                         {props.agenda}
                     </div>;
@@ -29,7 +30,7 @@ const Agenda = (props) => {
         <div className={`w-full md:w-3/5 ${styles.container}`}>
           <div className="p-6">
             <div className="flex">
-              <h1 className="text-lg text-gray-800"> Agenda {count}: Women safety </h1>
+              <h1 className="text-lg text-gray-800"> Agenda {count}: {title} </h1>
               <div className={`${styles.dropdowncont} ml-auto`} tabindex="-1">
                 <img src={dots} className={styles.dots} />
                 <div className={styles.dropdown}>

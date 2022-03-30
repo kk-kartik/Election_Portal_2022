@@ -5,27 +5,23 @@ import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import styles from "./TextEditor.module.css"
 import { convertToHTML } from 'draft-convert';
+import Agenda from "../Nominate/AgendaList/Agenda";
+var parse = require('html-react-parser');
 
 const TextEditor = (props) => {
+  let currentContentAsHTML ="";
   const [editorState, setEditorState] = useState(() =>
   EditorState.createEmpty()
 );
 
-const [convertedContent, setConvertedContent] = useState('');
   const handleEditorChange = (state) => {
     setEditorState(state);
-    convertContentToHTML();
-    // console.log((editorState.getCurrentContent().getBlocksAsArray));
-    // sendContent();
 };
+
 const convertContentToHTML = () => {
-  let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-  setConvertedContent(currentContentAsHTML);
-  console.log(currentContentAsHTML);
+  currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
 }
-
-const [title, setTitle] = useState ('')
-
+const [title, setTitle] = useState ('');
 
 const onSubmit = (e) => {
   e.preventDefault();
@@ -34,6 +30,14 @@ const onSubmit = (e) => {
       alert('Please add a title')
       return;
   }
+  props.setTitle(title);
+  convertContentToHTML();
+  const convertedString = parse(currentContentAsHTML);
+  let agenda = <Agenda count = "1" title={title} agenda={convertedString}/>
+  props.setAgendas((agendas)=>{
+    return [...agendas, agenda];
+  });
+  props.setIsOpen(false);
 }
 
   return (
@@ -55,9 +59,7 @@ const onSubmit = (e) => {
           editorState={editorState}
           onEditorStateChange={handleEditorChange}
           placeholder="Write about your agenda here..."
-          
-        />
-        {/* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}></textarea> */}
+          />
 
       </div>
       <div className="flex flex-row-reverse p-2">
