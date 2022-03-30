@@ -1,21 +1,18 @@
-# Name the node stage "builder"
-FROM node:alpine AS builder
+FROM node:14-alpine AS builder
 
 # Set working directory
 WORKDIR /app
-RUN yarn global add serve
+RUN npm install -g serve
 # Copy our node module specification
-COPY package.json .
-COPY yarn.lock .
+COPY package* ./
+
 
 # install node modules and build assets
-RUN yarn install --production
-
+RUN npm ci --silent
 # Copy all files from current directory to working dir in image
 # Except the one defined in '.dockerignore'
 COPY . .
 
 # Create production build of React App
-RUN yarn build
-RUN mv ./build/static ./build/staging_pre_election
-
+RUN npm run build
+RUN mv ./build/static ./build/staiging_pre_election
