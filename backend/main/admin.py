@@ -15,7 +15,7 @@ class ElectionAdmin(admin.ModelAdmin):
 
 @admin.register(Position)
 class PositionAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Position._meta.get_fields()]
+    list_display = ['id','title']
 
 @admin.register(Candidate)
 class CandidateAdmin(admin.ModelAdmin):
