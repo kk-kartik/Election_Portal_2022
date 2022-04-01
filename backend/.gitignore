@@ -7,9 +7,10 @@ db/db.sqlite3
 *.pyc
 __pycache__
 db.sqlite3
+.env.prod
 media
 migrations
-*.env
+google-creds.json
 
 # Visual Studio Code # 
 .vscode/* 

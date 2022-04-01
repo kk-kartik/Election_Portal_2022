@@ -4,16 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django-environ = "==0.8.1"
-environ = "==1.0"
-Django = "==4.0.2"
+django-environ = "*"
+environ = "*"
+Django = "*"
 djangorestframework = "*"
 gunicorn = "*"
 pycryptodome = "*"
 django-auth-adfs = "*"
 django-cors-headers = "*"
 pillow = "*"
+djangorestframework-simplejwt = "*"
+
 [dev-packages]
 
 [requires]
-python_version = "3.8"
+python_version = "3.7"
