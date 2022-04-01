@@ -11,6 +11,7 @@ services:
         - "./db:/app/db"
         - "./assets:/app/assets"
         - "./media:/app/media"
+        - "./main/migrations:/app/main/migrations"
     ports:
       - "8010:8000"
     env_file:
