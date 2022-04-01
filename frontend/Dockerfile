@@ -15,4 +15,4 @@ COPY . .
 
 # Create production build of React App
 RUN npm run build
-RUN mv ./build/static ./build/staging_pre_election
+RUN mv ./build/static ./build/election_portal
