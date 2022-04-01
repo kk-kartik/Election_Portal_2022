@@ -1,12 +1,11 @@
 from django.urls import path,include
 from . import views
-from rest_framework_simplejwt.views import (
-    TokenRefreshView,
-    TokenVerifyView
-)
+
 
 urlpatterns = [
-   path("outlook/signin/",view=views.OutlookSigninView.as_view(),name="outlook_sigin"),
-    path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path('token/refresh/',views.RefershTokenView.as_view(), name='token_refresh'),
+   path('', include('dj_rest_auth.urls')),
+   path('registration/', include('dj_rest_auth.registration.urls')),
+   path("social/google/",view=views.GoogleLogin.as_view(),name="google_login"),
+   path("social/outlook/",view=views.MicrosoftLogin.as_view(),name="outlook_login"),
+   path('accounts/', include('allauth.urls'), name='socialaccount_signup'),
 ]

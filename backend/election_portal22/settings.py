@@ -44,19 +44,25 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'django_auth_adfs',
-    'main',
+    # 'django_auth_adfs',
     'rest_framework',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    "dj_rest_auth",
+    'dj_rest_auth.registration',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.microsoft',
+    'main',
     "authentication",
-    'rest_framework_simplejwt'
 ]
+REST_USE_JWT = True
 
-AUTHENTICATION_BACKENDS = (
-   
-    'django_auth_adfs.backend.AdfsAccessTokenBackend',
-    'django.contrib.auth.backends.ModelBackend'
-)
+SITE_ID=1
 
+CORS_REPLACE_HTTPS_REFERER=True
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -70,6 +76,13 @@ MIDDLEWARE = [
     # 'django_auth_adfs.middleware.LoginRequiredMiddleware',
 ]
 
+
+REST_FRAMEWORK={
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
 ROOT_URLCONF = 'election_portal22.urls'
 
 TEMPLATES = [
@@ -82,7 +95,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+                'django.contrib.messages.context_processors.messages'
             ],
         },
     },
@@ -147,30 +160,6 @@ MEDIA_ROOT = BASE_DIR/"media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# AUTHENTICATION_BACKENDS = (
-#    'django_auth_adfs.backend.AdfsAuthCodeBackend',
-#    'django.contrib.auth.backends.ModelBackend',
-# )
-
-client_id = env("CLIENT_ID")
-tenant_id = env("TENANT_ID")
-client_secret = env("CLIENT_SECRET")
-
-AUTH_ADFS = {
-    'AUDIENCE': client_id,
-    'CLIENT_ID': client_id,
-    'CLIENT_SECRET': client_secret,
-    'CLAIM_MAPPING': {'first_name': 'given_name',
-                      'last_name': 'family_name',
-                      'email': 'upn'
-                      },
-    'GROUPS_CLAIM': 'roles',
-    'MIRROR_GROUPS': True,
-    'USERNAME_CLAIM': 'upn',
-    'TENANT_ID': tenant_id,
-    'RELYING_PARTY_ID': client_id,
-    "LOGIN_EXEMPT_URLS": ["api/", "public/","admin/"]
-}
 
 
 LOGIN_REDIRECT_URL = "/elections_api"
@@ -192,9 +181,6 @@ SIMPLE_JWT = {
     'ISSUER': None,
     'JWK_URL': None,
     'LEEWAY': 0,
-    
-    
-
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
@@ -210,27 +196,47 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
     'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    # custom
-  'AUTH_COOKIE': 'refresh_token',  # Cookie name. Enables cookies if value is set.
-  'AUTH_COOKIE_DOMAIN': None,     # A string like "example.com", or None for standard domain cookie.
-  'AUTH_COOKIE_SECURE': False,    # Whether the auth cookies should be secure (https:// only).
-  'AUTH_COOKIE_HTTP_ONLY' : True, # Http only cookie flag.It's not fetch by javascript.
-  'AUTH_COOKIE_PATH': '/',        # The path of the auth cookie.
-  'AUTH_COOKIE_SAMESITE': 'Lax',  # Whether to set the flag restricting cookie leaks on cross-site requests. This can be 'Lax', 'Strict', or None to disable the flag.
 }
 
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "https://swc.iitg.ac.in",
+    "http://localhost:3000"
 ]
-ALLOWED_HOSTS=["swc.iitg.ac.in"]
+ALLOWED_HOSTS=["swc.iitg.ac.in","localhost"]
+JWT_AUTH_REFRESH_COOKIE = 'election-token'
 
 if DEBUG:
-    CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    ]
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ORIGIN_ALLOW_ALL = True
     ALLOWED_HOSTS = ["*"]
-    SIMPLE_JWT["AUTH_COOKIE_SECURE"]=True
+    # SIMPLE_JWT["AUTH_COOKIE_SECURE"]=True
+
+
+OUTLOOK_CLIENT_ID = env("OUTLOOK_CLIENT_ID")
+OUTLOOK_CLIENT_SECRET = env("OUTLOOK_CLIENT_SECRET")
+OUTLOOK_TENANT_ID = env("OUTLOOK_TENANT_ID")
+GOOGLE_CLIENT_ID=env("GOOGLE_CLIENT_ID")
+GOOGLE_CLIENT_SECRET = env("GOOGLE_CLIENT_SECRET")
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        "APP":{
+            "client_id":GOOGLE_CLIENT_ID,
+            "secret":GOOGLE_CLIENT_SECRET,
+            "key":""
+        }
+    },
+    "microsoft":{
+        'TENANT':OUTLOOK_TENANT_ID,
+        "APP":{
+            "client_id":OUTLOOK_CLIENT_ID,
+            "secret":OUTLOOK_CLIENT_SECRET,
+        }
+    }
+}
