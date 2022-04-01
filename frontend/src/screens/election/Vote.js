@@ -4,6 +4,7 @@ import { getNEpair } from "../../lib/fetch";
 import { signVote } from "../../lib/post";
 
 import MicrosoftLogin from "react-microsoft-login";
+import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 
 function Vote() {
@@ -18,22 +19,43 @@ function Vote() {
   const authHandler = async (err, data) => {
     console.log(data, err);
     const accessToken = data["accessToken"];
-    const res = await axios.get(
-      "http://localhost:8000/elections_api/auth/outlook/signin/",
+    const res = await axios.post(
+      "http://localhost:8000/elections_api/auth/social/outlook/",
       {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+        access_token: accessToken,
+      },
+      {
         withCredentials: true,
       }
     );
 
-    const res1 = await axios.get(
+    const res1 = await axios.post(
       "http://localhost:8000/elections_api/auth/token/refresh/",
+      {},
       {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
+        withCredentials: true,
+      }
+    );
+    console.log(res1);
+  };
+
+  const responseGoogle = async (data) => {
+    console.log(data);
+    const accessToken = data["accessToken"];
+    const res = await axios.post(
+      "http://localhost:8000/elections_api/auth/social/google/",
+      {
+        access_token: accessToken,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    const res1 = await axios.post(
+      "http://localhost:8000/elections_api/auth/token/refresh/",
+      {},
+      {
         withCredentials: true,
       }
     );
@@ -84,9 +106,21 @@ function Vote() {
   };
   return (
     <div className="mt-20 mx-20">
+      <GoogleLogin
+        clientId="774598959771-jilp7jr6a3677htqaf1na9adqoj3aolo.apps.googleusercontent.com"
+        render={(renderProps) => (
+          <button onClick={renderProps.onClick} disabled={renderProps.disabled}>
+            Google login
+          </button>
+        )}
+        buttonText="Login"
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
+      />
+      ,
       <MicrosoftLogin
-        clientId={"f2dc9516-b846-4460-9c99-c46cf28b869b"}
-        graphScopes={["6974450a-7569-4f53-ab04-47aa8b84687f/read"]}
+        clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
         redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
         authCallback={authHandler}
         tenantUrl={
@@ -108,12 +142,6 @@ function Vote() {
           Submit
         </button>
       </form>
-      <p>Encrypted vote:{JSON.stringify({ data: encryptedVote })}</p>
-      <p>Blined vote:{JSON.stringify({ data: blindData })}</p>
-      <p>SignedVote vote:{JSON.stringify({ data: signedVote })}</p>
-      <p>isVerified:{isVerified ? 1 : 0}</p>
-      <p>Error: {JSON.stringify({ data: error })}</p>
-      <p>NEpair: {JSON.stringify({ data: NEpair })}</p>
     </div>
   );
 }
