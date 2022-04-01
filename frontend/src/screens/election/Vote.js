@@ -87,7 +87,7 @@ function Vote() {
       <MicrosoftLogin
         clientId={"f2dc9516-b846-4460-9c99-c46cf28b869b"}
         graphScopes={["6974450a-7569-4f53-ab04-47aa8b84687f/read"]}
-        redirectUri={"http://localhost:3000/"}
+        redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
         authCallback={authHandler}
         tenantUrl={
           "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
