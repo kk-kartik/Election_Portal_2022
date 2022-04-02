@@ -20,7 +20,7 @@ function Vote() {
     console.log(data, err);
     const accessToken = data["accessToken"];
     const res = await axios.post(
-      "http://localhost:8000/elections_api/auth/social/outlook/",
+      `${process.env.REACT_APP_BASEAPIURL}/auth/social/outlook/`,
       {
         access_token: accessToken,
       },
@@ -30,7 +30,7 @@ function Vote() {
     );
 
     const res1 = await axios.post(
-      "http://localhost:8000/elections_api/auth/token/refresh/",
+      `${process.env.REACT_APP_BASEAPIURL}/elections_api/auth/token/refresh/`,
       {},
       {
         withCredentials: true,
@@ -43,7 +43,7 @@ function Vote() {
     console.log(data);
     const accessToken = data["accessToken"];
     const res = await axios.post(
-      "http://localhost:8000/elections_api/auth/social/google/",
+      `${process.env.REACT_APP_BASEAPIURL}/elections_api/auth/social/google/`,
       {
         access_token: accessToken,
       },
@@ -53,7 +53,7 @@ function Vote() {
     );
 
     const res1 = await axios.post(
-      "http://localhost:8000/elections_api/auth/token/refresh/",
+      `${process.env.REACT_APP_BASEAPIURL}/elections_api/auth/token/refresh/`,
       {},
       {
         withCredentials: true,
