@@ -43,7 +43,7 @@ function Vote() {
     console.log(data);
     const accessToken = data["accessToken"];
     const res = await axios.post(
-      `${process.env.REACT_APP_BASEAPIURL}/elections_api/auth/social/google/`,
+      `${process.env.REACT_APP_BASEAPIURL}elections_api/auth/social/google/`,
       {
         access_token: accessToken,
       },
@@ -53,7 +53,7 @@ function Vote() {
     );
 
     const res1 = await axios.post(
-      `${process.env.REACT_APP_BASEAPIURL}/elections_api/auth/token/refresh/`,
+      `${process.env.REACT_APP_BASEAPIURL}elections_api/auth/token/refresh/`,
       {},
       {
         withCredentials: true,
