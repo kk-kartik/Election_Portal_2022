@@ -8,7 +8,7 @@ STATUS_CHOICES = (
     ('completed','Completed')
 )    
 
-NSTATUS = (
+NOMINATION_STATUS = (
     ('approved','Approved'),
     ('pending','Pending'),
     ('rejected','Rejected')
@@ -21,9 +21,8 @@ BRANCH = (
 )
 
 DEGREE = (
-    ('P','To be started'),
-    ('C','Completed'),
-    ('O','Ongoing')
+    ('U','UG'),
+    ('P','PG')
 )
 
 HOSTELS = [
@@ -32,7 +31,7 @@ HOSTELS = [
     ('siang', 'Siang'),
     ('manas', 'Manas'),
     ('dibang', 'Dibang'),
-    ('disang', '*Disang'),
+    ('disang', 'Disang'),
     ('kameng', 'Kameng'),
     ('umiam', 'Umiam'),
     ('barak', 'Barak'),
@@ -79,24 +78,33 @@ class Voter(models.Model):
     election_organizers = models.ForeignKey(Election,null=True,on_delete=models.SET_NULL,related_name='organizers') # change the name of field to election
     election_creator = models.OneToOneField(Election,null=True,on_delete=models.SET_NULL,related_name='created_by')
 
+    class Meta:
+        unique_together = (('user', 'election'), ('user', 'election_organizers'))
+
 class Position(models.Model):
     title = models.CharField(max_length=250,unique=True)
     debate_date_time = models.DateTimeField()
-    max_votes = models.PositiveIntegerField()
+    max_votes = models.PositiveIntegerField() 
     voting_instructions = models.JSONField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='positions')
+
+    def __str__(self) -> str:
+        return self.title
 
 class Candidate(models.Model):
     position = models.ForeignKey(Position,null=True,on_delete=models.SET_NULL,related_name='candidates_p')
     agenda_text = models.JSONField()
-    image = models.ImageField()
+    image = models.ImageField(blank=True)
     video = models.URLField()
     about = models.TextField()
     tagline = models.CharField(max_length=500)
-    agenda_pdf = models.FileField()
+    agenda_pdf = models.FileField(blank=True)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='candidates_e')
     user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='candidates_ids')
-    nomination_status = models.CharField(choices=NSTATUS,max_length=70)
+    nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70)
+
+    class Meta:
+        unique_together = (('position', 'election', 'user'))
 
 class Faq(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='faqs')

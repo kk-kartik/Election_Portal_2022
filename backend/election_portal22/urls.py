@@ -15,9 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+# from rest_framework_swagger.views import get_swagger_view
+
+# schema_view = get_swagger_view(title='Pastebin API')
+from django.views.generic import TemplateView
+from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
     path('elections_api/admin/', admin.site.urls),
     path('elections_api/auth/', include('authentication.urls')),
-    path('elections_api/<str:name_slug>/api/',include('main.urls'))
+    path('elections_api/<str:name_slug>/api/',include('main.urls')),
+    # path('elections_api/api_doc/',schema_view),
+
+    path('openapi', get_schema_view(title="Election portal 22",description="API for all things …",version="1.0.0"), name='openapi-schema'),
+    path('elections_api/api_doc/', TemplateView.as_view(template_name='api_doc.html',extra_context={'schema_url':'openapi-schema'}
+    ), name='api_doc'),
 ]

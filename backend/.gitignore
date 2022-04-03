@@ -8,6 +8,7 @@ db/db.sqlite3
 __pycache__
 db.sqlite3
 .env.prod
+*.env
 media
 migrations
 google-creds.json
