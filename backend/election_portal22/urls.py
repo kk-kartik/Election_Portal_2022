@@ -24,7 +24,7 @@ from rest_framework.schemas import get_schema_view
 urlpatterns = [
     path('elections_api/admin/', admin.site.urls),
     path('elections_api/auth/', include('authentication.urls')),
-    path('elections_api/<str:name_slug>/api/',include('main.urls')),
+    path('elections_api/<str:name_slug>/',include('main.urls')),
     # path('elections_api/api_doc/',schema_view),
 
     path('openapi', get_schema_view(title="Election portal 22",description="API for all things …",version="1.0.0"), name='openapi-schema'),

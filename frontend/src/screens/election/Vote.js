@@ -28,22 +28,13 @@ function Vote() {
         withCredentials: true,
       }
     );
-
-    const res1 = await axios.post(
-      `${process.env.REACT_APP_BASEAPIURL}/elections_api/auth/token/refresh/`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    console.log(res1);
   };
 
   const responseGoogle = async (data) => {
     console.log(data);
     const accessToken = data["accessToken"];
     const res = await axios.post(
-      `${process.env.REACT_APP_BASEAPIURL}elections_api/auth/social/google/`,
+      `${process.env.REACT_APP_BASEAPIURL}/auth/social/google/`,
       {
         access_token: accessToken,
       },
@@ -52,14 +43,7 @@ function Vote() {
       }
     );
 
-    const res1 = await axios.post(
-      `${process.env.REACT_APP_BASEAPIURL}elections_api/auth/token/refresh/`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    console.log(res1);
+    console.log(res);
   };
 
   const handleChange = (e) => {

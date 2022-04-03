@@ -87,12 +87,14 @@ class Position(models.Model):
     max_votes = models.PositiveIntegerField() 
     voting_instructions = models.JSONField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='positions')
+    postion_slug = models.SlugField(max_length=100,unique=True)
+    
 
     def __str__(self) -> str:
         return self.title
 
 class Candidate(models.Model):
-    position = models.ForeignKey(Position,null=True,on_delete=models.SET_NULL,related_name='candidates_p')
+    position = models.ForeignKey(Position,on_delete=models.DO_NOTHING,related_name='candidates_p')
     agenda_text = models.JSONField()
     image = models.ImageField(blank=True)
     video = models.URLField()
@@ -100,7 +102,7 @@ class Candidate(models.Model):
     tagline = models.CharField(max_length=500)
     agenda_pdf = models.FileField(blank=True)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='candidates_e')
-    user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='candidates_ids')
+    user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='candidates_ids')
     nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70)
 
     class Meta:

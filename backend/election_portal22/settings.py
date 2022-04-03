@@ -79,7 +79,12 @@ MIDDLEWARE = [
 
 
 REST_FRAMEWORK={
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        "dj_rest_auth.jwt_auth.JWTCookieAuthentication",
+        "dj_rest_auth.jwt_auth.JWTAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
@@ -207,7 +212,14 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
 ALLOWED_HOSTS=["swc.iitg.ac.in","localhost"]
-JWT_AUTH_REFRESH_COOKIE = 'election-token'
+
+###  SET AUTH COOKIE #####
+JWT_AUTH_COOKIE = 'election-token'
+JWT_AUTH_HTTPONLY = False
+
+
+
+
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
 
@@ -215,7 +227,9 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ORIGIN_ALLOW_ALL = True
     ALLOWED_HOSTS = ["*"]
-    # SIMPLE_JWT["AUTH_COOKIE_SECURE"]=True
+else:
+    JWT_AUTH_SAMESITE = "none"
+    JWT_AUTH_SECURE = True
 
 
 OUTLOOK_CLIENT_ID = env("OUTLOOK_CLIENT_ID")

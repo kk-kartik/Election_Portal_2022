@@ -1,10 +1,16 @@
 from .models import *
 from rest_framework import serializers
+from django.contrib.auth.models import User
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        exclude=["password"]
 
 class ImportantdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Imporatant_date
-        fields ='__all__'
+        fields =["title","date"]
 
 class PositionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,7 +26,6 @@ class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
         exclude = ['election']
-        depth = 1
 
 class CandidatePostSerializer(serializers.ModelSerializer):
     class Meta:

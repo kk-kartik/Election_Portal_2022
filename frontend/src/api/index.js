@@ -1,6 +1,5 @@
 import axios from "axios";
-import { BASEURL, BASEAPIURL, VALIDAPIURL} from "../constants";
-
+import { BASEURL, BASEAPIURL, VALIDAPIURL } from "../constants";
 
 export const API = axios.create({
   baseURL: `${BASEAPIURL}`,
@@ -8,8 +7,8 @@ export const API = axios.create({
 });
 
 export const VALIDAPI = axios.create({
-  baseURL: `${VALIDAPIURL}`
+  baseURL: `${VALIDAPIURL}`,
 });
 
 // Important Dates API
-export const fetchImportantDates = () => API.get("/importantdates");
+export const fetchImportantDates = () => API.get("/sgc2022/imp_dates");
