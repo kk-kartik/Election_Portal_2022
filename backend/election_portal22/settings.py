@@ -211,14 +211,14 @@ CORS_ALLOWED_ORIGINS = [
 ALLOWED_HOSTS=["swc.iitg.ac.in","localhost"]
 
 ###  SET AUTH COOKIE #####
-JWT_AUTH_COOKIE = 'election-token'
+JWT_AUTH_COOKIE = 'electiontoken'
 JWT_AUTH_HTTPONLY = False
 
 
 
 
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
-JWT_AUTH_SAMESITE = "None"
+JWT_AUTH_SAMESITE = "Lax"
 JWT_AUTH_SECURE = True
 
 if DEBUG:
