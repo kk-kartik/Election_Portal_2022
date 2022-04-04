@@ -48,7 +48,7 @@ HOSTELS = [
 
 class EUser(models.Model):
     name = models.CharField(max_length=100)
-    roll_number = models.CharField(max_length=9,unique=True)
+    roll_number = models.CharField(max_length=9)
     degree = models.CharField(choices=DEGREE,max_length=70)
     hostel = models.CharField(choices=HOSTELS,max_length=50)
     branch = models.CharField(choices=BRANCH,max_length=50)
@@ -130,4 +130,4 @@ class Statistic(models.Model):
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):
     if created:
-        euser = EUser.objects.create(user=instance,email=instance.email,name=instance.first_name)
+        euser = EUser.objects.create(user=instance,email=instance.email,name=instance.first_name,roll_number=instance.last_name)
