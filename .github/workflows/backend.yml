@@ -5,7 +5,7 @@ on:
         paths:
             - "backend/**"
         branches:
-            - "main"
+            - "deploy"
 
 jobs:
 
@@ -23,8 +23,9 @@ jobs:
         username: ${{ secrets.SSH_USERNAME }}
         script: |
             cd /webapps/Election_Portal_2022
-            ls
-            git pull origin main
+            git fetch origin
+            git checkout deploy
+            git pull
             git status
             cd backend
             docker-compose -f docker-compose.prod.yaml up -d --build
