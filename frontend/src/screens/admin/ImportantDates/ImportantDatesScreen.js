@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getImportantDates } from "../../../actions/importantDates";
-
+import {
+  getImportantDates,
+  deleteImportantDate,
+} from "../../../actions/importantDates";
+import { DateConvert } from "../../../utils";
 const ImportantDatesScreen = () => {
   const importantDates = useSelector((state) => state.importantDates);
   const dispatch = useDispatch();
@@ -11,7 +14,6 @@ const ImportantDatesScreen = () => {
   }, [dispatch]);
   return (
     <>
-      {console.log(importantDates)}
       <h1 className="text-3xl text-black pb-6">Important Dates</h1>
       <div className="mt-6">
         <Link
@@ -41,22 +43,38 @@ const ImportantDatesScreen = () => {
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              <tr>
-                <td className="text-left py-3 px-4"> Election Date</td>
-                <td className="text-left py-3 px-4">24/03/2022</td>
-                <td className="text-left py-3 px-4">
-                  <Link
-                    to={{
-                      pathname: `/admin/importantdates/add`,
-                    }}
-                  >
-                    <button className="hover:text-blue-500">Edit</button>
-                  </Link>
-                </td>
-                <td className="text-left py-3 px-4">
-                  <button className="hover:text-red-500">Delete</button>
-                </td>
-              </tr>
+              {console.log(importantDates)}
+              {importantDates.length !== 0 &&
+                importantDates.map((data, idx) => {
+                  return (
+                    <tr key={idx}>
+                      <td className="text-left py-3 px-4">{data?.title}</td>
+                      <td className="text-left py-3 px-4">
+                        {DateConvert(data?.date)}
+                      </td>
+                      <td className="text-left py-3 px-4">
+                        <Link
+                          to={{
+                            pathname: `/admin/importantdates/${data?.id}`,
+                          }}
+                          state={data}
+                        >
+                          <button className="hover:text-blue-500">Edit</button>
+                        </Link>
+                      </td>
+                      <td className="text-left py-3 px-4">
+                        <button
+                          className="hover:text-red-500"
+                          onClick={() =>
+                            dispatch(deleteImportantDate(data?.id))
+                          }
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>

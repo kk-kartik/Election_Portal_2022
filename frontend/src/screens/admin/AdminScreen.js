@@ -2,8 +2,9 @@ import React from "react";
 import Sidebar from "../../components/Admin/Sidebar/Sidebar";
 import "./AdminScreen.css";
 import { Routes, Route } from "react-router-dom";
-import FormScreen from "./FormScreen/FormScreen";
 import ImportantDatesScreen from "./ImportantDates/ImportantDatesScreen";
+import AddImportantDateScreen from "./ImportantDates/AddImportantDateScreen";
+import EditImportantDateScreen from "./ImportantDates/EditImportantDateScreen";
 
 const AdminScreen = () => {
   return (
@@ -15,7 +16,16 @@ const AdminScreen = () => {
             path={`/importantdates`}
             element={<ImportantDatesScreen />}
           />
-          <Route exact path={`/importantdates/add`} element={<FormScreen />} />
+          <Route
+            exact
+            path={`/importantdates/add`}
+            element={<AddImportantDateScreen />}
+          />
+          <Route
+            exact
+            path={`/importantdates/:id`}
+            element={<EditImportantDateScreen />}
+          />
         </Routes>
       </Sidebar>
     </div>

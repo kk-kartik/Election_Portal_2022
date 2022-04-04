@@ -4,6 +4,9 @@ export const VALIDAPIURL = process.env.REACT_APP_VALIDAPIURL;
 
 // Important Dates Constants
 export const GET_IMPORTANT_DATES = "GET_IMPORTANT_DATES";
+export const ADD_IMPORTANT_DATE = "ADD_IMPORTANT_DATE";
+export const EDIT_IMPORTANT_DATE = "EDIT_IMPORTANT_DATE";
+export const DELETE_IMPORTANT_DATE = "DELETE_IMPORTANT_DATE";
 // export const BASEURL = "http://localhost:3000/election_portal";
 // export const BASEAPIURL = "http://127.0.0.1:8000";
 export const publicKey =
