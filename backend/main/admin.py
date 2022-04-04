@@ -1,9 +1,7 @@
 from django.contrib import admin
 from .models import *
 
-@admin.register(EUser)
-class EUserAdmin(admin.ModelAdmin):
-    list_display = ['name']
+admin.site.register(EUser)
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):

@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 STATUS_CHOICES = (
     ('pending','To be started'),
@@ -54,7 +56,7 @@ class EUser(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='euser')
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.id)
 
 class Election(models.Model):
     name = models.CharField(max_length=250)
@@ -123,3 +125,9 @@ class Statistic(models.Model):
     stat_cnt = models.JSONField()
     stat_total = models.JSONField()
     stat_title = models.CharField(max_length=250)
+
+
+@receiver(post_save,sender=User)
+def create_euser(sender,instance,created,*args,**kwargs):
+    if created:
+        euser = EUser.objects.create(user=instance)
