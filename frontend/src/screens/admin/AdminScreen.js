@@ -5,6 +5,9 @@ import { Routes, Route } from "react-router-dom";
 import ImportantDatesScreen from "./ImportantDates/ImportantDatesScreen";
 import AddImportantDateScreen from "./ImportantDates/AddImportantDateScreen";
 import EditImportantDateScreen from "./ImportantDates/EditImportantDateScreen";
+import FAQScreen from "./FAQ/FAQScreen";
+import AddFAQScreen from "./FAQ/AddFAQScreen";
+import EditFAQScreen from "./FAQ/EditFAQScreen";
 
 const AdminScreen = () => {
   return (
@@ -26,6 +29,9 @@ const AdminScreen = () => {
             path={`/importantdates/:id`}
             element={<EditImportantDateScreen />}
           />
+          <Route exact path={`/faq`} element={<FAQScreen />} />
+          <Route exact path={`/faq/add`} element={<AddFAQScreen />} />
+          <Route exact path={`/faq/:id`} element={<EditFAQScreen />} />
         </Routes>
       </Sidebar>
     </div>
