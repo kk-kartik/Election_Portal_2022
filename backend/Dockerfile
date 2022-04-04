@@ -30,6 +30,6 @@ WORKDIR /app
 
 # always copy files after installing packages
 # docker will cache the packages hence better build time
-COPY . /app
+COPY . .
 
 RUN chmod +x scripts/*
