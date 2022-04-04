@@ -6,6 +6,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework  import status
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
+from django.utils.decorators import method_decorator
+from django.db import transaction
+
 
 class TokenVerifyView(GenericAPIView):
     authentication_classes = [JWTCookieAuthentication]
@@ -14,9 +17,11 @@ class TokenVerifyView(GenericAPIView):
     def get(self,request):
         return Response({"ok":True,"detail":"User is logged in!"},status=status.HTTP_200_OK)
 
+@method_decorator(transaction.atomic,name="dispatch")
 class GoogleLogin(SocialLoginView): # if you want to use Implicit Grant, use this
     adapter_class = GoogleOAuth2Adapter
 
+@method_decorator(transaction.atomic,name="dispatch")
 class MicrosoftLogin(SocialLoginView):
     adapter_class = MicrosoftGraphOAuth2Adapter
 

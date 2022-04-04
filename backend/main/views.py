@@ -58,7 +58,7 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
         return self.election.candidates_e.all()
     
     def perform_create(self,serializer):
-        return serializer.save(election=self.election)
+        return serializer.save(election=self.election,euser=self.request.user.euser)
     
     def perform_update(self,serializer):
         return serializer.save(election=self.election)

@@ -130,4 +130,8 @@ class Statistic(models.Model):
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):
     if created:
-        euser = EUser.objects.create(user=instance,email=instance.email,name=instance.first_name,roll_number=instance.email)
+        euser = EUser.objects.create(
+            user=instance,
+            email=instance.email,
+            name=instance.first_name,
+            roll_number=instance.email)

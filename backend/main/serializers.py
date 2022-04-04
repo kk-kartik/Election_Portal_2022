@@ -23,6 +23,7 @@ class EuserSerializer(serializers.ModelSerializer):
         fields =['id','name','roll_number','degree','hostel','branch','email']
 
 class CandidateSerializer(serializers.ModelSerializer):
+    user = serializers.ReadOnlyField()
     class Meta:
         model = Candidate
         exclude = ['election']
