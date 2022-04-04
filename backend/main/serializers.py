@@ -2,6 +2,12 @@ from .models import *
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
+
+class WitnessSerialzer(serializers.ModelSerializer):
+    class Meta:
+        model = Witness
+        fields = "__all__"
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -23,18 +29,29 @@ class EuserSerializer(serializers.ModelSerializer):
         fields =['id','name','roll_number','degree','hostel','branch','email']
 
 class CandidateSerializer(serializers.ModelSerializer):
-    user = serializers.ReadOnlyField()
+    # witnesses = WitnessSerialzer(many=True)
     class Meta:
         model = Candidate
-        exclude = ['election']
+        exclude = ['election',"user"]
+    
+    # def create(self,validated_data,*args, **kwargs):
+    #     witness = validated_data.pop("witness",None)
+    #     instance = super(CandidateSerializer,self).create(validated_data, *args, **kwargs)
+    #     for w in witness:
+    #         witness_obj = WitnessSerialzer(w,context=self.context)
+    #         witness_obj.save(candidate=instance)
+    #     return instance
+    
 
-class CandidatePostSerializer(serializers.ModelSerializer):
+class CandidateReadSerializer(serializers.ModelSerializer):
+    # witnesses = WitnessSerialzer(many=True)
     class Meta:
         model = Candidate
-        fields ='__all__'
-        # exclude = ['image','agenda_pdf']
+        fields = "__all__"
+        depth = 1
 
 class FaqSerializer(serializers.ModelSerializer):
     class Meta:
         model = Faq
         fields ='__all__'
+        exclude = ["election"]

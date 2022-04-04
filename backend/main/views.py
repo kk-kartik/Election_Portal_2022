@@ -51,14 +51,19 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [IsOrganizerOrCandidateWriteOnly]
-    serializer_class = CandidateSerializer
+    serializer_class = CandidateReadSerializer
     authentication_classes=default_authentication_classes
+    
+    def get_serializer_class(self):
+        if self.action =="create":
+            return CandidateSerializer
+        return CandidateReadSerializer
     
     def get_queryset(self):
         return self.election.candidates_e.all()
     
     def perform_create(self,serializer):
-        return serializer.save(election=self.election,euser=self.request.user.euser)
+        return serializer.save(election=self.election,user=self.request.user.euser)
     
     def perform_update(self,serializer):
         return serializer.save(election=self.election)
@@ -73,7 +78,7 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 class PositionsViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [ElectionOrganizerWritePermission]
     serializer_class = PositionSerializer
-    lookup_field="position_slug"
+    lookup_field="postion_slug"
     authentication_classes=default_authentication_classes
 
     def get_queryset(self):

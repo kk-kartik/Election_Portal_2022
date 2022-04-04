@@ -6,7 +6,7 @@ router = DefaultRouter()
 router.register("imp_dates",viewset=views.ImportantDatesViewSet,basename="imp_dates")
 router.register("candidates",viewset=views.CandidatesViewSet,basename="candidates")
 router.register("positions",viewset=views.PositionsViewSet,basename="positions")
-router.register("faqs",viewset=views.FAQViewSet,basename="candidates")
+router.register("faqs",viewset=views.FAQViewSet,basename="faqs")
 
 urlpatterns = [
     # path('all_positions/', views.all_positions.as_view(), name='all_positions'),

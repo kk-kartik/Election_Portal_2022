@@ -16,10 +16,30 @@ NOMINATION_STATUS = (
     ('rejected','Rejected')
 )
 
+TYPE = (
+    ('P','Proposed by'),
+    ('S','Seconded by')
+)
+
 BRANCH = (
-    ('P','To be started'),
-    ('C','Completed'),
-    ('O','Ongoing')
+    ('01', 'CSE'),
+    ('02', 'ECE'),
+    ('03', 'ME'),
+    ('04', 'Civil'),
+    ('05', 'Design'),
+    ('06', 'BSBE'),
+    ('07', 'CL'),
+    ('08', 'EEE'),
+    ('21', 'Physics'),
+    ('22', 'Chemistry'),
+    ('23', 'MNC'),
+    ('41', 'HSS'),
+    ('51', 'Energy'),
+    ('52', 'Environment'),
+    ('53', 'Nano-Tech'),
+    ('54', 'Rural-Tech'),
+    ('55', 'Linguistics'),
+	('61', 'Others'),
 )
 
 DEGREE = (
@@ -106,9 +126,29 @@ class Candidate(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='candidates_e')
     user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='candidates_ids')
     nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70)
+    cpi = models.CharField(max_length=70)
+    backlogs = models.CharField(max_length=100)
+    active_backlogs = models.CharField(max_length=100)
+    sign = models.FileField(blank=True)
+    date = models.DateField()
+    semester = models.CharField(max_length=70)
+    contact_no = models.IntegerField(max_length=10)
+    room_no = models.CharField(max_length=70)
+    
 
     class Meta:
         unique_together = (('position', 'election', 'user'))
+
+class Witness(models.Model):
+    user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='witness_ids')
+    cpi = models.CharField(max_length=70)
+    sign = models.FileField(blank=True)
+    date = models.DateField()
+    semester = models.CharField(max_length=70)
+    contact_no = models.IntegerField(max_length=10)
+    room_no = models.CharField(max_length=70)
+    type_ps = models.CharField(max_length=70,choices=TYPE)
+    candidate = models.ForeignKey(Candidate,on_delete=models.DO_NOTHING,related_name='witnesses')
 
 class Faq(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='faqs')
