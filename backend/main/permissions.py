@@ -27,7 +27,7 @@ class IsOrganizerOrCandidateWriteOnly(permissions.BasePermission):
             
         user = request.user
         election=view.election
-        is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.id).exists()
+        is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
         if is_organizer:
             return True
         
