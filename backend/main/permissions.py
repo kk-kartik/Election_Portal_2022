@@ -11,7 +11,7 @@ class ElectionOrganizerWritePermission(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        is_organizer = Voter.objects.filter(election_organizers__id=view.election.id,user__id=request.user.id).exists()
+        is_organizer = Voter.objects.filter(election_organizers__id=view.election.id,user__id=request.user.euser.id).exists()
         return is_organizer
 
 
