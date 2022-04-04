@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 class ImportantdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Imporatant_date
-        fields =["title","date"]
+        fields =["title","date","id"]
 
 class PositionSerializer(serializers.ModelSerializer):
     class Meta:
