@@ -117,7 +117,7 @@ class Faq(models.Model):
 
 class Imporatant_date(models.Model):
     title = models.CharField(max_length=250)
-    date = models.DateTimeField()
+    date = models.DateField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='important_dates')
 
 class Statistic(models.Model):
