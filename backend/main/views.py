@@ -9,13 +9,17 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 def response_with_election(name_slug,data,Serializer):
     election_id = Election.objects.get(name_slug=name_slug).id
-    _mutable = data._mutable
-    data._mutable = True
+    if hasattr(data, '_mutable'):
+        _mutable = data._mutable
+        data._mutable = True
     data['election'] = election_id
-    data._mutable = _mutable
+    if hasattr(data, '_mutable'):
+        data._mutable = _mutable
     obj = Serializer(data=data)
     if obj.is_valid():
         obj.save()
@@ -26,10 +30,12 @@ def response_with_election(name_slug,data,Serializer):
 
 def response_with_id_and_election(data,Serializer,ModelClass,name_slug,**kwargs):
     election_id = Election.objects.get(name_slug=name_slug).id
-    _mutable = data._mutable
-    data._mutable = True
+    if hasattr(data, '_mutable'):
+        _mutable = data._mutable
+        data._mutable = True
     data['election'] = election_id
-    data._mutable = _mutable
+    if hasattr(data, '_mutable'):
+        data._mutable = _mutable
     obj = ModelClass.objects.get(**kwargs)
     serializer = Serializer(obj, data=data,partial=True)
     if serializer.is_valid():
@@ -97,7 +103,8 @@ class UserWritePermission(permissions.BasePermission):
                 return False
 
 class get_important_dates(APIView):
-    permission_classes = [ElectionOrganizerWritePermission]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
 
     def get(self,request,name_slug):
         important_dates = Imporatant_date.objects.filter(election__name_slug=name_slug)
@@ -108,11 +115,13 @@ class get_important_dates(APIView):
         try:
             return response_with_election(name_slug,request.data,ImportantdateSerializer)
         except Exception as e:
+            print(e)
             return Response({f'{name_slug} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serialized_important_dates.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class get_important_dates_detailed(APIView):
-    permission_classes = [ElectionOrganizerWritePermission]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
 
     def get(self,request,name_slug,id):
         try:
@@ -136,7 +145,8 @@ class get_important_dates_detailed(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT) 
 
 class all_positions(APIView):
-    permission_classes = [ElectionOrganizerWritePermission]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
 
     def get(self,request,name_slug):
         position_name = request.query_params.get('position_name')
@@ -257,7 +267,8 @@ class candidate_detail(APIView):
         return Response({f'{position_name or email} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
 
 class all_eusers(APIView):
-    permission_classes = [ElectionOrganizerWritePermission]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
 
     def get(self,request,name_slug):
         euser = EUser.objects.all()
@@ -300,7 +311,8 @@ class all_eusers(APIView):
 #         return Response(status=status.HTTP_204_NO_CONTENT) 
 
 class all_faqs(APIView):
-    permission_classes = [ElectionOrganizerWritePermission]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
 
     def get(self,request,name_slug):
         faq = Faq.objects.filter(election__name_slug=name_slug)
@@ -321,7 +333,8 @@ class all_faqs(APIView):
 
 
 class faq_detailed(APIView):
-    permission_classes = [ElectionOrganizerWritePermission]
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
 
     def get(self,request,name_slug,id):
         try:

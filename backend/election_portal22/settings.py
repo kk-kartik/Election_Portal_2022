@@ -79,7 +79,10 @@ MIDDLEWARE = [
 
 
 REST_FRAMEWORK={
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        "rest_framework.authentication.BasicAuthentication",
+        'rest_framework.authentication.SessionAuthentication',
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
@@ -170,7 +173,7 @@ LOGIN_REDIRECT_URL = "/elections_api"
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -207,15 +210,22 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
 ALLOWED_HOSTS=["swc.iitg.ac.in","localhost"]
-JWT_AUTH_REFRESH_COOKIE = 'election-token'
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
+###  SET AUTH COOKIE #####
+JWT_AUTH_COOKIE = 'electiontoken'
+JWT_AUTH_HTTPONLY = False
+
+
+JWT_AUTH_SAMESITE = "None"
+JWT_AUTH_SECURE = True
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ORIGIN_ALLOW_ALL = True
     ALLOWED_HOSTS = ["*"]
-    # SIMPLE_JWT["AUTH_COOKIE_SECURE"]=True
+else:
+    JWT_AUTH_SAMESITE = "None"
+    JWT_AUTH_SECURE = True
 
 
 OUTLOOK_CLIENT_ID = env("OUTLOOK_CLIENT_ID")
