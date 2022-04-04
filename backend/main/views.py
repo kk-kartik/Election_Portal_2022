@@ -6,17 +6,21 @@ from rest_framework import status,mixins,generics,viewsets,permissions
 from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly
 from dj_rest_auth.jwt_auth import JWTAuthentication
 from .mixins import ElectionMixin
+from authentication.default_authentication_classes import default_authentication_classes
 
 
 class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EuserSerializer
+    authentication_classes=default_authentication_classes
 
     def get_object(self):
         return self.request.user.euser
 
 class ProfileAPIView(ElectionMixin,generics.GenericAPIView):
     permission_classes=[permissions.IsAuthenticated]
+    authentication_classes=default_authentication_classes
+
     def get(self,request,*args,**kwargs):
         election = self.election
         user = self.request.user
@@ -33,6 +37,7 @@ class ProfileAPIView(ElectionMixin,generics.GenericAPIView):
 class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [ElectionOrganizerWritePermission]
     serializer_class = ImportantdateSerializer
+    authentication_classes=default_authentication_classes
     
     def get_queryset(self):
         return self.election.important_dates.all()
@@ -47,6 +52,7 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [IsOrganizerOrCandidateWriteOnly]
     serializer_class = CandidateSerializer
+    authentication_classes=default_authentication_classes
     
     def get_queryset(self):
         return self.election.candidates_e.all()
@@ -68,6 +74,7 @@ class PositionsViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [ElectionOrganizerWritePermission]
     serializer_class = PositionSerializer
     lookup_field="position_slug"
+    authentication_classes=default_authentication_classes
 
     def get_queryset(self):
         return self.election.positions.all()
@@ -83,6 +90,7 @@ class PositionsViewSet(ElectionMixin,viewsets.ModelViewSet):
 class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [ElectionOrganizerWritePermission]
     serializer_class = FaqSerializer
+    authentication_classes=default_authentication_classes
 
     def get_queryset(self):
         return self.election.faqs.all()
