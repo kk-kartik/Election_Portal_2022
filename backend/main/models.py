@@ -121,6 +121,7 @@ def get_default_witness():
         "cpi":"",
         "roll_number":"",
         "branch": "",
+        "degree":"",
         "department": "",
         "email":"",
         "hostel":"",
