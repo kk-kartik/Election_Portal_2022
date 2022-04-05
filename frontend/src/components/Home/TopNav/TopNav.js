@@ -65,7 +65,6 @@ const TopNav = ({}) => {
   //   onFailure={responseGoogle}
   //   redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
   // />
-  console.log(process.env.REACT_APP_AUTH_REDIRECT_URI);
   let loginComp = (
     <MicrosoftLogin
       clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
@@ -95,7 +94,6 @@ const TopNav = ({}) => {
             if (msalInstance) {
               msalInstance.logout();
             }
-            navigate("/", { replace: true });
           }}
         >
           Logout
