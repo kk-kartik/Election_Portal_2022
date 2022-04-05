@@ -63,7 +63,7 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOrganizerOrCandidateWriteOnly]
-    serializer_class = CandidateOrganizerSerializer
+    serializer_class = CandidateSerializer
     authentication_classes=default_authentication_classes
     
     # def get_serializer_class(self):
