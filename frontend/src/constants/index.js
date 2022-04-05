@@ -15,6 +15,7 @@ export const EDIT_FAQ = "EDIT_FAQ";
 export const DELETE_FAQ = "DELETE_FAQ";
 
 export const GET_USER = "GET_USER";
+export const LOGOUT = "LOGOUT";
 
 // export const BASEURL = "http://localhost:3000/election_portal";
 // export const BASEAPIURL = "http://127.0.0.1:8000";

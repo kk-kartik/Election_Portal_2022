@@ -55,7 +55,7 @@ class EuserSerializer(serializers.ModelSerializer):
 class CandidateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        exclude = ['election',"user","approve"]
+        exclude = ['election',"user"]
 
 class CandidateOrganizerSerializer(serializers.ModelSerializer):
     class Meta:
