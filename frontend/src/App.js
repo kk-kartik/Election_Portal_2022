@@ -6,15 +6,29 @@ import CandidateNominateScreen from "./screens/candidatenominationscreen/Candida
 import RegisterScreen from "./screens/Register/RegisterScreen";
 import CandidatePositionForm from "./screens/CandidatePositionForm/CandidatePositionForm";
 import ElectionScreen from "./screens/election/ElectionScreen";
+import TopNav from "./components/Home/TopNav/TopNav";
+import CandidateNominationScreen from "./screens/pre_election/CandidateNominationScreen";
 
 function Pre() {
   return (
-    <Routes>
-      <Route path="/*" exact element={<PreElectionScreen />} />
-      <Route path="/register" exact element={<RegisterScreen />} />
-      <Route path="/nominate/*" exact element={<CandidateNominateScreen />} />
-      <Route path="/nominate/post" exact element={<CandidatePositionForm />} />
-    </Routes>
+    <div>
+      <TopNav />
+      <Routes>
+        <Route path="/*" exact element={<PreElectionScreen />} />
+        <Route path="/register" exact element={<RegisterScreen />} />
+        <Route path="/nominate/*" exact element={<CandidateNominateScreen />} />
+        <Route
+          path="/nominate/post"
+          exact
+          element={<CandidatePositionForm />}
+        />
+        <Route
+          path="/candidate/:name"
+          exact
+          element={<CandidateNominationScreen />}
+        />
+      </Routes>
+    </div>
   );
 }
 
