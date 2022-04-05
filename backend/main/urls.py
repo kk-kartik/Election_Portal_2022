@@ -13,5 +13,6 @@ urlpatterns = [
     path("<str:position_slug>/candidates",views.PositionCandidatesView.as_view(),name="position_candidates"),
     path("registration/complete/",views.RegistrationCompleteView.as_view(),name="candidate_profile"),
     path("profile/",views.ProfileAPIView.as_view(),name="voter_profile"),
+    path("add_credentials/",views.CredentialCreateAPIView.as_view(),name="credentials_view"),
     path("",include(router.urls))
 ]
