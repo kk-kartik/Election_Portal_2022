@@ -5,7 +5,7 @@ on:
         paths:
             - "backend/**"
         branches:
-            - "deploy"
+            - "main"
 
 jobs:
 
@@ -24,7 +24,7 @@ jobs:
         script: |
             cd /webapps/Election_Portal_2022
             git fetch origin
-            git checkout deploy
+            git checkout main
             git pull
             git status
             cd backend
