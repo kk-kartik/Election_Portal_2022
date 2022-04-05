@@ -34,7 +34,7 @@ const TopNav = ({}) => {
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.auth);
 
-  const authHandler = async (err, data, msal, dispatch) => {
+  const authHandler = async (err, data, msal) => {
     if (!err && data) {
       onMsalInstanceChange(msal);
     }
@@ -51,6 +51,9 @@ const TopNav = ({}) => {
     );
     dispatch(getUser());
     console.log("response", res);
+    if (!res?.data?.user?.registration_complete) {
+      navigate("/register", { replace: true });
+    }
   };
 
   //   let loginComp = <GoogleLogin
@@ -73,7 +76,7 @@ const TopNav = ({}) => {
       tenantUrl={
         "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
       }
-      authCallback={(err, data, msal) => authHandler(err, data, msal, dispatch)}
+      authCallback={(err, data, msal) => authHandler(err, data, msal)}
     />
   );
   if (userData?.first_name) {

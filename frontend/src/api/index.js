@@ -17,14 +17,15 @@ export const AUTH_API = axios.create({
 
 export const fetchUserData = () => API.get("/profile");
 export const verifyLogin = () => AUTH_API.get("/token/verify/");
+export const userRegistration = (data) => API.put("/registration/complete/",data);
 export const logout = () => AUTH_API.get("/logout/");
+
 // Important Dates API
 export const fetchImportantDates = () => API.get("/imp_dates");
 export const addImportantDateAPI = (newDate) =>
   API.post("/imp_dates/", newDate);
 export const editImportantDateAPI = (id, updateDate) =>
   API.put(`/imp_dates/${id}/`, updateDate);
-
 export const deleteImportantDate = (id) => API.delete(`/imp_dates/${id}/`);
 
 // FAQs API
