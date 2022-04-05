@@ -1,5 +1,5 @@
 from rest_framework import permissions
-from .models import Voter
+from .models import Voter,Candidate
 
 class ElectionOrganizerWritePermission(permissions.BasePermission):
     """
