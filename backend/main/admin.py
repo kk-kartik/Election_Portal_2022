@@ -1,9 +1,7 @@
 from django.contrib import admin
 from .models import *
 
-@admin.register(EUser)
-class EUserAdmin(admin.ModelAdmin):
-    list_display = ['name']
+admin.site.register(EUser)
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
@@ -17,9 +15,9 @@ class ElectionAdmin(admin.ModelAdmin):
 class PositionAdmin(admin.ModelAdmin):
     list_display = ['id','title']
 
-@admin.register(Candidate)
-class CandidateAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Candidate._meta.get_fields()]
+admin.site.register(Candidate)
+
+admin.site.register(Witness)
 
 @admin.register(Faq)
 class FAQsAdmin(admin.ModelAdmin):

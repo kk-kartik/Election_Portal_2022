@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 STATUS_CHOICES = (
     ('pending','To be started'),
@@ -14,10 +16,30 @@ NOMINATION_STATUS = (
     ('rejected','Rejected')
 )
 
+TYPE = (
+    ('P','Proposed by'),
+    ('S','Seconded by')
+)
+
 BRANCH = (
-    ('P','To be started'),
-    ('C','Completed'),
-    ('O','Ongoing')
+    ('01', 'CSE'),
+    ('02', 'ECE'),
+    ('03', 'ME'),
+    ('04', 'Civil'),
+    ('05', 'Design'),
+    ('06', 'BSBE'),
+    ('07', 'CL'),
+    ('08', 'EEE'),
+    ('21', 'Physics'),
+    ('22', 'Chemistry'),
+    ('23', 'MNC'),
+    ('41', 'HSS'),
+    ('51', 'Energy'),
+    ('52', 'Environment'),
+    ('53', 'Nano-Tech'),
+    ('54', 'Rural-Tech'),
+    ('55', 'Linguistics'),
+	('61', 'Others'),
 )
 
 DEGREE = (
@@ -46,15 +68,16 @@ HOSTELS = [
 
 class EUser(models.Model):
     name = models.CharField(max_length=100)
-    roll_number = models.CharField(max_length=9,unique=True)
+    roll_number = models.CharField(max_length=9)
     degree = models.CharField(choices=DEGREE,max_length=70)
     hostel = models.CharField(choices=HOSTELS,max_length=50)
     branch = models.CharField(choices=BRANCH,max_length=50)
     email = models.EmailField(unique=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='euser')
+    registration_complete = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return self.name
+        return str(self.id)
 
 class Election(models.Model):
     name = models.CharField(max_length=250)
@@ -87,12 +110,13 @@ class Position(models.Model):
     max_votes = models.PositiveIntegerField() 
     voting_instructions = models.JSONField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='positions')
+    
 
     def __str__(self) -> str:
         return self.title
 
 class Candidate(models.Model):
-    position = models.ForeignKey(Position,null=True,on_delete=models.SET_NULL,related_name='candidates_p')
+    position = models.ForeignKey(Position,on_delete=models.DO_NOTHING,related_name='candidates_p')
     agenda_text = models.JSONField()
     image = models.ImageField(blank=True)
     video = models.URLField()
@@ -100,11 +124,31 @@ class Candidate(models.Model):
     tagline = models.CharField(max_length=500)
     agenda_pdf = models.FileField(blank=True)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='candidates_e')
-    user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='candidates_ids')
+    user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='candidates_ids')
     nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70)
+    cpi = models.CharField(max_length=70)
+    backlogs = models.CharField(max_length=100)
+    active_backlogs = models.CharField(max_length=100)
+    sign = models.FileField(blank=True)
+    date = models.DateField()
+    semester = models.CharField(max_length=70)
+    contact_no = models.IntegerField()
+    room_no = models.CharField(max_length=70)
+    
 
     class Meta:
         unique_together = (('position', 'election', 'user'))
+
+class Witness(models.Model):
+    user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='witness_ids')
+    cpi = models.CharField(max_length=70)
+    sign = models.FileField(blank=True)
+    date = models.DateField()
+    semester = models.CharField(max_length=70)
+    contact_no = models.IntegerField()
+    room_no = models.CharField(max_length=70)
+    type_ps = models.CharField(max_length=70,choices=TYPE)
+    candidate = models.ForeignKey(Candidate,on_delete=models.DO_NOTHING,related_name='witnesses')
 
 class Faq(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='faqs')
@@ -113,7 +157,7 @@ class Faq(models.Model):
 
 class Imporatant_date(models.Model):
     title = models.CharField(max_length=250)
-    date = models.DateTimeField()
+    date = models.DateField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='important_dates')
 
 class Statistic(models.Model):
@@ -121,3 +165,18 @@ class Statistic(models.Model):
     stat_cnt = models.JSONField()
     stat_total = models.JSONField()
     stat_title = models.CharField(max_length=250)
+
+
+class Debate(models.Model):
+    title = models.CharField(max_length=250)
+    debate_time = models.DateTimeField()
+    election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='debates')
+
+@receiver(post_save,sender=User)
+def create_euser(sender,instance,created,*args,**kwargs):
+    if created:
+        euser = EUser.objects.create(
+            user=instance,
+            email=instance.email,
+            name=instance.first_name,
+            roll_number=instance.email)

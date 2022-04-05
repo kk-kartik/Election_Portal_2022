@@ -1,22 +1,78 @@
 import React from "react";
 import styles from "./TopNav.module.css";
-import {Avatar} from "@primer/react";
+import { Avatar } from "@primer/react";
 import LogoSVG from "./logo.svg";
 import GlobeSVG from "./globe.svg";
 import profile from "./profile.svg";
 import dropdown from "./drop.svg";
 import { Link } from "react-router-dom";
+import MicrosoftLogin from "react-microsoft-login";
+import { GoogleLogin } from "react-google-login";
+import axios from "axios";
+import { Dropdown } from "@primer/react";
+
+const responseGoogle = async (data) => {
+  console.log(data);
+  const accessToken = data["accessToken"];
+  const res = await axios.post(
+    `${process.env.REACT_APP_BASEAPIURL}elections_api/auth/social/google/`,
+    {
+      access_token: accessToken,
+    },
+    {
+      withCredentials: true,
+    }
+  );
+};
+const authHandler = async (err, data) => {
+  console.log(data, err);
+  const accessToken = data["accessToken"];
+  const res = await axios.post(
+    `https://swc.iitg.ac.in/elections_api/auth/social/outlook/`,
+    {
+      access_token: accessToken,
+    },
+    {
+      withCredentials: true,
+    }
+  );
+};
+
 const TopNav = (props) => {
-  let loginComp = <div className={`hidden sm:flex`}>Login</div>;
-  if(props.loggedIn === true){
-    loginComp = 
-    <div className={`hidden sm:flex flex-col`}>
-      <div className={`decoration-stone-800 flex items-center`}>
-        Sarath
-        <img src={dropdown} className={`mr-0 ml-auto`}></img>
+  //   let loginComp = <GoogleLogin
+  //   clientId="774598959771-jilp7jr6a3677htqaf1na9adqoj3aolo.apps.googleusercontent.com"
+  //   render={(renderProps) => (
+  //     <button onClick={renderProps.onClick} disabled={renderProps.disabled}>
+  //       <div className={`hidden sm:flex`}>Login</div>
+  //     </button>
+  //   )}
+  //   buttonText="Login"
+  //   onSuccess={responseGoogle}
+  //   onFailure={responseGoogle}
+  //   redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
+  // />
+  console.log(process.env.REACT_APP_AUTH_REDIRECT_URI);
+  let loginComp = (
+    <MicrosoftLogin
+      clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
+      redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
+      authCallback={authHandler}
+      tenantUrl={
+        "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
+      }
+      authCallback={authHandler}
+    />
+  );
+  if (props.loggedIn === true) {
+    loginComp = (
+      <div className={`hidden sm:flex flex-col`}>
+        <div className={`decoration-stone-800 flex items-center`}>
+          Sarath
+          <img src={dropdown} className={`mr-0 ml-auto`}></img>
+        </div>
+        <div className={`decoration-gray-600`}>Candidate</div>
       </div>
-      <div className={`decoration-gray-600`}>Candidate</div>
-    </div>;
+    );
   }
   return (
     <div className={`flex pl-4 pr-4 md:pl-16 md:pr-16 my-3`}>
@@ -28,7 +84,7 @@ const TopNav = (props) => {
       <div className={styles.cont}>
         <div className={styles.btn}>
           <div>
-          <img src={GlobeSVG} />
+            <img src={GlobeSVG} />
           </div>
           <div>EN</div>
         </div>

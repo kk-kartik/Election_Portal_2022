@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 import { BASEURL } from "../../../constants";
+import { SideNavList } from "./constants";
 
 const Sidebar = ({ children }) => {
   const [hamburger, setHamburger] = useState(false);
@@ -29,9 +30,13 @@ const Sidebar = ({ children }) => {
           </Link>
         </div>
         <nav className="text-white text-base font-semibold pt-3">
-          <Link to={`/admin/importantdates`} className={linkSidebar}>
-            Important Dates
-          </Link>
+          {SideNavList.map((data) => {
+            return (
+              <Link to={`/admin/${data.url}`} className={linkSidebar}>
+                {data.name}
+              </Link>
+            );
+          })}
         </nav>
       </aside>
 
@@ -59,15 +64,17 @@ const Sidebar = ({ children }) => {
 
           <nav
             className={
-              hamburger
-                ? "flex flex-col pt-4"
-                : "hidden flex-col pt-4"
+              hamburger ? "flex flex-col pt-4" : "hidden flex-col pt-4"
             }
           >
             <>
-              <Link to={`/admin/importantdates`} className={linkDropdown}>
-                Important Dates
-              </Link>
+              {SideNavList.map((data) => {
+                return (
+                  <Link to={`/admin/${data.url}`} className={linkDropdown}>
+                    {data.name}
+                  </Link>
+                );
+              })}
             </>
             {authBtn}
           </nav>

@@ -39,6 +39,7 @@ DEBUG = True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    # 'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -79,11 +80,18 @@ MIDDLEWARE = [
 
 
 REST_FRAMEWORK={
-    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        "rest_framework.authentication.BasicAuthentication",
+    ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+REST_AUTH_SERIALIZERS = {
+   "USER_DETAILS_SERIALIZER":"authentication.serializers.CustomUserDetailSerializer"
+}
+
 ROOT_URLCONF = 'election_portal22.urls'
 
 TEMPLATES = [
@@ -101,6 +109,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ACCOUNT_LOGOUT_ON_GET = True
 
 WSGI_APPLICATION = 'election_portal22.wsgi.application'
 
@@ -159,18 +169,18 @@ MEDIA_ROOT = BASE_DIR/"media"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
+LOGOUT_REDIRECT_URL = "/elections_portal"
 # REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
 
 
-LOGIN_REDIRECT_URL = "/elections_api"
+LOGIN_REDIRECT_URL = "/elections_portal"
 
 
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
@@ -207,15 +217,22 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
 ALLOWED_HOSTS=["swc.iitg.ac.in","localhost"]
-JWT_AUTH_REFRESH_COOKIE = 'election-token'
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
 
+###  SET AUTH COOKIE #####
+JWT_AUTH_COOKIE = 'electiontoken'
+JWT_AUTH_HTTPONLY = False
+
+CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+JWT_AUTH_SAMESITE = "None"
+JWT_AUTH_SECURE = True
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ORIGIN_ALLOW_ALL = True
     ALLOWED_HOSTS = ["*"]
-    # SIMPLE_JWT["AUTH_COOKIE_SECURE"]=True
+else:
+    JWT_AUTH_SAMESITE = "None"
+    JWT_AUTH_SECURE = True
 
 
 OUTLOOK_CLIENT_ID = env("OUTLOOK_CLIENT_ID")
@@ -244,3 +261,6 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+
+ACCOUNT_EMAIL_VERIFICATION="none"
