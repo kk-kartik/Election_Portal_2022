@@ -7,13 +7,16 @@ const RegisterScreen = () => {
   const [register, setRegister] = useState(false);
   const myclick = ()=>{
     setRegister(true);
-    alert("You have been successfully registered!");
-    window.location.href='/election_portal';
+    if(document.getElementById("name").value.length == 0 || document.getElementById("rollno").value.length == 0){
+      alert("Please enter details");
+    }
+    else{
+      alert("You have been successfully registered!");
+      window.location.href='/election_portal';
+    }
   }
   
   return (
-    
-      
     <div className="">
          <Helmet>
                 <style>{'body { background-color: #f8fafe; }'}</style>
