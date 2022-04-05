@@ -271,6 +271,7 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
 #         return Response({f'{position_name or email} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
         
 
+<<<<<<< HEAD
 #     def delete(self, request,name_slug, format=None):
 #         email = request.query_params.get('email')
 #         position_name = request.query_params.get('position_name')
@@ -286,6 +287,24 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 # class all_eusers(APIView):
 #     permission_classes = [ElectionOrganizerWritePermission]
+=======
+    def delete(self, request,name_slug, format=None):
+        email = request.query_params.get('email')
+        position_name = request.query_params.get('position_name')
+        if position_name and email:
+            try:
+                candidate = Candidate.objects.get(election__name_slug=name_slug,user__email=email,position__title=position_name)
+                serialized_candidate = CandidatePostSerializer(candidate)
+                candidate.delete()
+                return Response({"Sucess":"Data Deleted"})
+            except Exception as e:
+                return Response({f'{position_name or email} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({f'{position_name or email} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
+
+class all_eusers(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
+>>>>>>> 49e5d2078911a43811489645912ca8fec7fa9bce
 
 #     def get(self,request,name_slug):
 #         euser = EUser.objects.all()
@@ -379,3 +398,61 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
 #                 return Response({f'{id} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
 #         faq.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT) 
+<<<<<<< HEAD
+=======
+
+class all_faqs(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
+
+    def get(self,request,name_slug):
+        faq = Faq.objects.filter(election__name_slug=name_slug)
+        serialized_faq = FaqSerializer(faq,many=True)
+        return Response(serialized_faq.data)
+
+    def post(self,request,name_slug):       
+        try:
+            return response_with_election(name_slug,request.data,FaqSerializer)
+        except Exception as e:
+            return Response({f'{name_slug} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+        # faq = FaqSerializer(data=request.data)
+        # if faq.is_valid():
+        #     faq.save()
+        #     return Response(faq.data)
+        return Response(faq.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class faq_detailed(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
+
+    def get(self,request,name_slug,id):
+        try:
+            faq = Faq.objects.get(pk=id,election__name_slug=name_slug)
+        except Exception as e:
+                return Response({f'{id} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
+        serialized_faq = FaqSerializer(faq)
+        return Response(serialized_faq.data)
+
+    def patch(self, request,name_slug,id,format=None):
+        try:
+            return response_with_id_and_election(request.data,FaqSerializer,Faq,name_slug,pk=id,election__name_slug=name_slug)
+        # try:
+        #     faq = Faq.objects.get(pk=id,election__name_slug=name_slug)
+        #     serialized_faq = FaqSerializer(faq, data=request.data,partial=True)
+        #     if serialized_faq.is_valid():
+        #         serialized_faq.save()
+        #         return Response(serialized_faq.data)
+        except Exception as e:
+                return Response({f'{id} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serialized_faqstatus=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request,name_slug,id, format=None):
+        try:
+            faq = Faq.objects.get(pk=id,election__name_slug=name_slug)
+        except Exception as e:
+                return Response({f'{id} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
+        faq.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT) 
+>>>>>>> 49e5d2078911a43811489645912ca8fec7fa9bce

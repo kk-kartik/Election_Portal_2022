@@ -11,4 +11,16 @@ export const VALIDAPI = axios.create({
 });
 
 // Important Dates API
-export const fetchImportantDates = () => API.get("/sgc2022/imp_dates");
+export const fetchImportantDates = () => API.get("/imp_dates");
+export const addImportantDateAPI = (newDate) =>
+  API.post("/imp_dates/", newDate);
+export const editImportantDateAPI = (id, updateDate) =>
+  API.put(`/imp_dates/${id}/`, updateDate);
+
+export const deleteImportantDate = (id) => API.delete(`/imp_dates/${id}/`);
+
+// FAQs API
+export const fetchFAQs = () => API.get("/faqs");
+export const addFAQ = (newFAQ) => API.post("/faqs/", newFAQ);
+export const editFAQ = (id, updateFAQ) => API.put(`/faqs/${id}/`, updateFAQ);
+export const deleteFAQ = (id) => API.delete(`/faqs/${id}/`);
