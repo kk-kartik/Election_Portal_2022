@@ -1,4 +1,4 @@
-import {useEffect} from "react"
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { BASEURL } from "./constants";
 import PreElectionScreen from "./screens/pre_election/PreElectionScreen";
@@ -10,10 +10,10 @@ import ElectionScreen from "./screens/election/ElectionScreen";
 import TopNav from "./components/Home/TopNav/TopNav";
 import CandidateNominationScreen from "./screens/pre_election/CandidateNominationScreen";
 import { useDispatch, useSelector } from "react-redux";
-import {getUser} from "./actions/auth";
+import { getUser } from "./actions/auth";
 import useAuthCheck from "./hooks/useAuthCheck";
 
-function Pre() {
+function Pre({}) {
   return (
     <div>
       <TopNav />
@@ -37,15 +37,15 @@ function Pre() {
 }
 
 function App() {
-  const userData = useSelector((store)=>store.auth);
+  const userData = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const isLoggedIn = useAuthCheck();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getUser());
-  },[]);
+  }, []);
 
-  console.log("sss",isLoggedIn);
+  console.log("sss", userData);
 
   return (
     <BrowserRouter basename={BASEURL}>

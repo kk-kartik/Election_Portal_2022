@@ -10,6 +10,8 @@ import MicrosoftLogin from "react-microsoft-login";
 import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import { Dropdown } from "@primer/react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../../actions/auth";
 
 const responseGoogle = async (data) => {
   console.log(data);
@@ -24,7 +26,7 @@ const responseGoogle = async (data) => {
     }
   );
 };
-const authHandler = async (err, data) => {
+const authHandler = async (err, data, dispatch) => {
   console.log(data, err);
   const accessToken = data["accessToken"];
   const res = await axios.post(
@@ -36,9 +38,14 @@ const authHandler = async (err, data) => {
       withCredentials: true,
     }
   );
+  dispatch(getUser());
+  console.log("response", res);
 };
 
-const TopNav = (props) => {
+const TopNav = ({}) => {
+  const dispatch = useDispatch();
+  const userData = useSelector((store) => store.auth);
+
   //   let loginComp = <GoogleLogin
   //   clientId="774598959771-jilp7jr6a3677htqaf1na9adqoj3aolo.apps.googleusercontent.com"
   //   render={(renderProps) => (
@@ -56,21 +63,24 @@ const TopNav = (props) => {
     <MicrosoftLogin
       clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
       redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
-      authCallback={authHandler}
+      //authCallback={() => authHandler(dispatch)}
       tenantUrl={
         "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
       }
-      authCallback={authHandler}
+      authCallback={(err, data) => authHandler(err, data, dispatch)}
     />
   );
-  if (props.loggedIn === true) {
+  if (userData?.first_name) {
     loginComp = (
       <div className={`hidden sm:flex flex-col`}>
         <div className={`decoration-stone-800 flex items-center`}>
-          Sarath
-          <img src={dropdown} className={`mr-0 ml-auto`}></img>
+          <Avatar src={profile} size={38} />
+          {userData.first_name}
+          <img src={dropdown} className={`mr-0 ml-auto`} alt="d" />
         </div>
-        <div className={`decoration-gray-600`}>Candidate</div>
+        <div className={`decoration-gray-600`}>
+          {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
+        </div>
       </div>
     );
   }
@@ -89,7 +99,6 @@ const TopNav = (props) => {
           <div>EN</div>
         </div>
         <div className={styles.login}>
-          <Avatar src={profile} size={38} />
           {loginComp}
           <svg
             className={`flex sm:hidden`}
