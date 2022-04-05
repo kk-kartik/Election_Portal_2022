@@ -63,19 +63,13 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOrganizerOrCandidateWriteOnly]
-    serializer_class = CandidateReadSerializer
+    serializer_class = CandidateOrganizerSerializer
     authentication_classes=default_authentication_classes
     
-    def get_serializer_class(self):
-        if self.action == ["create"]:
-            try:
-                is_organizer = Voter.objects.filter(election_organizers__id=self.election.id,user__id=self.request.user.euser.id).exists()
-                if is_organizer:
-                    return CandidateOrganizerSerializer
-                return CandidateSerializer
-            except:
-                return CandidateSerializer
-        return CandidateReadSerializer
+    # def get_serializer_class(self):
+    #     if self.action == ["create"]:
+    #         return CandidateOrganizerSerializer
+    #     return CandidateReadSerializer
     
     def get_queryset(self):
         return self.election.candidates_e.all()
@@ -148,4 +142,3 @@ class CredentialCreateAPIView(Election,generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = CredentialSerializer
     authentication_classes=default_authentication_classes
-    
