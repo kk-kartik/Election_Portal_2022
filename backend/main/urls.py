@@ -16,6 +16,7 @@ urlpatterns = [
     # path('all_eusers/', views.all_eusers.as_view(), name='all_eusers'),
     # path('all_faqs/', views.all_faqs.as_view(), name='all_faqs'),
     # path('faq_detailed/<int:id>/', views.faq_detailed.as_view(), name='faq_detailed'),
+    path("<str:position_slug>/candidates",views.PositionCandidatesView.as_view(),name="position_candidates"),
     path("registration/complete/",views.RegistrationCompleteView.as_view(),name="candidate_profile"),
     path("profile/",views.ProfileAPIView.as_view(),name="voter_profile"),
     path("",include(router.urls))

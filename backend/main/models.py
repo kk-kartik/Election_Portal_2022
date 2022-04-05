@@ -74,6 +74,7 @@ class EUser(models.Model):
     branch = models.CharField(choices=BRANCH,max_length=50)
     email = models.EmailField(unique=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='euser')
+    registration_complete = models.BooleanField(default=False)
 
     def __str__(self) -> str:
         return str(self.id)
@@ -132,7 +133,7 @@ class Candidate(models.Model):
     sign = models.FileField(blank=True)
     date = models.DateField()
     semester = models.CharField(max_length=70)
-    contact_no = models.IntegerField(max_length=10)
+    contact_no = models.IntegerField()
     room_no = models.CharField(max_length=70)
     
 
@@ -145,7 +146,7 @@ class Witness(models.Model):
     sign = models.FileField(blank=True)
     date = models.DateField()
     semester = models.CharField(max_length=70)
-    contact_no = models.IntegerField(max_length=10)
+    contact_no = models.IntegerField()
     room_no = models.CharField(max_length=70)
     type_ps = models.CharField(max_length=70,choices=TYPE)
     candidate = models.ForeignKey(Candidate,on_delete=models.DO_NOTHING,related_name='witnesses')

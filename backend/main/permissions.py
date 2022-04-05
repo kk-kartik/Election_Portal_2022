@@ -8,11 +8,14 @@ class ElectionOrganizerWritePermission(permissions.BasePermission):
     message = 'Invalid Access! This API can be accessed only by one of the organizers of the election.'
 
     def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
+        if view.action in ["list","retrieve"]:
             return True
-
-        is_organizer = Voter.objects.filter(election_organizers__id=view.election.id,user__id=request.user.euser.id).exists()
-        return is_organizer
+        try:
+            is_organizer = Voter.objects.filter(election_organizers__id=view.election.id,user__id=request.user.euser.id).exists()
+            return is_organizer
+        except Exception as err:
+            print(repr(err))
+            return False
 
 
 class IsOrganizerOrCandidateWriteOnly(permissions.BasePermission):
@@ -22,18 +25,25 @@ class IsOrganizerOrCandidateWriteOnly(permissions.BasePermission):
     message = 'Invalid Access! This API can be accessed only by one of the organizers of the election.'
 
     def has_object_permission(self, request, view,obj):
-        if request.method in permissions.SAFE_METHODS:
-            return True
-            
-        user = request.user
-        election=view.election
-        is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
-        if is_organizer:
+        if view.action in ["list","retrieve"]:
             return True
         
-        euser = user.euser
-        candidates = Candidate.objects.filter(election=election,user=euser)
-        return candidates.filter(pk=obj.id).exists()
+        user = request.user
+        election=view.election
+        try:
+            is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
+            if is_organizer:
+                return Tru
+        except Exception as err:
+            print(repr(err))
+            
+        try:
+            euser = user.euser
+            candidates = Candidate.objects.filter(election=election,user=euser)
+            return candidates.filter(pk=obj.id).exists()
+        except Exception as err:
+            print(repr(err))
+            return False
         
         
 

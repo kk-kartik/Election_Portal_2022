@@ -87,6 +87,11 @@ REST_FRAMEWORK={
         'rest_framework.permissions.AllowAny',
     ]
 }
+
+REST_AUTH_SERIALIZERS = {
+   "USER_DETAILS_SERIALIZER":"authentication.serializers.CustomUserDetailSerializer"
+}
+
 ROOT_URLCONF = 'election_portal22.urls'
 
 TEMPLATES = [
@@ -104,6 +109,8 @@ TEMPLATES = [
         },
     },
 ]
+
+ACCOUNT_LOGOUT_ON_GET = True
 
 WSGI_APPLICATION = 'election_portal22.wsgi.application'
 

@@ -9,6 +9,15 @@ from .mixins import ElectionMixin
 from authentication.default_authentication_classes import default_authentication_classes
 
 
+class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
+    serializer_class=CandidateSerializer
+    permission_classes=[permissions.AllowAny]
+    authentication_classes =default_authentication_classes
+    
+    def get_queryset(self):
+        position = Position.objects.filter(id=self.kwargs.get("position_id"))
+        return Candidate.objects.filter(election=self.election)
+
 class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = EuserSerializer
@@ -16,6 +25,9 @@ class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
 
     def get_object(self):
         return self.request.user.euser
+    
+    def perform_update(self,serializer):
+        serializer.save(registration_complete=True)
 
 class ProfileAPIView(ElectionMixin,generics.GenericAPIView):
     permission_classes=[permissions.IsAuthenticated]
@@ -35,7 +47,7 @@ class ProfileAPIView(ElectionMixin,generics.GenericAPIView):
         
 
 class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [ElectionOrganizerWritePermission]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
     serializer_class = ImportantdateSerializer
     authentication_classes=default_authentication_classes
     
@@ -50,12 +62,12 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [IsOrganizerOrCandidateWriteOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOrganizerOrCandidateWriteOnly]
     serializer_class = CandidateReadSerializer
     authentication_classes=default_authentication_classes
     
     def get_serializer_class(self):
-        if self.action =="create":
+        if self.action in ["create","update"]:
             return CandidateSerializer
         return CandidateReadSerializer
     
@@ -76,10 +88,15 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class PositionsViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [ElectionOrganizerWritePermission]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
     serializer_class = PositionSerializer
     lookup_field="postion_slug"
     authentication_classes=default_authentication_classes
+
+    def get_serializer_class(self):
+        if self.action in ["create","update"]:
+            return PositionSerializer
+        return PositionReadSerializer
 
     def get_queryset(self):
         return self.election.positions.all()
@@ -93,7 +110,7 @@ class PositionsViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [ElectionOrganizerWritePermission]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
     serializer_class = FaqSerializer
     authentication_classes=default_authentication_classes
 
@@ -271,7 +288,6 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
 #         return Response({f'{position_name or email} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
         
 
-<<<<<<< HEAD
 #     def delete(self, request,name_slug, format=None):
 #         email = request.query_params.get('email')
 #         position_name = request.query_params.get('position_name')
@@ -287,24 +303,6 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 # class all_eusers(APIView):
 #     permission_classes = [ElectionOrganizerWritePermission]
-=======
-    def delete(self, request,name_slug, format=None):
-        email = request.query_params.get('email')
-        position_name = request.query_params.get('position_name')
-        if position_name and email:
-            try:
-                candidate = Candidate.objects.get(election__name_slug=name_slug,user__email=email,position__title=position_name)
-                serialized_candidate = CandidatePostSerializer(candidate)
-                candidate.delete()
-                return Response({"Sucess":"Data Deleted"})
-            except Exception as e:
-                return Response({f'{position_name or email} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
-        return Response({f'{position_name or email} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
-
-class all_eusers(APIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
->>>>>>> 49e5d2078911a43811489645912ca8fec7fa9bce
 
 #     def get(self,request,name_slug):
 #         euser = EUser.objects.all()
@@ -398,61 +396,3 @@ class all_eusers(APIView):
 #                 return Response({f'{id} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
 #         faq.delete()
 #         return Response(status=status.HTTP_204_NO_CONTENT) 
-<<<<<<< HEAD
-=======
-
-class all_faqs(APIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
-
-    def get(self,request,name_slug):
-        faq = Faq.objects.filter(election__name_slug=name_slug)
-        serialized_faq = FaqSerializer(faq,many=True)
-        return Response(serialized_faq.data)
-
-    def post(self,request,name_slug):       
-        try:
-            return response_with_election(name_slug,request.data,FaqSerializer)
-        except Exception as e:
-            return Response({f'{name_slug} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-        # faq = FaqSerializer(data=request.data)
-        # if faq.is_valid():
-        #     faq.save()
-        #     return Response(faq.data)
-        return Response(faq.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class faq_detailed(APIView):
-    authentication_classes = [SessionAuthentication, BasicAuthentication]
-    permission_classes = [IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
-
-    def get(self,request,name_slug,id):
-        try:
-            faq = Faq.objects.get(pk=id,election__name_slug=name_slug)
-        except Exception as e:
-                return Response({f'{id} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
-        serialized_faq = FaqSerializer(faq)
-        return Response(serialized_faq.data)
-
-    def patch(self, request,name_slug,id,format=None):
-        try:
-            return response_with_id_and_election(request.data,FaqSerializer,Faq,name_slug,pk=id,election__name_slug=name_slug)
-        # try:
-        #     faq = Faq.objects.get(pk=id,election__name_slug=name_slug)
-        #     serialized_faq = FaqSerializer(faq, data=request.data,partial=True)
-        #     if serialized_faq.is_valid():
-        #         serialized_faq.save()
-        #         return Response(serialized_faq.data)
-        except Exception as e:
-                return Response({f'{id} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serialized_faqstatus=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request,name_slug,id, format=None):
-        try:
-            faq = Faq.objects.get(pk=id,election__name_slug=name_slug)
-        except Exception as e:
-                return Response({f'{id} does not exist!'}, status=status.HTTP_400_BAD_REQUEST)
-        faq.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT) 
->>>>>>> 49e5d2078911a43811489645912ca8fec7fa9bce
