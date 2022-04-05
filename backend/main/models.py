@@ -122,7 +122,10 @@ def get_default_witness():
         "roll_number":"",
         "branch": "",
         "department": "",
-        "email":""
+        "email":"",
+        "hostel":"",
+        "room_no":"",
+        "semester":""
     }
 
 class Candidate(models.Model):
