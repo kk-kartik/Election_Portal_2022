@@ -9,20 +9,16 @@ const AboutScreen = () => {
   };
   return (
     <>
-      <div className="flex">
-        <div className="w-3/12">
+      <div className="flex flex-col	md:flex-row ">
+        <div className="w-full md:w-3/12">
           <RegisterForm />
         </div>
         <div className="w-full">
           <PicIntroUpload />
         </div>
       </div>
-
-      <br />
-      <br />
       <button className={styles.button} onClick={myclick}>
-        {" "}
-        Save{" "}
+        Save
       </button>
     </>
   );
