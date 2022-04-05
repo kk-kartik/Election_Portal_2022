@@ -14,6 +14,12 @@ export const ADD_FAQ = "ADD_FAQ";
 export const EDIT_FAQ = "EDIT_FAQ";
 export const DELETE_FAQ = "DELETE_FAQ";
 
+//Debates Constants
+export const GET_DEBATES = "GET_DEBATES";
+export const ADD_DEBATE = "ADD_DEBATE";
+export const EDIT_DEBATE = "EDIT_DEBATE";
+export const DELETE_DEBATE = "DELETE_DEBATE";
+
 export const GET_USER = "GET_USER";
 export const LOGOUT = "LOGOUT";
 

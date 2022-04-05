@@ -33,3 +33,12 @@ export const fetchFAQs = () => API.get("/faqs");
 export const addFAQ = (newFAQ) => API.post("/faqs/", newFAQ);
 export const editFAQ = (id, updateFAQ) => API.put(`/faqs/${id}/`, updateFAQ);
 export const deleteFAQ = (id) => API.delete(`/faqs/${id}/`);
+
+//Debates API
+export const fetchDebates = () => API.get("/debates");
+export const addDebate = (newDebate) => API.post("/debates/", newDebate);
+export const editDebate = (id, updateDebate) =>
+  API.put(`/debates/${id}/`, updateDebate);
+export const deleteDebate = (id) => API.delete(`/debates/${id}/`);
+
+  

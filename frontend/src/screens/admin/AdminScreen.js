@@ -8,6 +8,9 @@ import EditImportantDateScreen from "./ImportantDates/EditImportantDateScreen";
 import FAQScreen from "./FAQ/FAQScreen";
 import AddFAQScreen from "./FAQ/AddFAQScreen";
 import EditFAQScreen from "./FAQ/EditFAQScreen";
+import DebatesScreen from "./Debates/DebateScreen";
+import AddDebateScreen from "./Debates/AddDebateScreen";
+import EditDebateScreen from "./Debates/EditDebateScreen";
 
 const AdminScreen = () => {
   return (
@@ -29,6 +32,23 @@ const AdminScreen = () => {
             path={`/importantdates/:id`}
             element={<EditImportantDateScreen />}
           />
+          <Route
+            exact
+            path={`/debates`}
+            element={<DebatesScreen />}
+          />
+          <Route
+            exact
+            path={`/debates/add`}
+            element={<AddDebateScreen />}
+          />
+          <Route
+            exact
+            path={`/debates/:id`}
+            element={<EditDebateScreen />}
+          />
+          
+
           <Route exact path={`/faq`} element={<FAQScreen />} />
           <Route exact path={`/faq/add`} element={<AddFAQScreen />} />
           <Route exact path={`/faq/:id`} element={<EditFAQScreen />} />
