@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./TopNav.module.css";
 import { Avatar } from "@primer/react";
 import LogoSVG from "./logo.svg";
 import GlobeSVG from "./globe.svg";
 import profile from "./profile.svg";
 import dropdown from "./drop.svg";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import MicrosoftLogin from "react-microsoft-login";
 import { GoogleLogin } from "react-google-login";
 import axios from "axios";
 import { Dropdown } from "@primer/react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../../actions/auth";
+import { getUser, logout } from "../../../actions/auth";
+import { useNavigate } from "react-router-dom";
 
 const responseGoogle = async (data) => {
   console.log(data);
@@ -26,25 +27,31 @@ const responseGoogle = async (data) => {
     }
   );
 };
-const authHandler = async (err, data, dispatch) => {
-  console.log(data, err);
-  const accessToken = data["accessToken"];
-  const res = await axios.post(
-    `https://swc.iitg.ac.in/elections_api/auth/social/outlook/`,
-    {
-      access_token: accessToken,
-    },
-    {
-      withCredentials: true,
-    }
-  );
-  dispatch(getUser());
-  console.log("response", res);
-};
 
 const TopNav = ({}) => {
+  const [msalInstance, onMsalInstanceChange] = useState();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.auth);
+
+  const authHandler = async (err, data, msal, dispatch) => {
+    if (!err && data) {
+      onMsalInstanceChange(msal);
+    }
+
+    const accessToken = data["accessToken"];
+    const res = await axios.post(
+      `https://swc.iitg.ac.in/elections_api/auth/social/outlook/`,
+      {
+        access_token: accessToken,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch(getUser());
+    console.log("response", res);
+  };
 
   //   let loginComp = <GoogleLogin
   //   clientId="774598959771-jilp7jr6a3677htqaf1na9adqoj3aolo.apps.googleusercontent.com"
@@ -67,7 +74,7 @@ const TopNav = ({}) => {
       tenantUrl={
         "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
       }
-      authCallback={(err, data) => authHandler(err, data, dispatch)}
+      authCallback={(err, data, msal) => authHandler(err, data, msal, dispatch)}
     />
   );
   if (userData?.first_name) {
@@ -80,6 +87,18 @@ const TopNav = ({}) => {
         </div>
         <div className={`decoration-gray-600`}>
           {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
+        </div>
+        <div
+          className={`decoration-gray-600`}
+          onClick={() => {
+            dispatch(logout());
+            if (msalInstance) {
+              msalInstance.logout();
+            }
+            navigate("/", { replace: true });
+          }}
+        >
+          Logout
         </div>
       </div>
     );

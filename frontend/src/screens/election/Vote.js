@@ -104,6 +104,8 @@ function Vote() {
       />
       ,
       <MicrosoftLogin
+        prompt="select_account"
+        useLocalStorageCache={true}
         clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
         redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
         authCallback={authHandler}
