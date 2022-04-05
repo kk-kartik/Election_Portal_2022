@@ -22,7 +22,7 @@ const PreElectionScreen = () => {
     <>
       <div>
         {/* Pre-election navbar */}
-        <TopNav />
+
         <BlockchainMessage />
         {/* Routes Navbar */}
         <div className="mt-5 ml-1 mr-1 md:ml-16 md:mr-10">

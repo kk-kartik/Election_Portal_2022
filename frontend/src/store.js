@@ -3,7 +3,8 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import importantDates from "./reducers/importantDates";
 import FAQ from "./reducers/faq";
-const reducer = combineReducers({ importantDates, FAQ });
+import auth from "./reducers/auth";
+const reducer = combineReducers({ importantDates, FAQ, auth });
 
 const initialState = {};
 const middleware = [thunk];

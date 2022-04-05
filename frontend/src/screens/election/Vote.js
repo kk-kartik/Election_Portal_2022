@@ -110,7 +110,7 @@ function Vote() {
         tenantUrl={
           "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
         }
-        authCallback={authHandler}
+        //authCallback={authHandler}
       />
       <form onSubmit={handleSubmit}>
         <label>Enter your vote</label>

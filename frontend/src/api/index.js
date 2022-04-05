@@ -10,6 +10,14 @@ export const VALIDAPI = axios.create({
   baseURL: `${VALIDAPIURL}`,
 });
 
+export const AUTH_API = axios.create({
+  baseURL: `https://swc.iitg.ac.in/elections_api/auth`,
+  withCredentials: true,
+});
+
+export const fetchUserData = () => API.get("/profile");
+export const verifyLogin = () => AUTH_API.get("/token/verify/");
+
 // Important Dates API
 export const fetchImportantDates = () => API.get("/imp_dates");
 export const addImportantDateAPI = (newDate) =>

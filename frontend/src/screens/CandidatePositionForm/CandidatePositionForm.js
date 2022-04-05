@@ -45,7 +45,10 @@ const CandidatePositionForm = () => {
               Post:{" "}
             </label>{" "}
             <br />
-            <select id="degree" className={` ${styles.input} md:w-11/12 w-full`}>
+            <select
+              id="degree"
+              className={` ${styles.input} md:w-11/12 w-full`}
+            >
               <option value="vp">Vice President</option>
               <option value="president">President</option>
               <option value="phd">PhD</option>
