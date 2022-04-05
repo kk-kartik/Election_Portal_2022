@@ -12,6 +12,7 @@ import axios from "axios";
 import { Dropdown } from "@primer/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../../actions/auth";
+import { useNavigate } from "react-router-dom";
 
 const responseGoogle = async (data) => {
   console.log(data);
@@ -26,7 +27,7 @@ const responseGoogle = async (data) => {
     }
   );
 };
-const authHandler = async (err, data, dispatch) => {
+const authHandler = async (err, data, dispatch, navigate) => {
   console.log(data, err);
   const accessToken = data["accessToken"];
   const res = await axios.post(
@@ -40,12 +41,15 @@ const authHandler = async (err, data, dispatch) => {
   );
   dispatch(getUser());
   console.log("response", res);
+  if (!res?.data?.user?.registration_complete) {
+    navigate("/register", { replace: true });
+  }
 };
 
 const TopNav = ({}) => {
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.auth);
-
+  let navigate = useNavigate();
   //   let loginComp = <GoogleLogin
   //   clientId="774598959771-jilp7jr6a3677htqaf1na9adqoj3aolo.apps.googleusercontent.com"
   //   render={(renderProps) => (
@@ -67,7 +71,7 @@ const TopNav = ({}) => {
       tenantUrl={
         "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
       }
-      authCallback={(err, data) => authHandler(err, data, dispatch)}
+      authCallback={(err, data) => authHandler(err, data, dispatch, navigate)}
     />
   );
   if (userData?.first_name) {

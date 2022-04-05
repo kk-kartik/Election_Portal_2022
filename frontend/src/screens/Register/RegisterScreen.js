@@ -19,6 +19,7 @@ const RegisterScreen = () => {
   return (
     <div className="">
       <Helmet>
+        <title>Registration SGCE</title>
         <style>{"body { background-color: #f8fafe; }"}</style>
       </Helmet>
       {/* <TopNav /> */}
@@ -27,12 +28,11 @@ const RegisterScreen = () => {
       >
         <h1 className="text-4xl pb-4 mb-4 "> Complete Your Registration </h1>
         <RegisterForm />
-        <br />
-        <br />
+        {/* <br />
         <button className={styles.button} onClick={myclick}>
           {" "}
           Continue{" "}
-        </button>
+        </button> */}
       </div>
     </div>
   );

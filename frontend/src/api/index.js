@@ -17,6 +17,7 @@ export const AUTH_API = axios.create({
 
 export const fetchUserData = () => API.get("/profile");
 export const verifyLogin = () => AUTH_API.get("/token/verify/");
+export const userRegistration = (data) => API.put("/registration/complete/",data);
 
 // Important Dates API
 export const fetchImportantDates = () => API.get("/imp_dates");
