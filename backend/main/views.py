@@ -67,8 +67,14 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     authentication_classes=default_authentication_classes
     
     def get_serializer_class(self):
-        if self.action in ["create","update"]:
-            return CandidateSerializer
+        if self.action == ["create"]:
+            try:
+                is_organizer = Voter.objects.filter(election_organizers__id=self.election.id,user__id=self.request.user.euser.id).exists()
+                if is_organizer:
+                    return CandidateOrganizerSerializer
+                return CandidateSerializer
+            except:
+                return CandidateSerializer
         return CandidateReadSerializer
     
     def get_queryset(self):

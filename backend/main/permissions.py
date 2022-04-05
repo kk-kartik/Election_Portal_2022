@@ -25,7 +25,7 @@ class IsOrganizerOrCandidateWriteOnly(permissions.BasePermission):
     message = 'Invalid Access! This API can be accessed only by one of the organizers of the election.'
 
     def has_object_permission(self, request, view,obj):
-        if view.action in ["list","retrieve"]:
+        if view.action in ["list","retrieve","create"]:
             return True
         
         user = request.user
@@ -33,7 +33,7 @@ class IsOrganizerOrCandidateWriteOnly(permissions.BasePermission):
         try:
             is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
             if is_organizer:
-                return Tru
+                return True
         except Exception as err:
             print(repr(err))
             

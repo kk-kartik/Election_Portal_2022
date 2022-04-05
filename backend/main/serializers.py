@@ -48,19 +48,16 @@ class EuserSerializer(serializers.ModelSerializer):
         model = EUser
         fields =['id','name','roll_number','degree','hostel','branch','email']
 
+
 class CandidateSerializer(serializers.ModelSerializer):
-    # witnesses = WitnessSerialzer(many=True)
     class Meta:
         model = Candidate
-        exclude = ['election',"user"]
-    
-    # def create(self,validated_data,*args, **kwargs):
-    #     witness = validated_data.pop("witness",None)
-    #     instance = super(CandidateSerializer,self).create(validated_data, *args, **kwargs)
-    #     for w in witness:
-    #         witness_obj = WitnessSerialzer(w,context=self.context)
-    #         witness_obj.save(candidate=instance)
-    #     return instance
+        exclude = ['election',"user","approve"]
+
+class CandidateOrganizerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Candidate
+        fields = "__all__"
     
 
 
