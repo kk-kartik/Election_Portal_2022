@@ -4,7 +4,7 @@ import TopNav from "../../components/Home/TopNav/TopNav";
 import ProfileNavBar from "../../components/Nominate/ProfileNavBar/ProfileNavBar";
 import AboutScreen from "./AboutScreen";
 import AgendasScreen from "./AgendasScreen";
-import AnalyticsScreen from "./AnalyticsScreen";
+import WitnessesScreen from "./WitnessesScreen";
 import CredentialsScreen from "./CredentialsScreen";
 import VerificationScreen from "./VerificationScreen";
 import VideoScreen from "./VideoScreen";
@@ -31,7 +31,7 @@ const CandidateNominateScreen = () => {
           <Route path="credentials" exact element={<CredentialsScreen />} />
           <Route path="video" exact element={<VideoScreen />} />
           <Route path="verification" exact element={<VerificationScreen />} />
-          <Route path="analytics" exact element={<AnalyticsScreen />} />
+          <Route path="witnesses" exact element={<WitnessesScreen />} />
         </Route>
       </Routes>
     </>

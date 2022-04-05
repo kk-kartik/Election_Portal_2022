@@ -4,8 +4,8 @@ import Eye from "./eye.svg"
 const ProfileNavBar = () => {
     return(
         <RouteNavbar 
-        text={["About","Agendas","Credentials","Video","Verification", "Analytics"]}
-        routes={["about", "agendas", "credentials", "video","verification","analytics"]}
+        text={["About","Agendas","Credentials","Video","Verification", "Witnesses"]}
+        routes={["about", "agendas", "credentials", "video","verification","witnesses"]}
         mobWidth="w-full"
       >
       <div className="flex">
