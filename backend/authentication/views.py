@@ -12,10 +12,11 @@ from django.db import transaction
 
 class TokenVerifyView(GenericAPIView):
     authentication_classes = [JWTCookieAuthentication]
-    permission_classes = [IsAuthenticated]
 
     def get(self,request):
-        return Response({"ok":True,"detail":"User is logged in!"},status=status.HTTP_200_OK)
+        if request.user.is_authenticated:
+            return Response({"isLoggedIn":True,"detail":"User is logged in!"},status=status.HTTP_200_OK)
+        return Response({"isLoggedIn":False,"detail":"User not logged in!"},status=status.HTTP_200_OK)
 
 @method_decorator(transaction.atomic,name="dispatch")
 class GoogleLogin(SocialLoginView): # if you want to use Implicit Grant, use this
