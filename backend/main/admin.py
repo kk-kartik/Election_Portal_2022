@@ -17,7 +17,8 @@ class PositionAdmin(admin.ModelAdmin):
 
 admin.site.register(Candidate)
 
-admin.site.register(Witness)
+admin.site.register(Credentials)
+admin.site.register(Debate)
 
 @admin.register(Faq)
 class FAQsAdmin(admin.ModelAdmin):

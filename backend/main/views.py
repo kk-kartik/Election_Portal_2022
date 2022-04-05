@@ -142,3 +142,10 @@ class DebatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     
     def perform_update(self,serializer):
          return serializer.save(election=self.election)
+
+
+class CredentialCreateAPIView(Election,generics.CreateAPIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = CredentialSerializer
+    authentication_classes=default_authentication_classes
+    

@@ -115,40 +115,45 @@ class Position(models.Model):
     def __str__(self) -> str:
         return self.title
 
+def get_default_witness():
+    return {
+        "name":"",
+        "cpi":"",
+        "roll_number":"",
+        "branch": "",
+        "department": "",
+        "email":""
+    }
+
 class Candidate(models.Model):
     position = models.ForeignKey(Position,on_delete=models.DO_NOTHING,related_name='candidates_p')
     agenda_text = models.JSONField()
-    image = models.ImageField(blank=True)
+    image = models.ImageField(upload_to="candidate_profile/",blank=True)
     video = models.URLField()
     about = models.TextField()
-    tagline = models.CharField(max_length=500)
-    agenda_pdf = models.FileField(blank=True)
+    tagline = models.CharField(max_length=500,null=True,blank=True)
+    agenda_pdf = models.FileField(upload_to="agenda/",blank=True)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='candidates_e')
     user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='candidates_ids')
     nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70)
     cpi = models.CharField(max_length=70)
-    backlogs = models.CharField(max_length=100)
-    active_backlogs = models.CharField(max_length=100)
+    backlogs = models.CharField(max_length=100,null=True,blank=True)
+    active_backlogs = models.CharField(max_length=100,null=True,blank=True)
     sign = models.FileField(blank=True)
-    date = models.DateField()
+    date = models.DateField(null=True,blank=True)
     semester = models.CharField(max_length=70)
     contact_no = models.IntegerField()
     room_no = models.CharField(max_length=70)
+    proposed_by = models.JSONField(null=True,blank=True,default=get_default_witness)
+    seconded_by = models.JSONField(null=True,blank=True,default=get_default_witness)
+    credentials = models.JSONField(null=True,blank=True,default=dict)
+    proposed_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
+    seconded_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     
-
     class Meta:
         unique_together = (('position', 'election', 'user'))
 
-class Witness(models.Model):
-    user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='witness_ids')
-    cpi = models.CharField(max_length=70)
-    sign = models.FileField(blank=True)
-    date = models.DateField()
-    semester = models.CharField(max_length=70)
-    contact_no = models.IntegerField()
-    room_no = models.CharField(max_length=70)
-    type_ps = models.CharField(max_length=70,choices=TYPE)
-    candidate = models.ForeignKey(Candidate,on_delete=models.DO_NOTHING,related_name='witnesses')
+
 
 class Faq(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='faqs')
@@ -171,6 +176,11 @@ class Debate(models.Model):
     title = models.CharField(max_length=250)
     debate_time = models.DateTimeField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='debates')
+
+
+class Credentials(models.Model):
+    name=models.TextField(null=True,blank=True)
+    file = models.FileField(upload_to="credentials/")
 
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):
