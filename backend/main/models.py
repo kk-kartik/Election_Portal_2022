@@ -110,7 +110,6 @@ class Position(models.Model):
     max_votes = models.PositiveIntegerField() 
     voting_instructions = models.JSONField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='positions')
-    postion_slug = models.SlugField(max_length=100,unique=True)
     
 
     def __str__(self) -> str:
@@ -167,6 +166,11 @@ class Statistic(models.Model):
     stat_total = models.JSONField()
     stat_title = models.CharField(max_length=250)
 
+
+class Debate(models.Model):
+    title = models.CharField(max_length=250)
+    debate_time = models.DateTimeField()
+    election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='debates')
 
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):

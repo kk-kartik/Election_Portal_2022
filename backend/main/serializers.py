@@ -13,6 +13,11 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         exclude=["password"]
 
+class DebateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Debate
+        exclude=["election"]
+
 class ImportantdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Imporatant_date
