@@ -4,7 +4,17 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import importantDates from "./reducers/importantDates";
 import FAQ from "./reducers/faq";
 import auth from "./reducers/auth";
-const reducer = combineReducers({ importantDates, FAQ, auth });
+import positions from "./reducers/positions";
+import debates from "./reducers/debates";
+import candidate from "./reducers/candidate";
+const reducer = combineReducers({
+  importantDates,
+  FAQ,
+  auth,
+  positions,
+  candidate,
+  debates,
+});
 
 const initialState = {};
 const middleware = [thunk];

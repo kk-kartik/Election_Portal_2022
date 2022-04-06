@@ -161,7 +161,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/elections_api/static/'
-MEDIA_URL = "/ekections_api/media/"
+MEDIA_URL = "/elections_api/media/"
 STATICFILES_DIRS=[BASE_DIR/"static"]
 STATIC_ROOT = BASE_DIR/"assets"
 MEDIA_ROOT = BASE_DIR/"media"

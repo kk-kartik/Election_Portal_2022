@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { BASEURL } from "./constants";
+import { BASEURL, SET_CANDIDATE_DATA } from "./constants";
 import PreElectionScreen from "./screens/pre_election/PreElectionScreen";
 import AdminScreen from "./screens/admin/AdminScreen";
 import CandidateNominateScreen from "./screens/candidatenominationscreen/CandidateNominateScreen";
@@ -12,6 +12,7 @@ import CandidateNominationScreen from "./screens/pre_election/CandidateNominatio
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./actions/auth";
 import useAuthCheck from "./hooks/useAuthCheck";
+import LoginScreen from "./screens/loginScreen/LoginScreen";
 
 function Pre({}) {
   return (
@@ -21,6 +22,7 @@ function Pre({}) {
         <Route path="/*" exact element={<PreElectionScreen />} />
         <Route path="/register" exact element={<RegisterScreen />} />
         <Route path="/nominate/*" exact element={<CandidateNominateScreen />} />
+        <Route path="/login" exact element={<LoginScreen />} />
         <Route
           path="/nominate/post"
           exact
@@ -38,6 +40,7 @@ function Pre({}) {
 
 function App() {
   const userData = useSelector((store) => store.auth);
+  const candidate = useSelector((store) => store.candidate);
   const dispatch = useDispatch();
   const isLoggedIn = useAuthCheck();
 
@@ -45,14 +48,24 @@ function App() {
     dispatch(getUser());
   }, []);
 
-  console.log("sss", userData);
-
+  useEffect(() => {
+    console.log(userData);
+    if (
+      userData &&
+      Object.keys(candidate).length == 0 &&
+      userData.candidates.length != 0
+    ) {
+      console.log("hi");
+      dispatch({ type: SET_CANDIDATE_DATA, data: userData.candidates[0] });
+    }
+  }, [userData]);
   return (
     <BrowserRouter basename={BASEURL}>
       <Routes>
         <Route path="/*" exact element={<Pre />} />
         <Route path="/election/*" exact element={<ElectionScreen />} />
         <Route path="/admin/*" exact element={<AdminScreen />} />
+        <Route path="/login" exact element={<LoginScreen />} />
         {/* Route of the VOTING PORTAL */}
       </Routes>
     </BrowserRouter>

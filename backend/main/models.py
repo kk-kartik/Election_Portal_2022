@@ -139,7 +139,7 @@ class Candidate(models.Model):
     agenda_pdf = models.FileField(upload_to="agenda/",blank=True)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='candidates_e')
     user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='candidates_ids')
-    nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70)
+    nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70,default="pending")
     cpi = models.CharField(max_length=70,null=True,blank=True)
     backlogs = models.CharField(max_length=100,null=True,blank=True)
     active_backlogs = models.CharField(max_length=100,null=True,blank=True)
@@ -153,6 +153,7 @@ class Candidate(models.Model):
     credentials = models.JSONField(null=True,blank=True,default=dict)
     proposed_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     seconded_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
+    nomination_complete = models.BooleanField(default=False)
     
     class Meta:
         unique_together = (('position', 'election', 'user'))

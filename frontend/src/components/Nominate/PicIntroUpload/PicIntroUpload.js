@@ -3,19 +3,10 @@ import { useState, useEffect } from "react";
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css'
 
-const App = () => {
-  const [uploadImage, setUploadImage] = useState(null);
-  const [imageURL, setImageURL] = useState(null);
-  const [crop, setCrop] = useState({aspect: 4/3});
-  useEffect(() => {
-    if (uploadImage) {
-      setImageURL(URL.createObjectURL(uploadImage));
-    } else {
-      setImageURL(null);
-    }
-  }, [uploadImage]);
+const App = ({ uploadImage, setUploadImage, setIntro, imageURL, intro }) => {
+    const [crop, setCrop] = useState({aspect: 4/3});
   return (
-    <div className="p-3 md:m-10 mt-0">
+    <div className="p-3 m-6 mt-0">
       <div className="font-bold">Profile Pic : </div>
       <div
         className="flex justify-center align-center items-center border-gray-400 border-2 p-3"
@@ -38,14 +29,14 @@ const App = () => {
           {imageURL && (
             <>
               <div className="flex-col justify-center align-center items-center">
-                <div className="flex-col items-stretch">
+                {/* <div className="flex-col items-stretch">
                   <button
                     className="mt-3 mb-2 px-4 hover:bg-gray-400 rounded text-center border-2 border-gray-700 mx-10 font-bold"
                     onClick={(e) => setUploadImage(null)}
                   >
                     Click to remove
                   </button>
-                </div>
+                </div> */}
                 <div className="mx-10">
                   {/* <img src={imageURL} alt="" className="h-24" /> */}
                   <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
@@ -64,6 +55,8 @@ const App = () => {
           placeholder="Write 300 words of introduction..."
           name="intro"
           className="w-full h-full"
+          defaultValue={intro}
+          onChange={(e) => setIntro(e.target.value)}
         ></textarea>
       </div>
     </div>

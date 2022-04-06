@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./TopNav.module.css";
 import { Avatar } from "@primer/react";
 import LogoSVG from "./logo.svg";
@@ -9,15 +9,15 @@ import { Link } from "react-router-dom";
 import MicrosoftLogin from "react-microsoft-login";
 import { GoogleLogin } from "react-google-login";
 import axios from "axios";
-import { Dropdown } from "@primer/react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../../actions/auth";
+import { getUser, logout } from "../../../actions/auth";
+import { useNavigate } from "react-router-dom";
+import { ELECTIONAPI } from "../../../constants";
 
 const responseGoogle = async (data) => {
-  console.log(data);
   const accessToken = data["accessToken"];
   const res = await axios.post(
-    `${process.env.REACT_APP_BASEAPIURL}elections_api/auth/social/google/`,
+    `${ELECTIONAPI}/auth/social/google/`,
     {
       access_token: accessToken,
     },
@@ -25,26 +25,43 @@ const responseGoogle = async (data) => {
       withCredentials: true,
     }
   );
-};
-const authHandler = async (err, data, dispatch) => {
-  console.log(data, err);
-  const accessToken = data["accessToken"];
-  const res = await axios.post(
-    `https://swc.iitg.ac.in/elections_api/auth/social/outlook/`,
-    {
-      access_token: accessToken,
-    },
-    {
-      withCredentials: true,
-    }
-  );
-  dispatch(getUser());
-  console.log("response", res);
 };
 
 const TopNav = ({}) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.auth);
+  const candidate = useSelector((store) => store.candidate);
+  const [loginClicked, setLoginClicked] = useState(false);
+
+  const authHandler = async (err, data) => {
+    if (err) {
+      alert("Something went wrong!Please check your connection");
+      return;
+    }
+    if (loginClicked) {
+      const accessToken = data["accessToken"];
+      try {
+        const res = await axios.post(
+          `${ELECTIONAPI}/auth/social/outlook/`,
+          {
+            access_token: accessToken,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        dispatch(getUser());
+
+        if (!res?.data?.user?.registration_complete) {
+          navigate("/register", { replace: true });
+        }
+      } catch (err) {
+        alert("Something went wrong!Please check your connection");
+        return;
+      }
+    }
+  };
 
   //   let loginComp = <GoogleLogin
   //   clientId="774598959771-jilp7jr6a3677htqaf1na9adqoj3aolo.apps.googleusercontent.com"
@@ -58,48 +75,74 @@ const TopNav = ({}) => {
   //   onFailure={responseGoogle}
   //   redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
   // />
-  console.log(process.env.REACT_APP_AUTH_REDIRECT_URI);
-  let loginComp = (
-    <MicrosoftLogin
-      clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
-      redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
-      //authCallback={() => authHandler(dispatch)}
-      tenantUrl={
-        "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
-      }
-      authCallback={(err, data) => authHandler(err, data, dispatch)}
-    />
-  );
-  if (userData?.first_name) {
-    loginComp = (
-      <div className={`hidden sm:flex flex-col`}>
-        <div className={`decoration-stone-800 flex items-center`}>
-          <Avatar src={profile} size={38} />
-          {userData.first_name}
-          <img src={dropdown} className={`mr-0 ml-auto`} alt="d" />
+  let loginComp = () => {
+    if (userData?.first_name) {
+      return (
+        <div className={`hidden sm:flex flex-col`}>
+          <div className={`decoration-stone-800 flex items-center`}>
+            <Avatar src={profile} size={38} />
+            <div className="ml-2">
+              <div className="flex flex-row">
+                <span className="text-sm font-medium">
+                  {userData.first_name}
+                </span>
+                <img
+                  src={dropdown}
+                  className="ml-1 scale-125 cursor-pointer"
+                  alt="d"
+                />
+              </div>
+              <span className="text-sm text-gray-800">
+                {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
+              </span>
+            </div>
+          </div>
+          <div className={`decoration-gray-600`}>
+            {candidate?.id ? "Candidate" : "Voter"}
+          </div>
+          <div
+            className={`decoration-gray-600`}
+            onClick={(e) => {
+              dispatch(logout());
+              setLoginClicked(false);
+              navigate("/");
+            }}
+          >
+            Logout
+          </div>
         </div>
-        <div className={`decoration-gray-600`}>
-          {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
-        </div>
+      );
+    }
+    return (
+      <div onClick={(e) => setLoginClicked(true)}>
+        <MicrosoftLogin
+          clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
+          redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
+          //authCallback={() => authHandler(dispatch)}
+          tenantUrl={
+            "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
+          }
+          authCallback={authHandler}
+        />
       </div>
     );
-  }
+  };
   return (
     <div className={`flex pl-4 pr-4 md:pl-16 md:pr-16 my-3`}>
       <div>
         <Link to="/">
-          <img src={LogoSVG} />
+          <img src={LogoSVG} alt="logo" />
         </Link>
       </div>
       <div className={styles.cont}>
-        <div className={styles.btn}>
+        {/* <div className={styles.btn}>
           <div>
-            <img src={GlobeSVG} />
+            <img src={GlobeSVG} alt="logo"/>
           </div>
           <div>EN</div>
-        </div>
+        </div> */}
         <div className={styles.login}>
-          {loginComp}
+          {loginComp()}
           <svg
             className={`flex sm:hidden`}
             width="16"

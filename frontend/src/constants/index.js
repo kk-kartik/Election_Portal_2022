@@ -1,5 +1,6 @@
 export const BASEURL = process.env.REACT_APP_BASEURL;
 export const BASEAPIURL = process.env.REACT_APP_BASEAPIURL;
+export const ELECTIONAPI = process.env.REACT_APP_ELECTIONSAPI;
 export const VALIDAPIURL = process.env.REACT_APP_VALIDAPIURL;
 
 // Important Dates Constants
@@ -14,7 +15,18 @@ export const ADD_FAQ = "ADD_FAQ";
 export const EDIT_FAQ = "EDIT_FAQ";
 export const DELETE_FAQ = "DELETE_FAQ";
 
+//Candidate consts
+export const SET_CANDIDATE_DATA = "SET_CANDIDATE_DATA";
+//POS constants
+export const GET_POS = "GET_POS";
+//Debates Constants
+export const GET_DEBATES = "GET_DEBATES";
+export const ADD_DEBATE = "ADD_DEBATE";
+export const EDIT_DEBATE = "EDIT_DEBATE";
+export const DELETE_DEBATE = "DELETE_DEBATE";
+
 export const GET_USER = "GET_USER";
+export const LOGOUT = "LOGOUT";
 
 // export const BASEURL = "http://localhost:3000/election_portal";
 // export const BASEAPIURL = "http://127.0.0.1:8000";

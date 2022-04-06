@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from "./Upload.module.css";
 import doc from "./doc.svg";
 import UploadField from "./UploadField";
@@ -10,16 +10,16 @@ const Upload = (props) => {
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
-    props.handleFile(fileUploaded);
+    props.handleFile("proof", fileUploaded);
   };
   const [credentials, setCredentials] = useState([]);
   const onCLick = (e) => {
     e.preventDefault();
-    let credential = <UploadField/>;
-    setCredentials((credentials)=>{
-     return [...credentials, credential];
+    let credential = <UploadField handleFile={props.handleFile} />;
+    setCredentials((credentials) => {
+      return [...credentials, credential];
     });
-  }
+  };
   return (
     <div>
       <div className={`w-full md:w-3/5 ${styles.container}`}>
@@ -45,11 +45,12 @@ const Upload = (props) => {
           />
         </div>
       </div>
-      <div>
-        {credentials}
-      </div>
+      <div>{credentials}</div>
       <div className="pt-8">
-        <button className={`px-5 text-white ${styles.credbutton}`} onClick={onCLick}>
+        <button
+          className={`px-5 text-white ${styles.credbutton}`}
+          onClick={onCLick}
+        >
           {" "}
           Add Credentials{" "}
         </button>
