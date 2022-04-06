@@ -45,7 +45,7 @@ const CandidatesScreen = () => {
                 candidates.map((data, idx) => {
                   return (
                     <tr key={idx}>
-                      <td className="text-left py-3 px-4">{data?.title}</td>
+                      <td className="text-left py-3 px-4">{data?.user.name}</td>
                       <td className="text-left py-3 px-4">
                         <span>{data?.proposed_by.name}</span><br/>
                         <span>{data?.proposed_by.roll_number}</span>
