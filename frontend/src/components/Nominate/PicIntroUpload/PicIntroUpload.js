@@ -1,7 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css'
 
 const App = ({ uploadImage, setUploadImage, setIntro, imageURL, intro }) => {
+    const [crop, setCrop] = useState({aspect: 4/3});
   return (
     <div className="p-3 m-6 mt-0">
       <div className="font-bold">Profile Pic : </div>
@@ -35,7 +38,10 @@ const App = ({ uploadImage, setUploadImage, setIntro, imageURL, intro }) => {
                   </button>
                 </div> */}
                 <div className="mx-10">
-                  <img src={imageURL} alt="" className="h-24" />
+                  {/* <img src={imageURL} alt="" className="h-24" /> */}
+                  <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
+                    <img src={imageURL} />
+                  </ReactCrop>
                 </div>
               </div>
             </>
