@@ -13,15 +13,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./actions/auth";
 import useAuthCheck from "./hooks/useAuthCheck";
 import LoginScreen from "./screens/loginScreen/LoginScreen";
+import RegistrationRoute from "./custom-routes/RegistrationRoute";
+import NominationRoute from "./custom-routes/NominationRoutes";
 
-function Pre({}) {
+function Pre() {
   return (
     <div>
       <TopNav />
       <Routes>
         <Route path="/*" exact element={<PreElectionScreen />} />
-        <Route path="/register" exact element={<RegisterScreen />} />
-        <Route path="/nominate/*" exact element={<CandidateNominateScreen />} />
+        <Route
+          path="/register"
+          exact
+          element={
+            <RegistrationRoute>
+              <RegisterScreen />
+            </RegistrationRoute>
+          }
+        />
+        <Route
+          path="/nominate/*"
+          exact
+          element={
+            <NominationRoute>
+              <CandidateNominateScreen />
+            </NominationRoute>
+          }
+        />
         <Route path="/login" exact element={<LoginScreen />} />
         <Route
           path="/nominate/post"
@@ -43,6 +61,8 @@ function App() {
   const candidate = useSelector((store) => store.candidate);
   const dispatch = useDispatch();
   const isLoggedIn = useAuthCheck();
+
+  console.log("APP ", isLoggedIn);
 
   useEffect(() => {
     dispatch(getUser());

@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Upload.module.css";
 import doc from "./doc.svg";
+import del from "./delete.svg";
 const UploadField = (props) => {
   const hiddenFileInput = React.useRef(null);
   const fileNameRef = React.useRef(null);
@@ -40,6 +41,10 @@ const UploadField = (props) => {
                 <p className="pl-2">Upload </p>
               </div>
             </button>
+            <button className="p-4" onClick={props.credDelete}>
+              <img src={del} />
+            </button>
+      
             <input
               type="file"
               ref={hiddenFileInput}

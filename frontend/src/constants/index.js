@@ -17,6 +17,11 @@ export const DELETE_FAQ = "DELETE_FAQ";
 
 //Candidate consts
 export const SET_CANDIDATE_DATA = "SET_CANDIDATE_DATA";
+
+//Candidate Admin
+export const GET_CANDIDATE_DATA = "GET_CANDIDATE_DATA";
+export const EDIT_CANDIDATE_DATA = "EDIT_CANDIDATE_DATA";
+
 //POS constants
 export const GET_POS = "GET_POS";
 //Debates Constants
