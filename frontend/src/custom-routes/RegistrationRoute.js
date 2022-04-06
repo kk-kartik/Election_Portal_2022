@@ -7,7 +7,6 @@ const RegistrationRoute = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("yahn",isRegistered);
     if (isRegistered) {
       navigate("/", { replace: true });
     }
