@@ -33,7 +33,7 @@ const TopNav = ({}) => {
   const userData = useSelector((store) => store.auth);
   const candidate = useSelector((store) => store.candidate);
   const [loginClicked, setLoginClicked] = useState(false);
-
+  const [dropClick, setDropClick] = useState(false);
   const authHandler = async (err, data) => {
     if (err) {
       alert("Something went wrong!Please check your connection");
@@ -75,13 +75,16 @@ const TopNav = ({}) => {
   //   onFailure={responseGoogle}
   //   redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
   // />
+  const dropdownListener = (e) => {
+    setDropClick(!dropClick);
+  }
   let loginComp = () => {
     if (userData?.first_name) {
       return (
         <div className={`hidden sm:flex flex-col`}>
           <div className={`decoration-stone-800 flex items-center`}>
             <Avatar src={profile} size={38} />
-            <div className="ml-2">
+            <div className="ml-2 relative">
               <div className="flex flex-row">
                 <span className="text-sm font-medium">
                   {userData.first_name}
@@ -90,23 +93,25 @@ const TopNav = ({}) => {
                   src={dropdown}
                   className="ml-1 scale-125 cursor-pointer"
                   alt="d"
+                  onClick={dropdownListener}
                 />
               </div>
               <span className="text-sm text-gray-800">
                 {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
               </span>
+              <div
+                className={`decoration-gray-600 absolute font-bold bg-red-100 p-3 ${dropClick ? 'flex' : 'hidden'}`}
+                onClick={(e) => {
+                  dispatch(logout());
+                  setLoginClicked(false);
+                  navigate("/");
+                }}
+              >
+                Logout
+              </div>
             </div>
           </div>
-          <div
-            className={`decoration-gray-600`}
-            onClick={(e) => {
-              dispatch(logout());
-              setLoginClicked(false);
-              navigate("/");
-            }}
-          >
-            Logout
-          </div>
+          
         </div>
       );
     }

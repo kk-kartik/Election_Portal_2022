@@ -8,8 +8,8 @@ const AboutScreen = () => {
   return (
     <>
       <Register/>
-      <Dates />
-      <Debates />
+      {/* <Dates /> */}
+      {/* <Debates /> */}
     </>
   );
 };

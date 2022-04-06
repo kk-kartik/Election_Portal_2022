@@ -33,8 +33,8 @@ const VideoScreen = () => {
     embedId = CheckURL(videoRef.current.value);
     console.log(embedId);
     const data = { video: videoRef.current.value };
-
     updateNomination(data, "/nominate/witnesses");
+    setError(null);
   };
   return (
     <>
