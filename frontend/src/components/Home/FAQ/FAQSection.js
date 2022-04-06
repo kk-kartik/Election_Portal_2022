@@ -1,5 +1,4 @@
 import React, {useEffect} from "react";
-import { FAQData } from "./FAQData";
 import FAQCard from "./FAQCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getFaq, deleteFAQ } from "../../../actions/faq";
