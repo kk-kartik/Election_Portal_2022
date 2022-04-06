@@ -3,20 +3,31 @@ import styles from "./Register.module.css";
 import RegisterSVG from "./RegisterSVG";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 const Register = () => {
   let navigate = useNavigate();
-  const candidate = useSelector((store) => store.candidate);
+  const userData = useSelector((store) => store.auth);
+
   const routeChange = () => {
-    let path = `register`;
+    let path = ""; 
+    if(!userData){
+      path = `/login`
+    }else{
+      path = `/register`;
+    }
     navigate(path);
   };
+
   const routeChange2 = () => {
     let path = "";
-    if (candidate && candidate.id) {
+    if(!userData){
+      path = "/login"
+    }else if (userData && userData.candidates.length) {
       path = "/nominate/about";
     } else path = `/nominate/post`;
     navigate(path);
   };
+
   return (
     <div className={`${styles.cont} w-full md:w-4/6`}>
       <h1 className={styles.regText}>Register</h1>
@@ -24,14 +35,20 @@ const Register = () => {
         <div className={`${styles.reg}`}>
           <span>Register for the Gymkhana Elections to cast your votes</span>
           <div className={styles.btns}>
-            <button className={`${styles.regBtn}`} onClick={routeChange}>
-              Register Now
-            </button>
+            {!userData && !userData?.euser?.registration_complete && (
+              <button
+                className={`${styles.regBtn}`}
+                onClick={routeChange}
+              >
+                Register Now
+              </button>
+            )}
+
             <button
               className={`${styles.nomBtn} hidden md:block bg-coolGray-50`}
               onClick={routeChange2}
             >
-              {candidate?.id ? "My Nomination" : "Nominate"}
+              {userData?.candidates.length ? "My Nomination" : "Nominate"}
             </button>
           </div>
         </div>

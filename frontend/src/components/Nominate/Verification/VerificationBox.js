@@ -25,7 +25,7 @@ const VerificationBox = () => {
   };
 
   return (
-    <div className={`w-9/12 ${styles.main} pt-6 pl-6 pr-6 pb-6`}>
+    <div className={`w-full md:w-9/12 ${styles.main} pt-6 pl-6 pr-6 pb-6`}>
       <div className="flex flex-wrap">
         <Tile
           svg={postSVG}

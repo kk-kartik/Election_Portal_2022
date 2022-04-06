@@ -7,6 +7,7 @@ import auth from "./reducers/auth";
 import positions from "./reducers/positions";
 import debates from "./reducers/debates";
 import candidate from "./reducers/candidate";
+import candidates from "./reducers/candidates";
 const reducer = combineReducers({
   importantDates,
   FAQ,
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   positions,
   candidate,
   debates,
+  candidates,
 });
 
 const initialState = {};
