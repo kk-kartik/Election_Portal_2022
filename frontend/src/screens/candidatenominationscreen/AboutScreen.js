@@ -80,6 +80,7 @@ const AboutScreen = () => {
             imageURL={imageURL || convertoUrl(candidate?.image)}
             uploadImage={uploadImage}
             setUploadImage={setUploadImage}
+            setImageURL={setImageURL}
             intro={intro || candidate?.about}
           />
         </div>

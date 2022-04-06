@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as RiIcons from "react-icons/ri";
 
-const FAQCard = ({ item, index }) => {
+const FAQCard = (props) => {
   const [answerOpen, setAnswer] = useState(false);
 
   const toggleAnswer = () => setAnswer(!answerOpen);
@@ -18,7 +18,7 @@ const FAQCard = ({ item, index }) => {
             : { "margin-bottom": "0px", transition: "all 0.3s ease-out" }
         }
       >
-        <div>{item.question}</div>
+        <div>{props.question}</div>
         {answerOpen ? (
           <div>
             <RiIcons.RiArrowUpSFill />
@@ -37,7 +37,7 @@ const FAQCard = ({ item, index }) => {
             : { maxHeight: "0" }
         }
       >
-        {item.answer}
+        {props.answer}
       </div>
     </div>
   );
