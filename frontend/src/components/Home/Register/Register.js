@@ -20,7 +20,9 @@ const Register = () => {
 
   const routeChange2 = () => {
     let path = "";
-    if (userData && userData.candidates.length) {
+    if(!userData){
+      path = "/login"
+    }else if (userData && userData.candidates.length) {
       path = "/nominate/about";
     } else path = `/nominate/post`;
     navigate(path);
