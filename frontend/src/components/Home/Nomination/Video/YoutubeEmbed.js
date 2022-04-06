@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./YoutubeEmbed.module.css"
 const YoutubeEmbed = ({ embedId }) => (
   <div className="video-responsive">
+      {embedId!='' && 
     <iframe
     className={styles.frame}
       width="853"
@@ -12,7 +13,7 @@ const YoutubeEmbed = ({ embedId }) => (
       allow="clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       allowFullScreen
       title="Embedded youtube"
-    />
+    /> }
   </div>
 );
 

@@ -40,8 +40,10 @@ export const fetchPos = () => API.get("/positions");
 
 //Candidate APIS
 export const candidateRegistration = (data) => API.post("/candidates/", data);
-export const updateCandidateData = (id, updateFAQ) =>
-  API.patch(`/candidates/${id}/`, updateFAQ);
+export const updateCandidateData = (id, data) =>
+  API.patch(`/candidates/${id}/`, data);
+export const getCandidateData = () =>
+  API.get(`/candidates/`);
 
 //credentials
 export const uploadCredentials = (data) => API.post("/add_credentials/", data);
