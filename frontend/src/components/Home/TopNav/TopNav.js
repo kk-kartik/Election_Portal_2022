@@ -97,7 +97,7 @@ const TopNav = ({}) => {
               </span>
             </div>
           </div>
-          {/* <div
+          <div
             className={`decoration-gray-600`}
             onClick={(e) => {
               dispatch(logout());
@@ -106,7 +106,7 @@ const TopNav = ({}) => {
             }}
           >
             Logout
-          </div> */}
+          </div>
         </div>
       );
     }
