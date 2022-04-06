@@ -26,12 +26,16 @@ class ImportantdateSerializer(serializers.ModelSerializer):
         model = Imporatant_date
         fields =["title","date","id"]
 
+class EuserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EUser
+        fields ="__all__"
+
 class CandidateReadSerializer(serializers.ModelSerializer):
-    # witnesses = WitnessSerialzer(many=True)
+    user = EuserSerializer(required=False)
     class Meta:
         model = Candidate
         fields = "__all__"
-        depth = 1
 
 class PositionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,12 +48,6 @@ class PositionReadSerializer(serializers.ModelSerializer):
         model = Position
         fields = "__all__"
         depth=1
-
-
-class EuserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = EUser
-        fields ="__all__"
 
 
 class CandidateSerializer(serializers.ModelSerializer):

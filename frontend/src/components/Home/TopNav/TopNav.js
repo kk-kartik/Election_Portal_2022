@@ -97,9 +97,6 @@ const TopNav = ({}) => {
               </span>
             </div>
           </div>
-          <div className={`decoration-gray-600`}>
-            {candidate?.id ? "Candidate" : "Voter"}
-          </div>
           <div
             className={`decoration-gray-600`}
             onClick={(e) => {

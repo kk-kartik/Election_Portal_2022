@@ -66,10 +66,10 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     serializer_class = CandidateSerializer
     authentication_classes=default_authentication_classes
     
-    # def get_serializer_class(self):
-    #     if self.action == ["create"]:
-    #         return CandidateOrganizerSerializer
-    #     return CandidateReadSerializer
+    def get_serializer_class(self):
+        if self.action in ["create",'update']:
+            return CandidateSerializer
+        return CandidateReadSerializer
     
     def get_queryset(self):
         try:
