@@ -7,7 +7,7 @@ import register from "../../../assets/Register.png";
 const StepList = () => {
   return (
     <>
-      <div className="w-8/12 p-6 shadow-lg m-3 overflow-x-auto">
+      <div className="md:w-8/12 p-6 shadow-lg m-3 overflow-x-auto">
         <div className="m-3 grid grid-rows-2 grid-flow-col gap-6 place-items-center	">
           <div className="text-center mx-auto	col-span-9 md:col-span-6">
             <img src={register} alt="hello" />
@@ -37,10 +37,10 @@ const StepList = () => {
           <div className="col-span-9 md:col-span-8"></div>
         </div>
         <div className="gap-3 flex">
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button class="bg-[#2B00FF] hover:bg-[#2B00AA] font-family-roboto text-white font-medium py-2 px-4 rounded">
             Apply Now
           </button>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          <button class=" hover:bg-gray-300 font-medium py-2 px-10 rounded border">
             Learn More
           </button>
         </div>
