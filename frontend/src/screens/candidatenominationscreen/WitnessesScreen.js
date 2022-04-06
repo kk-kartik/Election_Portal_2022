@@ -5,38 +5,29 @@ import WitnessDataForm from "../Register/WitnessDataForm";
 import styles from "../Register/RegisterScreen.module.css";
 import { useNavigate } from "react-router-dom";
 import { SET_CANDIDATE_DATA } from "../../constants";
+import useNominate from "../../hooks/useNominate";
+import SaveAndNext from "./SaveAndNext";
 
 const WitnessesScreen = () => {
-  const candidate = useSelector((store) => store.candidate);
+  const {
+    candidate,
+    error,
+    message,
+    updateNomination,
+    loading,
+  } = useNominate();
+
   const [proposedByData, setProposedyData] = useState(null);
   const [secondedByData, setSecondedByData] = useState(null);
   const [signs, setSigns] = useState({});
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [error, setError] = useState(null);
   const submitData = async () => {
-    if (!candidate) {
-      navigate("/", { replace: true });
-    }
-
-    try {
-      dispatch({
-        type: SET_CANDIDATE_DATA,
-        data: {
-          ...signs,
-          proposed_by: proposedByData || candidate.proposed_by,
-          seconded_by: secondedByData || candidate.seconded_by,
-        },
-      });
-      navigate("/nominate/verification");
-    } catch (err) {
-      console.log(err);
-      setError(
-        err.response?.data?.detail ||
-          "Something went wrong!Please try logging in again."
-      );
-    }
+    const data = {
+      ...signs,
+      proposed_by: proposedByData || candidate.proposed_by,
+      seconded_by: secondedByData || candidate.seconded_by,
+    };
+    updateNomination(data, "/nominate/verification");
   };
 
   const onChange = (e) => {
@@ -91,12 +82,12 @@ const WitnessesScreen = () => {
           />
         </div>
       </div>
-      <div className="p-6">
-        <p className="text-sm">Apply changes before proceeding</p>
-        <button className={styles.button} onClick={submitData}>
-          Save & Next
-        </button>
-      </div>
+      <SaveAndNext
+        error={error}
+        message={message}
+        loading={loading}
+        submit={submitData}
+      />
     </div>
   );
 };

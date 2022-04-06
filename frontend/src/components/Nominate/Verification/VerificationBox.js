@@ -9,86 +9,19 @@ import styles from "./VerificationBox.module.css";
 import { useSelector } from "react-redux";
 import { API, updateCandidateData } from "../../../api";
 import { useState } from "react";
-
-function buildFormData(formData, data, parentKey) {
-  if (
-    data &&
-    typeof data === "object" &&
-    !(data instanceof Date) &&
-    !(data instanceof File)
-  ) {
-    Object.keys(data).forEach((key) => {
-      buildFormData(
-        formData,
-        data[key],
-        parentKey ? `${parentKey}[${key}]` : key
-      );
-    });
-  } else {
-    const value = data == null ? "" : data;
-
-    formData.append(parentKey, value);
-  }
-}
-
-function jsonToFormData(data) {
-  const formData = new FormData();
-
-  buildFormData(formData, data);
-
-  return formData;
-}
+import useNominate from "../../../hooks/useNominate";
 
 const VerificationBox = () => {
-  const candidate = useSelector((store) => store.candidate);
-  const [error, setError] = useState(null);
-  const [message, setMessage] = useState(null);
-  const canSubmit =
-    !!candidate.id &&
-    !!candidate.video &&
-    !!candidate.agenda_text &&
-    !!candidate.credentials &&
-    !!candidate.proposed_by?.name;
+  const {
+    candidate,
+    error,
+    message,
+    updateNomination,
+    isComplete,
+  } = useNominate();
 
   const submitNominationForm = async () => {
-    try {
-      API.defaults.headers["Content-Type"] = "multipart/form-data";
-      const finalData = {};
-      Object.keys(candidate).forEach((k) => {
-        if (
-          k == "image" ||
-          k == "proposed_by_sign" ||
-          k == "seconded_by_sign"
-        ) {
-          const val = candidate[k];
-          if (
-            val &&
-            (typeof val === "string" || val instanceof String) &&
-            val.startsWith("http")
-          ) {
-            return;
-          }
-        }
-        if (
-          k == "agenda_text" ||
-          k == "credentials" ||
-          k == "proposed_by" ||
-          k == "seconded_by"
-        ) {
-          finalData[k] = JSON.stringify(candidate[k]);
-          return;
-        }
-        finalData[k] = candidate[k];
-      });
-      const formData = await jsonToFormData(finalData);
-      const res = await updateCandidateData(candidate.id, formData);
-      setMessage("Nomination submitted!!");
-    } catch (err) {
-      setError(
-        err.response?.data?.detail ||
-          "Something went wrong!Please try logging in again."
-      );
-    }
+    updateNomination({ nomination_complete: true });
   };
 
   return (
@@ -118,7 +51,7 @@ const VerificationBox = () => {
         <Tile
           svg={verifySVG}
           text={"Add Witness Data"}
-          done={!!candidate.proposed_by?.name}
+          done={!!(candidate.proposed_by?.name && candidate.seconded_by?.name)}
         />
       </div>
       <div className={`flex mt-4`}>
@@ -126,10 +59,10 @@ const VerificationBox = () => {
           <div className={`${styles.text}`}>Preview Nomination Form</div>
         </button>
         <button
-          className={`${canSubmit ? styles.btn1 : styles.btn2} py-2 px-4`}
+          className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
           onClick={submitNominationForm}
         >
-          <div className={`${canSubmit ? styles.text1 : styles.text2}`}>
+          <div className={`${isComplete ? styles.text1 : styles.text2}`}>
             Send For Verification
           </div>
         </button>

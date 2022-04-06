@@ -6,14 +6,19 @@ import { API, updateCandidateData, uploadCredentials } from "../../api";
 import Upload from "../../components/Nominate/Upload/Upload";
 import UploadNavbar from "../../components/Nominate/UploadNavbar/UploadNavbar";
 import { SET_CANDIDATE_DATA } from "../../constants";
+import useNominate from "../../hooks/useNominate";
 import styles from "../Register/RegisterScreen.module.css";
+import SaveAndNext from "./SaveAndNext";
 const CredentialsScreen = () => {
-  const candidate = useSelector((store) => store.candidate);
-  const dispatch = useDispatch();
-
   const [credentials, setCredentials] = useState({});
-  const [error, setError] = useState();
-  const navigate = useNavigate();
+  const {
+    candidate,
+    error,
+    message,
+    loading,
+    updateNomination,
+    setError,
+  } = useNominate();
 
   const handleFile = async (title, file) => {
     try {
@@ -31,25 +36,14 @@ const CredentialsScreen = () => {
     }
   };
 
-  const submitCredentils = async () => {
-    try {
-      dispatch({
-        type: SET_CANDIDATE_DATA,
-        data: {
-          credentials: {
-            ...(candidate?.credentials ? candidate.credentials : {}),
-            ...credentials,
-          },
-        },
-      });
-      navigate("/nominate/video");
-    } catch (err) {
-      console.log(err);
-      setError(
-        err.response?.data?.detail ||
-          "Something went wrong!Please try logging in again."
-      );
-    }
+  const submitData = async () => {
+    const data = {
+      credentials: {
+        ...(candidate?.credentials ? candidate.credentials : {}),
+        ...credentials,
+      },
+    };
+    updateNomination(data, "/nominate/video");
   };
 
   return (
@@ -76,14 +70,12 @@ const CredentialsScreen = () => {
         </>
       )}
       <Upload handleFile={handleFile} />
-      {error && <p className="text-red">{error}</p>}
-      <p className="text-sm mt-6">Apply changes before proceeding</p>
-      <button
-        className={`px-5 text-white  ${styles.button}`}
-        onClick={submitCredentils}
-      >
-        Save & Next
-      </button>
+      <SaveAndNext
+        error={error}
+        message={message}
+        loading={loading}
+        submit={submitData}
+      />
     </>
   );
 };

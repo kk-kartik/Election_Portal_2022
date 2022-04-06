@@ -32,6 +32,7 @@ const TopNav = ({}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.auth);
+  const candidate = useSelector((store) => store.candidate);
   const [loginClicked, setLoginClicked] = useState(false);
 
   const authHandler = async (err, data) => {
@@ -85,7 +86,7 @@ const TopNav = ({}) => {
             <img src={dropdown} className={`mr-0 ml-auto`} alt="d" />
           </div>
           <div className={`decoration-gray-600`}>
-            {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
+            {candidate?.id ? "Candidate" : "Voter"}
           </div>
           <div
             className={`decoration-gray-600`}

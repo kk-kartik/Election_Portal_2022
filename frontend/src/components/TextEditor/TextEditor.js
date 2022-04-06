@@ -12,8 +12,6 @@ import { SET_CANDIDATE_DATA } from "../../constants";
 var parse = require("html-react-parser");
 
 const TextEditor = (props) => {
-  const candidate = useSelector((store) => store.candidate);
-  const dispatch = useDispatch();
   let currentContentAsHTML = "";
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -38,16 +36,14 @@ const TextEditor = (props) => {
     props.setTitle(title);
     convertContentToHTML();
     const convertedString = parse(currentContentAsHTML);
-
-    dispatch({
-      type: SET_CANDIDATE_DATA,
-      data: {
-        agenda_text: {
-          ...candidate?.agenda_text,
-          [title]: currentContentAsHTML,
-        },
+    const data = {
+      agenda_text: {
+        ...props.candidate?.agenda_text,
+        [title]: currentContentAsHTML,
       },
-    });
+    };
+
+    props.updateNomination(data);
     props.setIsOpen(false);
   };
 

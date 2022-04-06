@@ -26,14 +26,14 @@ const App = ({ uploadImage, setUploadImage, setIntro, imageURL, intro }) => {
           {imageURL && (
             <>
               <div className="flex-col justify-center align-center items-center">
-                <div className="flex-col items-stretch">
+                {/* <div className="flex-col items-stretch">
                   <button
                     className="mt-3 mb-2 px-4 hover:bg-gray-400 rounded text-center border-2 border-gray-700 mx-10 font-bold"
                     onClick={(e) => setUploadImage(null)}
                   >
                     Click to remove
                   </button>
-                </div>
+                </div> */}
                 <div className="mx-10">
                   <img src={imageURL} alt="" className="h-24" />
                 </div>
