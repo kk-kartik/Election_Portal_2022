@@ -35,7 +35,7 @@ const Register = () => {
         <div className={`${styles.reg}`}>
           <span>Register for the Gymkhana Elections to cast your votes</span>
           <div className={styles.btns}>
-            {!userData && !userData?.euser?.registration_complete && (
+            {!userData?.euser?.registration_complete && (
               <button
                 className={`${styles.regBtn}`}
                 onClick={routeChange}
