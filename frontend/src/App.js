@@ -22,7 +22,7 @@ function Pre({}) {
         <Route path="/*" exact element={<PreElectionScreen />} />
         <Route path="/register" exact element={<RegisterScreen />} />
         <Route path="/nominate/*" exact element={<CandidateNominateScreen />} />
-        <Route path='/login' exact element={<LoginScreen />} />
+        <Route path="/login" exact element={<LoginScreen />} />
         <Route
           path="/nominate/post"
           exact
@@ -65,6 +65,7 @@ function App() {
         <Route path="/*" exact element={<Pre />} />
         <Route path="/election/*" exact element={<ElectionScreen />} />
         <Route path="/admin/*" exact element={<AdminScreen />} />
+        <Route path="/login" exact element={<LoginScreen />} />
         {/* Route of the VOTING PORTAL */}
       </Routes>
     </BrowserRouter>
