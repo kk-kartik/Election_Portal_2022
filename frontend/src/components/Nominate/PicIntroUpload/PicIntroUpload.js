@@ -1,10 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css'
 
 const App = () => {
   const [uploadImage, setUploadImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
-
+  const [crop, setCrop] = useState({aspect: 4/3});
   useEffect(() => {
     if (uploadImage) {
       setImageURL(URL.createObjectURL(uploadImage));
@@ -13,7 +15,7 @@ const App = () => {
     }
   }, [uploadImage]);
   return (
-    <div className="p-3 m-10 mt-0">
+    <div className="p-3 md:m-10 mt-0">
       <div className="font-bold">Profile Pic : </div>
       <div
         className="flex justify-center align-center items-center border-gray-400 border-2 p-3"
@@ -45,7 +47,10 @@ const App = () => {
                   </button>
                 </div>
                 <div className="mx-10">
-                  <img src={imageURL} alt="" className="h-24" />
+                  {/* <img src={imageURL} alt="" className="h-24" /> */}
+                  <ReactCrop crop={crop} onChange={(c) => setCrop(c)}>
+                    <img src={imageURL} />
+                  </ReactCrop>
                 </div>
               </div>
             </>

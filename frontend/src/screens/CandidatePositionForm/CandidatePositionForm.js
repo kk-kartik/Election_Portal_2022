@@ -22,7 +22,7 @@ const CandidatePositionForm = () => {
       <Helmet>
         <style>{'body { background-color: #f8fafe; }'}</style>
       </Helmet>
-      <TopNav />
+      {/* <TopNav /> */}
       <div className={`${styles.cont} ml-2.5 mr-2.5 sm:ml-auto sm:mr-auto `}>
         <h1 className="text-4xl pb-4 mb-4"> Nominate Yourself as a Candidate </h1>
         <div>
