@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import styles from "./Upload.module.css";
 import doc from "./doc.svg";
 import UploadField from "./UploadField";
+import del from "./delete.svg"
 const Upload = (props) => {
   const hiddenFileInput = React.useRef(null);
   const handleClick = (event) => {
     hiddenFileInput.current.click();
   };
+
+  const credDelete = (e) => {
+    console.log(e);
+  }
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
@@ -15,15 +20,16 @@ const Upload = (props) => {
   const [credentials, setCredentials] = useState([]);
   const onCLick = (e) => {
     e.preventDefault();
-    let credential = <UploadField handleFile={props.handleFile} />;
+    let credential = <UploadField handleFile={props.handleFile} credDelete={credDelete}/>;
     setCredentials((credentials) => {
       return [...credentials, credential];
     });
+
   };
   return (
     <div>
       <div className={`w-full md:w-3/5 ${styles.container}`}>
-        <div className="p-6">
+        {/* <div className="p-6">
           <div className="pb-4">
             <p className="text-lg leading-8 text-gray-600 ">
               Certificate of Appreciation in RECYCLE-2018 (International
@@ -43,16 +49,21 @@ const Upload = (props) => {
             onChange={handleChange}
             style={{ display: "none" }}
           />
-        </div>
+        </div> */}
       </div>
-      <div>{credentials}</div>
+      <div>
+        
+      </div>
+      <div>{credentials}</div> 
+     
+     
+      
       <div className="pt-8">
         <button
           className={`px-5 text-white ${styles.credbutton}`}
           onClick={onCLick}
         >
-          {" "}
-          Add Credentials{" "}
+          Add Credentials
         </button>
       </div>
     </div>
