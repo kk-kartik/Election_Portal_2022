@@ -30,7 +30,7 @@ const LoginScreen = () => {
             );
             dispatch(getUser());
     
-            if (!res?.data?.user?.registration_complete) {
+            if (!res?.data?.euser?.registration_complete) {
               navigate("/register", { replace: true });
             }
           } catch (err) {

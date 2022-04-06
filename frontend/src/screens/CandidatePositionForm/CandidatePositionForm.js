@@ -32,6 +32,7 @@ const CandidatePositionForm = () => {
         position: parseInt(posRef.current.value),
       });
       dispatch({ type: SET_CANDIDATE_DATA, data: res.data });
+      dispatch(getUser());
       navigate("/nominate/about");
     } catch (err) {
       setError(
@@ -48,6 +49,7 @@ const CandidatePositionForm = () => {
   return (
     <div className="">
       <Helmet>
+        <title>Nominate Yourself</title>
         <style>{"body { background-color: #f8fafe; }"}</style>
       </Helmet>
       {/* <TopNav /> */}
