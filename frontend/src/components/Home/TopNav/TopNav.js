@@ -5,11 +5,10 @@ import LogoSVG from "./logo.svg";
 import GlobeSVG from "./globe.svg";
 import profile from "./profile.svg";
 import dropdown from "./drop.svg";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MicrosoftLogin from "react-microsoft-login";
 import { GoogleLogin } from "react-google-login";
 import axios from "axios";
-import { Dropdown } from "@primer/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logout } from "../../../actions/auth";
 import { useNavigate } from "react-router-dom";
@@ -81,13 +80,17 @@ const TopNav = ({}) => {
         <div className={`hidden sm:flex flex-col`}>
           <div className={`decoration-stone-800 flex items-center`}>
             <Avatar src={profile} size={38} />
-            {userData.first_name}
-            <img src={dropdown} className={`mr-0 ml-auto`} alt="d" />
+            <div className="ml-2">
+              <div className="flex flex-row">
+                <span className="text-sm font-medium">{userData.first_name}</span>
+                <img src={dropdown} className="ml-1 scale-125 cursor-pointer" alt="d" />
+              </div>
+              <span className="text-sm text-gray-800">
+                {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
+              </span>
+            </div>
           </div>
-          <div className={`decoration-gray-600`}>
-            {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
-          </div>
-          <div
+          {/* <div
             className={`decoration-gray-600`}
             onClick={(e) => {
               dispatch(logout());
@@ -96,7 +99,7 @@ const TopNav = ({}) => {
             }}
           >
             Logout
-          </div>
+          </div> */}
         </div>
       );
     }
@@ -118,16 +121,16 @@ const TopNav = ({}) => {
     <div className={`flex pl-4 pr-4 md:pl-16 md:pr-16 my-3`}>
       <div>
         <Link to="/">
-          <img src={LogoSVG} />
+          <img src={LogoSVG} alt="logo"/>
         </Link>
       </div>
       <div className={styles.cont}>
-        <div className={styles.btn}>
+        {/* <div className={styles.btn}>
           <div>
-            <img src={GlobeSVG} />
+            <img src={GlobeSVG} alt="logo"/>
           </div>
           <div>EN</div>
-        </div>
+        </div> */}
         <div className={styles.login}>
           {loginComp()}
           <svg
