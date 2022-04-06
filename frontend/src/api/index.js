@@ -45,3 +45,9 @@ export const updateCandidateData = (id, updateFAQ) =>
 
 //credentials
 export const uploadCredentials = (data) => API.post("/add_credentials/", data);
+//Debates API
+export const fetchDebates = () => API.get("/debates");
+export const addDebate = (newDebate) => API.post("/debates/", newDebate);
+export const editDebate = (id, updateDebate) =>
+  API.put(`/debates/${id}/`, updateDebate);
+export const deleteDebate = (id) => API.delete(`/debates/${id}/`);

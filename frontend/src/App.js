@@ -12,6 +12,7 @@ import CandidateNominationScreen from "./screens/pre_election/CandidateNominatio
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "./actions/auth";
 import useAuthCheck from "./hooks/useAuthCheck";
+import LoginScreen from "./screens/loginScreen/LoginScreen";
 
 function Pre({}) {
   return (
@@ -21,6 +22,7 @@ function Pre({}) {
         <Route path="/*" exact element={<PreElectionScreen />} />
         <Route path="/register" exact element={<RegisterScreen />} />
         <Route path="/nominate/*" exact element={<CandidateNominateScreen />} />
+        <Route path='/login' exact element={<LoginScreen />} />
         <Route
           path="/nominate/post"
           exact

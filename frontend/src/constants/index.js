@@ -19,6 +19,11 @@ export const DELETE_FAQ = "DELETE_FAQ";
 export const SET_CANDIDATE_DATA = "SET_CANDIDATE_DATA";
 //POS constants
 export const GET_POS = "GET_POS";
+//Debates Constants
+export const GET_DEBATES = "GET_DEBATES";
+export const ADD_DEBATE = "ADD_DEBATE";
+export const EDIT_DEBATE = "EDIT_DEBATE";
+export const DELETE_DEBATE = "DELETE_DEBATE";
 
 export const GET_USER = "GET_USER";
 export const LOGOUT = "LOGOUT";
