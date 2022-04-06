@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { BASEURL } from "./constants";
+import { BASEURL, SET_CANDIDATE_DATA } from "./constants";
 import PreElectionScreen from "./screens/pre_election/PreElectionScreen";
 import AdminScreen from "./screens/admin/AdminScreen";
 import CandidateNominateScreen from "./screens/candidatenominationscreen/CandidateNominateScreen";
@@ -38,6 +38,7 @@ function Pre({}) {
 
 function App() {
   const userData = useSelector((store) => store.auth);
+  const candidate = useSelector((store) => store.candidate);
   const dispatch = useDispatch();
   const isLoggedIn = useAuthCheck();
 
@@ -45,8 +46,17 @@ function App() {
     dispatch(getUser());
   }, []);
 
-  console.log("sss", userData);
-
+  useEffect(() => {
+    console.log(userData);
+    if (
+      userData &&
+      Object.keys(candidate).length == 0 &&
+      userData.candidates.length != 0
+    ) {
+      console.log("hi");
+      dispatch({ type: SET_CANDIDATE_DATA, data: userData.candidates[0] });
+    }
+  }, [userData]);
   return (
     <BrowserRouter basename={BASEURL}>
       <Routes>

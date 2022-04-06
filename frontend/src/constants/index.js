@@ -1,5 +1,6 @@
 export const BASEURL = process.env.REACT_APP_BASEURL;
 export const BASEAPIURL = process.env.REACT_APP_BASEAPIURL;
+export const ELECTIONAPI = process.env.REACT_APP_ELECTIONSAPI;
 export const VALIDAPIURL = process.env.REACT_APP_VALIDAPIURL;
 
 // Important Dates Constants
@@ -13,6 +14,11 @@ export const GET_FAQS = "GET_FAQS";
 export const ADD_FAQ = "ADD_FAQ";
 export const EDIT_FAQ = "EDIT_FAQ";
 export const DELETE_FAQ = "DELETE_FAQ";
+
+//Candidate consts
+export const SET_CANDIDATE_DATA = "SET_CANDIDATE_DATA";
+//POS constants
+export const GET_POS = "GET_POS";
 
 export const GET_USER = "GET_USER";
 export const LOGOUT = "LOGOUT";

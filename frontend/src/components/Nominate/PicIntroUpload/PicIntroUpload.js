@@ -1,19 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const App = () => {
-  const [uploadImage, setUploadImage] = useState(null);
-  const [imageURL, setImageURL] = useState(null);
-
-  useEffect(() => {
-    if (uploadImage) {
-      setImageURL(URL.createObjectURL(uploadImage));
-    } else {
-      setImageURL(null);
-    }
-  }, [uploadImage]);
+const App = ({ uploadImage, setUploadImage, setIntro, imageURL, intro }) => {
   return (
-    <div className="p-3 m-10 mt-0">
+    <div className="p-3 m-6 mt-0">
       <div className="font-bold">Profile Pic : </div>
       <div
         className="flex justify-center align-center items-center border-gray-400 border-2 p-3"
@@ -59,6 +49,8 @@ const App = () => {
           placeholder="Write 300 words of introduction..."
           name="intro"
           className="w-full h-full"
+          defaultValue={intro}
+          onChange={(e) => setIntro(e.target.value)}
         ></textarea>
       </div>
     </div>

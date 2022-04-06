@@ -13,12 +13,12 @@ import { Dropdown } from "@primer/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logout } from "../../../actions/auth";
 import { useNavigate } from "react-router-dom";
+import { ELECTIONAPI } from "../../../constants";
 
 const responseGoogle = async (data) => {
-  console.log(data);
   const accessToken = data["accessToken"];
   const res = await axios.post(
-    `${process.env.REACT_APP_BASEAPIURL}elections_api/auth/social/google/`,
+    `${ELECTIONAPI}/auth/social/google/`,
     {
       access_token: accessToken,
     },
@@ -29,30 +29,37 @@ const responseGoogle = async (data) => {
 };
 
 const TopNav = ({}) => {
-  const [msalInstance, onMsalInstanceChange] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.auth);
+  const [loginClicked, setLoginClicked] = useState(false);
 
-  const authHandler = async (err, data, msal) => {
-    if (!err && data) {
-      onMsalInstanceChange(msal);
+  const authHandler = async (err, data) => {
+    if (err) {
+      alert("Something went wrong!Please check your connection");
+      return;
     }
+    if (loginClicked) {
+      const accessToken = data["accessToken"];
+      try {
+        const res = await axios.post(
+          `${ELECTIONAPI}/auth/social/outlook/`,
+          {
+            access_token: accessToken,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        dispatch(getUser());
 
-    const accessToken = data["accessToken"];
-    const res = await axios.post(
-      `https://swc.iitg.ac.in/elections_api/auth/social/outlook/`,
-      {
-        access_token: accessToken,
-      },
-      {
-        withCredentials: true,
+        if (!res?.data?.user?.registration_complete) {
+          navigate("/register", { replace: true });
+        }
+      } catch (err) {
+        alert("Something went wrong!Please check your connection");
+        return;
       }
-    );
-    dispatch(getUser());
-    console.log("response", res);
-    if (!res?.data?.user?.registration_complete) {
-      navigate("/register", { replace: true });
     }
   };
 
@@ -68,42 +75,45 @@ const TopNav = ({}) => {
   //   onFailure={responseGoogle}
   //   redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
   // />
-  let loginComp = (
-    <MicrosoftLogin
-      clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
-      redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
-      //authCallback={() => authHandler(dispatch)}
-      tenantUrl={
-        "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
-      }
-      authCallback={(err, data, msal) => authHandler(err, data, msal)}
-    />
-  );
-  if (userData?.first_name) {
-    loginComp = (
-      <div className={`hidden sm:flex flex-col`}>
-        <div className={`decoration-stone-800 flex items-center`}>
-          <Avatar src={profile} size={38} />
-          {userData.first_name}
-          <img src={dropdown} className={`mr-0 ml-auto`} alt="d" />
+  let loginComp = () => {
+    if (userData?.first_name) {
+      return (
+        <div className={`hidden sm:flex flex-col`}>
+          <div className={`decoration-stone-800 flex items-center`}>
+            <Avatar src={profile} size={38} />
+            {userData.first_name}
+            <img src={dropdown} className={`mr-0 ml-auto`} alt="d" />
+          </div>
+          <div className={`decoration-gray-600`}>
+            {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
+          </div>
+          <div
+            className={`decoration-gray-600`}
+            onClick={(e) => {
+              dispatch(logout());
+              setLoginClicked(false);
+              navigate("/");
+            }}
+          >
+            Logout
+          </div>
         </div>
-        <div className={`decoration-gray-600`}>
-          {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
-        </div>
-        <div
-          className={`decoration-gray-600`}
-          onClick={() => {
-            dispatch(logout());
-            if (msalInstance) {
-              msalInstance.logout();
-            }
-          }}
-        >
-          Logout
-        </div>
+      );
+    }
+    return (
+      <div onClick={(e) => setLoginClicked(true)}>
+        <MicrosoftLogin
+          clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
+          redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
+          //authCallback={() => authHandler(dispatch)}
+          tenantUrl={
+            "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
+          }
+          authCallback={authHandler}
+        />
       </div>
     );
-  }
+  };
   return (
     <div className={`flex pl-4 pr-4 md:pl-16 md:pr-16 my-3`}>
       <div>
@@ -119,7 +129,7 @@ const TopNav = ({}) => {
           <div>EN</div>
         </div>
         <div className={styles.login}>
-          {loginComp}
+          {loginComp()}
           <svg
             className={`flex sm:hidden`}
             width="16"
