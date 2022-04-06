@@ -6,7 +6,7 @@ const NameTag = () => {
     <>
       <div className="mr-10 mt-6">
         <div className="flex justify-between items-center">
-          <div className="text-gray-600 font-semibold text-lg">
+          <div className="text-gray-400 font-semibold text-lg pb-8">
             Contesting for Vice President
           </div>
           <div className="flex space-x-2  hidden sm:block">

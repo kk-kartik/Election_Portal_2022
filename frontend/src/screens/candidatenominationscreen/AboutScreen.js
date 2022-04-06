@@ -13,18 +13,35 @@ import {
 import { getUser } from "../../actions/auth";
 import { SET_CANDIDATE_DATA } from "../../constants";
 import WitnessDataForm from "../Register/WitnessDataForm";
+import useNominate from "../../hooks/useNominate";
+import SaveAndNext from "./SaveAndNext";
 
+const convertoUrl = (image) => {
+  if (!image) return null;
+  if (
+    (typeof image === "string" || image instanceof String) &&
+    image.startsWith("http")
+  ) {
+    return image;
+  }
+  return URL.createObjectURL(image);
+};
 const AboutScreen = () => {
-  const candidate = useSelector((store) => store.candidate);
+  const {
+    candidate,
+    navigate,
+    error,
+    setError,
+    loading,
+    setLoading,
+    message,
+    updateNomination,
+  } = useNominate();
   const userData = useSelector((store) => store.auth);
   const [profileData, setProfileData] = useState(null);
 
   const [uploadImage, setUploadImage] = useState(null);
-  const navigate = useNavigate();
-  const [error, setError] = useState(null);
   const [imageURL, setImageURL] = useState(null);
-  const dispatch = useDispatch();
-
   const [intro, setIntro] = useState(null);
 
   useEffect(() => {
@@ -35,15 +52,7 @@ const AboutScreen = () => {
     }
   }, [uploadImage]);
 
-  const submitAboutData = async () => {
-    if (!candidate) {
-      navigate("/", { replace: true });
-    }
-    dispatch({
-      type: SET_CANDIDATE_DATA,
-      data: { image: uploadImage, about: intro },
-    });
-
+  const submitData = async () => {
     try {
       const res = await userRegistration(profileData);
     } catch (err) {
@@ -52,8 +61,10 @@ const AboutScreen = () => {
           "Something went wrong!Please try logging in again."
       );
     }
-    navigate("/nominate/agendas");
+    const data = { image: uploadImage, about: intro };
+    updateNomination(data, "/nominate/agendas");
   };
+
   return (
     <>
       <div className="flex flex-col	md:flex-row ">
@@ -66,18 +77,19 @@ const AboutScreen = () => {
         <div className="w-full">
           <PicIntroUpload
             setIntro={setIntro}
-            imageURL={imageURL || candidate?.image}
+            imageURL={imageURL || convertoUrl(candidate?.image)}
             uploadImage={uploadImage}
             setUploadImage={setUploadImage}
-            intro={intro || candidate.about}
+            intro={intro || candidate?.about}
           />
         </div>
       </div>
-      {error && <p className="text-red">{error}</p>}
-      <p className="text-sm">Apply changes before proceeding</p>
-      <button className={styles.button} onClick={submitAboutData}>
-        Save & Next
-      </button>
+      <SaveAndNext
+        error={error}
+        message={message}
+        loading={loading}
+        submit={submitData}
+      />
     </>
   );
 };

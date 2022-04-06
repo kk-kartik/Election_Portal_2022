@@ -49,7 +49,7 @@ class PositionReadSerializer(serializers.ModelSerializer):
 class EuserSerializer(serializers.ModelSerializer):
     class Meta:
         model = EUser
-        fields =['id','name','roll_number','degree','hostel','branch','email']
+        fields ="__all__"
 
 
 class CandidateSerializer(serializers.ModelSerializer):

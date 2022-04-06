@@ -31,6 +31,7 @@ const TopNav = ({}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.auth);
+  const candidate = useSelector((store) => store.candidate);
   const [loginClicked, setLoginClicked] = useState(false);
 
   const authHandler = async (err, data) => {
@@ -82,15 +83,24 @@ const TopNav = ({}) => {
             <Avatar src={profile} size={38} />
             <div className="ml-2">
               <div className="flex flex-row">
-                <span className="text-sm font-medium">{userData.first_name}</span>
-                <img src={dropdown} className="ml-1 scale-125 cursor-pointer" alt="d" />
+                <span className="text-sm font-medium">
+                  {userData.first_name}
+                </span>
+                <img
+                  src={dropdown}
+                  className="ml-1 scale-125 cursor-pointer"
+                  alt="d"
+                />
               </div>
               <span className="text-sm text-gray-800">
                 {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
               </span>
             </div>
           </div>
-          {/* <div
+          <div className={`decoration-gray-600`}>
+            {candidate?.id ? "Candidate" : "Voter"}
+          </div>
+          <div
             className={`decoration-gray-600`}
             onClick={(e) => {
               dispatch(logout());
@@ -99,7 +109,7 @@ const TopNav = ({}) => {
             }}
           >
             Logout
-          </div> */}
+          </div>
         </div>
       );
     }
@@ -121,7 +131,7 @@ const TopNav = ({}) => {
     <div className={`flex pl-4 pr-4 md:pl-16 md:pr-16 my-3`}>
       <div>
         <Link to="/">
-          <img src={LogoSVG} alt="logo"/>
+          <img src={LogoSVG} alt="logo" />
         </Link>
       </div>
       <div className={styles.cont}>

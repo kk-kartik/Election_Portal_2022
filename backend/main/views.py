@@ -72,7 +72,15 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     #     return CandidateReadSerializer
     
     def get_queryset(self):
-        return self.election.candidates_e.all()
+        try:
+            is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
+        except Exception as err:
+            is_organizer=False
+        
+        candidates = self.election.candidates_e.all()
+        if is_organizer:
+            return candidates.filter(nomination_complete=True)
+        return candidates
     
     def perform_create(self,serializer):
         return serializer.save(election=self.election,user=self.request.user.euser)

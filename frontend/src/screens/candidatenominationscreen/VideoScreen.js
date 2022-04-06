@@ -4,38 +4,29 @@ import { useNavigate, useNavigationType } from "react-router-dom";
 import { getUser } from "../../actions/auth";
 import { API, updateCandidateData, uploadCredentials } from "../../api";
 import { SET_CANDIDATE_DATA } from "../../constants";
+import useNominate from "../../hooks/useNominate";
 import styles from "../Register/RegisterScreen.module.css";
+import SaveAndNext from "./SaveAndNext";
 
 const VideoScreen = () => {
-  const candidate = useSelector((store) => store.candidate);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+  const {
+    error,
+    message,
+    loading,
+    candidate,
+    setError,
+    updateNomination,
+  } = useNominate();
+
   const videoRef = useRef(null);
-  const dispatch = useDispatch();
 
   const submitData = async () => {
     if (!videoRef.current.value) {
       setError("Please add valid url");
       return;
     }
-    try {
-      // API.defaults.headers["Content-Type"] = "application/json";
-      // const res = await updateCandidateData(candidate.id, {
-      //   video: videoRef.current.value,
-      // });
-      // await dispatch(getUser());
-      // navigate("/nominate/witnesses");
-      dispatch({
-        type: SET_CANDIDATE_DATA,
-        data: { video: videoRef.current.value },
-      });
-    } catch (err) {
-      console.log(err);
-      setError(
-        err.response?.data?.detail ||
-          "Something went wrong!Please try logging in again."
-      );
-    }
+    const data = { video: videoRef.current.value };
+    updateNomination(data, "/nominate/witnesses");
   };
   return (
     <>
@@ -52,7 +43,12 @@ const VideoScreen = () => {
         className={`${styles.input} md:w-1/2 lg:w-2/5 w-full`}
         defaultValue={candidate?.video}
         ref={videoRef}
-        onChange={submitData}
+      />
+      <SaveAndNext
+        error={error}
+        message={message}
+        loading={loading}
+        submit={submitData}
       />
     </>
   );

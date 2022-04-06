@@ -36,12 +36,12 @@ const ProfileNavBar = () => {
         <span className="font-normal text-2xl sm:text-3xl">
           &nbsp;My Profile &nbsp;
         </span>
-        <button className={`${styles.notver} py-1 px-3 sm:px-5 ml-auto`}>
+        <button className={`${styles.notver} py-1 px-3 sm:px-5 ml-auto mr-4`}>
           {capitalizeFirstLetter(candidate?.nomination_status) ||
             "Not Verified"}
         </button>
-        <button
-          className={`${styles.preview} py-1 pl-2 pr-1 sm:px-5 ml-4 mr-4`}
+        {/* <button
+          className={`${styles.preview} py-1 pl-2 pr-1 sm:px-5 mr-4`}
         >
           <span className="flex">
             <div className="flex items-center mr-1">
@@ -51,7 +51,7 @@ const ProfileNavBar = () => {
               Preview
             </div>
           </span>
-        </button>
+        </button> */}
       </div>
     </RouteNavbar>
   );

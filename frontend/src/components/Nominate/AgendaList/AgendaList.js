@@ -4,8 +4,10 @@ import TextEditor from "../../TextEditor/TextEditor";
 import Agenda from "./Agenda";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import useNominate from "../../../hooks/useNominate";
 const AgendaList = () => {
-  const candidate = useSelector((store) => store.candidate);
+  const { candidate, error, message, updateNomination } = useNominate();
+
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -16,7 +18,14 @@ const AgendaList = () => {
           <Agenda title={a} agenda={parse(candidate.agenda_text[a])} />
         ))}
 
-      {isOpen && <TextEditor setIsOpen={setIsOpen} setTitle={setTitle} />}
+      {isOpen && (
+        <TextEditor
+          setIsOpen={setIsOpen}
+          setTitle={setTitle}
+          updateNomination={updateNomination}
+          candidate={candidate}
+        />
+      )}
       {/* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}></textarea> */}
       {/* <Agenda count={count} title={title} agenda={agenda} long={true} /> */}
       <div className="pt-8">
