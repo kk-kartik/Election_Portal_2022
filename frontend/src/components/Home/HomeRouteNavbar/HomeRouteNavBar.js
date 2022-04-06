@@ -4,8 +4,12 @@ import Datebox from "../Datebox/Datebox";
 const HomeRouteNavBar = () => {
     return(
         <RouteNavbar 
-        text={["About","Nominations","Statistics","Rules and Regulations","Organisers"]}
-        routes={["", "nominations", "stats", "rules","organisers"]}
+        text={["About","Nominations",
+        // "Statistics",
+        "Rules and Regulations","Organisers"]}
+        routes={["", "nominations",
+        // "stats",
+         "rules","organisers"]}
         onOpenMenu={()=>{
           document.getElementById("datebox").style.display = "none";
         }}
