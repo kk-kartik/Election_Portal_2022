@@ -139,7 +139,7 @@ class Candidate(models.Model):
     agenda_pdf = models.FileField(upload_to="agenda/",blank=True)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='candidates_e')
     user = models.ForeignKey(EUser,on_delete=models.DO_NOTHING,related_name='candidates_ids')
-    nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70)
+    nomination_status = models.CharField(choices=NOMINATION_STATUS,max_length=70,default="pending")
     cpi = models.CharField(max_length=70,null=True,blank=True)
     backlogs = models.CharField(max_length=100,null=True,blank=True)
     active_backlogs = models.CharField(max_length=100,null=True,blank=True)
