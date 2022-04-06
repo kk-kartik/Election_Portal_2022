@@ -7,8 +7,8 @@ const useRegisterCheck = () => {
 
   const checkRegistration = async () => {
     if (
-      userData.euser.degree !== undefined &&
-      userData.euser.degree !== ""
+      userData.euser.registration_complete !== undefined &&
+      userData.euser.registration_complete 
     ) {
       setIsRegistered(true);
     } else {
@@ -18,7 +18,7 @@ const useRegisterCheck = () => {
 
   useEffect(() => {
     checkRegistration();
-  }, []);
+  }, [userData]);
 
   return isRegistered;
 };
