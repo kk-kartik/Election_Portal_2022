@@ -9,22 +9,17 @@ import styles from "../Register/RegisterScreen.module.css";
 import SaveAndNext from "./SaveAndNext";
 import YoutubeEmbed from "../../components/Home/Nomination/Video/YoutubeEmbed";
 const VideoScreen = () => {
-  const {
-    error,
-    message,
-    loading,
-    candidate,
-    setError,
-    updateNomination,
-  } = useNominate();
+  const { error, message, loading, candidate, setError, updateNomination } =
+    useNominate();
 
   const videoRef = useRef(null);
-  let embedId = '';
-  const CheckURL=(url) => {
-    var regExp = /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
-      var match = url.match(regExp);
-      return (match && match[1].length==11)? match[1] : false;
-  }
+  let embedId = "";
+  const CheckURL = (url) => {
+    var regExp =
+      /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+    var match = url.match(regExp);
+    return match && match[1].length == 11 ? match[1] : false;
+  };
   const submitData = async () => {
     if (!videoRef.current.value || !CheckURL(videoRef.current.value)) {
       setError("Please add valid url");
@@ -38,9 +33,9 @@ const VideoScreen = () => {
   };
   return (
     <>
-      <p>Enter Youtube Video url.</p>
+      {/* <p>Enter Youtube Video url.</p> */}
       <label for="video" className="font-normal mb-4 text-sm text-gray-800">
-        Video Url
+        Enter Youtube Video url.
       </label>
       <br />
       <input
@@ -52,16 +47,18 @@ const VideoScreen = () => {
         defaultValue={candidate?.video}
         ref={videoRef}
       />
-      <div className="w-full md:w-1/2">
-       <YoutubeEmbed embedId={embedId}/>
-      </div>
+      {candidate.video && (
+        <div className="w-full md:w-1/2 my-4">
+          <YoutubeEmbed embedId={CheckURL(candidate.video)} />
+        </div>
+      )}
+
       <SaveAndNext
         error={error}
         message={message}
         loading={loading}
         submit={submitData}
       />
-      
     </>
   );
 };

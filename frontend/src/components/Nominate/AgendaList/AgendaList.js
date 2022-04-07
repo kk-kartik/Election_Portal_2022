@@ -6,7 +6,8 @@ import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import useNominate from "../../../hooks/useNominate";
 const AgendaList = () => {
-  const { candidate, error, message, updateNomination } = useNominate();
+  const { candidate, error, message, updateNomination, loading } =
+    useNominate();
 
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState("");
@@ -15,7 +16,12 @@ const AgendaList = () => {
     <div className="">
       {candidate?.agenda_text &&
         Object.keys(candidate?.agenda_text || []).map((a, i) => (
-          <Agenda title={a} agenda={parse(candidate.agenda_text[a])} />
+          <Agenda
+            title={a}
+            agenda={parse(candidate.agenda_text[a])}
+            candidate={candidate}
+            updateNomination={updateNomination}
+          />
         ))}
 
       {isOpen && (
@@ -36,6 +42,12 @@ const AgendaList = () => {
           Add Agenda
         </button>
       </div>
+      {loading && <p className="text-sm text-green">Saving...</p>}
+      {error ? (
+        <p className="text-red">{error}</p>
+      ) : message ? (
+        <p className="text-green">{error}</p>
+      ) : null}
     </div>
   );
 };

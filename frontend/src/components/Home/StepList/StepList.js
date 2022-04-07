@@ -38,10 +38,10 @@ const StepList = () => {
           })}
         </div>
         <div className="flex">
-          <button class="bg-[#2B00FF] hover:bg-[#2B00AA] font-family-roboto text-white font-medium py-2 px-4 rounded mr-3 sm:mr-4">
+          <button class="bg-[#2B00FF] hover:bg-[#2B00AA] text-[14px] font-family-roboto text-white font-medium py-2 px-4 rounded mr-3 sm:mr-4">
             Apply Now
           </button>
-          <button class=" hover:bg-gray-300 font-medium py-2 px-6 rounded border-2">
+          <button class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium py-2 px-6 rounded border-2">
             Learn More
           </button>
         </div>

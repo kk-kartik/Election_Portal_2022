@@ -41,6 +41,7 @@ const WitnessDataForm = ({ data, setData }) => {
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           defaultValue={data?.roll_number || ""}
           onChange={onChange}
+          maxLength={9}
         />
         <br />
         <label for="degree" className="font-semibold text-sm text-gray-800">
@@ -52,9 +53,10 @@ const WitnessDataForm = ({ data, setData }) => {
           id="degree"
           name="degree"
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          defaultValue={data?.degree || ""}
+          defaultValue={data?.degree || "U"}
           onChange={onChange}
         >
+          {/* <option value="">Select </option> */}
           <option value="U">B.Tech</option>
           <option value="P">M.Tech</option>
           <option value="P">PhD</option>
@@ -68,10 +70,11 @@ const WitnessDataForm = ({ data, setData }) => {
           required
           id="branch"
           name="branch"
-          defaultValue={data?.branch || ""}
+          defaultValue={data?.branch || "61"}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
         >
+          {/* <option value="">Select </option> */}
           <option value="01">CSE</option>
           <option value="02">ECE</option>
           <option value="03">ME</option>
@@ -100,10 +103,11 @@ const WitnessDataForm = ({ data, setData }) => {
           required
           id="hostel"
           name="hostel"
-          defaultValue={data?.hostel || ""}
+          defaultValue={data?.hostel || "not-alloted"}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
         >
+          {/* <option value="">Select </option> */}
           <option value="lohit">Lohit</option>
           <option value="dhansiri">Dhansiri</option>
           <option value="dihing">Dihing</option>

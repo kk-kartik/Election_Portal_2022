@@ -9,13 +9,8 @@ import useNominate from "../../hooks/useNominate";
 import SaveAndNext from "./SaveAndNext";
 
 const WitnessesScreen = () => {
-  const {
-    candidate,
-    error,
-    message,
-    updateNomination,
-    loading,
-  } = useNominate();
+  const { candidate, error, message, updateNomination, loading } =
+    useNominate();
 
   const [proposedByData, setProposedyData] = useState(null);
   const [secondedByData, setSecondedByData] = useState(null);
@@ -49,14 +44,14 @@ const WitnessesScreen = () => {
             setData={setProposedyData}
           />
           <br />
-          <div className="font-semibold text-s text-gray-800">Signature :</div>
-          <input
+          {/* <div className="font-semibold text-s text-gray-800">Signature :</div> */}
+          {/* <input
             accept="image/*"
             type="file"
             id="select-image"
             name="proposed_by_sign"
             onChange={onChange}
-          />
+          /> */}
         </div>
 
         <div className="p-6">
@@ -72,14 +67,14 @@ const WitnessesScreen = () => {
             setData={setSecondedByData}
           />
           <br />
-          <div className="font-semibold text-s text-gray-800">Signature :</div>
+          {/* <div className="font-semibold text-s text-gray-800">Signature :</div>
           <input
             accept="image/*"
             type="file"
             id="select-image"
             name="seconded_by_sign"
             onChange={onChange}
-          />
+          /> */}
         </div>
       </div>
       <SaveAndNext

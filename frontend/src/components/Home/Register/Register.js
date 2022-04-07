@@ -37,7 +37,7 @@ const Register = () => {
           <div className={styles.btns}>
             {!userData?.euser?.registration_complete && (
               <button
-                className={`${styles.regBtn} py-2 px-6 md:py-2.5 md:px-7`}
+                className={`${styles.regBtn} bg-[#2B00FF] hover:bg-[#2B00AA] text-[14px] font-family-roboto text-white font-medium py-2 px-4 rounded mr-3 sm:mr-4`}
                 onClick={routeChange}
               >
                 Register Now
@@ -45,7 +45,7 @@ const Register = () => {
             )}
 
             <button
-              className={`${styles.nomBtn} block bg-coolGray-50 py-2 px-6 md:py-2.5 md:px-7`}
+              className={`${styles.nomBtn} hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium py-2 px-6 rounded border-2`}
               onClick={routeChange2}
             >
               {userData?.candidates.length ? "My Nomination" : "Nominate"}

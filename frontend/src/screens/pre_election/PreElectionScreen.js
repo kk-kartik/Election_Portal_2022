@@ -12,7 +12,10 @@ import OrganisersScreen from "./OrganisersScreen";
 import lime from "../../assets/Lime.jpg";
 const Layout = () => {
   return (
-    <div className="mt-12  ml-1 mr-1 md:ml-16 md:mr-10" style={{maxWidth:"1240px"}}>
+    <div
+      className="mt-12  ml-1 mr-1 md:ml-16 md:mr-10"
+      style={{ maxWidth: "1240px" }}
+    >
       <Outlet />
     </div>
   );
@@ -20,7 +23,11 @@ const Layout = () => {
 const PreElectionScreen = () => {
   return (
     <>
-      <div>
+      <div
+        style={{
+          minHeight: "83vh",
+        }}
+      >
         {/* Pre-election navbar */}
 
         <BlockchainMessage />
