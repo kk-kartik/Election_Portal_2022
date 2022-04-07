@@ -15,6 +15,7 @@ django-cors-headers = "*"
 pillow = "*"
 djangorestframework-simplejwt = "*"
 dj-rest-auth = {extras = ["with_social"], version = "*"}
+psycopg2-binary="*"
 
 [dev-packages]
 
