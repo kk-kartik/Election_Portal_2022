@@ -1,11 +1,11 @@
 name: Frontend Deployment
 on:
     workflow_dispatch:
-    push:
-        paths:
-            - "frontend/**"
-        branches:
-            - "main"
+    # push:
+    #     paths:
+    #         - "frontend/**"
+    #     branches:
+    #         - "main"
 
 jobs:
 
