@@ -136,7 +136,7 @@ const RegisterForm = () => {
           <option value="siang">Siang</option>
           <option value="not-alloted">Not Alloted</option>
         </select>
-        <button type="submit" className={styles.button}>
+        <button type="submit" className={`${styles.button} mt-3`}>
           Continue
         </button>
       </form>

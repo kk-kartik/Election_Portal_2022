@@ -31,8 +31,10 @@ SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
+print(DEBUG)
+DEBUG = not (DEBUG == 'false' or DEBUG == 'False') if isinstance(DEBUG, str) else True
 
-
+print(DEBUG)
 
 # Application definition
 
@@ -130,6 +132,7 @@ DATABASES = {
 
 
 if not DEBUG:
+    print("Connecting to db....")
     DATABASES["default"]:{
             "ENGINE":"django.db.backends.postgresql_psycopg2",
             "NAME":env("DB_NAME"),
@@ -182,12 +185,10 @@ MEDIA_ROOT = BASE_DIR/"media"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGOUT_REDIRECT_URL = "/elections_portal"
 # REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
 
 
-LOGIN_REDIRECT_URL = "/elections_portal"
 
 
 from datetime import timedelta
@@ -208,8 +209,8 @@ SIMPLE_JWT = {
     'LEEWAY': 0,
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
+    'USER_ID_FIELD': 'email',
+    'USER_ID_CLAIM': 'user_email',
     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
@@ -231,13 +232,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 ALLOWED_HOSTS=["swc.iitg.ac.in","localhost"]
 
-###  SET AUTH COOKIE #####
-JWT_AUTH_COOKIE = 'electiontoken'
-JWT_AUTH_HTTPONLY = False
 
 CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
-JWT_AUTH_SAMESITE = "None"
-JWT_AUTH_SECURE = True
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
@@ -275,3 +271,21 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 ACCOUNT_EMAIL_VERIFICATION="none"
+
+###  SET AUTH COOKIE #####
+JWT_AUTH_COOKIE = 'electiontoken'
+JWT_AUTH_HTTPONLY = False
+JWT_AUTH_SAMESITE = "None"
+JWT_AUTH_SECURE = True
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
+SESSION_COOKIE_NAME ="electionsessiontoken"
+# SESSION_COOKIE_SAMSITE=JWT_AUTH_SAMESITE
+# SESSION_COOKIE_SECURE = JWT_AUTH_SECURE
+# SESSION_COOKIE_HTTPONLY = JWT_AUTH_HTTPONLY
+
+LOGIN_REDIRECT_URL = "/elections_api/auth/login_success"
+LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
+CLIENT_URL = env("CLIENT_URL")
+if not DEBUG:
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'

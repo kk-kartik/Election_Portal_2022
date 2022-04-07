@@ -8,6 +8,5 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
         return  # To not perform the csrf check previously happening
 
 
-default_authentication_classes = [JWTCookieAuthentication,JWTAuthentication]
-if settings.DEBUG:
-    default_authentication_classes +=[BasicAuthentication,CsrfExemptSessionAuthentication]
+default_authentication_classes =[CsrfExemptSessionAuthentication]
+default_authentication_classes += [JWTCookieAuthentication,JWTAuthentication]
