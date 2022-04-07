@@ -13,7 +13,7 @@ const OrganisersScreen = () => {
         <OrganizerCard />
         <OrganizerCard />
       </div>
-      <div className="text-2xl mt-8">Web Developement Team</div>
+      <div className="text-2xl mt-8">Web Development Team</div>
       <div className="flex flex-wrap">
         <OrganizerCard />
         <OrganizerCard />

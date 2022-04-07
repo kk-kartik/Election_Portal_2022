@@ -37,7 +37,7 @@ const Register = () => {
           <div className={styles.btns}>
             {!userData?.euser?.registration_complete && (
               <button
-                className={`${styles.regBtn}`}
+                className={`${styles.regBtn} bg-[#2B00FF] hover:bg-[#2B00AA]`}
                 onClick={routeChange}
               >
                 Register Now
@@ -45,7 +45,7 @@ const Register = () => {
             )}
 
             <button
-              className={`${styles.nomBtn} hidden md:block bg-coolGray-50`}
+              className={`${styles.nomBtn} hover:bg-gray-300 hidden md:block bg-coolGray-50`}
               onClick={routeChange2}
             >
               {userData?.candidates.length ? "My Nomination" : "Nominate"}
