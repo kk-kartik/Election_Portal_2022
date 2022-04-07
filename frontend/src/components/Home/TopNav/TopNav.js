@@ -35,8 +35,7 @@ const TopNav = ({}) => {
   const [loginClicked, setLoginClicked] = useState(false);
   const [dropClick, setDropClick] = useState(false);
   const authHandler = async (err, data) => {
-    if (err) {
-      alert("Something went wrong!Please check your connection");
+    if (err && !data && !data["accessToken"]) {
       return;
     }
     if (loginClicked) {
@@ -77,7 +76,7 @@ const TopNav = ({}) => {
   // />
   const dropdownListener = (e) => {
     setDropClick(!dropClick);
-  }
+  };
   let loginComp = () => {
     if (userData?.first_name) {
       return (
@@ -108,7 +107,7 @@ const TopNav = ({}) => {
                   <Link
                     to="/nominate/about"
                     className="text-xs font-medium hover:bg-blue-100 px-3 py-2 rounded"
-                    onClick={()=>setDropClick(false)}
+                    onClick={() => setDropClick(false)}
                   >
                     My profile
                   </Link>
@@ -144,7 +143,9 @@ const TopNav = ({}) => {
       // </div>
       <div>
         <Link to="/login">
-          <button className="border-2 py-1 px-4 rounded-md text-sm font-medium">Login</button>
+          <button className="border-2 py-1 px-4 rounded-md text-sm font-medium">
+            Login
+          </button>
         </Link>
       </div>
     );
