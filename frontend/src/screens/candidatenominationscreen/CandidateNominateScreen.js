@@ -11,7 +11,10 @@ import VideoScreen from "./VideoScreen";
 
 const Layout = () => {
   return (
-    <div className="md:ml-20 mt-12 mr-4 ml-4">
+    <div
+      className="mt-12  ml-1 mr-1 md:ml-16 md:mr-10"
+      style={{ maxWidth: "1240px" }}
+    >
       <Outlet />
     </div>
   );

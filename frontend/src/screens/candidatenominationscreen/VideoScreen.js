@@ -7,7 +7,7 @@ import { SET_CANDIDATE_DATA } from "../../constants";
 import useNominate from "../../hooks/useNominate";
 import styles from "../Register/RegisterScreen.module.css";
 import SaveAndNext from "./SaveAndNext";
-
+import YoutubeEmbed from "../../components/Home/Nomination/Video/YoutubeEmbed";
 const VideoScreen = () => {
   const {
     error,
@@ -19,14 +19,22 @@ const VideoScreen = () => {
   } = useNominate();
 
   const videoRef = useRef(null);
-
+  let embedId = '';
+  const CheckURL=(url) => {
+    var regExp = /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+      var match = url.match(regExp);
+      return (match && match[1].length==11)? match[1] : false;
+  }
   const submitData = async () => {
-    if (!videoRef.current.value) {
+    if (!videoRef.current.value || !CheckURL(videoRef.current.value)) {
       setError("Please add valid url");
       return;
     }
+    embedId = CheckURL(videoRef.current.value);
+    console.log(embedId);
     const data = { video: videoRef.current.value };
     updateNomination(data, "/nominate/witnesses");
+    setError(null);
   };
   return (
     <>
@@ -44,12 +52,16 @@ const VideoScreen = () => {
         defaultValue={candidate?.video}
         ref={videoRef}
       />
+      <div className="w-full md:w-1/2">
+       <YoutubeEmbed embedId={embedId}/>
+      </div>
       <SaveAndNext
         error={error}
         message={message}
         loading={loading}
         submit={submitData}
       />
+      
     </>
   );
 };

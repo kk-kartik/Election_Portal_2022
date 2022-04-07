@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import styles from "./RegisterScreen.module.css";
 import { userRegistration } from "../../api/index";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { getUser } from "../../actions/auth";
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
   let navigate = useNavigate();
   // const [name, setName] = useState("");
   // const [rollNo, setRollNo] = useState(0);
@@ -21,6 +24,7 @@ const RegisterForm = () => {
       try {
         const res = await userRegistration(payload);
         if (res.status === 200) {
+          dispatch(getUser());
           navigate("/", { replace: true });
         }
       } catch (error) {

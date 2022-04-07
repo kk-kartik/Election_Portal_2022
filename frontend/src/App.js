@@ -62,23 +62,23 @@ function App() {
   const dispatch = useDispatch();
   const isLoggedIn = useAuthCheck();
 
-  console.log("APP ", isLoggedIn);
+  console.log("isLoggedIn: ", isLoggedIn);
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
   useEffect(() => {
-    console.log(userData);
+    console.log("userData: ",userData);
     if (
       userData &&
-      Object.keys(candidate).length == 0 &&
-      userData.candidates.length != 0
+      Object.keys(candidate).length === 0 &&
+      userData.candidates.length !== 0
     ) {
-      console.log("hi");
       dispatch({ type: SET_CANDIDATE_DATA, data: userData.candidates[0] });
     }
   }, [userData]);
+
   return (
     <BrowserRouter basename={BASEURL}>
       <Routes>

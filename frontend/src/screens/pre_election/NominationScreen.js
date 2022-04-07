@@ -7,9 +7,12 @@ import SideBarSection from "../../components/Home/SideNav/Sidebar";
 const NominationScreen = (props) => {
   return (
     <>
+      <h1 className="p-3 pt-0 font-medium text-xl">
+        Steps For Nominating Yourself
+      </h1>
       <StepList />
       <div className="grid grid-cols-12 gap-4 lg:mr-12">
-        <div className="col-span-12 md:col-span-3">
+        <div className="col-span-12 md:col-span-3 hidden">
           <SideBarSection posts={props.posts} />
         </div>
         <div className="col-span-12 md:col-span-9">

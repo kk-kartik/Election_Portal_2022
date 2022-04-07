@@ -11,6 +11,7 @@ import EditFAQScreen from "./FAQ/EditFAQScreen";
 import DebatesScreen from "./Debates/DebateScreen";
 import AddDebateScreen from "./Debates/AddDebateScreen";
 import EditDebateScreen from "./Debates/EditDebateScreen";
+import CandidatesScreen from "./Candidates/CandidateScreen";
 
 const AdminScreen = () => {
   return (
@@ -47,7 +48,11 @@ const AdminScreen = () => {
             path={`/debates/:id`}
             element={<EditDebateScreen />}
           />
-          
+          <Route
+            exact
+            path={`/candidates`}
+            element={<CandidatesScreen />}
+          />
 
           <Route exact path={`/faq`} element={<FAQScreen />} />
           <Route exact path={`/faq/add`} element={<AddFAQScreen />} />

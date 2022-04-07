@@ -2,7 +2,7 @@ import styles from "./Tile.module.css"
 import doneSVG from "./done.svg"
 import notdoneSVG from "./notdone.svg"
 const Tile = (props)=>{
-    let checkbox = <img src={notdoneSVG} className="mr-0 ml-auto w-5 h-6"/>
+    let checkbox = <img src={notdoneSVG} className="mr-0 ml-auto w-5 h-6EDIT_DEBATE"/>
     if(props.done === true){
         checkbox = <img src={doneSVG} className="mr-0 ml-auto w-5 h-6"/>
     }
