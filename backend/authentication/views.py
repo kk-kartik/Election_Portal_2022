@@ -14,7 +14,7 @@ from main.models import Election
 from django.conf import settings
 
 class TokenVerifyView(GenericAPIView):
-    authentication_classes = [JWTCookieAuthentication,CsrfExemptSessionAuthentication]
+    authentication_classes = [CsrfExemptSessionAuthentication,JWTCookieAuthentication]
 
     def get(self,request):
         if request.user.is_authenticated:
@@ -31,7 +31,7 @@ class MicrosoftLogin(SocialLoginView):
 
 
 class LoginRedirectView(GenericAPIView):
-    authentication_classes = [JWTCookieAuthentication,CsrfExemptSessionAuthentication]
+    authentication_classes = [CsrfExemptSessionAuthentication,JWTCookieAuthentication]
 
     def get(self,request):
         if request.user.is_authenticated:
