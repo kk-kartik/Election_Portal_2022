@@ -35,7 +35,13 @@ const TopNav = ({}) => {
   const [loginClicked, setLoginClicked] = useState(false);
   const [dropClick, setDropClick] = useState(false);
   const authHandler = async (err, data) => {
-    if (err && !data && !data["accessToken"]) {
+    if (err) {
+      return;
+    }
+    if (!data) {
+      return;
+    }
+    if (!data["accesstoken"]) {
       return;
     }
     if (loginClicked) {

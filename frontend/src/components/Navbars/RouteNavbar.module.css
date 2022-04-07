@@ -20,12 +20,20 @@
     line-height: 20px;
     letter-spacing: -0.15px;
     padding: 14px 16px 12px 16px;
+    animation-name : fadein;
+    animation-duration: 0.2s;
+    border-bottom: 2px solid white;
+  }
+  .link:hover{
+    border-bottom: 2px solid #DBDDE0;
   }
   .active {
     border-bottom: 2px solid #2b00ff;
     font-weight: 600;
     display: flex;
+    
   }
+
   .linkCont{
     /* margin-left: 24px;
     margin-right: 10px; */
@@ -35,4 +43,12 @@
       align-items: flex-start;
     }
   }
+  @keyframes fadein {
+    from {
+      border-bottom: 2px solid white;
+    }
   
+    to {
+      border-bottom: 2px solid #DBDDE0;
+    }
+  }
