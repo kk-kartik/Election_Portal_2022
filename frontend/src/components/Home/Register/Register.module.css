@@ -37,7 +37,7 @@
     box-sizing: border-box;
     box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.05), 0px 0px 1px rgba(0, 0, 0, 0.25);
     border-radius: 6px;
-    padding: 10px 20px;
+    /* padding: 10px 20px; */
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -54,7 +54,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 20px;
-    padding: 10px 30px;
+    /* padding: 10px 30px; */
   }
   
   .regText {
