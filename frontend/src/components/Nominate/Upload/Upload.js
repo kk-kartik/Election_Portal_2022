@@ -2,29 +2,24 @@ import React, { useState } from "react";
 import styles from "./Upload.module.css";
 import doc from "./doc.svg";
 import UploadField from "./UploadField";
-import del from "./delete.svg"
+import del from "./delete.svg";
 const Upload = (props) => {
   const hiddenFileInput = React.useRef(null);
   const handleClick = (event) => {
     hiddenFileInput.current.click();
   };
 
-  const credDelete = (e) => {
-    console.log(e);
-  }
-
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
     props.handleFile("proof", fileUploaded);
   };
-  const [credentials, setCredentials] = useState([]);
+
   const onCLick = (e) => {
     e.preventDefault();
-    let credential = <UploadField handleFile={props.handleFile} credDelete={credDelete}/>;
-    setCredentials((credentials) => {
-      return [...credentials, credential];
+    let credential = <UploadField handleFile={props.handleFile} />;
+    props.setCredentials((credentials) => {
+      return [credential];
     });
-
   };
   return (
     <div>
@@ -51,13 +46,9 @@ const Upload = (props) => {
           />
         </div> */}
       </div>
-      <div>
-        
-      </div>
-      <div>{credentials}</div> 
-     
-     
-      
+      <div></div>
+      <div>{props.credentials}</div>
+
       <div className="pt-8">
         <button
           className={`px-5 text-white ${styles.credbutton}`}

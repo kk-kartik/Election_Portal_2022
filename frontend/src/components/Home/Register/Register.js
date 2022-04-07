@@ -9,10 +9,10 @@ const Register = () => {
   const userData = useSelector((store) => store.auth);
 
   const routeChange = () => {
-    let path = ""; 
-    if(!userData){
-      path = `/login`
-    }else{
+    let path = "";
+    if (!userData) {
+      path = `/login`;
+    } else {
       path = `/register`;
     }
     navigate(path);
@@ -20,16 +20,16 @@ const Register = () => {
 
   const routeChange2 = () => {
     let path = "";
-    if(!userData){
-      path = "/login"
-    }else if (userData && userData.candidates.length) {
+    if (!userData) {
+      path = "/login";
+    } else if (userData && userData.candidates.length) {
       path = "/nominate/about";
     } else path = `/nominate/post`;
     navigate(path);
   };
 
   return (
-    <div className={`${styles.cont} w-full md:w-4/6`}>
+    <div className={`${styles.cont} w-full md:w-4/6 px-2 md:p-0 `}>
       <h1 className={styles.regText}>Register</h1>
       <div className={styles.regCont}>
         <div className={`${styles.reg}`}>

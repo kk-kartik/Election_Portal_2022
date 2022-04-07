@@ -6,6 +6,14 @@ export const API = axios.create({
   withCredentials: true,
 });
 
+export const MULTIPARTAPI = axios.create({
+  baseURL: `${BASEAPIURL}`,
+  withCredentials: true,
+  headers:{
+    "Content-Type":"multipart/form-data"
+  }
+});
+
 export const VALIDAPI = axios.create({
   baseURL: `${VALIDAPIURL}`,
 });
