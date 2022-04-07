@@ -131,16 +131,21 @@ const TopNav = ({}) => {
       );
     }
     return (
-      <div onClick={(e) => setLoginClicked(true)}>
-        <MicrosoftLogin
-          clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
-          redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
-          //authCallback={() => authHandler(dispatch)}
-          tenantUrl={
-            "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
-          }
-          authCallback={authHandler}
-        />
+      // <div onClick={(e) => setLoginClicked(true)}>
+      //   <MicrosoftLogin
+      //     clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
+      //     redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
+      //     //authCallback={() => authHandler(dispatch)}
+      //     tenantUrl={
+      //       "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
+      //     }
+      //     authCallback={authHandler}
+      //   />
+      // </div>
+      <div>
+        <Link to="/login">
+          <button className="border-2 py-1 px-4 rounded-md text-sm font-medium">Login</button>
+        </Link>
       </div>
     );
   };
