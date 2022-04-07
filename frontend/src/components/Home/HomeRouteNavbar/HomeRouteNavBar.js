@@ -9,7 +9,7 @@ const HomeRouteNavBar = () => {
         "Nominations",
         // "Statistics",
         "Rules and Regulations",
-        "Organisers",
+        "Organizers",
       ]}
       routes={[
         "",
