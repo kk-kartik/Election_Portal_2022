@@ -13,7 +13,7 @@ const FAQSection = (props) => {
   }, [dispatch]);
   return (
     <div className="flex-row space-y-4 p-6 break-words">
-      <div className="font-normal text-2xl">Frequently Asked Questions</div>
+      <div className="font-medium text-xl">Frequently Asked Questions</div>
       {faq.length !== 0 &&
                 faq.map((data, idx) => {
                   return (

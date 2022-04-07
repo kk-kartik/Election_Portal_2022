@@ -100,18 +100,33 @@ const TopNav = ({}) => {
                 {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
               </span>
               <div
-                className={`decoration-gray-600 absolute font-bold bg-red-100 p-3 ${dropClick ? 'flex' : 'hidden'}`}
-                onClick={(e) => {
-                  dispatch(logout());
-                  setLoginClicked(false);
-                  navigate("/");
-                }}
+                className={`decoration-gray-600 absolute z-10 font-bold bg-white rounded shadow-lg top-3 right-0 ${
+                  dropClick ? "flex flex-col" : "hidden"
+                }`}
               >
-                Logout
+                {userData?.candidates.length !== 0 && (
+                  <Link
+                    to="/nominate/about"
+                    className="text-xs font-medium hover:bg-blue-100 px-3 py-2 rounded"
+                    onClick={()=>setDropClick(false)}
+                  >
+                    My profile
+                  </Link>
+                )}
+                <button
+                  onClick={(e) => {
+                    dispatch(logout());
+                    setLoginClicked(false);
+                    setDropClick(false);
+                    navigate("/");
+                  }}
+                  className="text-xs font-medium hover:bg-blue-100 px-3 py-2 rounded"
+                >
+                  Logout
+                </button>
               </div>
             </div>
           </div>
-          
         </div>
       );
     }
