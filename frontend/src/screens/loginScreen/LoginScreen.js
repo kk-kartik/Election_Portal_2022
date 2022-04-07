@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import iitglogo from "./iitglogo.png";
 import gmaillogo from "./gmaillogo.png";
+import outlooklogo from "./microsoft.png";
 import axios from "axios";
 import MicrosoftLogin from "react-microsoft-login";
 import { GoogleLogin } from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logout } from "../../actions/auth";
 import { useNavigate } from "react-router-dom";
-import { ELECTIONAPI } from "../../constants";
+import { ELECTIONAPI, IS_PROD, OUTLOOK_LOGIN_URL } from "../../constants";
 import cards from "../../assets/images_1.png";
 
 const LoginScreen = () => {
@@ -16,58 +17,61 @@ const LoginScreen = () => {
   //const [loginClicked, setLoginClicked] = useState(false);
   const responseGoogle = async (data) => {
     const accessToken = data["accessToken"];
-    try {
-      const res = await axios.post(
-        `${ELECTIONAPI}/auth/social/google/`,
-        {
-          access_token: accessToken,
-        },
-        {
-          withCredentials: true,
+    if (accessToken) {
+      try {
+        const res = await axios.post(
+          `${ELECTIONAPI}/auth/social/google/`,
+          {
+            access_token: accessToken,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        dispatch(getUser());
+        if (!res?.data?.user?.registration_complete) {
+          navigate("/register", { replace: true });
+        } else {
+          navigate("/", { replace: true });
         }
-      );
-      dispatch(getUser());
-      if (!res?.data?.user?.registration_complete) {
-        navigate("/register", { replace: true });
-      }else {
-        navigate("/", { replace: true });
+      } catch (err) {
+        alert("Something went wrong!Please check your connection");
+        return;
       }
-    } catch (err) {
-      alert("Something went wrong!Please check your connection");
-      return;
     }
   };
 
-
   const authHandler = async (err, data) => {
-    if (err) {
-      alert("Something went wrong!Please check your connection");
-      return;
-    }
-    // if (loginClicked) {
-    const accessToken = data["accessToken"];
-    try {
-      const res = await axios.post(
-        `${ELECTIONAPI}/auth/social/outlook/`,
-        {
-          access_token: accessToken,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      dispatch(getUser());
-      sessionStorage.removeItem("msal.idtoken");
-      if (!res?.data?.user?.registration_complete) {
-        navigate("/register", { replace: true });
-      }else{
-        navigate("/",{replace: true})
+    if (!IS_PROD) {
+      if (err) {
+        alert("Something went wrong!Please check your connection");
+        return;
       }
-    } catch (err) {
-      alert("Something went wrong!Please check your connection");
-      return;
+
+      // if (loginClicked) {
+      const accessToken = data["accessToken"];
+      try {
+        const res = await axios.post(
+          `${ELECTIONAPI}/auth/social/outlook/`,
+          {
+            access_token: accessToken,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        dispatch(getUser());
+        sessionStorage.removeItem("msal.idtoken");
+        if (!res?.data?.user?.registration_complete) {
+          navigate("/register", { replace: true });
+        } else {
+          navigate("/", { replace: true });
+        }
+      } catch (err) {
+        alert("Something went wrong!Please check your connection");
+        return;
+      }
     }
-    //}
   };
   return (
     <>
@@ -96,19 +100,36 @@ const LoginScreen = () => {
             </div>
 
             <div className="flex flex-col justify-start items-start">
-              <div className="mb-4">
-                <MicrosoftLogin
-                  clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
-                  redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
-                  //authCallback={() => authHandler(dispatch)}
-                  tenantUrl={
-                    "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
-                  }
-                  authCallback={authHandler}
-                />
-              </div>
+              {IS_PROD ? (
+                <div className="mb-4">
+                  <div className="py-2 px-4 border text-slate-600 font-bold border-slate-700">
+                    <a href={OUTLOOK_LOGIN_URL}>
+                      <div className="flex flex-row items-start justify-start font-semibold">
+                        <img
+                          src={outlooklogo}
+                          alt=""
+                          className="w-5 h-5 mr-3 "
+                        />
+                        Sign in with Outlook
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <div className="mb-4">
+                  <MicrosoftLogin
+                    clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
+                    redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
+                    //authCallback={() => authHandler(dispatch)}
+                    tenantUrl={
+                      "https://login.microsoftonline.com/850aa78d-94e1-4bc6-9cf3-8c11b530701c"
+                    }
+                    authCallback={authHandler}
+                  />
+                </div>
+              )}
               <div>
-                <button className="py-2 pl-1 pr-9 border text-slate-600 font-bold border-slate-700">
+                <div className="py-2 pl-1 pr-1 border text-slate-600 font-bold border-slate-700">
                   <GoogleLogin
                     clientId="774598959771-jilp7jr6a3677htqaf1na9adqoj3aolo.apps.googleusercontent.com"
                     render={(renderProps) => (
@@ -117,8 +138,8 @@ const LoginScreen = () => {
                         disabled={renderProps.disabled}
                       >
                         <div className="flex flex-row items-start justify-start font-semibold">
-                          <img src={gmaillogo} alt="" className="w-10 h-5 mr-1" />
-                          Sign in with Gmail
+                          <img src={gmaillogo} alt="" className="w-10 h-5" />
+                          Sign in with IITG Gmail
                         </div>
                       </button>
                     )}
@@ -127,7 +148,7 @@ const LoginScreen = () => {
                     onFailure={responseGoogle}
                     redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
                   />
-                </button>
+                </div>
               </div>
             </div>
           </div>

@@ -9,5 +9,4 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
 
 
 default_authentication_classes = [JWTCookieAuthentication,JWTAuthentication]
-if settings.DEBUG:
-    default_authentication_classes +=[BasicAuthentication,CsrfExemptSessionAuthentication]
+default_authentication_classes +=[BasicAuthentication,CsrfExemptSessionAuthentication]
