@@ -107,6 +107,8 @@ const useNominate = () => {
     if (next && !error) {
       navigate(next);
     }
+    setMessage("Saved");
+    setLoading(false);
   };
 
   return {
