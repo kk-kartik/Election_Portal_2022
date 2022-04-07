@@ -284,3 +284,5 @@ SESSION_COOKIE_NAME ="electionsessiontoken"
 LOGIN_REDIRECT_URL = "/elections_api/auth/login_success"
 LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
 CLIENT_URL = env("CLIENT_URL")
+if not DEBUG:
+    ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
