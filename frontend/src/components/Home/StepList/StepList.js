@@ -1,11 +1,15 @@
 import React from "react";
+import checkCircle from "./checkCircle.png";
 import submit from "../../../assets/Submit.png";
 import agenda from "../../../assets/Agenda.png";
 import record from "../../../assets/Record.png";
 import register from "../../../assets/Register.png";
+import useNominate from "../../../hooks/useNominate";
+import { Link } from "react-router-dom";
 
-const Step = ({ text, imgSrc }) => (
-  <div className="mb-2 mr-4 p-4">
+const Step = ({ text, imgSrc,done,link }) => (
+  <Link to={`/nominate/${link}`}>
+  <div className="mb-2 mr-4 p-4 w-48 h-40">
     <div className="p-3 rounded-md flex flex-col justify-center items-center cursor-pointer hover:scale-110 ease-in-out duration-300">
       <div className="text-center mb-4">
         <img src={imgSrc} alt="icon" />
@@ -13,16 +17,35 @@ const Step = ({ text, imgSrc }) => (
       <p className="text-center text-sm font-medium">{text}</p>
     </div>
   </div>
+  </Link>
 );
 
-const steps = [
-  { text: "Register for the post", imgSrc: register },
-  { text: "Write your agendas", imgSrc: agenda },
-  { text: "Record a video", imgSrc: record },
-  { text: "Submit your form", imgSrc: submit },
-];
+const StepCompleted =({text, imgSrc,done,link}) => (
+  <div className="mb-2 mr-4 p-4 bg-blue-100 rounded-lg w-48 h-40">
+    <div className="p-3 rounded-md flex flex-col justify-center items-center cursor-pointer hover:scale-110 ease-in-out duration-300 ">
+      <div className="text-center mb-4">
+        <img src={checkCircle} alt="icon" />
+      </div>
+      <p className="text-center text-sm font-medium text-indigo-600">{text}</p>
+    </div>
+  </div>
+);
 
 const StepList = () => {
+  const {
+    candidate,
+    error,
+    message,
+    updateNomination,
+    isComplete,
+  } = useNominate();
+  const steps = [
+    { text: "Register for the post", imgSrc: register,done:!!candidate.id, link: "" },
+    { text: "Write your agendas", imgSrc: agenda,done:!!candidate.agenda_text, link:'agendas'},
+    { text: "Record your introduction video", imgSrc: record,done:!!candidate.video, link:"video" },
+    { text: "Submit your form", imgSrc: submit,done:candidate.isComplete, link:"verification" },
+  
+  ];
   return (
     <>
       <div
@@ -33,8 +56,12 @@ const StepList = () => {
         }}
       >
         <div className="flex justify-start items-center">
-          {steps.map(({ text, imgSrc }, index) => {
-            return <Step key={index} text={text} imgSrc={imgSrc} />;
+          {steps.map(({ text, imgSrc,done,link }, index) => {
+            if (done){
+            return <StepCompleted key={index} text={text} imgSrc={imgSrc} done={done} link={link} />;
+            } else{
+              return <Step key={index} text={text} imgSrc={imgSrc} done={done} link={link}/>;
+            }
           })}
         </div>
         <div className="flex">
