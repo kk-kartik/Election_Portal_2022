@@ -118,7 +118,7 @@ const LoginScreen = () => {
               ) : (
                 <div className="mb-4">
                   <MicrosoftLogin
-                    clientId={"495b7037-aa83-4595-a842-8a69daaf2f20"}
+                    clientId={"24fc6265-3b9b-4b94-813b-9b810b90c1e9"}
                     redirectUri={process.env.REACT_APP_AUTH_REDIRECT_URI}
                     //authCallback={() => authHandler(dispatch)}
                     tenantUrl={
