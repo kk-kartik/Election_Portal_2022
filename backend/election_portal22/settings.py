@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
 
 
@@ -124,6 +124,16 @@ DATABASES = {
         'NAME': BASE_DIR / 'db'/'db.sqlite3',
     }
 }
+
+
+if not DEBUG:
+    DATABASES["default"]:{
+            "ENGINE":"django.db.backends.postgresql_psycopg2",
+            "NAME":env("DB_NAME"),
+            "USER":env("DB_USER"),
+            "HOST":env("DB_HOST"),
+            "PORT":5432
+    }
 
 
 # Password validation
