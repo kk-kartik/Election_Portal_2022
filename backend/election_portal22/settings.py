@@ -31,8 +31,10 @@ SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
+print(DEBUG)
+DEBUG = not (DEBUG == 'false' or DEBUG == 'False') if isinstance(DEBUG, str) else True
 
-
+print(DEBUG)
 
 # Application definition
 
@@ -284,3 +286,4 @@ SESSION_COOKIE_NAME ="electionsessiontoken"
 LOGIN_REDIRECT_URL = "/elections_api/auth/login_success"
 LOGOUT_REDIRECT_URL = LOGIN_REDIRECT_URL
 CLIENT_URL = env("CLIENT_URL")
+ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
