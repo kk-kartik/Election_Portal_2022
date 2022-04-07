@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env("DEBUG")
 
 
 
@@ -87,6 +87,9 @@ REST_FRAMEWORK={
         'rest_framework.permissions.AllowAny',
     ]
 }
+if not DEBUG:
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"]=["rest_framework.renderers.JSONRenderer"]
+
 
 REST_AUTH_SERIALIZERS = {
    "USER_DETAILS_SERIALIZER":"authentication.serializers.CustomUserDetailSerializer"
@@ -124,6 +127,16 @@ DATABASES = {
         'NAME': BASE_DIR / 'db'/'db.sqlite3',
     }
 }
+
+
+if not DEBUG:
+    DATABASES["default"]:{
+            "ENGINE":"django.db.backends.postgresql_psycopg2",
+            "NAME":env("DB_NAME"),
+            "USER":env("DB_USER"),
+            "HOST":env("DB_HOST"),
+            "PORT":5432
+    }
 
 
 # Password validation
@@ -230,9 +243,7 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ORIGIN_ALLOW_ALL = True
     ALLOWED_HOSTS = ["*"]
-else:
-    JWT_AUTH_SAMESITE = "None"
-    JWT_AUTH_SECURE = True
+
 
 
 OUTLOOK_CLIENT_ID = env("OUTLOOK_CLIENT_ID")

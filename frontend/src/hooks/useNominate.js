@@ -59,6 +59,9 @@ const useNominate = () => {
       API.defaults.headers["Content-Type"] = "multipart/form-data";
       const finalData = {};
       Object.keys(data).forEach((k) => {
+        if (k == "nomination_status") {
+          return;
+        }
         if (
           k == "image" ||
           k == "proposed_by_sign" ||
@@ -93,16 +96,19 @@ const useNominate = () => {
 
       setMessage("Nomination data submitted!!");
     } catch (err) {
-      console.log(err);
       setError(
         err.response?.data?.detail ||
           "Something went wrong!Please try logging in again."
       );
+      setLoading(false);
+      return;
     }
-    setLoading(false);
+
     if (next && !error) {
       navigate(next);
     }
+    setMessage("Saved");
+    setLoading(false);
   };
 
   return {

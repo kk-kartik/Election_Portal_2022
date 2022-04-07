@@ -51,6 +51,7 @@ class PositionReadSerializer(serializers.ModelSerializer):
 
 
 class CandidateSerializer(serializers.ModelSerializer):
+    nomination_status = serializers.ReadOnlyField()
     class Meta:
         model = Candidate
         exclude = ['election',"user"]
@@ -58,7 +59,7 @@ class CandidateSerializer(serializers.ModelSerializer):
 class CandidateOrganizerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        fields = "__all__"
+        exclude = ['election',"user"]
     
 
 

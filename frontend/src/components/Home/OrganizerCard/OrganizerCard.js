@@ -3,11 +3,14 @@ import React from "react";
 const OrganizerCard = () => {
   return (
     <div className="border-2 w-fit p-4 rounded-md mt-8 mr-4">
-      <div className="box-border pointer-events-none border-8 border-white w-full h-64 bg-gray-100">
+      <div
+        className="box-border pointer-events-none border-8 border-white w-full h-64 bg-gray-100"
+        style={{ maxWidth: "225px", margin: "auto" }}
+      >
         <img
-          src="https://i.pinimg.com/originals/ef/0d/ec/ef0dec7cb8b80b65ae925ccb9286f567.jpg"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsZW3yf5o2ljvgPhSpm-6_YQTUPNKiBH1z2Q&usqp=CAU"
           alt=""
-          className="h-full w-full object-contain rounded-sm"
+          className="h-full w-full object-fit rounded-sm"
         />
       </div>
       <div className="font-bold font-sans text-lg">CEO of Election (TBD)</div>
