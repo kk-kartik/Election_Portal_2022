@@ -8,10 +8,13 @@ from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from django.utils.decorators import method_decorator
 from django.db import transaction
-
+from .default_authentication_classes import CsrfExemptSessionAuthentication
+from django.http import HttpResponseRedirect
+from main.models import Election
+from django.conf import settings
 
 class TokenVerifyView(GenericAPIView):
-    authentication_classes = [JWTCookieAuthentication]
+    authentication_classes = [JWTCookieAuthentication,CsrfExemptSessionAuthentication]
 
     def get(self,request):
         if request.user.is_authenticated:
@@ -27,3 +30,28 @@ class MicrosoftLogin(SocialLoginView):
     adapter_class = MicrosoftGraphOAuth2Adapter
 
 
+class LoginRedirectView(GenericAPIView):
+    authentication_classes = [JWTCookieAuthentication,CsrfExemptSessionAuthentication]
+
+    def get(self,request):
+        if request.user.is_authenticated:
+            try:
+                election = Election.objects.all().first()
+                is_organizer = election.organizers.filter(user__id=request.user.euser.id).exists()
+            except:
+                is_organizer=False
+            url = settings.CLIENT_URL
+
+            if is_organizer:
+                url +="/admin"
+            else:
+                try:
+                    is_registered = request.user.euser.registration_complete
+                except:
+                    is_registered = False
+                
+                if not is_registered:
+                    url+="/register"
+
+            return HttpResponseRedirect(url)
+        return Response({"isLoggedIn":False,"detail":"User not logged in!"},status=status.HTTP_200_OK)
