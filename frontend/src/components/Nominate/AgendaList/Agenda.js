@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./Agenda.module.css";
 import dots from "./three-dots.svg";
-
+import deleteSVG from "./delete.svg";
 const Agenda = (props) => {
   const [clicked, setClicked] = useState(false);
   let shortAgenda =
@@ -27,6 +27,19 @@ const Agenda = (props) => {
       </div>
     );
   }
+  const agendaDelete = async () => {
+    console.log("213");
+    const prevAgendas = props.candidate.agenda_text;
+    const newAgendas = {};
+    Object.keys(prevAgendas).forEach((k) => {
+      if (k == props.title) return;
+      newAgendas[k] = prevAgendas[k];
+    });
+    const data = {
+      agenda_text: newAgendas,
+    };
+    props.updateNomination(data);
+  };
   return (
     <div className="p-2">
       <div className={`w-full md:w-3/5 ${styles.container}`}>
@@ -40,7 +53,14 @@ const Agenda = (props) => {
               <img src={dots} className={styles.dots} />
             </div>
           </div>
-          <div className="pt-4">{agenda}</div>
+          <div className="flex">
+            <div className="pt-4">{agenda}</div>
+            <img
+              className="self-end mr-0 ml-auto w-5 h-5 cursor-pointer"
+              src={deleteSVG}
+              onClick={agendaDelete}
+            ></img>
+          </div>
         </div>
       </div>
     </div>
