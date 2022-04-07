@@ -31,8 +31,7 @@ SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
-
-
+DEBUG = (DEBUG == 'true' or DEBUG == 'True') if isinstance(DEBUG, str) else DEBUG
 
 # Application definition
 
@@ -130,6 +129,7 @@ DATABASES = {
 
 
 if not DEBUG:
+    print("Connecting to db....")
     DATABASES["default"]:{
             "ENGINE":"django.db.backends.postgresql_psycopg2",
             "NAME":env("DB_NAME"),

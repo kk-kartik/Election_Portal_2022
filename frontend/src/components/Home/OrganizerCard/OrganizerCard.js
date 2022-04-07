@@ -1,22 +1,35 @@
 import React from "react";
 import princy from "../../../assets/team_images/princy.jpeg";
 const OrganizerCard = (props) => {
+  const contact = `tel:${props.contact}`;
+  const name = props.imagename;
+  console.log(name);
+  const nameString = props.name.split(" ");
   return (
-    <div className="border-2 w-fit p-4 rounded-md mt-8 mr-4">
-      <div
-        className="box-border pointer-events-none border-8 border-white w-full h-64 bg-gray-100"
+    <div className="border-2 p-4 rounded-md mt-8 mr-4 w-72">
+      {/* <div
+        className="box-border pointer-events-none border-8 border-white w-full h-64 bg-gray-700 flex justify-center"
         style={{ maxWidth: "225px", margin: "auto" }}
       >
         <img
-          src={props.image}
+          src={props.image[name]}
           alt=""
           className="h-full w-full object-fit rounded-sm"
         />
-      </div>
-      <div className="font-bold font-sans text-lg">{props.name}</div>
-      <div className="text-gray-600 font-semibold">{props.post}</div>
-      <div className="flex items-center space-x-2">
-        <div>
+      </div> */}
+        <div className="bg-gray-200 rounded-md ">
+          <img
+            style={{ height: "250px" }}
+            src={props.image[name]}
+            alt="ProfilePic"
+            className="w-full object-contain rounded-md"
+          />
+        </div>
+      <div class="ml-2">
+        <div className="font-bold font-sans text-lg">{props.name}</div>
+        <div className="text-gray-600 font-semibold">{props.post}</div>
+        <div className="flex items-center space-x-2">
+          {/* <div>
           <svg
             width="16"
             height="12"
@@ -31,12 +44,14 @@ const OrganizerCard = (props) => {
               fill="#4B5563"
             />
           </svg>
+        </div> */}
+          <div className="font-gray-700">+91-{props.contact}</div>
         </div>
-        <div className="font-gray-700">+91-{props.contact}</div>
       </div>
-      <button className="mt-6 py-2.5 px-16 border-2 rounded-md bg-gray-100 font-semibold">
-        Contact Admin
-      </button>
+      <div className="flex justify-center">
+      <button className="mt-4 py-2.5 px-16 border-2 rounded-md bg-gray-100 font-semibold">
+        <a href={contact}>Contact {nameString[0]}</a>
+      </button></div>
     </div>
   );
 };
