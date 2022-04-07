@@ -35,8 +35,7 @@ const TopNav = ({}) => {
   const [loginClicked, setLoginClicked] = useState(false);
   const [dropClick, setDropClick] = useState(false);
   const authHandler = async (err, data) => {
-    if (err) {
-      alert("Something went wrong!Please check your connection");
+    if (err && !data && !data["accessToken"]) {
       return;
     }
     if (loginClicked) {
@@ -77,11 +76,11 @@ const TopNav = ({}) => {
   // />
   const dropdownListener = (e) => {
     setDropClick(!dropClick);
-  }
+  };
   let loginComp = () => {
     if (userData?.first_name) {
       return (
-        <div className={`hidden sm:flex flex-col`}>
+        <div className={`sm:flex flex-col`}>
           <div className={`decoration-stone-800 flex items-center`}>
             <Avatar src={profile} size={38} />
             <div className="ml-2 relative">
@@ -108,7 +107,7 @@ const TopNav = ({}) => {
                   <Link
                     to="/nominate/about"
                     className="text-xs font-medium hover:bg-blue-100 px-3 py-2 rounded"
-                    onClick={()=>setDropClick(false)}
+                    onClick={() => setDropClick(false)}
                   >
                     My profile
                   </Link>
@@ -144,7 +143,9 @@ const TopNav = ({}) => {
       // </div>
       <div>
         <Link to="/login">
-          <button className="border-2 py-1 px-4 rounded-md text-sm font-medium">Login</button>
+          <button className="border-2 py-1 px-4 rounded-md text-sm font-medium">
+            Login
+          </button>
         </Link>
       </div>
     );
@@ -165,7 +166,7 @@ const TopNav = ({}) => {
         </div> */}
         <div className={styles.login}>
           {loginComp()}
-          <svg
+          {/* <svg
             className={`flex sm:hidden`}
             width="16"
             height="16"
@@ -177,7 +178,7 @@ const TopNav = ({}) => {
               d="M4.42678 7.42678L7.82326 10.8232C7.92089 10.9209 8.07918 10.9209 8.17681 10.8232L11.5732 7.42678C11.7307 7.26928 11.6192 7 11.3964 7H4.60356C4.38083 7 4.26929 7.26929 4.42678 7.42678Z"
               fill="#959DA5"
             />
-          </svg>
+          </svg> */}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 const { useState } = require("react");
 const { useDispatch, useSelector } = require("react-redux");
 const { useNavigate } = require("react-router-dom");
-const { API, updateCandidateData } = require("../api");
+const { MULTIPARTAPI, updateCandidateData } = require("../api");
 const { SET_CANDIDATE_DATA } = require("../constants");
 
 function buildFormData(formData, data, parentKey) {
@@ -56,7 +56,6 @@ const useNominate = () => {
     const data = { ...candidate, ...updatedData };
     setLoading(true);
     try {
-      API.defaults.headers["Content-Type"] = "multipart/form-data";
       const finalData = {};
       Object.keys(data).forEach((k) => {
         if (k == "nomination_status") {
