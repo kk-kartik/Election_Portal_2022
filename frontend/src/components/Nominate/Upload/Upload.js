@@ -13,12 +13,12 @@ const Upload = (props) => {
     const fileUploaded = event.target.files[0];
     props.handleFile("proof", fileUploaded);
   };
-  const [credentials, setCredentials] = useState([]);
+
   const onCLick = (e) => {
     e.preventDefault();
     let credential = <UploadField handleFile={props.handleFile} />;
-    setCredentials((credentials) => {
-      return [...credentials, credential];
+    props.setCredentials((credentials) => {
+      return [credential];
     });
   };
   return (
@@ -47,7 +47,7 @@ const Upload = (props) => {
         </div> */}
       </div>
       <div></div>
-      <div>{credentials}</div>
+      <div>{props.credentials}</div>
 
       <div className="pt-8">
         <button

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useNavigationType } from "react-router-dom";
+import { Navigate, useNavigate, useNavigationType } from "react-router-dom";
 import { getUser } from "../../actions/auth";
 import { API, updateCandidateData, uploadCredentials } from "../../api";
 import Upload from "../../components/Nominate/Upload/Upload";
@@ -11,7 +11,6 @@ import useNominate from "../../hooks/useNominate";
 import styles from "../Register/RegisterScreen.module.css";
 import SaveAndNext from "./SaveAndNext";
 const CredentialsScreen = () => {
-  const [credentials, setCredentials] = useState({});
   const {
     candidate,
     error,
@@ -21,6 +20,20 @@ const CredentialsScreen = () => {
     setError,
   } = useNominate();
 
+  const [credentials, setCredentials] = useState([]);
+
+  const navigate = useNavigate();
+
+  const submitData = async (uploadData) => {
+    const data = {
+      credentials: {
+        ...(candidate?.credentials ? candidate.credentials : {}),
+        ...uploadData,
+      },
+    };
+    updateNomination(data);
+  };
+
   const handleFile = async (title, file) => {
     try {
       API.defaults.headers["Content-Type"] = "multipart/form-data";
@@ -28,7 +41,8 @@ const CredentialsScreen = () => {
       formData.append("file", file);
       formData.append("name", title);
       const res = await uploadCredentials(formData);
-      setCredentials((prev) => ({ ...prev, [title]: res.data.file }));
+      submitData({ [title]: res.data.file });
+      setCredentials([]);
     } catch (err) {
       setError(
         err.response?.data?.detail ||
@@ -37,18 +51,8 @@ const CredentialsScreen = () => {
     }
   };
 
-  const submitData = async () => {
-    const data = {
-      credentials: {
-        ...(candidate?.credentials ? candidate.credentials : {}),
-        ...credentials,
-      },
-    };
-    updateNomination(data, "/nominate/video");
-  };
-
   const credDelete = async (title) => {
-    const prevCredentials = credentials;
+    const prevCredentials = candidate.credentials;
     const newCredentials = {};
     Object.keys(prevCredentials).forEach((k) => {
       if (k == title) return;
@@ -77,12 +81,16 @@ const CredentialsScreen = () => {
           ))}
         </>
       )}
-      <Upload handleFile={handleFile} />
+      <Upload
+        handleFile={handleFile}
+        credentials={credentials}
+        setCredentials={setCredentials}
+      />
       <SaveAndNext
         error={error}
         message={message}
         loading={loading}
-        submit={submitData}
+        submit={() => navigate("/nominate/witnesses")}
       />
     </>
   );
