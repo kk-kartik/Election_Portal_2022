@@ -60,7 +60,7 @@ const VerificationBox = () => {
         </button>
         <button
           className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
-          onClick={submitNominationForm}
+          onClick={submitNominationForm} disabled={!isComplete}
         >
           <div className={`${isComplete ? styles.text1 : styles.text2}`}>
             Send For Verification

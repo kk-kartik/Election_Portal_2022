@@ -18,7 +18,7 @@ import NominationRoute from "./custom-routes/NominationRoutes";
 
 function Pre() {
   return (
-    <div>
+    <div className="min-h-screen">
       <TopNav />
       <Routes>
         <Route path="/*" exact element={<PreElectionScreen />} />
@@ -69,7 +69,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    console.log("userData: ",userData);
+    console.log("userData: ", userData);
     if (
       userData &&
       Object.keys(candidate).length === 0 &&

@@ -6,6 +6,7 @@ const AgendasScreen = () => {
     <>
      <AgendaNavbar />
      <AgendaList />
+     
     </>
   );
 };
