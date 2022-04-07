@@ -161,6 +161,8 @@ class Candidate(models.Model):
     seconded_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     nomination_complete = models.BooleanField(default=False)
 
+    
+
     class Meta:
         unique_together = (('position', 'election', 'user'))
     

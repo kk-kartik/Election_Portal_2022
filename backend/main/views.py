@@ -15,7 +15,7 @@ from django.http import HttpResponse
 from django.core.files.base import ContentFile
 
 from django.views.generic.base import View
-from wkhtmltopdf.views import PDFTemplateResponse
+# from wkhtmltopdf.views import PDFTemplateResponse
 
 
 def create_pdf(request, name_slug, template_src, instance):
@@ -150,27 +150,28 @@ class CandidateAgendaPdf(generics.GenericAPIView):
             
         except Exception as e:
             return HttpResponse({"some error has occured in CandidateAgendaPdf"})
-        # create_pdf(request, name_slug, 'for_pdf.html', instance)
+        create_pdf(request, name_slug, 'for_pdf.html', instance)
         temp_dict = {**instance.__dict__, **instance.user.__dict__, **instance.position.__dict__, **instance.election.__dict__}
+        # temp_dict = {**instance.__dict__}
         temp_dict['election_name'] = temp_dict['name']
         temp_dict['name'] = instance.user.name
     	#data  = {"mydata":"your data"} # data that has to be renderd to pdf templete 
         
-        response = PDFTemplateResponse(request=request,
-                                        template='for_pdf.html',
-                                        filename="agenda.pdf",
-                                        context= temp_dict,
-                                        show_content_in_browser=False,
-                                        cmd_options={'margin-top': 10,
-                                        "zoom":1,
-                                        "viewport-size" :"1366 x 513",
-                                        'javascript-delay':1000,
-                                        'footer-center' :'[page]/[topage]',
-                                        "no-stop-slow-scripts":True},
-                                        )
-        return response
-        #return HttpResponse(instance.agenda_pdf, content_type='application/pdf')
-
+        # response = PDFTemplateResponse(request=request,
+        #                                 template='for_pdf.html',
+        #                                 filename="agenda.pdf",
+        #                                 context= temp_dict,
+        #                                 show_content_in_browser=False,
+        #                                 cmd_options={'margin-top': 10,
+        #                                 "zoom":1,
+        #                                 "viewport-size" :"1366 x 513",
+        #                                 'javascript-delay':1000,
+        #                                 'footer-center' :'[page]/[topage]',
+        #                                 "no-stop-slow-scripts":True},
+        #                                 )
+        # return response
+        return HttpResponse(instance.agenda_pdf, content_type='application/pdf')
+    
 class PositionsViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
     serializer_class = PositionSerializer
