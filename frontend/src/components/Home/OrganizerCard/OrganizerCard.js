@@ -1,6 +1,6 @@
 import React from "react";
-
-const OrganizerCard = () => {
+import princy from "../../../assets/team_images/princy.jpeg";
+const OrganizerCard = (props) => {
   return (
     <div className="border-2 w-fit p-4 rounded-md mt-8 mr-4">
       <div
@@ -8,13 +8,13 @@ const OrganizerCard = () => {
         style={{ maxWidth: "225px", margin: "auto" }}
       >
         <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsZW3yf5o2ljvgPhSpm-6_YQTUPNKiBH1z2Q&usqp=CAU"
+          src={props.image}
           alt=""
           className="h-full w-full object-fit rounded-sm"
         />
       </div>
-      <div className="font-bold font-sans text-lg">CEO of Election (TBD)</div>
-      <div className="text-gray-600 font-semibold">Chief</div>
+      <div className="font-bold font-sans text-lg">{props.name}</div>
+      <div className="text-gray-600 font-semibold">{props.post}</div>
       <div className="flex items-center space-x-2">
         <div>
           <svg
@@ -32,7 +32,7 @@ const OrganizerCard = () => {
             />
           </svg>
         </div>
-        <div className="font-gray-700">tbd@iitg.ac.in</div>
+        <div className="font-gray-700">+91-{props.contact}</div>
       </div>
       <button className="mt-6 py-2.5 px-16 border-2 rounded-md bg-gray-100 font-semibold">
         Contact Admin
