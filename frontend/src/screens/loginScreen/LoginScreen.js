@@ -27,8 +27,10 @@ const LoginScreen = () => {
         }
       );
       dispatch(getUser());
-      if (!res?.data?.euser?.registration_complete) {
+      if (!res?.data?.user?.registration_complete) {
         navigate("/register", { replace: true });
+      }else {
+        navigate("/", { replace: true });
       }
     } catch (err) {
       alert("Something went wrong!Please check your connection");
@@ -56,8 +58,10 @@ const LoginScreen = () => {
       );
       dispatch(getUser());
       sessionStorage.removeItem("msal.idtoken");
-      if (!res?.data?.euser?.registration_complete) {
+      if (!res?.data?.user?.registration_complete) {
         navigate("/register", { replace: true });
+      }else{
+        navigate("/",{replace: true})
       }
     } catch (err) {
       alert("Something went wrong!Please check your connection");
