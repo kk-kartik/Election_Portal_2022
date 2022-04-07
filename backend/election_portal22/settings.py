@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.microsoft',
     'main',
     "authentication",
+    "wkhtmltopdf",
     # 'rest_framework_swagger',
 ]
 REST_USE_JWT = True
@@ -85,7 +86,8 @@ REST_FRAMEWORK={
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'UNICODE_JSON': False
 }
 
 REST_AUTH_SERIALIZERS = {
@@ -134,6 +136,15 @@ if not DEBUG:
             "HOST":env("DB_HOST"),
             "PORT":5432
     }
+
+WKHTMLTOPDF_CMD_OPTIONS = {
+'quiet': True,
+}
+
+# if os.name != 'nt':
+#     WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+# else:
+#     WKHTMLTOPDF_DEBUG = True
 
 
 # Password validation
@@ -274,3 +285,5 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 ACCOUNT_EMAIL_VERIFICATION="none"
+
+WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'

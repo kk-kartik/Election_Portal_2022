@@ -8,6 +8,45 @@ from dj_rest_auth.jwt_auth import JWTAuthentication
 from .mixins import ElectionMixin
 from authentication.default_authentication_classes import default_authentication_classes
 
+from io import BytesIO
+from xhtml2pdf import pisa
+from django.template.loader import get_template
+from django.http import HttpResponse
+from django.core.files.base import ContentFile
+
+from django.views.generic.base import View
+from wkhtmltopdf.views import PDFTemplateResponse
+
+
+def create_pdf(request, name_slug, template_src, instance):
+    template = get_template(template_src)
+    html  = template.render({**instance.__dict__})
+    temp_dict = {**instance.__dict__, **instance.user.__dict__, **instance.position.__dict__, **instance.election.__dict__}
+    temp_dict['election_name'] = temp_dict['name']
+    temp_dict['name'] = instance.user.name
+    cur_url = request.build_absolute_uri()
+    cur_url = cur_url[:cur_url.find(name_slug)]
+    cur_url += 'media/'
+    # print("#####")
+    # print(temp_dict['sign'])
+    # print(cur_url)
+    # print("#####")
+    # temp_dict['sign'] = cur_url + temp_dict['sign']
+    # temp_dict['image'] = cur_url + temp_dict['image']
+    html  = template.render(temp_dict)
+    print(html)
+    result = BytesIO()
+
+    # pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+    if not pdf.err:
+        instance.agenda_pdf.save(instance.user.name + '-agenda.pdf', ContentFile(result.getvalue()))
+        # instance.agenda_pdf.save(instance.user.email + '-agenda.pdf', ContentFile(result.getvalue()))
+        # print(instance.user.name + 'agenda.pdf')
+        # return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return HttpResponse('We had some errors<pre></pre>')
+
+
 
 class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
     serializer_class=CandidateSerializer
@@ -73,9 +112,13 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     
     def get_queryset(self):
         try:
-            is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
+            is_organizer = Voter.objects.filter(election_organizers__id=self.election.id,user__id=self.user.euser.id).exists()
         except Exception as err:
             is_organizer=False
+
+        print(list(self.election.candidates_e.all())[0])
+        # print(self.)
+        # create_pdf('for_pdf.html', list(self.election.candidates_e.all())[0])
         
         candidates = self.election.candidates_e.all()
         if is_organizer:
@@ -86,7 +129,9 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
         return serializer.save(election=self.election,user=self.request.user.euser)
     
     def perform_update(self,serializer):
-        return serializer.save(election=self.election)
+        instance=serializer.save(election=self.election)
+        # create_pdf('for_pdf.html', instance)
+        return instance
     
     def create(self,request,*args,**kwargs):
         is_registered = self.election.candidates_e.filter(user=request.user.euser,position=request.data.get("position"))
@@ -94,6 +139,37 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
             return Response({"detail":"Candidate Already Registered"},status=status.HTTP_400_BAD_REQUEST)
         return super(CandidatesViewSet,self).create(request,*args,**kwargs)
 
+
+class CandidateAgendaPdf(generics.GenericAPIView):
+    permission_classes=[permissions.IsAuthenticated]
+    authentication_classes=default_authentication_classes
+
+    def get(self,request,name_slug,id):
+        try:
+            instance = Candidate.objects.get(id=id)
+            
+        except Exception as e:
+            return HttpResponse({"some error has occured in CandidateAgendaPdf"})
+        # create_pdf(request, name_slug, 'for_pdf.html', instance)
+        temp_dict = {**instance.__dict__, **instance.user.__dict__, **instance.position.__dict__, **instance.election.__dict__}
+        temp_dict['election_name'] = temp_dict['name']
+        temp_dict['name'] = instance.user.name
+    	#data  = {"mydata":"your data"} # data that has to be renderd to pdf templete 
+        
+        response = PDFTemplateResponse(request=request,
+                                        template='for_pdf.html',
+                                        filename="agenda.pdf",
+                                        context= temp_dict,
+                                        show_content_in_browser=False,
+                                        cmd_options={'margin-top': 10,
+                                        "zoom":1,
+                                        "viewport-size" :"1366 x 513",
+                                        'javascript-delay':1000,
+                                        'footer-center' :'[page]/[topage]',
+                                        "no-stop-slow-scripts":True},
+                                        )
+        return response
+        #return HttpResponse(instance.agenda_pdf, content_type='application/pdf')
 
 class PositionsViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
