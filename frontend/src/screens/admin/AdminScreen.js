@@ -21,47 +21,49 @@ const AdminScreen = () => {
   return (
     <div className="bg-gray-100 font-family-karla flex">
       {loginBool ? (
-        <Sidebar>
+        <>
           {loginBool?.is_staff ? (
-            <Routes>
-              <Route
-                exact
-                path={`/importantdates`}
-                element={<ImportantDatesScreen />}
-              />
-              <Route
-                exact
-                path={`/importantdates/add`}
-                element={<AddImportantDateScreen />}
-              />
-              <Route
-                exact
-                path={`/importantdates/:id`}
-                element={<EditImportantDateScreen />}
-              />
-              <Route exact path={`/debates`} element={<DebatesScreen />} />
-              <Route
-                exact
-                path={`/debates/add`}
-                element={<AddDebateScreen />}
-              />
-              <Route
-                exact
-                path={`/debates/:id`}
-                element={<EditDebateScreen />}
-              />
-              <Route
-                exact
-                path={`/candidates`}
-                element={<CandidatesScreen />}
-              />
+            <Sidebar>
+              <Routes>
+                <Route
+                  exact
+                  path={`/importantdates`}
+                  element={<ImportantDatesScreen />}
+                />
+                <Route
+                  exact
+                  path={`/importantdates/add`}
+                  element={<AddImportantDateScreen />}
+                />
+                <Route
+                  exact
+                  path={`/importantdates/:id`}
+                  element={<EditImportantDateScreen />}
+                />
+                <Route exact path={`/debates`} element={<DebatesScreen />} />
+                <Route
+                  exact
+                  path={`/debates/add`}
+                  element={<AddDebateScreen />}
+                />
+                <Route
+                  exact
+                  path={`/debates/:id`}
+                  element={<EditDebateScreen />}
+                />
+                <Route
+                  exact
+                  path={`/candidates`}
+                  element={<CandidatesScreen />}
+                />
 
-              <Route exact path={`/faq`} element={<FAQScreen />} />
-              <Route exact path={`/faq/add`} element={<AddFAQScreen />} />
-              <Route exact path={`/faq/:id`} element={<EditFAQScreen />} />
-            </Routes>
+                <Route exact path={`/faq`} element={<FAQScreen />} />
+                <Route exact path={`/faq/add`} element={<AddFAQScreen />} />
+                <Route exact path={`/faq/:id`} element={<EditFAQScreen />} />
+              </Routes>
+            </Sidebar>
           ) : (
-            <div className="h-4/5 flex justify-center items-center">
+            <div className="absolute left-1/2 top-1/2 transform -translate-x-2/4 -translate-y-1/2">
               <div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-center">
                   You are Not Authorized.
@@ -69,9 +71,9 @@ const AdminScreen = () => {
               </div>
             </div>
           )}
-        </Sidebar>
+        </>
       ) : (
-        <div className="h-4/5 flex justify-center items-center">
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-2/4 -translate-y-1/2">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold text-center">
               Welcome to Election Portal's Admin Panel.
