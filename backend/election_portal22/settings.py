@@ -87,6 +87,9 @@ REST_FRAMEWORK={
         'rest_framework.permissions.AllowAny',
     ]
 }
+if not DEBUG:
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"]=["rest_framework.renderers.JSONRenderer"]
+
 
 REST_AUTH_SERIALIZERS = {
    "USER_DETAILS_SERIALIZER":"authentication.serializers.CustomUserDetailSerializer"
@@ -230,9 +233,7 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     CORS_ORIGIN_ALLOW_ALL = True
     ALLOWED_HOSTS = ["*"]
-else:
-    JWT_AUTH_SAMESITE = "None"
-    JWT_AUTH_SECURE = True
+
 
 
 OUTLOOK_CLIENT_ID = env("OUTLOOK_CLIENT_ID")

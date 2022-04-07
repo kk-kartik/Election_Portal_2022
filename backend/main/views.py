@@ -66,10 +66,16 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     serializer_class = CandidateSerializer
     authentication_classes=default_authentication_classes
     
-    # def get_serializer_class(self):
-    #     if self.action in ["create",'update']:
-    #         return CandidateSerializer
-    #     return CandidateReadSerializer
+    def get_serializer_class(self):
+        if self.action in ["create",'update']:
+            try:
+                is_organizer = self.election.organizers.filter(user__id=self.request.user.euser.id).exists()
+            except:
+                is_organizer=False
+            if is_organizer:
+                return CandidateOrganizerSerializer
+            return CandidateSerializer
+        return CandidateReadSerializer
     
     def get_queryset(self):
         try:
@@ -146,7 +152,21 @@ class DebatesViewSet(ElectionMixin,viewsets.ModelViewSet):
          return serializer.save(election=self.election)
 
 
-class CredentialCreateAPIView(Election,generics.CreateAPIView):
+class CredentialCreateAPIView(ElectionMixin,generics.CreateAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = CredentialSerializer
     authentication_classes=default_authentication_classes
+
+
+class IsOrganizerView(ElectionMixin,generics.GenericAPIView):
+   permission_classes=[permissions.IsAuthenticated]
+   authentication_classes=default_authentication_classes
+
+   def get(self,request,*args,**kwargs):
+        try:
+           is_organizer=self.election.organizers.filter(user__id=self.request.user.euser.id).exists()
+        except:
+           is_organizer=False
+        
+        return Response({'isOrganizer':is_organizer},status=status.HTTP_200_OK)
+        
