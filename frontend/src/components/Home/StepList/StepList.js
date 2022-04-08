@@ -110,7 +110,7 @@ const StepList = () => {
               navigate(path);
             }}
           >
-            {candidate?.id ? "View Nomination" : "Apply Now"}
+            {userData && userData?.candidates.length!==0 ? "View Nomination" : "Apply Now"}
           </button>
           {/* <button class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium py-2 px-6 rounded border-2">
             Learn More

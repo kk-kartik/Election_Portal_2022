@@ -10,6 +10,7 @@ import { getUser, logout } from "../../actions/auth";
 import { useNavigate } from "react-router-dom";
 import { ELECTIONAPI, IS_PROD, OUTLOOK_LOGIN_URL } from "../../constants";
 import cards from "../../assets/images_1.png";
+import bg from "../../assets/authBg.jpeg";
 import Footer from "../../components/Footer/Footer";
 
 const LoginScreen = () => {
@@ -247,7 +248,7 @@ const LoginScreen = () => {
             </div>
           </div>
           <div className="hidden md:block">
-            <img src={cards} alt="cards" className="h-screen" />
+            <img src={bg} alt="cards" className="h-screen" />
           </div>
         </div>
         {/* <div className="flex flex-col">
