@@ -22,7 +22,7 @@ const AgendaNavbar = () => {
           Learn More
         </button>
       </div>
-      {isOpen && <LearnMore content={modalText} setIsOpen={setIsOpen} />}
+      {isOpen && <LearnMore page="agenda" setIsOpen={setIsOpen} />}
       <hr className="my-2 border border-solid border-gray-200" />
     </div>
   );
