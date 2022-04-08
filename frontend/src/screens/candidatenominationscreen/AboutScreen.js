@@ -142,10 +142,10 @@ const AboutScreen = () => {
       data["image"] = uploadImage;
     }
     const cData = {
-      cpi: candidate.cpi,
+      cpi: candidate.cpi || "",
       contact_no: candidate.contact_no || "",
-      backlogs: candidate.backlogs,
-      active_backlogs: candidate.active_backlogs,
+      backlogs: candidate.backlogs || "",
+      active_backlogs: candidate.active_backlogs || "",
     };
     try {
       await candidateSchema.validate(candidateData || cData, {
