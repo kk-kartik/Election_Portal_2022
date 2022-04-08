@@ -2,6 +2,7 @@ import { useState } from "react";
 import styles from "./Agenda.module.css";
 import dots from "./three-dots.svg";
 import deleteSVG from "./delete.svg";
+import editSVG from "./edit.svg";
 const Agenda = (props) => {
   const [clicked, setClicked] = useState(false);
   let shortAgenda =
@@ -57,8 +58,11 @@ const Agenda = (props) => {
             <div className="pt-4">{agenda}</div>
             <img
               className="self-end mr-0 ml-auto w-5 h-5 cursor-pointer"
-              src={deleteSVG}
-              onClick={agendaDelete}
+              src={editSVG}
+              onClick={() => {
+                props.setTitle(props.title);
+                props.setIsOpen(true);
+              }}
             ></img>
           </div>
         </div>

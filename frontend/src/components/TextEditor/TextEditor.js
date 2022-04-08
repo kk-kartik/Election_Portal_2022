@@ -21,30 +21,39 @@ const TextEditor = (props) => {
     setEditorState(state);
   };
 
+  useState(() => {
+    if (props.title) {
+      setEditorState(
+        EditorState.createWithContent(
+          convertFromHTML(props?.candidate?.agenda_text[props.title])
+        )
+      );
+    }
+  }, [props.title]);
+
   const convertContentToHTML = () => {
     currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
   };
-  const [title, setTitle] = useState("");
 
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (!title) {
+    if (!props.title) {
       alert("Please add a title");
       return;
     }
-    props.setTitle(title);
     convertContentToHTML();
     const convertedString = parse(currentContentAsHTML);
     const data = {
       agenda_text: {
         ...props.candidate?.agenda_text,
-        [title]: currentContentAsHTML,
+        [props.title]: currentContentAsHTML,
       },
     };
 
     props.updateNomination(data);
     props.setIsOpen(false);
+    props.setTitle(null);
   };
 
   return (
@@ -55,7 +64,10 @@ const TextEditor = (props) => {
             <h1 className="text-2xl"> Add New Agenda</h1>
             <button
               className={`ml-auto self-center ${styles.link}`}
-              onClick={() => props.setIsOpen(false)}
+              onClick={() => {
+                props.setTitle(null);
+                props.setIsOpen(false);
+              }}
             >
               Cancel
             </button>
@@ -66,8 +78,8 @@ const TextEditor = (props) => {
                 type="text"
                 placeholder="Title"
                 className={` ${styles.input} p-2 w-full`}
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={props.title}
+                onChange={(e) => props.setTitle(e.target.value)}
               />
             </div>
             <div className={` ${styles.editor} p-2`}>

@@ -15,7 +15,7 @@ const AgendaList = () => {
   } = useNominate();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(null);
 
   return (
     <div className="">
@@ -24,8 +24,8 @@ const AgendaList = () => {
           <Agenda
             title={a}
             agenda={parse(candidate.agenda_text[a])}
-            candidate={candidate}
-            updateNomination={updateNomination}
+            setIsOpen={setIsOpen}
+            setTitle={setTitle}
           />
         ))}
       {!candidate ||
@@ -40,6 +40,7 @@ const AgendaList = () => {
           setTitle={setTitle}
           updateNomination={updateNomination}
           candidate={candidate}
+          title={title}
         />
       )}
       {/* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}></textarea> */}
