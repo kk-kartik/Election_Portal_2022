@@ -1,8 +1,6 @@
 import React from "react";
-import { useState } from "react";
 import "react-image-crop/dist/ReactCrop.css";
 import Avatar from "./Avatar";
-import ImageEditor from "./ImageEditor";
 
 const PicIntroUpload = ({
   uploadImage,
@@ -13,9 +11,8 @@ const PicIntroUpload = ({
   intro,
   validationErrors,
 }) => {
-  const [isPopUp, setIsPopUp] = useState(false);
-  const [fileName, setFileName] = useState(null);
-  const [imgType, setImgType] = useState(null);
+  console.log("khulllaaaaaaaaaaa ncdlnlcd");
+
   return (
     <div className="w-full p-3 m-6 mt-0">
       <div className="font-medium">Profile Pic : </div>
@@ -33,13 +30,7 @@ const PicIntroUpload = ({
             type="file"
             id="select-image"
             style={{ display: "none" }}
-            onChange={(e) => {
-              setUploadImage(e.target.files[0]);
-              console.log(e.target.files[0]);
-              setFileName(e.target.files[0].name);
-              setImgType(e.target.files[0].type);
-              setIsPopUp(true);
-            }}
+            onChange={(e) => setUploadImage(e.target.files[0])}
             required
           />
           <label htmlFor="select-image">
@@ -48,18 +39,8 @@ const PicIntroUpload = ({
             </div>
           </label>
           {imageURL && <Avatar imageURL={imageURL} />}
-          {isPopUp && (
-            <ImageEditor
-              imageURL={imageURL}
-              setIsPopUp={setIsPopUp}
-              setUploadImage={setUploadImage}
-              fileName={fileName}
-              imgType={imgType}
-            />
-          )}
         </div>
       </div>
-      {/* this is textbox */}
       <div className="mt-3 font-medium">Brief Introduction :</div>
       <textarea
         type="text"
