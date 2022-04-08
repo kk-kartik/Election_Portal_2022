@@ -22,6 +22,24 @@ const VerificationBox = () => {
     setMessage,
   } = useNominate();
 
+  const userData = useSelector((store) => store.auth);
+
+  const checkCreds = () => {
+    if (
+      candidate &&
+      candidate.credentials &&
+      candidate.credentials["Grade Card"]
+    ) {
+      if(userData?.euser?.degree === "P" && candidate.credentials["Thesis incomplete proof"]){
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return false;
+    }
+  };
+
   const submitNominationForm = async () => {
     if (!isComplete) {
       setError("Please complete nomination form");
@@ -49,21 +67,14 @@ const VerificationBox = () => {
           done={
             candidate &&
             candidate.agenda_text &&
-            Object.keys(candidate.agenda_text).length >= 4
+            Object.keys(candidate.agenda_text).length >= 3
           }
         />
         {/* <Tile svg={formSVG} text={"Generate Nomination form"} done={true} /> */}
         <Tile
           svg={plusSVG}
           text={"Add Credentials"}
-          done={
-            candidate &&
-            candidate.credentials &&
-            candidate.credentials["Grade Card"] &&
-            (candidate.user.degree === "P" &&
-            candidate.credentials["Thesis incomplete proof"]) &&
-            Object.keys(candidate.credentials).length >= 1
-          }
+          done={checkCreds()}
         />
         <Tile
           svg={verifySVG}

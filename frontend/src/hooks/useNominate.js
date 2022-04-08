@@ -40,16 +40,33 @@ const useNominate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const candidate = useSelector((store) => store.candidate);
-  const isCredsComplete =
-    candidate &&
-    candidate.credentials &&
-    candidate.credentials["Grade Card"] &&
-    (candidate.user.degree==="P" && candidate.credentials["Thesis incomplete proof"]) &&
-    Object.keys(candidate.credentials).length >= 1;
+  const userData = useSelector((store) => store.auth);
+
+  const checkCreds = () => {
+    if (
+      candidate &&
+      candidate.credentials &&
+      candidate.credentials["Grade Card"]
+    ) {
+      if (
+        userData?.euser?.degree === "P" &&
+        candidate.credentials["Thesis incomplete proof"]
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+
+  const isCredsComplete = checkCreds();
   const isAgendaComplete =
     candidate &&
     candidate.agenda_text &&
-    Object.keys(candidate.agenda_text).length >= 4;
+    Object.keys(candidate.agenda_text).length >= 3;
   const isComplete =
     !!candidate.id &&
     !!candidate.video &&

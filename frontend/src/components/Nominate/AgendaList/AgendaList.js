@@ -32,8 +32,8 @@ const AgendaList = () => {
         ))}
       {!candidate ||
         !candidate?.agenda_text ||
-        (Object.keys(candidate?.agenda_text || []).length < 4 && (
-          <p className="text-sm">Add Atleast 4 agendas</p>
+        (Object.keys(candidate?.agenda_text || []).length < 3 && (
+          <p className="text-sm">Add Atleast 3 agendas</p>
         ))}
 
       {isOpen && (

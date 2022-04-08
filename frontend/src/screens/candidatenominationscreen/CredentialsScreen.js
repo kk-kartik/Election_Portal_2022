@@ -25,6 +25,7 @@ const CredentialsScreen = () => {
   const [credentials, setCredentials] = useState([]);
 
   const navigate = useNavigate();
+  const userData = useSelector((store) => store.auth);
 
   const submitData = async (uploadData) => {
     const data = {
@@ -87,7 +88,7 @@ const CredentialsScreen = () => {
         link={candidate.credentials && candidate.credentials["Grade Card"]}
       />
 
-      {candidate?.user?.degree === "P" && (
+      {userData?.euser?.degree === "P" && (
         <FixedUploadField
           handleFile={handleFile}
           credDelete={credDelete}
