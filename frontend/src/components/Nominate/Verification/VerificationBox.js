@@ -65,7 +65,12 @@ const VerificationBox = () => {
         <Tile
           svg={verifySVG}
           text={"Add Witness Data"}
-          done={!!(candidate.proposed_by?.name && candidate.seconded_by?.name)}
+          done={
+            !(
+              candidate?.proposed_by?.name == "" ||
+              candidate?.seconded_by?.name == ""
+            )
+          }
         />
       </div>
       <div className={`flex mt-4`}>

@@ -27,10 +27,6 @@ const WitnessesScreen = () => {
   const [signs, setSigns] = useState({});
 
   const submitData = async () => {
-    if (candidate.proposed_by.name == "" || candidate.seconded_by.name == "") {
-      setError("Please enter witness details");
-      return;
-    }
     if (secondedByData) {
       try {
         await aboutSchema.validate(secondedByData, { abortEarly: false });
@@ -64,6 +60,10 @@ const WitnessesScreen = () => {
       proposed_by: proposedByData || candidate.proposed_by,
       seconded_by: secondedByData || candidate.seconded_by,
     };
+    if (data.proposed_by.name == "" || data.seconded_by.name == "") {
+      setError("Please enter witness details");
+      return;
+    }
     updateNomination(data, "/nominate/verification");
   };
 
