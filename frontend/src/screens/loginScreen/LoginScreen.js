@@ -186,7 +186,7 @@ const LoginScreen = () => {
                   Register yourself by using IITG email
                 </p>
               </div>
-              {true ? (
+              {IS_PROD ? (
                 <div className="md:ml-32 mt-4">
                   <div className="w-6/12">
                     <a href={OUTLOOK_LOGIN_URL}>
