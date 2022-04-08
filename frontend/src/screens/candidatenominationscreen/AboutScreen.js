@@ -42,6 +42,8 @@ const AboutScreen = () => {
   const userData = useSelector((store) => store.auth);
   const [profileData, setProfileData] = useState(null);
 
+  console.log("khulllaaaaaaaaaaa");
+
   const [uploadImage, setUploadImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
   const [intro, setIntro] = useState(null);
@@ -117,7 +119,7 @@ const AboutScreen = () => {
 
   return (
     <>
-      <div className="hidden flex flex-col	md:flex-row ">
+      <div className="flex flex-col	md:flex-row ">
         <div className="w-full md:w-4/12">
           <WitnessDataForm
             data={profileData || userData?.euser}
