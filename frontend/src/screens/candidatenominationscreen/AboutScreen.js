@@ -86,18 +86,32 @@ const AboutScreen = () => {
         }
         return;
       }
+      try {
+        const res = await userRegistration(profileData);
+      } catch (err) {
+        setError(
+          err.response?.data?.detail ||
+            "Something went wrong!Please again or refresh the browser"
+        );
+        return;
+      }
     }
-
-    try {
-      const res = await userRegistration(profileData);
-    } catch (err) {
-      setError(
-        err.response?.data?.detail ||
-          "Something went wrong!Please again or refresh the browser"
-      );
+    if (candidate.about == "" && !intro) {
+      setValidationErrors((prev) => ({
+        ...prev,
+        about: "Intro should be minimum 50 words.",
+      }));
       return;
     }
-    const data = { image: uploadImage, about: intro };
+    const data = {};
+    if (intro) {
+      data["about"] = intro;
+    } else {
+      data["about"] = candidate.about;
+    }
+    if (uploadImage) {
+      data["image"] = uploadImage;
+    }
     updateNomination(data, "/nominate/agendas");
   };
 
