@@ -1,5 +1,5 @@
 <html lang="en">
-
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,7 +75,7 @@
 
 
         .container,
-        .container-fluid,
+        .container-fluid,static
         .container-xxl,
         .container-xl,
         .container-lg,
@@ -309,11 +309,13 @@
     </style>
 </head>
 
-<body>
+<body style="font-family: 'Times New Roman', Times, serif;">
 
-    <div style="margin: 20px;" class="imgClass">
-        <img src="/home/swc/election_portal/Election_Portal_2022/backend/assets/admin/img/gymkhana_img.png" alt="">
+    <div style="margin: 32px;margin-left: -10px;" class="imgClass">
+        <img src="https://swc.iitg.ac.in/elections_api/media/candidate_profile/Header1.png" alt="">
     </div>
+    <div style="font-size: 20px; text-align: center;"><strong> <u> Nomination Form </u></strong> </div>
+
     <br>
     <div style="font-size: 19px;">Post contesting for: <strong> {{title}} </strong> </div>
     <br>
@@ -475,10 +477,31 @@
     <br>
     <div style="font-size: 15px;" >Signature with date: </div><br>
 
-    <div style="margin: 20px; margin-left: 8px;" class="imgClass">
-        <img src="/home/swc/election_portal/Election_Portal_2022/backend/assets/admin/img/agenda.png" alt="">
+    <div style="margin: 20px;margin-left: -10px;" class="imgClass">
+        <img src="https://swc.iitg.ac.in/elections_api/media/candidate_profile/Header1.png" alt="">
     </div>
+    <div style="font-size: 20px; text-align: center;"><strong> <u> Agendas and Declaration Form </u></strong> </div>
+    <br>
+    <table> 
+        <tr>
+            <td>
+                <div style="font-size: 15px;" >Post contesting for: </div>
+                <div style="font-size: 15px;" >{{title}} </div><br>
+                <div style="font-size: 15px;" >Name: {{name}} </div><br>
+                
+                <div style="font-size: 15px;" >Tagline (Punch line): {{tagline}} </div><br>            
+            </td>
+            <td></td>
+            <td>
+                <!-- <div style="border: #000 1px solid; height: 148px;width: 140px;display: block;"> -->
+                    <!-- <img src="{{image}}" style="border: #000 2px solid;" alt=""> -->
+                    <img src="{{image}}" style="height: 147px;width: 150px; object-fit: cover;"  alt="Image not loaded">   
+                <!-- </div> -->
+            </td>
+        </tr>
+    </table>
 
+    <br>
 
     {% for key,value in agenda_text.items %}
     <ul>
@@ -486,10 +509,9 @@
             {{key}} 
         </strong></div>
         <div style="font-size: 16px;">
-            {{value}} 
+            {{value |safe}} 
         </div>
     </ul>    
-    <br>
     <br>
     {% endfor %}
     

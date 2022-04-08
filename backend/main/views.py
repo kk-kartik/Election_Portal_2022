@@ -27,6 +27,11 @@ def create_pdf(request, name_slug, template_src, instance):
     cur_url = request.build_absolute_uri()
     cur_url = cur_url[:cur_url.find(name_slug)]
     cur_url += 'media/'
+    base_url = 'https://swc.iitg.ac.in/elections_api/media/'
+    candidate_url = base_url + str(instance.image)
+    temp_dict['image'] = candidate_url
+
+    print(candidate_url)
     # print("#####")
     # print(temp_dict['sign'])
     # print(cur_url)
@@ -34,11 +39,12 @@ def create_pdf(request, name_slug, template_src, instance):
     # temp_dict['sign'] = cur_url + temp_dict['sign']
     # temp_dict['image'] = cur_url + temp_dict['image']
     html  = template.render(temp_dict)
-    print(html)
+    # print(html)
     result = BytesIO()
 
     # pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
     pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+    # print(pdf)
     if not pdf.err:
         instance.agenda_pdf.save(instance.user.name + '-agenda.pdf', ContentFile(result.getvalue()))
         # instance.agenda_pdf.save(instance.user.email + '-agenda.pdf', ContentFile(result.getvalue()))
@@ -130,7 +136,7 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     
     def perform_update(self,serializer):
         instance=serializer.save(election=self.election)
-        # create_pdf('for_pdf.html', instance)
+        create_pdf('for_pdf.html', instance)
         return instance
     
     def create(self,request,*args,**kwargs):
