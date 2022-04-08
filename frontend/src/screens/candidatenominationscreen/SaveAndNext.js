@@ -3,7 +3,7 @@ import styles from "../Register/RegisterScreen.module.css";
 
 function SaveAndNext({ error, message, loading, submit }) {
   return (
-    <div className="mt-5">
+    <div className="">
       {loading && <p className="text-sm text-green">Saving...</p>}
       {message && <p className="text-red">{message}</p>}
 

@@ -8,8 +8,11 @@ import verifySVG from "./verify.svg";
 import styles from "./VerificationBox.module.css";
 import { useSelector } from "react-redux";
 import { API, updateCandidateData } from "../../../api";
-import { useState } from "react";
+import React, { useState } from "react";
 import useNominate from "../../../hooks/useNominate";
+import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
+
+const lastDateOfVerification = "11/04/22";
 
 const VerificationBox = () => {
   const {
@@ -24,6 +27,7 @@ const VerificationBox = () => {
   } = useNominate();
 
   const userData = useSelector((store) => store.auth);
+  const [isOpen, setIsOpen] = useState(false);
 
   const checkCreds = () => {
     if (
@@ -95,13 +99,16 @@ const VerificationBox = () => {
             className={`${styles.text}`}
             href={`https://swc.iitg.ac.in/elections_api/sgc/candidate_pdf/${candidate?.id}/`}
             target="_blank"
+            rel="noreferrer"
           >
             Preview Nomination Form
           </a>
         </button>
         <button
           className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
-          onClick={submitNominationForm}
+          disabled={!isComplete}
+          onClick={() => setIsOpen(!isOpen)}
+          //onClick={submitNominationForm}
         >
           <div className={`${isComplete ? styles.text1 : styles.text2}`}>
             {isNominationComplete
@@ -117,12 +124,15 @@ const VerificationBox = () => {
       {message && <p className="text-green-600 mt-5">{message}</p>}
       <div className={`flex mt-4`}>
         <div className={`${styles.lastdate}`}>
-          Last Date for Verification is: 11/04/22
+          Last Date for Verification is: {lastDateOfVerification}
         </div>
         <div className={`mr-0 ml-auto ${styles.help}`}>
           <a href="mailto:swc@iitg.ac.in">Need Help?</a>
         </div>
       </div>
+      {isOpen && (
+        <ConfirmDialog setIsOpen={setIsOpen} finalSubmit={submitNominationForm}/>
+      )}
     </div>
   );
 };
