@@ -7,16 +7,58 @@ import { useNavigate } from "react-router-dom";
 import { SET_CANDIDATE_DATA } from "../../constants";
 import useNominate from "../../hooks/useNominate";
 import SaveAndNext from "./SaveAndNext";
+import * as yup from "yup";
 
 const WitnessesScreen = () => {
-  const { candidate, error, message, updateNomination, loading } =
-    useNominate();
+  const {
+    candidate,
+    error,
+    message,
+    updateNomination,
+    loading,
+    setError,
+  } = useNominate();
 
   const [proposedByData, setProposedyData] = useState(null);
   const [secondedByData, setSecondedByData] = useState(null);
+  const [pvalidationErrors, setPValidationErrors] = useState(null);
+  const [svalidationErrors, setSValidationErrors] = useState(null);
+
   const [signs, setSigns] = useState({});
 
   const submitData = async () => {
+    if (candidate.proposed_by.name == "" || candidate.seconded_by.name == "") {
+      setError("Please enter witness details");
+      return;
+    }
+    if (secondedByData) {
+      try {
+        await aboutSchema.validate(secondedByData, { abortEarly: false });
+      } catch (err) {
+        if (err.inner) {
+          setSValidationErrors((prev) => {
+            const newError = {};
+            err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
+            return newError;
+          });
+        }
+      }
+    }
+
+    if (proposedByData) {
+      try {
+        await aboutSchema.validate(proposedByData, { abortEarly: false });
+      } catch (err) {
+        if (err.inner) {
+          setPValidationErrors((prev) => {
+            const newError = {};
+            err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
+            return newError;
+          });
+        }
+        return;
+      }
+    }
     const data = {
       ...signs,
       proposed_by: proposedByData || candidate.proposed_by,
@@ -25,9 +67,27 @@ const WitnessesScreen = () => {
     updateNomination(data, "/nominate/verification");
   };
 
+  let aboutSchema = yup.object().shape({
+    name: yup
+      .string()
+      .required("Please enter the name")
+      .min(3, "Please enter a valid name"),
+    degree: yup.string().required(),
+    branch: yup.string().required(),
+    hostel: yup.string().required(),
+    roll_number: yup
+      .string()
+      .required()
+      .matches(/^[0-9]+$/, "Must be only digits")
+      .min(9, "Roll number should have atleast 9 digits")
+      .max(12, "Roll number shouldn't be more than 12 digits")
+      .typeError("Please enter digits only"),
+  });
+
   const onChange = (e) => {
     setSigns((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
   };
+
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2">
@@ -42,6 +102,7 @@ const WitnessesScreen = () => {
               (candidate?.proposed_by ? candidate.proposed_by : {})
             }
             setData={setProposedyData}
+            validationErrors={pvalidationErrors}
           />
           <br />
           {/* <div className="font-semibold text-s text-gray-800">Signature :</div> */}
@@ -65,6 +126,7 @@ const WitnessesScreen = () => {
               (candidate?.proposed_by ? candidate.seconded_by : {})
             }
             setData={setSecondedByData}
+            validationErrors={svalidationErrors}
           />
           <br />
           {/* <div className="font-semibold text-s text-gray-800">Signature :</div>

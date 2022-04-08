@@ -67,9 +67,13 @@ const CredentialsScreen = () => {
   return (
     <>
       <UploadNavbar />
+      {!candidate.credentials ||
+        (Object.keys(candidate?.credentials).length == 0 && (
+          <p>Upload all the important documents and credentials</p>
+        ))}
       {candidate.credentials && Object.keys(candidate.credentials).length != 0 && (
         <>
-          <h2>Previous uploaded credentials</h2>
+          <h2 className="mb-2">Uploaded credentials</h2>
 
           {Object.keys(candidate.credentials).map((k, i) => (
             <UploadField

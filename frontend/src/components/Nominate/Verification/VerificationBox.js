@@ -18,9 +18,15 @@ const VerificationBox = () => {
     message,
     updateNomination,
     isComplete,
+    setError,
+    setMessage,
   } = useNominate();
 
   const submitNominationForm = async () => {
+    if (!isComplete) {
+      setError("Please complete nomination form");
+      return;
+    }
     updateNomination({ nomination_complete: true });
   };
 
@@ -40,13 +46,21 @@ const VerificationBox = () => {
         <Tile
           svg={agendaSVG}
           text={"Upload your agendas"}
-          done={!!candidate.agenda_text}
+          done={
+            candidate &&
+            candidate.agenda_text &&
+            Object.keys(candidate.agenda_text).length >= 4
+          }
         />
         <Tile svg={formSVG} text={"Generate Nomination form"} done={true} />
         <Tile
           svg={plusSVG}
           text={"Add Credentials"}
-          done={!!candidate.credentials}
+          done={
+            candidate &&
+            candidate.credentials &&
+            Object.keys(candidate.credentials).length >= 1
+          }
         />
         <Tile
           svg={verifySVG}
@@ -60,7 +74,7 @@ const VerificationBox = () => {
         </button>
         <button
           className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
-          onClick={submitNominationForm} disabled={!isComplete}
+          onClick={submitNominationForm}
         >
           <div className={`${isComplete ? styles.text1 : styles.text2}`}>
             Send For Verification

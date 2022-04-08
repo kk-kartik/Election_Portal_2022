@@ -40,10 +40,18 @@ const useNominate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const candidate = useSelector((store) => store.candidate);
+  const isCredsComplete =
+    candidate &&
+    candidate.credentials &&
+    Object.keys(candidate.credentials).length >= 1;
+  const isAgendaComplete =
+    candidate &&
+    candidate.agenda_text &&
+    Object.keys(candidate.agenda_text).length >= 4;
   const isComplete =
     !!candidate.id &&
     !!candidate.video &&
-    !!candidate.agenda_text &&
+    isAgendaComplete &&
     !!candidate.credentials &&
     !!candidate.proposed_by?.name;
 

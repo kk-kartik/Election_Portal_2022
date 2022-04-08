@@ -10,6 +10,7 @@ const App = ({
   imageURL,
   setImageURL,
   intro,
+  validationErrors,
 }) => {
   const [crop, setCrop] = useState({ aspect: 4 / 3 });
   return (
@@ -20,7 +21,10 @@ const App = ({
         style={({ height: "fit-content" }, { "min-height": "12rem" })}
       >
         <div>
-          <div className="mb-3 text-center"> Upload your profile picture here</div>
+          <div className="mb-3 text-center">
+            {" "}
+            Upload your profile picture here
+          </div>
           <input
             accept="image/*"
             type="file"
@@ -62,15 +66,20 @@ const App = ({
         </div>
       </div>
       <div className="mt-3 font-medium">Brief Introduction :</div>
-        <textarea
-          type="text"
-          placeholder="Write 300 words of introduction..."
-          name="intro"
-          className="w-full h-48 p-2 mt-1 border-2"
-          defaultValue={intro}
-          onChange={(e) => setIntro(e.target.value)}
-          required
-        ></textarea>
+      <textarea
+        type="text"
+        placeholder="Write 300 words of introduction..."
+        name="intro"
+        className="w-full h-48 p-2 mt-1 border-2"
+        defaultValue={intro}
+        onChange={(e) => setIntro(e.target.value)}
+        required
+      ></textarea>
+      {validationErrors?.about ? (
+        <p className="text-red-400 text-sm">{validationErrors.about}</p>
+      ) : (
+        <br />
+      )}
     </div>
   );
 };

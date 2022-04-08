@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { BASEURL, SET_CANDIDATE_DATA } from "./constants";
+import { BASEURL, IS_PROD, SET_CANDIDATE_DATA } from "./constants";
 import PreElectionScreen from "./screens/pre_election/PreElectionScreen";
 import AdminScreen from "./screens/admin/AdminScreen";
 import CandidateNominateScreen from "./screens/candidatenominationscreen/CandidateNominateScreen";
@@ -61,6 +61,9 @@ function App() {
   const candidate = useSelector((store) => store.candidate);
   const dispatch = useDispatch();
   const isLoggedIn = useAuthCheck();
+  if (IS_PROD) {
+    window.console.log = () => {};
+  }
 
   console.log("isLoggedIn: ", isLoggedIn);
 
