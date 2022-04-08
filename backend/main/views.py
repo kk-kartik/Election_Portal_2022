@@ -142,7 +142,6 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     
     def perform_update(self,serializer):
         instance=serializer.save(election=self.election)
-        create_pdf('for_pdf.html', instance)
         return instance
     
     def create(self,request,*args,**kwargs):

@@ -50,10 +50,9 @@ class PositionReadSerializer(serializers.ModelSerializer):
 
 class CandidateSerializer(serializers.ModelSerializer):
     nomination_status = serializers.ReadOnlyField()
-    agenda_pdf = serializers.ReadOnlyField()
     class Meta:
         model = Candidate
-        exclude = ['election',"user"]
+        exclude = ['election',"user","agenda_pdf"]
 
 class CandidateOrganizerSerializer(serializers.ModelSerializer):
     class Meta:

@@ -131,7 +131,7 @@ DATABASES = {
 }
 
 
-if not  DEBUG:
+if not DEBUG:
     print("Connecting to db....")
     DATABASES["default"]:{
             "ENGINE":"django.db.backends.postgresql_psycopg2",
