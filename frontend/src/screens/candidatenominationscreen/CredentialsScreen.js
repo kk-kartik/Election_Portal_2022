@@ -16,6 +16,7 @@ const CredentialsScreen = () => {
     error,
     message,
     loading,
+    setMessage,
     updateNomination,
     setError,
   } = useNominate();
@@ -35,6 +36,7 @@ const CredentialsScreen = () => {
   };
 
   const handleFile = async (title, file) => {
+    setMessage("Uploading credentials");
     try {
       API.defaults.headers["Content-Type"] = "multipart/form-data";
       const formData = new FormData();
@@ -49,6 +51,7 @@ const CredentialsScreen = () => {
           "Something went wrong!Please try logging in again."
       );
     }
+    setMessage(null);
   };
 
   const credDelete = async (title) => {

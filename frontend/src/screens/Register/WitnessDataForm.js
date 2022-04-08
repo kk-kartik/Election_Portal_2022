@@ -43,7 +43,7 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           id="rollno"
           name="roll_number"
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          defaultValue={data?.roll_number || ""}
+          defaultValue={data?.roll_number != "" ? data?.roll_number : null}
           onChange={onChange}
           maxLength={9}
         />
@@ -61,7 +61,7 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           id="degree"
           name="degree"
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          defaultValue={data?.degree || ""}
+          defaultValue={data?.degree != "" ? data?.degree : null}
           onChange={onChange}
         >
           <option value="">Select </option>
@@ -82,11 +82,11 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           required
           id="branch"
           name="branch"
-          defaultValue={data?.branch || ""}
+          defaultValue={data?.branch != "" ? data?.branch : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
         >
-          <option value="">Select </option>
+          <option value="">Select</option>
           <option value="01">CSE</option>
           <option value="02">ECE</option>
           <option value="03">ME</option>
@@ -119,7 +119,7 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           required
           id="hostel"
           name="hostel"
-          defaultValue={data?.hostel || ""}
+          defaultValue={data?.hostel != "" ? data?.hostel : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
         >
