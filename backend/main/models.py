@@ -132,7 +132,8 @@ def get_default_witness():
         "email":"",
         "hostel":"",
         "room_no":"",
-        "semester":""
+        "semester":"",
+        "contact_no":""
     }
 
 class Candidate(models.Model):
