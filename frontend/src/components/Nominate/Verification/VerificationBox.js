@@ -74,8 +74,13 @@ const VerificationBox = () => {
         />
       </div>
       <div className={`flex mt-4`}>
-        <button className={`${styles.btn1} py-2 px-4 mr-4`}>
-          <div className={`${styles.text}`}>Preview Nomination Form</div>
+        <button className={`${styles.btn1} py-2 px-4 mr-4 cursor-pointer`}>
+          <a
+            className={`${styles.text}`}
+            href={`https://swc.iitg.ac.in/elelection_api/sgc/candidate_pdf/${candidate?.id}/`}
+          >
+            Preview Nomination Form
+          </a>
         </button>
         <button
           className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
