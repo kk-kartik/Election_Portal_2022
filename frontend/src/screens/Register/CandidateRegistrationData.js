@@ -3,7 +3,7 @@ import styles from "./RegisterScreen.module.css";
 import { userRegistration } from "../../api/index";
 import { useNavigate } from "react-router-dom";
 
-const WitnessDataForm = ({ data, setData, validationErrors }) => {
+const CandidateRegistrationData = ({ data, setData, validationErrors }) => {
   const onChange = (e) => {
     setData((prev) => ({
       ...data,
@@ -145,79 +145,9 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
         ) : (
           <br />
         )}
-        <label for="cpi" className="font-semibold text-sm text-gray-800">
-          Room no:{" "}
-        </label>
-        <input
-          required
-          type="text"
-          id="room_no"
-          name="room_no"
-          className={`${styles.input} md:w-11/12 w-full mb-1`}
-          defaultValue={data?.room_no}
-          onChange={onChange}
-        />
-        {validationErrors?.room_no ? (
-          <p className="text-red-400 text-sm">{validationErrors.room_no}</p>
-        ) : (
-          <br />
-        )}
-        <label for="cpi" className="font-semibold text-sm text-gray-800">
-          Cpi:{" "}
-        </label>
-        <br />
-        <input
-          required
-          type="text"
-          id="cpi"
-          name="cpi"
-          className={`${styles.input} md:w-11/12 w-full mb-1`}
-          defaultValue={data?.cpi}
-          onChange={onChange}
-        />
-        {validationErrors?.cpi ? (
-          <p className="text-red-400 text-sm">{validationErrors.cpi}</p>
-        ) : (
-          <br />
-        )}
-        <label for="cpi" className="font-semibold text-sm text-gray-800">
-          Semester:{" "}
-        </label>
-        <input
-          required
-          type="text"
-          id="semester"
-          name="semester"
-          className={`${styles.input} md:w-11/12 w-full mb-1`}
-          defaultValue={data?.semester}
-          onChange={onChange}
-        />
-        {validationErrors?.semester ? (
-          <p className="text-red-400 text-sm">{validationErrors.semester}</p>
-        ) : (
-          <br />
-        )}
-        <label for="contact_no" className="font-semibold text-sm text-gray-800">
-          Contact No:{" "}
-        </label>
-        <br />
-        <input
-          required
-          type="text"
-          id="contact_no"
-          name="contact_no"
-          className={`${styles.input} md:w-11/12 w-full mb-1`}
-          defaultValue={data?.contact_no}
-          onChange={onChange}
-        />
-        {validationErrors?.contact_no ? (
-          <p className="text-red-400 text-sm">{validationErrors.contact_no}</p>
-        ) : (
-          <br />
-        )}
       </form>
     </div>
   );
 };
 
-export default WitnessDataForm;
+export default CandidateRegistrationData;
