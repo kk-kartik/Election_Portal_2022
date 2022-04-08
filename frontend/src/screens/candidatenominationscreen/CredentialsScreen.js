@@ -20,6 +20,7 @@ const CredentialsScreen = () => {
     setMessage,
     updateNomination,
     setError,
+    isNominationComplete,
   } = useNominate();
 
   const [credentials, setCredentials] = useState([]);
@@ -119,6 +120,7 @@ const CredentialsScreen = () => {
         handleFile={handleFile}
         credentials={credentials}
         setCredentials={setCredentials}
+        isNominationComplete={isNominationComplete}
       />
       <br />
       {/* <SaveAndNext

@@ -48,15 +48,16 @@ const Upload = (props) => {
       </div>
       <div></div>
       <div>{props.credentials}</div>
-
-      <div className="pt-8">
-        <button
-          className={`px-5 text-white ${styles.credbutton}`}
-          onClick={onCLick}
-        >
-          Add Credentials
-        </button>
-      </div>
+      {!props.isNominationComplete && (
+        <div className="pt-8">
+          <button
+            className={`px-5 text-white ${styles.credbutton}`}
+            onClick={onCLick}
+          >
+            Add Credentials
+          </button>
+        </div>
+      )}
     </div>
   );
 };

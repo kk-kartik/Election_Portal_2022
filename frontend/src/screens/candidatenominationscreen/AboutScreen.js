@@ -39,9 +39,11 @@ const AboutScreen = () => {
     setLoading,
     message,
     updateNomination,
+    isNominationComplete,
   } = useNominate();
   const userData = useSelector((store) => store.auth);
   const [profileData, setProfileData] = useState(null);
+  const dispatch = useDispatch();
 
   const [uploadImage, setUploadImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
@@ -117,6 +119,7 @@ const AboutScreen = () => {
       }
       try {
         const res = await userRegistration(profileData);
+        dispatch(getUser());
       } catch (err) {
         setError(
           err.response?.data?.detail ||
@@ -174,11 +177,12 @@ const AboutScreen = () => {
   return (
     <>
       <div className="flex flex-col	md:flex-row ">
-        <div className="w-full md:w-4/12">
+        <div className=" mx-4 md:mx-0 md:w-4/12">
           <CandidateRegistrationData
             data={profileData || userData?.euser}
             setData={setProfileData}
             validationErrors={validationErrors}
+            isNominationComplete={isNominationComplete}
           />
           <label for="cpi" className="font-semibold text-sm text-gray-800">
             Cpi:{" "}
@@ -192,6 +196,7 @@ const AboutScreen = () => {
             className={`${styles.input} md:w-11/12 w-full mb-1`}
             defaultValue={candidate?.cpi}
             onChange={onChange}
+            disabled={isNominationComplete}
           />
           {candidateDataErrors?.cpi ? (
             <p className="text-red-400 text-sm">{candidateDataErrors.cpi}</p>
@@ -208,6 +213,7 @@ const AboutScreen = () => {
           <input
             required
             type="text"
+            disabled={isNominationComplete}
             id="contact_no"
             name="contact_no"
             className={`${styles.input} md:w-11/12 w-full mb-1`}
@@ -227,6 +233,7 @@ const AboutScreen = () => {
           <br />
           <input
             required
+            disabled={isNominationComplete}
             type="text"
             id="backlogs"
             name="backlogs"
@@ -247,6 +254,7 @@ const AboutScreen = () => {
           <br />
           <input
             required
+            disabled={isNominationComplete}
             type="text"
             id="active_backlogs"
             name="active_backlogs"
@@ -265,6 +273,7 @@ const AboutScreen = () => {
         <div className="w-full">
           <PicIntroUpload
             setIntro={setIntro}
+            isNominationComplete={isNominationComplete}
             imageURL={imageURL || convertoUrl(candidate?.image)}
             uploadImage={uploadImage}
             setUploadImage={setUploadImage}
@@ -274,12 +283,16 @@ const AboutScreen = () => {
           />
         </div>
       </div>
-      <SaveAndNext
-        error={error}
-        message={message}
-        loading={loading}
-        submit={submitData}
-      />
+      <div class="flex justify-center md:justify-start">
+        {!isNominationComplete && (
+          <SaveAndNext
+            error={error}
+            message={message}
+            loading={loading}
+            submit={submitData}
+          />
+        )}
+      </div>
     </>
   );
 };

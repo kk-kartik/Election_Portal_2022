@@ -87,16 +87,16 @@ const LoginScreen = () => {
             <img className="h-12 w-12 md:h-20 md:w-20" src={iitglogo} alt="" />
           </div>
           <div>
-            <p class="text-lg sm:text-xl" style={{ color: "#4b5563" }}>
+            <p className="text-sm" style={{ color: "#4b5563" }}>
               Indian Institute of Technology Guwahati
             </p>
           </div>
         </div>
         <div className="mt-16 ml-4">
-          <p className="text-4xl font-medium mb-2" style={{ color: "#2e2f2f" }}>
+          <p className="text-2xl font-medium mb-2" style={{ color: "#2e2f2f" }}>
             Sign In
           </p>
-          <p className="text-lg font-normal" style={{ color: "#4b5563" }}>
+          <p className=" font-normal" style={{ color: "#4b5563" }}>
             Register yourself by using IITG email
           </p>
         </div>

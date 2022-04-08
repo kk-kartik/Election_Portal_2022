@@ -17,7 +17,10 @@ const WitnessesScreen = () => {
     updateNomination,
     loading,
     setError,
+    isNominationComplete,
   } = useNominate();
+
+  console.log(isNominationComplete);
 
   const [proposedByData, setProposedyData] = useState(null);
   const [secondedByData, setSecondedByData] = useState(null);
@@ -111,6 +114,7 @@ const WitnessesScreen = () => {
             }
             setData={setProposedyData}
             validationErrors={pvalidationErrors}
+            isNominationComplete={isNominationComplete}
           />
           <br />
           {/* <div className="font-semibold text-s text-gray-800">Signature :</div> */}
@@ -129,6 +133,7 @@ const WitnessesScreen = () => {
           </div>
           <br />
           <WitnessDataForm
+            isNominationComplete={isNominationComplete}
             data={
               secondedByData ||
               (candidate?.proposed_by ? candidate.seconded_by : {})
@@ -148,12 +153,14 @@ const WitnessesScreen = () => {
         </div>
       </div>
       <div className="sm:pl-6 mb-4">
-        <SaveAndNext
-          error={error}
-          message={message}
-          loading={loading}
-          submit={submitData}
-        />
+        {!isNominationComplete && (
+          <SaveAndNext
+            error={error}
+            message={message}
+            loading={loading}
+            submit={submitData}
+          />
+        )}
       </div>
     </div>
   );

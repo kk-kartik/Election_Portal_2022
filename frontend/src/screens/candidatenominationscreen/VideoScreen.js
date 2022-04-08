@@ -9,14 +9,20 @@ import styles from "../Register/RegisterScreen.module.css";
 import SaveAndNext from "./SaveAndNext";
 import YoutubeEmbed from "../../components/Home/Nomination/Video/YoutubeEmbed";
 const VideoScreen = () => {
-  const { error, message, loading, candidate, setError, updateNomination } =
-    useNominate();
+  const {
+    error,
+    message,
+    loading,
+    candidate,
+    setError,
+    updateNomination,
+    isNominationComplete,
+  } = useNominate();
 
   const videoRef = useRef(null);
   let embedId = "";
   const CheckURL = (url) => {
-    var regExp =
-      /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
+    var regExp = /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
     var match = url.match(regExp);
     return match && match[1].length == 11 ? match[1] : false;
   };
@@ -46,6 +52,7 @@ const VideoScreen = () => {
         className={`${styles.input} md:w-1/2 lg:w-2/5 w-full`}
         defaultValue={candidate?.video}
         ref={videoRef}
+        disabled={isNominationComplete}
       />
       {candidate.video && (
         <div className="w-full md:w-1/2 my-4">
@@ -53,12 +60,14 @@ const VideoScreen = () => {
         </div>
       )}
 
-      <SaveAndNext
-        error={error}
-        message={message}
-        loading={loading}
-        submit={submitData}
-      />
+      {!isNominationComplete && (
+        <SaveAndNext
+          error={error}
+          message={message}
+          loading={loading}
+          submit={submitData}
+        />
+      )}
     </>
   );
 };

@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import useNominate from "../../../hooks/useNominate";
 import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
 
-const lastDateOfVerification = "08/04/22";
+const lastDateOfVerification = "11/04/22";
 
 const VerificationBox = () => {
   const {
@@ -23,6 +23,7 @@ const VerificationBox = () => {
     isComplete,
     setError,
     setMessage,
+    isNominationComplete,
   } = useNominate();
 
   const userData = useSelector((store) => store.auth);
@@ -110,10 +111,15 @@ const VerificationBox = () => {
           //onClick={submitNominationForm}
         >
           <div className={`${isComplete ? styles.text1 : styles.text2}`}>
-            Send For Verification
+            {isNominationComplete
+              ? "Sent for Nomination"
+              : "Send for Nomination"}
           </div>
         </button>
       </div>
+      <p className={`${styles.lastdate} mt-2`}>
+        *No changes will possible once form is sent for verificaton
+      </p>
       {error && <p className="text-red-600 mt-5">{error}</p>}
       {message && <p className="text-green-600 mt-5">{message}</p>}
       <div className={`flex mt-4`}>

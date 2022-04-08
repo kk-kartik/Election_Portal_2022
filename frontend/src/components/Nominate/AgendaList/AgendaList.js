@@ -12,6 +12,7 @@ const AgendaList = () => {
     message,
     updateNomination,
     loading,
+    isNominationComplete,
   } = useNominate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -47,14 +48,16 @@ const AgendaList = () => {
       )}
       {/* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}></textarea> */}
       {/* <Agenda count={count} title={title} agenda={agenda} long={true} /> */}
-      <div className="pt-8">
-        <button
-          className={`text-white ${styles.button} px-5 ml-2`}
-          onClick={() => setIsOpen(true)}
-        >
-          Add Agenda
-        </button>
-      </div>
+      {!isNominationComplete && (
+        <div className="pt-8">
+          <button
+            className={`text-white ${styles.button} px-5 ml-2`}
+            onClick={() => setIsOpen(true)}
+          >
+            Add Agenda
+          </button>
+        </div>
+      )}
       {loading && <p className="text-sm text-green">Saving...</p>}
       {error ? (
         <p className="text-red">{error}</p>

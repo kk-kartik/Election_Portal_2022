@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
-const App = ({
+const PicIntroUpload = ({
   uploadImage,
   setUploadImage,
   setIntro,
@@ -11,11 +11,9 @@ const App = ({
   setImageURL,
   intro,
   validationErrors,
+  isNominationComplete,
 }) => {
   const [crop, setCrop] = useState({ aspect: 4 / 3 });
-
-  console.log("khulllaaaaaaaaaaa ncdlnlcd");
-
   return (
     <div className="p-3 m-6 mt-0">
       <div className="font-medium">Profile Pic : </div>
@@ -24,23 +22,27 @@ const App = ({
         style={({ height: "fit-content" }, { "min-height": "12rem" })}
       >
         <div>
-          <div className="mb-3 text-center">
-            {" "}
-            Upload your profile picture here
-          </div>
-          <input
-            accept="image/*"
-            type="file"
-            id="select-image"
-            style={{ display: "none" }}
-            onChange={(e) => setUploadImage(e.target.files[0])}
-            required
-          />
-          <label htmlFor="select-image">
-            <div class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium text-center py-2 px-6 rounded border-2">
-              Upload File
-            </div>
-          </label>
+          {!isNominationComplete && (
+            <>
+              <div className="mb-3 text-center">
+                {" "}
+                Upload your profile picture here
+              </div>
+              <input
+                accept="image/*"
+                type="file"
+                id="select-image"
+                style={{ display: "none" }}
+                onChange={(e) => setUploadImage(e.target.files[0])}
+                required
+              />
+              <label htmlFor="select-image">
+                <div class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium text-center py-2 px-6 rounded border-2">
+                  Upload File
+                </div>
+              </label>
+            </>
+          )}
           {imageURL && (
             <>
               <div className="flex-col justify-center align-center items-center">
@@ -77,6 +79,7 @@ const App = ({
         defaultValue={intro}
         onChange={(e) => setIntro(e.target.value)}
         required
+        disabled={isNominationComplete}
       ></textarea>
       {validationErrors?.about ? (
         <p className="text-red-400 text-sm">{validationErrors.about}</p>
@@ -87,4 +90,4 @@ const App = ({
   );
 };
 
-export default App;
+export default PicIntroUpload;
