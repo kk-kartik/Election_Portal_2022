@@ -33,13 +33,8 @@ const StepCompleted = ({ text, imgSrc, done, link }) => (
 );
 
 const StepList = () => {
-  const {
-    candidate,
-    error,
-    message,
-    updateNomination,
-    isComplete,
-  } = useNominate();
+  const { candidate, error, message, updateNomination, isComplete } =
+    useNominate();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.auth);
   const steps = [
@@ -71,7 +66,7 @@ const StepList = () => {
   return (
     <>
       <div
-        className="md:w-7/12 rounded-md py-6 px-8 m-3 overflow-x-auto"
+        className=" rounded-md py-6 px-8 m-3 overflow-x-auto w-max"
         style={{
           boxShadow:
             "0px 0px 2px rgb(0 0 0 / 20%), 0px 2px 10px rgb(0 0 0 / 10%)",
@@ -79,7 +74,7 @@ const StepList = () => {
       >
         <div className="flex justify-start items-center">
           {steps.map(({ text, imgSrc, done, link }, index) => {
-            if (userData!==null && done) {
+            if (userData !== null && done) {
               return (
                 <StepCompleted
                   key={index}

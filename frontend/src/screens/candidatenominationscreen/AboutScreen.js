@@ -174,7 +174,7 @@ const AboutScreen = () => {
   return (
     <>
       <div className="flex flex-col	md:flex-row ">
-        <div className="w-full md:w-4/12">
+        <div className=" mx-4 md:mx-0 md:w-4/12">
           <CandidateRegistrationData
             data={profileData || userData?.euser}
             setData={setProfileData}
@@ -274,12 +274,14 @@ const AboutScreen = () => {
           />
         </div>
       </div>
-      <SaveAndNext
-        error={error}
-        message={message}
-        loading={loading}
-        submit={submitData}
-      />
+      <div class="flex justify-center md:justify-start">
+        <SaveAndNext
+          error={error}
+          message={message}
+          loading={loading}
+          submit={submitData}
+        />
+      </div>
     </>
   );
 };

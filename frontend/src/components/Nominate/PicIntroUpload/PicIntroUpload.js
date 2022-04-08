@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
-const App = ({
+const PicIntroUpload = ({
   uploadImage,
   setUploadImage,
   setIntro,
@@ -13,9 +13,6 @@ const App = ({
   validationErrors,
 }) => {
   const [crop, setCrop] = useState({ aspect: 4 / 3 });
-
-  console.log("khulllaaaaaaaaaaa ncdlnlcd");
-
   return (
     <div className="p-3 m-6 mt-0">
       <div className="font-medium">Profile Pic : </div>
@@ -87,4 +84,4 @@ const App = ({
   );
 };
 
-export default App;
+export default PicIntroUpload;
