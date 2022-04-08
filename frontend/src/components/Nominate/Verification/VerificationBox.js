@@ -78,6 +78,7 @@ const VerificationBox = () => {
           <a
             className={`${styles.text}`}
             href={`https://swc.iitg.ac.in/elections_api/sgc/candidate_pdf/${candidate?.id}/`}
+            target="_blank"
           >
             Preview Nomination Form
           </a>

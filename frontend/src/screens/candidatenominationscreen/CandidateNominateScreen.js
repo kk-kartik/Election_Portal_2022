@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import TopNav from "../../components/Home/TopNav/TopNav";
 import ProfileNavBar from "../../components/Nominate/ProfileNavBar/ProfileNavBar";
@@ -8,6 +8,8 @@ import WitnessesScreen from "./WitnessesScreen";
 import CredentialsScreen from "./CredentialsScreen";
 import VerificationScreen from "./VerificationScreen";
 import VideoScreen from "./VideoScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../actions/auth";
 
 const Layout = () => {
   return (
@@ -20,6 +22,12 @@ const Layout = () => {
   );
 };
 const CandidateNominateScreen = () => {
+  const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    dispatch(getUser());
+  },[])
+
   return (
     <>
       {/* <TopNav /> */}
