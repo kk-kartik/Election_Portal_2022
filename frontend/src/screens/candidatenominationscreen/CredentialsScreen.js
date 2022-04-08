@@ -93,12 +93,13 @@ const CredentialsScreen = () => {
         credentials={credentials}
         setCredentials={setCredentials}
       />
-      <SaveAndNext
+      <br />
+      {/* <SaveAndNext
         error={error}
         message={message}
         loading={loading}
         submit={() => navigate("/nominate/witnesses")}
-      />
+      /> */}
     </>
   );
 };

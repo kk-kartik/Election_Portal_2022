@@ -6,7 +6,7 @@ const useCandidateCheck = () => {
   const userData = useSelector((store) => store.auth);
 
   const checkCandidate = async () => {
-    if (userData?.candidates?.length != 0) {
+    if (userData && userData?.candidates?.length !== 0) {
       setIsCandidate(true);
     } else {
       setIsCandidate(false);

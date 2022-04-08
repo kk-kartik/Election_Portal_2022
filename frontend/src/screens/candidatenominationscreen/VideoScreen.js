@@ -34,8 +34,8 @@ const VideoScreen = () => {
   return (
     <>
       {/* <p>Enter Youtube Video url.</p> */}
-      <label for="video" className="font-normal mb-4 text-sm text-gray-800">
-        Enter Youtube Video url.
+      <label for="video" className="font-medium mb-4 text-base text-gray-800">
+        Enter Youtube Video Url :
       </label>
       <br />
       <input

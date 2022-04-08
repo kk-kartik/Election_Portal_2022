@@ -87,7 +87,8 @@ REST_FRAMEWORK={
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'UNICODE_JSON': False
 }
 if not DEBUG:
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"]=["rest_framework.renderers.JSONRenderer"]
@@ -140,6 +141,12 @@ if not DEBUG:
             "HOST":env("DB_HOST"),
             "PORT":5432
     }
+
+
+# if os.name != 'nt':
+#     WKHTMLTOPDF_CMD = '/usr/local/bin/wkhtmltopdf'
+# else:
+#     WKHTMLTOPDF_DEBUG = True
 
 
 # Password validation

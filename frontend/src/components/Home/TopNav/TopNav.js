@@ -12,7 +12,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logout } from "../../../actions/auth";
 import { useNavigate } from "react-router-dom";
-import { ELECTIONAPI } from "../../../constants";
+import { ELECTIONAPI, SET_CANDIDATE_DATA } from "../../../constants";
 
 const responseGoogle = async (data) => {
   const accessToken = data["accessToken"];
@@ -123,6 +123,7 @@ const TopNav = ({}) => {
                     dispatch(logout());
                     setLoginClicked(false);
                     setDropClick(false);
+                    dispatch({type:SET_CANDIDATE_DATA, data:{}});
                     navigate("/");
                   }}
                   className="text-xs font-medium hover:bg-blue-100 px-3 py-2 rounded"

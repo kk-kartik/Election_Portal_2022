@@ -54,12 +54,13 @@ const Agenda = (props) => {
               <img src={dots} className={styles.dots} />
             </div> */}
           </div>
-          <div className="flex">
+          <div className="flex flex-col">
             <div className="pt-4">{agenda}</div>
-            <div className="self-end mr-0 ml-auto flex gap-4 items-center">
-              <img
+            <div className="flex w-full items-center justify-start mt-2">
+              {/* <img
                 className=" w-4 h-4 cursor-pointer"
                 src={editSVG}
+                alt="icon"
                 onClick={() => {
                   props.setTitle(props.title);
                   props.setIsOpen(true);
@@ -68,8 +69,27 @@ const Agenda = (props) => {
               <img
                 className="w-5 h-5 cursor-pointer"
                 src={deleteSVG}
+                alt="icon"
                 onClick={agendaDelete}
-              ></img>
+              ></img> */}
+              <button
+                className={`${styles.button} mt-2 mr-2`}
+                onClick={() => {
+                  props.setTitle(props.title);
+                  props.setIsOpen(true);
+                }}
+              >
+                <div className="flex">
+                  {/* <img src={doc} alt="doc" /> */}
+                  <p className="">Edit</p>
+                </div>
+              </button>
+              <button
+                className={`${styles.button} mt-2 text-red-500`}
+                onClick={agendaDelete}
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
