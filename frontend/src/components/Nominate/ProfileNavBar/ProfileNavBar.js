@@ -1,6 +1,7 @@
 import RouteNavbar from "../../Navbars/RouteNavbar";
 import styles from "./ProfileNavBar.module.css";
 import Eye from "./eye.svg";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 function capitalizeFirstLetter(string) {
   if (!string) return null;
@@ -30,14 +31,14 @@ const ProfileNavBar = () => {
     >
       <div className="flex">
         <span className="font-normal text-3xl underline hidden lg:block">
-          Gymkhana Elections 2021
+          <Link to="/">Gymkhana Elections 2022</Link>
         </span>
         <span className="font-normal text-3xl hidden lg:block">&nbsp; / </span>
         <span className="font-normal text-2xl sm:text-3xl">
           &nbsp;My Profile &nbsp;
         </span>
         <button className={`${styles.notver} py-1 px-3 sm:px-5 ml-auto mr-4`}>
-          {`Nomination ${capitalizeFirstLetter(
+          {`Verification ${capitalizeFirstLetter(
             candidate?.nomination_status
           )}` || "Not Verified"}
         </button>
