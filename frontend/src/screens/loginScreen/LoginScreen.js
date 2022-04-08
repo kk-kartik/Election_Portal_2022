@@ -186,11 +186,11 @@ const LoginScreen = () => {
                   Register yourself by using IITG email
                 </p>
               </div>
-              {IS_PROD ? (
-                <div className="">
-                  <div className="">
+              {true ? (
+                <div className="md:ml-32 mt-4">
+                  <div className="w-6/12">
                     <a href={OUTLOOK_LOGIN_URL}>
-                      <div className="px-4 py-2 border-black border-2 flex items-center">
+                      <div className="pl-4 py-2 border-black border-2 flex items-center">
                         <img
                           src={outlooklogo}
                           alt=""
@@ -333,7 +333,7 @@ const LoginScreen = () => {
         <img src={cards} alt="cards" className="h-screen" />
       </div> */}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
