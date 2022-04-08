@@ -96,7 +96,7 @@ const AboutScreen = () => {
         return;
       }
     }
-    if (candidate.about != "" && !intro) {
+    if (candidate.about == "" && !intro) {
       setValidationErrors((prev) => ({
         ...prev,
         about: "Intro should be minimum 50 words.",
