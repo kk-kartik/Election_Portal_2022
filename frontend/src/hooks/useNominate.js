@@ -43,6 +43,8 @@ const useNominate = () => {
   const isCredsComplete =
     candidate &&
     candidate.credentials &&
+    candidate.credentials["Grade Card"] &&
+    candidate.credentials["Thesis incomplete proof"] &&
     Object.keys(candidate.credentials).length >= 1;
   const isAgendaComplete =
     candidate &&
@@ -52,6 +54,7 @@ const useNominate = () => {
     !!candidate.id &&
     !!candidate.video &&
     isAgendaComplete &&
+    isCredsComplete &&
     !!candidate.credentials &&
     !!candidate.proposed_by?.name;
 

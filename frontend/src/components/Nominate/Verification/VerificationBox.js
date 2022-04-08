@@ -59,6 +59,8 @@ const VerificationBox = () => {
           done={
             candidate &&
             candidate.credentials &&
+            candidate.credentials["Grade Card"] &&
+            candidate.credentials["Thesis incomplete proof"] &&
             Object.keys(candidate.credentials).length >= 1
           }
         />

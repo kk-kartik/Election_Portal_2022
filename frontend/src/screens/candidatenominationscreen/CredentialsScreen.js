@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useNavigate, useNavigationType } from "react-router-dom";
 import { getUser } from "../../actions/auth";
 import { API, updateCandidateData, uploadCredentials } from "../../api";
+import FixedUploadField from "../../components/Nominate/Upload/FixedUploadField";
 import Upload from "../../components/Nominate/Upload/Upload";
 import UploadField from "../../components/Nominate/Upload/UploadField";
 import UploadNavbar from "../../components/Nominate/UploadNavbar/UploadNavbar";
@@ -34,6 +35,8 @@ const CredentialsScreen = () => {
     };
     updateNomination(data);
   };
+
+  console.log("Candidate profile: ",candidate);
 
   const handleFile = async (title, file) => {
     setMessage("Uploading credentials");
@@ -77,6 +80,22 @@ const CredentialsScreen = () => {
       {candidate.credentials && Object.keys(candidate.credentials).length != 0 && (
         <>
           <h2 className="mb-2">Uploaded credentials</h2>
+
+          <FixedUploadField
+            handleFile={handleFile}
+            credDelete={credDelete}
+            title="Grade Card"
+            link={candidate.credentials["Grade Card"]}
+          />
+
+          {candidate?.user?.degree === "P" && (
+            <FixedUploadField
+              handleFile={handleFile}
+              credDelete={credDelete}
+              title="Thesis incomplete proof"
+              link={candidate.credentials["Thesis incomplete proof"]}
+            />
+          )}
 
           {Object.keys(candidate.credentials).map((k, i) => (
             <UploadField

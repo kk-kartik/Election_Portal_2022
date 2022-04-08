@@ -120,8 +120,8 @@ const RegisterForm = () => {
           defaultValue=""
         >
           <option value="">Select </option>
-          <option value="U">B.Tech</option>
-          <option value="P">M.Tech</option>
+          <option value="B">B.Tech</option>
+          <option value="M">M.Tech</option>
           <option value="P">PhD</option>
         </select>
         {validationErrors?.degree ? (
