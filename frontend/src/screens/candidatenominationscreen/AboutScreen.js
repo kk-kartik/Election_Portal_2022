@@ -37,6 +37,7 @@ const AboutScreen = () => {
     setError,
     loading,
     setLoading,
+    setMessage,
     message,
     updateNomination,
     isNominationComplete,
@@ -103,7 +104,6 @@ const AboutScreen = () => {
   }, [uploadImage]);
 
   const submitData = async () => {
-    console.log(candidateData);
     if (profileData) {
       try {
         await aboutSchema.validate(profileData, { abortEarly: false });
@@ -128,13 +128,21 @@ const AboutScreen = () => {
         return;
       }
     }
-    if (candidate.about == "" && !intro) {
+    setError(null);
+    if (candidate.about == "" && (!intro || intro.length == 0)) {
       setValidationErrors((prev) => ({
         ...prev,
         about: "Intro should be minimum 50 words.",
       }));
       return;
     }
+
+    setValidationErrors(null);
+    if (!candidate.image && !uploadImage) {
+      setMessage("Please upload profile pic");
+      return;
+    }
+    setMessage(null);
     let data = {};
     if (intro) {
       data["about"] = intro;
@@ -144,12 +152,14 @@ const AboutScreen = () => {
     if (uploadImage) {
       data["image"] = uploadImage;
     }
+
     const cData = {
-      cpi: candidate.cpi || "",
-      contact_no: candidate.contact_no || "",
-      backlogs: candidate.backlogs || "",
-      active_backlogs: candidate.active_backlogs || "",
+      cpi: candidate?.cpi || "",
+      contact_no: candidate?.contact_no || "",
+      backlogs: candidate?.backlogs || "",
+      active_backlogs: candidate?.active_backlogs || "",
     };
+
     try {
       await candidateSchema.validate(candidateData || cData, {
         abortEarly: false,
@@ -164,6 +174,7 @@ const AboutScreen = () => {
       }
       return;
     }
+    setcandidateDataErrors(null);
 
     if (candidateData) {
       data = {
@@ -171,6 +182,9 @@ const AboutScreen = () => {
         ...candidateData,
       };
     }
+    setValidationErrors(null);
+    setError(null);
+    setMessage(null);
     updateNomination(data, "/nominate/agendas");
   };
 

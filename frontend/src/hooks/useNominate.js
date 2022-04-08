@@ -128,6 +128,7 @@ const useNominate = () => {
 
       setMessage("Nomination data submitted!!");
     } catch (err) {
+      console.log(err);
       setError(
         err.response?.data?.detail ||
           "Something went wrong!Please try logging in again."

@@ -5,11 +5,9 @@ function SaveAndNext({ error, message, loading, submit }) {
   return (
     <div className="mt-5">
       {loading && <p className="text-sm text-green">Saving...</p>}
-      {error ? (
-        <p className="text-red">{error}</p>
-      ) : message ? (
-        <p className="text-green">{error}</p>
-      ) : null}
+      {message && <p className="text-red">{message}</p>}
+
+      {error && <p className="text-green">{error}</p>}
       {/* <p className="text-sm">Apply changes before proceeding</p> */}
       <button className={styles.button} onClick={submit}>
         Save
