@@ -20,7 +20,31 @@ const VerificationBox = () => {
     isComplete,
     setError,
     setMessage,
+    isNominationComplete,
   } = useNominate();
+
+  const userData = useSelector((store) => store.auth);
+
+  const checkCreds = () => {
+    if (
+      candidate &&
+      candidate.credentials &&
+      candidate.credentials["Grade Card"]
+    ) {
+      if (userData?.euser?.degree !== "P") {
+        return true;
+      } else if (
+        userData?.euser?.degree === "P" &&
+        candidate.credentials["Thesis incomplete proof"]
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
 
   const submitNominationForm = async () => {
     if (!isComplete) {
@@ -49,21 +73,11 @@ const VerificationBox = () => {
           done={
             candidate &&
             candidate.agenda_text &&
-            Object.keys(candidate.agenda_text).length >= 4
+            Object.keys(candidate.agenda_text).length >= 3
           }
         />
         {/* <Tile svg={formSVG} text={"Generate Nomination form"} done={true} /> */}
-        <Tile
-          svg={plusSVG}
-          text={"Add Credentials"}
-          done={
-            candidate &&
-            candidate.credentials &&
-            candidate.credentials["Grade Card"] &&
-            candidate.credentials["Thesis incomplete proof"] &&
-            Object.keys(candidate.credentials).length >= 1
-          }
-        />
+        <Tile svg={plusSVG} text={"Add Credentials"} done={checkCreds()} />
         <Tile
           svg={verifySVG}
           text={"Add Witness Data"}
@@ -90,15 +104,20 @@ const VerificationBox = () => {
           onClick={submitNominationForm}
         >
           <div className={`${isComplete ? styles.text1 : styles.text2}`}>
-            Send For Verification
+            {isNominationComplete
+              ? "Sent for Nomination"
+              : "Send for Nomination"}
           </div>
         </button>
       </div>
+      <p className={`${styles.lastdate} mt-2`}>
+        *No changes will possible once form is sent for verificaton
+      </p>
       {error && <p className="text-red-600 mt-5">{error}</p>}
       {message && <p className="text-green-600 mt-5">{message}</p>}
       <div className={`flex mt-4`}>
         <div className={`${styles.lastdate}`}>
-          Last Date for Verification is: 08/04/22
+          Last Date for Verification is: 11/04/22
         </div>
         <div className={`mr-0 ml-auto ${styles.help}`}>
           <a href="mailto:swc@iitg.ac.in">Need Help?</a>

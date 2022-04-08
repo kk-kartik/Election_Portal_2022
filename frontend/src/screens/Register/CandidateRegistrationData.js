@@ -3,7 +3,12 @@ import styles from "./RegisterScreen.module.css";
 import { userRegistration } from "../../api/index";
 import { useNavigate } from "react-router-dom";
 
-const CandidateRegistrationData = ({ data, setData, validationErrors }) => {
+const CandidateRegistrationData = ({
+  data,
+  setData,
+  validationErrors,
+  isNominationComplete,
+}) => {
   const onChange = (e) => {
     setData((prev) => ({
       ...data,
@@ -27,6 +32,7 @@ const CandidateRegistrationData = ({ data, setData, validationErrors }) => {
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.name}
           onChange={onChange}
+          disabled={isNominationComplete}
         />
         {validationErrors?.name ? (
           <p className="text-red-400 text-sm">{validationErrors.name}</p>
@@ -46,6 +52,7 @@ const CandidateRegistrationData = ({ data, setData, validationErrors }) => {
           defaultValue={data?.roll_number != "" ? data?.roll_number : null}
           onChange={onChange}
           maxLength={9}
+          disabled={isNominationComplete}
         />
         {validationErrors?.roll_number ? (
           <p className="text-red-400 text-sm">{validationErrors.roll_number}</p>
@@ -63,6 +70,7 @@ const CandidateRegistrationData = ({ data, setData, validationErrors }) => {
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           defaultValue={data?.degree != "" ? data?.degree : null}
           onChange={onChange}
+          disabled={isNominationComplete}
         >
           <option value="">Select </option>
           <option value="B">B.Tech</option>
@@ -85,6 +93,7 @@ const CandidateRegistrationData = ({ data, setData, validationErrors }) => {
           defaultValue={data?.branch != "" ? data?.branch : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
+          disabled={isNominationComplete}
         >
           <option value="">Select</option>
           <option value="01">CSE</option>
@@ -122,6 +131,7 @@ const CandidateRegistrationData = ({ data, setData, validationErrors }) => {
           defaultValue={data?.hostel != "" ? data?.hostel : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
+          disabled={isNominationComplete}
         >
           <option value="">Select </option>
           <option value="lohit">Lohit</option>

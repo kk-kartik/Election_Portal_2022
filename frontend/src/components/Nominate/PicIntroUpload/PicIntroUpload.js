@@ -11,6 +11,7 @@ const PicIntroUpload = ({
   setImageURL,
   intro,
   validationErrors,
+  isNominationComplete,
 }) => {
   const [crop, setCrop] = useState({ aspect: 4 / 3 });
   return (
@@ -21,23 +22,27 @@ const PicIntroUpload = ({
         style={({ height: "fit-content" }, { "min-height": "12rem" })}
       >
         <div>
-          <div className="mb-3 text-center">
-            {" "}
-            Upload your profile picture here
-          </div>
-          <input
-            accept="image/*"
-            type="file"
-            id="select-image"
-            style={{ display: "none" }}
-            onChange={(e) => setUploadImage(e.target.files[0])}
-            required
-          />
-          <label htmlFor="select-image">
-            <div class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium text-center py-2 px-6 rounded border-2">
-              Upload File
-            </div>
-          </label>
+          {!isNominationComplete && (
+            <>
+              <div className="mb-3 text-center">
+                {" "}
+                Upload your profile picture here
+              </div>
+              <input
+                accept="image/*"
+                type="file"
+                id="select-image"
+                style={{ display: "none" }}
+                onChange={(e) => setUploadImage(e.target.files[0])}
+                required
+              />
+              <label htmlFor="select-image">
+                <div class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium text-center py-2 px-6 rounded border-2">
+                  Upload File
+                </div>
+              </label>
+            </>
+          )}
           {imageURL && (
             <>
               <div className="flex-col justify-center align-center items-center">
@@ -74,6 +79,7 @@ const PicIntroUpload = ({
         defaultValue={intro}
         onChange={(e) => setIntro(e.target.value)}
         required
+        disabled={isNominationComplete}
       ></textarea>
       {validationErrors?.about ? (
         <p className="text-red-400 text-sm">{validationErrors.about}</p>
