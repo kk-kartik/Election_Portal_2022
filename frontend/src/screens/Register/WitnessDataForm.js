@@ -7,7 +7,7 @@ const WitnessDataForm = ({
   data,
   setData,
   validationErrors,
-  isNomiationComplete,
+  isNominationComplete,
 }) => {
   const onChange = (e) => {
     setData((prev) => ({
@@ -32,7 +32,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.name}
           onChange={onChange}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         />
         {validationErrors?.name ? (
           <p className="text-red-400 text-sm">{validationErrors.name}</p>
@@ -52,7 +52,7 @@ const WitnessDataForm = ({
           defaultValue={data?.roll_number != "" ? data?.roll_number : null}
           onChange={onChange}
           maxLength={9}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         />
         {validationErrors?.roll_number ? (
           <p className="text-red-400 text-sm">{validationErrors.roll_number}</p>
@@ -70,7 +70,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           defaultValue={data?.degree != "" ? data?.degree : null}
           onChange={onChange}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         >
           <option value="">Select </option>
           <option value="B">B.Tech</option>
@@ -93,7 +93,7 @@ const WitnessDataForm = ({
           defaultValue={data?.branch != "" ? data?.branch : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         >
           <option value="">Select</option>
           <option value="01">CSE</option>
@@ -131,7 +131,7 @@ const WitnessDataForm = ({
           defaultValue={data?.hostel != "" ? data?.hostel : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         >
           <option value="">Select </option>
           <option value="lohit">Lohit</option>
@@ -166,7 +166,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.room_no}
           onChange={onChange}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         />
         {validationErrors?.room_no ? (
           <p className="text-red-400 text-sm">{validationErrors.room_no}</p>
@@ -185,7 +185,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.cpi}
           onChange={onChange}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         />
         {validationErrors?.cpi ? (
           <p className="text-red-400 text-sm">{validationErrors.cpi}</p>
@@ -203,7 +203,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.semester}
           onChange={onChange}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         />
         {validationErrors?.semester ? (
           <p className="text-red-400 text-sm">{validationErrors.semester}</p>
@@ -222,7 +222,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.contact_no}
           onChange={onChange}
-          disabled={isNomiationComplete}
+          disabled={isNominationComplete}
         />
         {validationErrors?.contact_no ? (
           <p className="text-red-400 text-sm">{validationErrors.contact_no}</p>

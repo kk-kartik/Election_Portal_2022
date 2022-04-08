@@ -20,6 +20,7 @@ const VerificationBox = () => {
     isComplete,
     setError,
     setMessage,
+    isNominationComplete,
   } = useNominate();
 
   const userData = useSelector((store) => store.auth);
@@ -76,11 +77,7 @@ const VerificationBox = () => {
           }
         />
         {/* <Tile svg={formSVG} text={"Generate Nomination form"} done={true} /> */}
-        <Tile
-          svg={plusSVG}
-          text={"Add Credentials"}
-          done={checkCreds()}
-        />
+        <Tile svg={plusSVG} text={"Add Credentials"} done={checkCreds()} />
         <Tile
           svg={verifySVG}
           text={"Add Witness Data"}
@@ -107,7 +104,9 @@ const VerificationBox = () => {
           onClick={submitNominationForm}
         >
           <div className={`${isComplete ? styles.text1 : styles.text2}`}>
-            Send For Verification
+            {isNominationComplete
+              ? "Sent for Nomination"
+              : "Send for Nomination"}
           </div>
         </button>
       </div>

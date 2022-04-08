@@ -20,6 +20,8 @@ const WitnessesScreen = () => {
     isNominationComplete,
   } = useNominate();
 
+  console.log(isNominationComplete);
+
   const [proposedByData, setProposedyData] = useState(null);
   const [secondedByData, setSecondedByData] = useState(null);
   const [pvalidationErrors, setPValidationErrors] = useState(null);
@@ -151,12 +153,14 @@ const WitnessesScreen = () => {
         </div>
       </div>
       <div className="sm:pl-6 mb-4">
-        <SaveAndNext
-          error={error}
-          message={message}
-          loading={loading}
-          submit={submitData}
-        />
+        {!isNominationComplete && (
+          <SaveAndNext
+            error={error}
+            message={message}
+            loading={loading}
+            submit={submitData}
+          />
+        )}
       </div>
     </div>
   );
