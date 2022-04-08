@@ -96,7 +96,7 @@ const AboutScreen = () => {
         return;
       }
     }
-    if (candidate.about != "" && (!intro || intro.length < 50)) {
+    if (candidate.about != "" && !intro) {
       setValidationErrors((prev) => ({
         ...prev,
         about: "Intro should be minimum 50 words.",
@@ -106,6 +106,8 @@ const AboutScreen = () => {
     const data = {};
     if (intro) {
       data["about"] = intro;
+    } else {
+      data["about"] = candidate.about;
     }
     if (uploadImage) {
       data["image"] = uploadImage;
