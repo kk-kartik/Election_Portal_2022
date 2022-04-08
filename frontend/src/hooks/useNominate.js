@@ -48,7 +48,9 @@ const useNominate = () => {
       candidate.credentials &&
       candidate.credentials["Grade Card"]
     ) {
-      if (
+      if (userData?.euser?.degree !== "P") {
+        return true;
+      } else if (
         userData?.euser?.degree === "P" &&
         candidate.credentials["Thesis incomplete proof"]
       ) {
@@ -60,7 +62,6 @@ const useNominate = () => {
       return false;
     }
   };
-
 
   const isCredsComplete = checkCreds();
   const isAgendaComplete =
