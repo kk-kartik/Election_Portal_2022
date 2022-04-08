@@ -17,10 +17,9 @@ const WitnessesScreen = () => {
     updateNomination,
     loading,
     setError,
+    setMessage,
     isNominationComplete,
   } = useNominate();
-
-  console.log(isNominationComplete);
 
   const [proposedByData, setProposedyData] = useState(null);
   const [secondedByData, setSecondedByData] = useState(null);
@@ -28,47 +27,6 @@ const WitnessesScreen = () => {
   const [svalidationErrors, setSValidationErrors] = useState(null);
 
   const [signs, setSigns] = useState({});
-
-  const submitData = async () => {
-    if (secondedByData) {
-      try {
-        await aboutSchema.validate(secondedByData, { abortEarly: false });
-      } catch (err) {
-        if (err.inner) {
-          setSValidationErrors((prev) => {
-            const newError = {};
-            err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
-            return newError;
-          });
-        }
-      }
-    }
-
-    if (proposedByData) {
-      try {
-        await aboutSchema.validate(proposedByData, { abortEarly: false });
-      } catch (err) {
-        if (err.inner) {
-          setPValidationErrors((prev) => {
-            const newError = {};
-            err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
-            return newError;
-          });
-        }
-        return;
-      }
-    }
-    const data = {
-      ...signs,
-      proposed_by: proposedByData || candidate.proposed_by,
-      seconded_by: secondedByData || candidate.seconded_by,
-    };
-    if (data.proposed_by.name == "" || data.seconded_by.name == "") {
-      setError("Please enter witness details");
-      return;
-    }
-    updateNomination(data, "/nominate/verification");
-  };
 
   let aboutSchema = yup.object().shape({
     name: yup
@@ -94,6 +52,53 @@ const WitnessesScreen = () => {
       .matches(/^[0-9]+$/, "Must be only digits")
       .min(6, "Phone no should have atleast 6 digits"),
   });
+  const submitData = async () => {
+    console.log(proposedByData, secondedByData);
+    if (secondedByData) {
+      try {
+        const res = await aboutSchema.validate(secondedByData, {
+          abortEarly: false,
+        });
+      } catch (err) {
+        if (err.inner) {
+          setSValidationErrors((prev) => {
+            const newError = {};
+            err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
+            return newError;
+          });
+          return;
+        }
+      }
+    }
+
+    if (proposedByData) {
+      try {
+        await aboutSchema.validate(proposedByData, { abortEarly: false });
+      } catch (err) {
+        if (err.inner) {
+          setPValidationErrors((prev) => {
+            const newError = {};
+            err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
+            return newError;
+          });
+        }
+        return;
+      }
+    }
+    setPValidationErrors(null);
+    setSValidationErrors(null);
+    const data = {
+      proposed_by: proposedByData || candidate.proposed_by,
+      seconded_by: secondedByData || candidate.seconded_by,
+    };
+    console.log(data.proposed_by.name == "" || data.seconded_by.name == "");
+    if (data.proposed_by.name == "" || data.seconded_by.name == "") {
+      setMessage("Please fill both witness details");
+      return;
+    }
+    setMessage(null);
+    updateNomination(data, "/nominate/verification");
+  };
 
   const onChange = (e) => {
     setSigns((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
