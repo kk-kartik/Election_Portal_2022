@@ -141,20 +141,27 @@ const AboutScreen = () => {
     if (uploadImage) {
       data["image"] = uploadImage;
     }
-    if (candidateData) {
-      try {
-        await candidateSchema.validate(candidateData, { abortEarly: false });
-      } catch (err) {
-        if (err.inner) {
-          setcandidateDataErrors((prev) => {
-            const newError = {};
-            err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
-            return newError;
-          });
-        }
-        return;
+    const cData = {
+      cpi: candidate.cpi,
+      contact_no: candidate.contact_no,
+      backlogs: candidate.backlogs,
+      active_backlogs: candidate.active_backlogs,
+    };
+    try {
+      await candidateSchema.validate(candidateData || cData, {
+        abortEarly: false,
+      });
+    } catch (err) {
+      if (err.inner) {
+        setcandidateDataErrors((prev) => {
+          const newError = {};
+          err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
+          return newError;
+        });
       }
+      return;
     }
+
     if (candidateData) {
       data = {
         ...data,
