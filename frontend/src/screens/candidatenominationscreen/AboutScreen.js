@@ -117,7 +117,7 @@ const AboutScreen = () => {
 
   return (
     <>
-      <div className="flex flex-col	md:flex-row ">
+      <div className="hidden flex flex-col	md:flex-row ">
         <div className="w-full md:w-4/12">
           <WitnessDataForm
             data={profileData || userData?.euser}
