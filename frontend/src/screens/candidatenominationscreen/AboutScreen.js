@@ -95,9 +95,22 @@ const AboutScreen = () => {
         );
         return;
       }
-      const data = { image: uploadImage, about: intro };
-      updateNomination(data, "/nominate/agendas");
     }
+    if (candidate.about != "" && (!intro || intro.length < 50)) {
+      setValidationErrors((prev) => ({
+        ...prev,
+        about: "Intro should be minimum 50 words.",
+      }));
+      return;
+    }
+    const data = {};
+    if (intro) {
+      data["about"] = intro;
+    }
+    if (uploadImage) {
+      data["image"] = uploadImage;
+    }
+    updateNomination(data, "/nominate/agendas");
   };
 
   return (
