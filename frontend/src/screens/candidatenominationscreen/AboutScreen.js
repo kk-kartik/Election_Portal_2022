@@ -17,6 +17,7 @@ import useNominate from "../../hooks/useNominate";
 import SaveAndNext from "./SaveAndNext";
 import * as yup from "yup";
 import { validateYupSchema } from "formik";
+import CandidateRegistrationData from "../Register/CandidateRegistrationData";
 
 const convertoUrl = (image) => {
   if (!image) return null;
@@ -42,12 +43,37 @@ const AboutScreen = () => {
   const userData = useSelector((store) => store.auth);
   const [profileData, setProfileData] = useState(null);
 
-  console.log("khulllaaaaaaaaaaa");
-
   const [uploadImage, setUploadImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
   const [intro, setIntro] = useState(null);
+  const [candidateData, setCandidateData] = useState(null);
+  const [candidateDataErrors, setcandidateDataErrors] = useState(null);
   const [validationErrors, setValidationErrors] = useState(null);
+
+  const onChange = (e) => {
+    const cData = {
+      cpi: candidate.cpi,
+      contact_no: candidate.contact_no,
+      backlogs: candidate.backlogs,
+      active_backlogs: candidate.active_backlogs,
+    };
+    setCandidateData((prev) => ({
+      ...cData,
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  let candidateSchema = yup.object().shape({
+    cpi: yup.string().required("Cpi is required"),
+    backlogs: yup.string().required("Please enter NA if None"),
+    active_backlogs: yup.string().required("Please enter NA if None"),
+    contact_no: yup
+      .string()
+      .required("Please enter your phone number")
+      .matches(/^[0-9]+$/, "Must be only digits")
+      .min(6, "Phone no should have atleast 6 digits"),
+  });
 
   let aboutSchema = yup.object().shape({
     name: yup
@@ -75,6 +101,7 @@ const AboutScreen = () => {
   }, [uploadImage]);
 
   const submitData = async () => {
+    console.log(candidateData);
     if (profileData) {
       try {
         await aboutSchema.validate(profileData, { abortEarly: false });
@@ -105,7 +132,7 @@ const AboutScreen = () => {
       }));
       return;
     }
-    const data = {};
+    let data = {};
     if (intro) {
       data["about"] = intro;
     } else {
@@ -114,6 +141,26 @@ const AboutScreen = () => {
     if (uploadImage) {
       data["image"] = uploadImage;
     }
+    if (candidateData) {
+      try {
+        await candidateSchema.validate(candidateData, { abortEarly: false });
+      } catch (err) {
+        if (err.inner) {
+          setcandidateDataErrors((prev) => {
+            const newError = {};
+            err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
+            return newError;
+          });
+        }
+        return;
+      }
+    }
+    if (candidateData) {
+      data = {
+        ...data,
+        ...candidateData,
+      };
+    }
     updateNomination(data, "/nominate/agendas");
   };
 
@@ -121,11 +168,92 @@ const AboutScreen = () => {
     <>
       <div className="flex flex-col	md:flex-row ">
         <div className="w-full md:w-4/12">
-          <WitnessDataForm
+          <CandidateRegistrationData
             data={profileData || userData?.euser}
             setData={setProfileData}
             validationErrors={validationErrors}
           />
+          <label for="cpi" className="font-semibold text-sm text-gray-800">
+            Cpi:{" "}
+          </label>
+          <br />
+          <input
+            required
+            type="text"
+            id="cpi"
+            name="cpi"
+            className={`${styles.input} md:w-11/12 w-full mb-1`}
+            defaultValue={candidate?.cpi}
+            onChange={onChange}
+          />
+          {candidateDataErrors?.cpi ? (
+            <p className="text-red-400 text-sm">{candidateDataErrors.cpi}</p>
+          ) : (
+            <br />
+          )}
+          <label
+            for="contact_no"
+            className="font-semibold text-sm text-gray-800"
+          >
+            Contact No:{" "}
+          </label>
+          <br />
+          <input
+            required
+            type="text"
+            id="contact_no"
+            name="contact_no"
+            className={`${styles.input} md:w-11/12 w-full mb-1`}
+            defaultValue={candidate?.contact_no}
+            onChange={onChange}
+          />
+          {candidateDataErrors?.contact_no ? (
+            <p className="text-red-400 text-sm">
+              {candidateDataErrors.contact_no}
+            </p>
+          ) : (
+            <br />
+          )}
+          <label for="backlogs" className="font-semibold text-sm text-gray-800">
+            Backlogs:{" "}
+          </label>
+          <br />
+          <input
+            required
+            type="text"
+            id="backlogs"
+            name="backlogs"
+            className={`${styles.input} md:w-11/12 w-full mb-1`}
+            defaultValue={candidate?.backlogs}
+            onChange={onChange}
+          />
+          {candidateDataErrors?.backlogs ? (
+            <p className="text-red-400 text-sm">
+              {candidateDataErrors.backlogs}
+            </p>
+          ) : (
+            <br />
+          )}
+          <label for="backlogs" className="font-semibold text-sm text-gray-800">
+            Active Backlogs:{" "}
+          </label>
+          <br />
+          <input
+            required
+            type="text"
+            id="active_backlogs"
+            name="active_backlogs"
+            className={`${styles.input} md:w-11/12 w-full mb-1`}
+            defaultValue={candidate?.backlogs}
+            onChange={onChange}
+          />
+          {candidateDataErrors?.active_backlogs ? (
+            <p className="text-red-400 text-sm">
+              {candidateDataErrors.active_backlogs}
+            </p>
+          ) : (
+            <br />
+          )}
         </div>
         <div className="w-full">
           <PicIntroUpload

@@ -82,6 +82,14 @@ const WitnessesScreen = () => {
       .min(9, "Roll number should have atleast 9 digits")
       .max(12, "Roll number shouldn't be more than 12 digits")
       .typeError("Please enter digits only"),
+    cpi: yup.string().required("Cpi is required"),
+    semester: yup.string().required("Semester is required"),
+    room_no: yup.string().required("Room no is required"),
+    contact_no: yup
+      .string()
+      .required("Please enter your phone number")
+      .matches(/^[0-9]+$/, "Must be only digits")
+      .min(6, "Phone no should have atleast 6 digits"),
   });
 
   const onChange = (e) => {
