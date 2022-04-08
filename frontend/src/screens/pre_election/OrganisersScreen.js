@@ -50,6 +50,20 @@ const WebTeamList = [
     imagename: "Vishnu_img",
   },
   {
+    name: "Saket Kumar Singh",
+    post: "Backend Team",
+    contact: "7207848523",
+    image: { Saket_img },
+    imagename: "Saket_img",
+  },
+  {
+    name: "Vedant Chourasia",
+    post: "Backend Team",
+    contact: "8109181921",
+    image: { Vedant_img },
+    imagename: "Vedant_img",
+  },
+  {
     name: "Bhargav Saikia",
     post: "Frontend Team",
     contact: "8403821184",
@@ -60,23 +74,8 @@ const WebTeamList = [
     name: "Sarthak Bhagwat",
     post: "Frontend Team",
     contact: "9425605601",
-    image: { Sarthak_img},
+    image: { Sarthak_img },
     imagename: "Sarthak_img",
-  },
-  {
-    name: "Saket Kumar Singh",
-    post: "Backend Team",
-    contact: "7207848523",
-    image: { Saket_img },
-    imagename: "Saket_img",
-  },
-
-  {
-    name: "Vedant Chourasia",
-    post: "Backend Team",
-    contact: "8109181921",
-    image: { Vedant_img },
-    imagename: "Vedant_img",
   },
 ];
 

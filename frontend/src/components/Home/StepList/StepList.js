@@ -79,7 +79,7 @@ const StepList = () => {
       >
         <div className="flex justify-start items-center">
           {steps.map(({ text, imgSrc, done, link }, index) => {
-            if (done) {
+            if (userData!==null && done) {
               return (
                 <StepCompleted
                   key={index}
