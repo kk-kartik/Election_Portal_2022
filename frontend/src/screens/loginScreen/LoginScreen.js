@@ -75,6 +75,7 @@ const LoginScreen = () => {
   };
   return (
     <>
+    <div className="min-h-screen min-w-screen" style={{backgroundColor:"#f8fafe"}}>
       <div className="flex flex-col">
         <div className="flex flex-row items-center py-2 sm:py-4">
           <div className="h-15 w-15 flex mx-3 sm:ml-20">
@@ -157,6 +158,7 @@ const LoginScreen = () => {
       <div className="hidden sm:flex fixed top-0 right-0 w-auto bg-slate-100 justify-end">
         <img src={cards} alt="cards" className="h-screen" />
       </div>
+    </div>
     </>
   );
 };

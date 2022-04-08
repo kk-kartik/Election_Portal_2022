@@ -49,7 +49,7 @@ const OrganizerCard = (props) => {
         </div>
       </div>
       <div className="flex justify-center">
-      <button className="mt-4 py-2.5 px-16 border-2 rounded-md bg-gray-100 font-semibold">
+      <button className="mt-4 py-2.5 px-14 border-2 rounded-md bg-gray-100 font-semibold">
         <a href={contact}>Contact {nameString[0]}</a>
       </button></div>
     </div>
