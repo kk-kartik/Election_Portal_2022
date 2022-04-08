@@ -87,16 +87,18 @@ const TopNav = ({}) => {
     if (userData?.first_name) {
       return (
         <div className={`sm:flex flex-col`}>
-          <div className={`decoration-stone-800 flex items-center`}>
+          <div className={`decoration-stone-800 flex items-center space-x-2`}>
             <Avatar src={profile} size={38} />
             <div className="ml-2 relative">
-              <div className="flex flex-row">
+              <div className="flex flex-row space-x-2">
                 <span className="text-sm font-medium">
                   {userData.first_name}
                 </span>
                 <img
                   src={dropdown}
-                  className="ml-1 scale-125 cursor-pointer"
+                  className={`ml-1 scale-150 cursor-pointer ${
+                    dropClick ? "rotate-180" : ""
+                  }`}
                   alt="d"
                   onClick={dropdownListener}
                 />
@@ -105,28 +107,30 @@ const TopNav = ({}) => {
                 {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
               </span>
               <div
-                className={`decoration-gray-600 absolute z-10 font-bold bg-white rounded shadow-lg top-3 right-0 ${
+                className={`decoration-gray-600 absolute z-10 font-bold bg-white rounded shadow-lg top-10 right-0 w-40 shadow ${
                   dropClick ? "flex flex-col" : "hidden"
                 }`}
               >
                 {userData?.candidates.length !== 0 && (
-                  <Link
-                    to="/nominate/about"
-                    className="text-xs font-medium hover:bg-blue-100 px-3 py-2 rounded"
-                    onClick={() => setDropClick(false)}
-                  >
-                    My profile
-                  </Link>
+                  <button className="hover:bg-blue-100 py-2">
+                    <Link
+                      to="/nominate/about"
+                      className=" font-medium  px-3 py-2 rounded"
+                      onClick={() => setDropClick(false)}
+                    >
+                      My profile
+                    </Link>
+                  </button>
                 )}
                 <button
                   onClick={(e) => {
                     dispatch(logout());
                     setLoginClicked(false);
                     setDropClick(false);
-                    dispatch({type:SET_CANDIDATE_DATA, data:{}});
+                    dispatch({ type: SET_CANDIDATE_DATA, data: {} });
                     navigate("/");
                   }}
-                  className="text-xs font-medium hover:bg-blue-100 px-3 py-2 rounded"
+                  className="font-medium hover:bg-blue-100 px-3 py-2 rounded"
                 >
                   Logout
                 </button>
