@@ -169,14 +169,14 @@ class Candidate(models.Model):
     def __str__(self) -> str:
         return str(self.position) + '_' + str(self.user)
 
-    def save(self, *args, **kwargs):
-        super().save()  # saving image first
+    # def save(self, *args, **kwargs):
+    #     super().save()  # saving image first
 
-        img = Image.open(self.image.path) # Open image using self
-        if img.height > 100 or img.width > 100:
-            new_img = (100, 100)
-            img.thumbnail(new_img)
-            img.save(self.image.path)  # saving image at the same path
+    #     img = Image.open(self.image.path) # Open image using self
+    #     if img.height > 100 or img.width > 100:
+    #         new_img = (100, 100)
+    #         img.thumbnail(new_img)
+    #         img.save(self.image.path)  # saving image at the same path
 
 class Faq(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='faqs')
