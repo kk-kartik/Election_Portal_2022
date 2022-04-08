@@ -2,15 +2,34 @@ import React, { useState } from "react";
 import styles from "./RegisterScreen.module.css";
 import { userRegistration } from "../../api/index";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../actions/auth";
+import * as yup from "yup";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
+  const userData = useSelector((store) => store.auth);
+  const [validationErrors, setValidationErrors] = useState(null);
+  let aboutSchema = yup.object().shape({
+    name: yup
+      .string()
+      .required("Please enter the name")
+      .min(3, "Please enter a valid name"),
+    degree: yup.string().required(),
+    branch: yup.string().required(),
+    hostel: yup.string().required(),
+    roll_number: yup
+      .string()
+      .required()
+      .matches(/^[0-9]+$/, "Must be only digits")
+      .min(9, "Roll number should have atleast 9 digits")
+      .max(12, "Roll number shouldn't be more than 12 digits")
+      .typeError("Please enter digits only"),
+  });
   let navigate = useNavigate();
   // const [name, setName] = useState("");
   // const [rollNo, setRollNo] = useState(0);
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     const data = new FormData(e.target);
     const payload = {
@@ -20,6 +39,19 @@ const RegisterForm = () => {
       branch: data.get("branch"),
       hostel: data.get("hostel"),
     };
+
+    try {
+      await aboutSchema.validate(payload, { abortEarly: false });
+    } catch (err) {
+      if (err.inner) {
+        setValidationErrors((prev) => {
+          const newError = {};
+          err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
+          return newError;
+        });
+      }
+      return;
+    }
     const regSubmit = async () => {
       try {
         const res = await userRegistration(payload);
@@ -46,10 +78,17 @@ const RegisterForm = () => {
           type="text"
           id="name"
           name="name"
+          defaultValue={userData?.first_name || userData?.euser?.name}
           className={`${styles.input} md:w-11/12 w-full`}
         />
-        <br />
-        <br />
+        {validationErrors?.name ? (
+          <p className="text-red-400 text-sm">{validationErrors.name}</p>
+        ) : (
+          <>
+            <br />
+            <br />
+          </>
+        )}
         <label for="rollno" className="font-semibold text-s text-gray-800">
           Roll No.:{" "}
         </label>
@@ -61,8 +100,14 @@ const RegisterForm = () => {
           name="roll_number"
           className={`${styles.input} md:w-11/12 w-full`}
         />
-        <br />
-        <br />
+        {validationErrors?.roll_number ? (
+          <p className="text-red-400 text-sm">{validationErrors.roll_number}</p>
+        ) : (
+          <>
+            <br />
+            <br />
+          </>
+        )}
         <label for="degree" className="font-semibold text-s text-gray-800">
           Degree:{" "}
         </label>{" "}
@@ -72,13 +117,21 @@ const RegisterForm = () => {
           id="degree"
           name="degree"
           className={`${styles.input} md:w-11/12 w-full`}
+          defaultValue=""
         >
+          <option value="">Select </option>
           <option value="U">B.Tech</option>
           <option value="P">M.Tech</option>
           <option value="P">PhD</option>
         </select>
-        <br />
-        <br />
+        {validationErrors?.degree ? (
+          <p className="text-red-400 text-sm">{validationErrors.degree}</p>
+        ) : (
+          <>
+            <br />
+            <br />
+          </>
+        )}
         <label for="branch" className="font-semibold text-s text-gray-800">
           Branch:{" "}
         </label>{" "}
@@ -88,7 +141,9 @@ const RegisterForm = () => {
           id="branch"
           name="branch"
           className={`${styles.input} md:w-11/12 w-full`}
+          defaultValue=""
         >
+          <option value="">Select </option>
           <option value="01">CSE</option>
           <option value="02">ECE</option>
           <option value="03">ME</option>
@@ -108,8 +163,14 @@ const RegisterForm = () => {
           <option value="55">Linguistics</option>
           <option value="61">Others</option>
         </select>
-        <br />
-        <br />
+        {validationErrors?.branch ? (
+          <p className="text-red-400 text-sm">{validationErrors.branch}</p>
+        ) : (
+          <>
+            <br />
+            <br />
+          </>
+        )}
         <label for="hostel" className="font-semibold text-s text-gray-800">
           Hostel:
         </label>
@@ -119,7 +180,9 @@ const RegisterForm = () => {
           id="hostel"
           name="hostel"
           className={`${styles.input} md:w-11/12 w-full`}
+          defaultValue=""
         >
+          <option value="">Select </option>
           <option value="lohit">Lohit</option>
           <option value="dhansiri">Dhansiri</option>
           <option value="dihing">Dihing</option>
@@ -136,7 +199,15 @@ const RegisterForm = () => {
           <option value="siang">Siang</option>
           <option value="not-alloted">Not Alloted</option>
         </select>
-        <button type="submit" className={styles.button}>
+        {validationErrors?.hostel ? (
+          <p className="text-red-400 text-sm">{validationErrors.hostel}</p>
+        ) : (
+          <>
+            <br />
+            <br />
+          </>
+        )}
+        <button type="submit" className={`${styles.button} mt-3`}>
           Continue
         </button>
       </form>

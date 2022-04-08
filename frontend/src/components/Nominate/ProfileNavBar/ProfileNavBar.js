@@ -37,8 +37,9 @@ const ProfileNavBar = () => {
           &nbsp;My Profile &nbsp;
         </span>
         <button className={`${styles.notver} py-1 px-3 sm:px-5 ml-auto mr-4`}>
-          {capitalizeFirstLetter(candidate?.nomination_status) ||
-            "Not Verified"}
+          {`Nomination ${capitalizeFirstLetter(
+            candidate?.nomination_status
+          )}` || "Not Verified"}
         </button>
         {/* <button
           className={`${styles.preview} py-1 pl-2 pr-1 sm:px-5 mr-4`}

@@ -3,21 +3,19 @@ import { useSelector } from "react-redux";
 
 const useCandidateCheck = () => {
   const [isCandidate, setIsCandidate] = useState(true);
-  const candidateData = useSelector((store) => store.candidate);
-
-  console.log("chalaaaa", candidateData);
+  const userData = useSelector((store) => store.auth);
 
   const checkCandidate = async () => {
-    if(candidateData.id!==undefined){
-        setIsCandidate(true);
-    }else{
-        setIsCandidate(false);
+    if (userData && userData?.candidates?.length !== 0) {
+      setIsCandidate(true);
+    } else {
+      setIsCandidate(false);
     }
   };
 
   useEffect(() => {
     checkCandidate();
-  }, [candidateData]);
+  }, [userData]);
 
   return isCandidate;
 };

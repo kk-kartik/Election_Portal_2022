@@ -6,16 +6,34 @@ import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import useNominate from "../../../hooks/useNominate";
 const AgendaList = () => {
-  const { candidate, error, message, updateNomination } = useNominate();
+  const {
+    candidate,
+    error,
+    message,
+    updateNomination,
+    loading,
+  } = useNominate();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(null);
 
   return (
     <div className="">
       {candidate?.agenda_text &&
         Object.keys(candidate?.agenda_text || []).map((a, i) => (
-          <Agenda title={a} agenda={parse(candidate.agenda_text[a])} />
+          <Agenda
+            title={a}
+            agenda={parse(candidate.agenda_text[a])}
+            setIsOpen={setIsOpen}
+            setTitle={setTitle}
+            updateNomination={updateNomination}
+            candidate={candidate}
+          />
+        ))}
+      {!candidate ||
+        !candidate?.agenda_text ||
+        (Object.keys(candidate?.agenda_text || []).length < 4 && (
+          <p className="text-sm">Add Atleast 4 agendas</p>
         ))}
 
       {isOpen && (
@@ -24,6 +42,7 @@ const AgendaList = () => {
           setTitle={setTitle}
           updateNomination={updateNomination}
           candidate={candidate}
+          title={title}
         />
       )}
       {/* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}></textarea> */}
@@ -36,6 +55,12 @@ const AgendaList = () => {
           Add Agenda
         </button>
       </div>
+      {loading && <p className="text-sm text-green">Saving...</p>}
+      {error ? (
+        <p className="text-red">{error}</p>
+      ) : message ? (
+        <p className="text-green">{error}</p>
+      ) : null}
     </div>
   );
 };

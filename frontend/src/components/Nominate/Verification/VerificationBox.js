@@ -18,9 +18,15 @@ const VerificationBox = () => {
     message,
     updateNomination,
     isComplete,
+    setError,
+    setMessage,
   } = useNominate();
 
   const submitNominationForm = async () => {
+    if (!isComplete) {
+      setError("Please complete nomination form");
+      return;
+    }
     updateNomination({ nomination_complete: true });
   };
 
@@ -40,18 +46,31 @@ const VerificationBox = () => {
         <Tile
           svg={agendaSVG}
           text={"Upload your agendas"}
-          done={!!candidate.agenda_text}
+          done={
+            candidate &&
+            candidate.agenda_text &&
+            Object.keys(candidate.agenda_text).length >= 4
+          }
         />
         <Tile svg={formSVG} text={"Generate Nomination form"} done={true} />
         <Tile
           svg={plusSVG}
           text={"Add Credentials"}
-          done={!!candidate.credentials}
+          done={
+            candidate &&
+            candidate.credentials &&
+            Object.keys(candidate.credentials).length >= 1
+          }
         />
         <Tile
           svg={verifySVG}
           text={"Add Witness Data"}
-          done={!!(candidate.proposed_by?.name && candidate.seconded_by?.name)}
+          done={
+            !(
+              candidate?.proposed_by?.name == "" ||
+              candidate?.seconded_by?.name == ""
+            )
+          }
         />
       </div>
       <div className={`flex mt-4`}>

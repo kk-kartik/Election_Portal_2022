@@ -2,7 +2,8 @@ export const BASEURL = process.env.REACT_APP_BASEURL;
 export const BASEAPIURL = process.env.REACT_APP_BASEAPIURL;
 export const ELECTIONAPI = process.env.REACT_APP_ELECTIONSAPI;
 export const VALIDAPIURL = process.env.REACT_APP_VALIDAPIURL;
-
+export const OUTLOOK_LOGIN_URL = process.env.REACT_APP_OUTLOOK_LOGIN_URL;
+export const IS_PROD = process.env.REACT_APP_ENV == "production";
 // Important Dates Constants
 export const GET_IMPORTANT_DATES = "GET_IMPORTANT_DATES";
 export const ADD_IMPORTANT_DATE = "ADD_IMPORTANT_DATE";

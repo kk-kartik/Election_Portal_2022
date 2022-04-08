@@ -99,8 +99,8 @@ class Voter(models.Model):
     user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='voter_ids')
     is_voted = models.BooleanField(default=False)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='voters')
-    election_organizers = models.ForeignKey(Election,null=True,on_delete=models.SET_NULL,related_name='organizers') # change the name of field to election
-    election_creator = models.OneToOneField(Election,null=True,on_delete=models.SET_NULL,related_name='created_by')
+    election_organizers = models.ForeignKey(Election,blank=True,on_delete=models.DO_NOTHING,related_name='organizers') # change the name of field to election
+    election_creator = models.OneToOneField(Election,blank=True,on_delete=models.DO_NOTHING,related_name='created_by')
 
     class Meta:
         unique_together = (('user', 'election'), ('user', 'election_organizers'))

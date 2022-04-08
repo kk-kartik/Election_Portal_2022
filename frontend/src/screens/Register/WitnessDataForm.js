@@ -3,7 +3,7 @@ import styles from "./RegisterScreen.module.css";
 import { userRegistration } from "../../api/index";
 import { useNavigate } from "react-router-dom";
 
-const WitnessDataForm = ({ data, setData }) => {
+const WitnessDataForm = ({ data, setData, validationErrors }) => {
   const onChange = (e) => {
     setData((prev) => ({
       ...data,
@@ -25,10 +25,14 @@ const WitnessDataForm = ({ data, setData }) => {
           id="name"
           name="name"
           className={`${styles.input} md:w-11/12 w-full mb-1`}
-          defaultValue={data?.name || ""}
+          defaultValue={data?.name}
           onChange={onChange}
         />
-        <br />
+        {validationErrors?.name ? (
+          <p className="text-red-400 text-sm">{validationErrors.name}</p>
+        ) : (
+          <br />
+        )}
         <label for="rollno" className="font-semibold text-sm text-gray-800">
           Roll No.:{" "}
         </label>
@@ -39,10 +43,15 @@ const WitnessDataForm = ({ data, setData }) => {
           id="rollno"
           name="roll_number"
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          defaultValue={data?.roll_number || ""}
+          defaultValue={data?.roll_number != "" ? data?.roll_number : null}
           onChange={onChange}
+          maxLength={9}
         />
-        <br />
+        {validationErrors?.roll_number ? (
+          <p className="text-red-400 text-sm">{validationErrors.roll_number}</p>
+        ) : (
+          <br />
+        )}
         <label for="degree" className="font-semibold text-sm text-gray-800">
           Degree:{" "}
         </label>{" "}
@@ -52,14 +61,19 @@ const WitnessDataForm = ({ data, setData }) => {
           id="degree"
           name="degree"
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          defaultValue={data?.degree || ""}
+          defaultValue={data?.degree != "" ? data?.degree : null}
           onChange={onChange}
         >
+          <option value="">Select </option>
           <option value="U">B.Tech</option>
           <option value="P">M.Tech</option>
           <option value="P">PhD</option>
         </select>
-        <br />
+        {validationErrors?.degree ? (
+          <p className="text-red-400 text-sm">{validationErrors.degree}</p>
+        ) : (
+          <br />
+        )}
         <label for="branch" className="font-semibold text-sm text-gray-800">
           Branch:{" "}
         </label>{" "}
@@ -68,10 +82,11 @@ const WitnessDataForm = ({ data, setData }) => {
           required
           id="branch"
           name="branch"
-          defaultValue={data?.branch || ""}
+          defaultValue={data?.branch != "" ? data?.branch : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
         >
+          <option value="">Select</option>
           <option value="01">CSE</option>
           <option value="02">ECE</option>
           <option value="03">ME</option>
@@ -91,7 +106,11 @@ const WitnessDataForm = ({ data, setData }) => {
           <option value="55">Linguistics</option>
           <option value="61">Others</option>
         </select>
-        <br />
+        {validationErrors?.branch ? (
+          <p className="text-red-400 text-sm">{validationErrors.branch}</p>
+        ) : (
+          <br />
+        )}
         <label for="hostel" className="font-semibold text-sm text-gray-800">
           Hostel:
         </label>
@@ -100,10 +119,11 @@ const WitnessDataForm = ({ data, setData }) => {
           required
           id="hostel"
           name="hostel"
-          defaultValue={data?.hostel || ""}
+          defaultValue={data?.hostel != "" ? data?.hostel : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
         >
+          <option value="">Select </option>
           <option value="lohit">Lohit</option>
           <option value="dhansiri">Dhansiri</option>
           <option value="dihing">Dihing</option>
@@ -120,6 +140,11 @@ const WitnessDataForm = ({ data, setData }) => {
           <option value="siang">Siang</option>
           <option value="not-alloted">Not Alloted</option>
         </select>
+        {validationErrors?.hostel ? (
+          <p className="text-red-400 text-sm">{validationErrors.hostel}</p>
+        ) : (
+          <br />
+        )}
       </form>
     </div>
   );

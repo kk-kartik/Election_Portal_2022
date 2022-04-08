@@ -1,7 +1,7 @@
 const { useState } = require("react");
 const { useDispatch, useSelector } = require("react-redux");
 const { useNavigate } = require("react-router-dom");
-const { API, updateCandidateData } = require("../api");
+const { MULTIPARTAPI, updateCandidateData } = require("../api");
 const { SET_CANDIDATE_DATA } = require("../constants");
 
 function buildFormData(formData, data, parentKey) {
@@ -40,10 +40,18 @@ const useNominate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const candidate = useSelector((store) => store.candidate);
+  const isCredsComplete =
+    candidate &&
+    candidate.credentials &&
+    Object.keys(candidate.credentials).length >= 1;
+  const isAgendaComplete =
+    candidate &&
+    candidate.agenda_text &&
+    Object.keys(candidate.agenda_text).length >= 4;
   const isComplete =
     !!candidate.id &&
     !!candidate.video &&
-    !!candidate.agenda_text &&
+    isAgendaComplete &&
     !!candidate.credentials &&
     !!candidate.proposed_by?.name;
 
@@ -56,9 +64,11 @@ const useNominate = () => {
     const data = { ...candidate, ...updatedData };
     setLoading(true);
     try {
-      API.defaults.headers["Content-Type"] = "multipart/form-data";
       const finalData = {};
       Object.keys(data).forEach((k) => {
+        if (k == "nomination_status") {
+          return;
+        }
         if (
           k == "image" ||
           k == "proposed_by_sign" ||
@@ -93,16 +103,19 @@ const useNominate = () => {
 
       setMessage("Nomination data submitted!!");
     } catch (err) {
-      console.log(err);
       setError(
         err.response?.data?.detail ||
           "Something went wrong!Please try logging in again."
       );
+      setLoading(false);
+      return;
     }
-    setLoading(false);
+
     if (next && !error) {
       navigate(next);
     }
+    setMessage("Saved");
+    setLoading(false);
   };
 
   return {

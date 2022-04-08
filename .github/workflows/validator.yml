@@ -1,11 +1,11 @@
 name: Validator deployment
 on:
     workflow_dispatch:
-    push:
-        paths:
-            - "vote-validator/**"
-        branches:
-            - "main"
+    # push:
+    #     paths:
+    #         - "vote-validator/**"
+    #     branches:
+    #         - "main"
 
 jobs:
 
