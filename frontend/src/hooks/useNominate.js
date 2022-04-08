@@ -66,7 +66,7 @@ const useNominate = () => {
     try {
       const finalData = {};
       Object.keys(data).forEach((k) => {
-        if (k == "nomination_status") {
+        if (k === "nomination_status" || k === "agenda_pdf") {
           return;
         }
         if (

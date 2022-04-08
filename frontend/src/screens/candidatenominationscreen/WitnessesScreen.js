@@ -139,12 +139,14 @@ const WitnessesScreen = () => {
           /> */}
         </div>
       </div>
-      <SaveAndNext
-        error={error}
-        message={message}
-        loading={loading}
-        submit={submitData}
-      />
+      <div className="sm:pl-6 mb-4">
+        <SaveAndNext
+          error={error}
+          message={message}
+          loading={loading}
+          submit={submitData}
+        />
+      </div>
     </div>
   );
 };
