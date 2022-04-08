@@ -35,7 +35,6 @@ print(DEBUG)
 DEBUG = not (DEBUG == 'false' or DEBUG == 'False') if isinstance(DEBUG, str) else True
 
 print(DEBUG)
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -132,7 +131,7 @@ DATABASES = {
 }
 
 
-if not DEBUG:
+if not  DEBUG:
     print("Connecting to db....")
     DATABASES["default"]:{
             "ENGINE":"django.db.backends.postgresql_psycopg2",
