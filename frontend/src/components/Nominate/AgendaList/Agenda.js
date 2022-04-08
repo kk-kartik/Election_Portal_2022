@@ -50,9 +50,9 @@ const Agenda = (props) => {
               {" "}
               Agenda {count}: {title}{" "}
             </h1>
-            <div className={`${styles.dropdowncont} ml-auto`} tabindex="-1">
+            {/* <div className={`${styles.dropdowncont} ml-auto`} tabindex="-1">
               <img src={dots} className={styles.dots} />
-            </div>
+            </div> */}
           </div>
           <div className="flex">
             <div className="pt-4">{agenda}</div>
