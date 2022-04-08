@@ -2,6 +2,8 @@ import styles from "./AgendaNavbar.module.css";
 import React, { useEffect, useState } from "react";
 import LearnMore from "../../LearnMore/LearnMore";
 
+const modalText = ""
+
 const AgendaNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -20,7 +22,7 @@ const AgendaNavbar = () => {
           Learn More
         </button>
       </div>
-      {isOpen && <LearnMore setIsOpen={setIsOpen} />}
+      {isOpen && <LearnMore content={modalText} setIsOpen={setIsOpen} />}
       <hr className="my-2 border border-solid border-gray-200" />
     </div>
   );

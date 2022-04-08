@@ -77,26 +77,26 @@ const CredentialsScreen = () => {
         (Object.keys(candidate?.credentials).length == 0 && (
           <p>Upload all the important documents and credentials</p>
         ))}
+
+      {/* <h2 className="mb-2">Uploaded credentials</h2> */}
+
+      <FixedUploadField
+        handleFile={handleFile}
+        credDelete={credDelete}
+        title="Grade Card"
+        link={candidate.credentials && candidate.credentials["Grade Card"]}
+      />
+
+      {candidate?.user?.degree === "P" && (
+        <FixedUploadField
+          handleFile={handleFile}
+          credDelete={credDelete}
+          title="Thesis incomplete proof"
+          link={candidate.credentials && candidate.credentials["Thesis incomplete proof"]}
+        />
+      )}
       {candidate.credentials && Object.keys(candidate.credentials).length != 0 && (
         <>
-          <h2 className="mb-2">Uploaded credentials</h2>
-
-          <FixedUploadField
-            handleFile={handleFile}
-            credDelete={credDelete}
-            title="Grade Card"
-            link={candidate.credentials["Grade Card"]}
-          />
-
-          {candidate?.user?.degree === "P" && (
-            <FixedUploadField
-              handleFile={handleFile}
-              credDelete={credDelete}
-              title="Thesis incomplete proof"
-              link={candidate.credentials["Thesis incomplete proof"]}
-            />
-          )}
-
           {Object.keys(candidate.credentials).map((k, i) => (
             <UploadField
               handleFile={handleFile}
