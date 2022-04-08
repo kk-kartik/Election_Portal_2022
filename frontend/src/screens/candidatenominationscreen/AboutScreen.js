@@ -86,19 +86,18 @@ const AboutScreen = () => {
         }
         return;
       }
+      try {
+        const res = await userRegistration(profileData);
+      } catch (err) {
+        setError(
+          err.response?.data?.detail ||
+            "Something went wrong!Please again or refresh the browser"
+        );
+        return;
+      }
+      const data = { image: uploadImage, about: intro };
+      updateNomination(data, "/nominate/agendas");
     }
-
-    try {
-      const res = await userRegistration(profileData);
-    } catch (err) {
-      setError(
-        err.response?.data?.detail ||
-          "Something went wrong!Please again or refresh the browser"
-      );
-      return;
-    }
-    const data = { image: uploadImage, about: intro };
-    updateNomination(data, "/nominate/agendas");
   };
 
   return (
