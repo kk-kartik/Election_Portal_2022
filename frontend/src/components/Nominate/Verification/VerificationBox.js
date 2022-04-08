@@ -52,7 +52,7 @@ const VerificationBox = () => {
             Object.keys(candidate.agenda_text).length >= 4
           }
         />
-        <Tile svg={formSVG} text={"Generate Nomination form"} done={true} />
+        {/* <Tile svg={formSVG} text={"Generate Nomination form"} done={true} /> */}
         <Tile
           svg={plusSVG}
           text={"Add Credentials"}
@@ -77,7 +77,7 @@ const VerificationBox = () => {
         <button className={`${styles.btn1} py-2 px-4 mr-4 cursor-pointer`}>
           <a
             className={`${styles.text}`}
-            href={`https://swc.iitg.ac.in/elelection_api/sgc/candidate_pdf/${candidate?.id}/`}
+            href={`https://swc.iitg.ac.in/elections_api/sgc/candidate_pdf/${candidate?.id}/`}
           >
             Preview Nomination Form
           </a>
