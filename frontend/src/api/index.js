@@ -56,7 +56,8 @@ export const updateCandidateData = (id, data) =>
 export const getCandidateData = () => API.get(`/candidates/`);
 
 //credentials
-export const uploadCredentials = (data) => API.post("/add_credentials/", data);
+export const uploadCredentials = (data) =>
+  MULTIPARTAPI.post("/add_credentials/", data);
 //Debates API
 export const fetchDebates = () => API.get("/debates");
 export const addDebate = (newDebate) => API.post("/debates/", newDebate);

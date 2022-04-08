@@ -36,12 +36,11 @@ const CredentialsScreen = () => {
     updateNomination(data);
   };
 
-  console.log("Candidate profile: ",candidate);
+  console.log("Candidate profile: ", candidate);
 
   const handleFile = async (title, file) => {
     setMessage("Uploading credentials");
     try {
-      API.defaults.headers["Content-Type"] = "multipart/form-data";
       const formData = new FormData();
       formData.append("file", file);
       formData.append("name", title);
@@ -54,6 +53,7 @@ const CredentialsScreen = () => {
           "Something went wrong!Please try logging in again."
       );
     }
+
     setMessage(null);
   };
 
