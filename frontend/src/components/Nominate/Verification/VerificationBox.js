@@ -94,11 +94,14 @@ const VerificationBox = () => {
           </div>
         </button>
       </div>
+      <p className={`${styles.lastdate} mt-2`}>
+        *No changes will possible once form is sent for verificaton
+      </p>
       {error && <p className="text-red-600 mt-5">{error}</p>}
       {message && <p className="text-green-600 mt-5">{message}</p>}
       <div className={`flex mt-4`}>
         <div className={`${styles.lastdate}`}>
-          Last Date for Verification is: 08/04/22
+          Last Date for Verification is: 11/04/22
         </div>
         <div className={`mr-0 ml-auto ${styles.help}`}>
           <a href="mailto:swc@iitg.ac.in">Need Help?</a>

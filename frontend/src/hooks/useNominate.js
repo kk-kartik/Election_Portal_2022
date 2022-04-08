@@ -40,6 +40,7 @@ const useNominate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const candidate = useSelector((store) => store.candidate);
+  const isNominationComplete = candidate.nomination_complete;
   const isCredsComplete =
     candidate &&
     candidate.credentials &&
@@ -59,6 +60,10 @@ const useNominate = () => {
     !!candidate.proposed_by?.name;
 
   const updateNomination = async (updatedData, next = null) => {
+    if (isNominationComplete) {
+      setMessage("Nomination is already submitted");
+      return;
+    }
     if (!candidate) {
       navigate("/", { replace: true });
       return;
@@ -131,6 +136,7 @@ const useNominate = () => {
     isComplete,
     message,
     setMessage,
+    isNominationComplete,
   };
 };
 
