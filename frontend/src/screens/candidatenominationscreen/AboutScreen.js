@@ -143,7 +143,7 @@ const AboutScreen = () => {
     }
     const cData = {
       cpi: candidate.cpi,
-      contact_no: candidate.contact_no,
+      contact_no: candidate.contact_no || "",
       backlogs: candidate.backlogs,
       active_backlogs: candidate.active_backlogs,
     };
