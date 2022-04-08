@@ -79,6 +79,7 @@ const TextEditor = (props) => {
                 placeholder="Title"
                 className={` ${styles.input} p-2 w-full`}
                 value={props.title}
+                disabled={!!props.title}
                 onChange={(e) => props.setTitle(e.target.value)}
               />
             </div>

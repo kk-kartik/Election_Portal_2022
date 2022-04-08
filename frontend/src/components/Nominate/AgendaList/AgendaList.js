@@ -26,6 +26,8 @@ const AgendaList = () => {
             agenda={parse(candidate.agenda_text[a])}
             setIsOpen={setIsOpen}
             setTitle={setTitle}
+            updateNomination={updateNomination}
+            candidate={candidate}
           />
         ))}
       {!candidate ||

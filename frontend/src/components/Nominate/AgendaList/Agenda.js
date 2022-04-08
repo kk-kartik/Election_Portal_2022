@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./Agenda.module.css";
 import dots from "./three-dots.svg";
-import deleteSVG from "./delete.svg";
+import deleteSVG from "./delete2.svg";
 import editSVG from "./edit.svg";
 const Agenda = (props) => {
   const [clicked, setClicked] = useState(false);
@@ -56,14 +56,21 @@ const Agenda = (props) => {
           </div>
           <div className="flex">
             <div className="pt-4">{agenda}</div>
-            <img
-              className="self-end mr-0 ml-auto w-5 h-5 cursor-pointer"
-              src={editSVG}
-              onClick={() => {
-                props.setTitle(props.title);
-                props.setIsOpen(true);
-              }}
-            ></img>
+            <div className="self-end mr-0 ml-auto flex gap-4 items-center">
+              <img
+                className=" w-4 h-4 cursor-pointer"
+                src={editSVG}
+                onClick={() => {
+                  props.setTitle(props.title);
+                  props.setIsOpen(true);
+                }}
+              ></img>
+              <img
+                className="w-5 h-5 cursor-pointer"
+                src={deleteSVG}
+                onClick={agendaDelete}
+              ></img>
+            </div>
           </div>
         </div>
       </div>
