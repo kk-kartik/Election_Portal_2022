@@ -49,7 +49,7 @@ const AgendaList = () => {
       {/* <Agenda count={count} title={title} agenda={agenda} long={true} /> */}
       <div className="pt-8">
         <button
-          className={`text-white ${styles.button} px-5`}
+          className={`text-white ${styles.button} px-5 ml-2`}
           onClick={() => setIsOpen(true)}
         >
           Add Agenda
@@ -61,6 +61,7 @@ const AgendaList = () => {
       ) : message ? (
         <p className="text-green">{error}</p>
       ) : null}
+      <br />
     </div>
   );
 };

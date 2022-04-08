@@ -10,8 +10,8 @@ function SaveAndNext({ error, message, loading, submit }) {
       ) : message ? (
         <p className="text-green">{error}</p>
       ) : null}
-      <p className="text-sm">Apply changes before proceeding</p>
-      <button className={styles.button} onClick={submit}>
+      {/* <p className="text-sm">Apply changes before proceeding</p> */}
+      <button className={`${styles.button} mb-4`} onClick={submit}>
         Save & Next
       </button>
     </div>
