@@ -9,6 +9,7 @@ import Vishnu_img from "../../assets/team_images/Vishnu.jpeg";
 import Kunal_img from "../../assets/team_images/Kunal.jpg";
 import Bhargav_img from "../../assets/team_images/Bhargav.jpg";
 import Saket_img from "../../assets/team_images/Saket.png";
+import Sarthak_img from "../../assets/team_images/Sarthak.jpg";
 const ElectionTeamList = [
   {
     name: "Praveen Sai Teella",
@@ -59,8 +60,8 @@ const WebTeamList = [
     name: "Sarthak Bhagwat",
     post: "Frontend Team",
     contact: "9425605601",
-    image: { Praveen_img },
-    imagename: "Saket_img",
+    image: { Sarthak_img},
+    imagename: "Sarthak_img",
   },
   {
     name: "Saket Kumar Singh",
