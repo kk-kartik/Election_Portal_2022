@@ -36,7 +36,7 @@ const Register = () => {
           <span>
             {userData && userData?.euser?.registration_complete
               ? "Complete your nomination profile for the Gymkhana Elections."
-              : "Register for the Gymkhana Elections to cast your votes"}
+              : "Register for the Gymkhana Elections to nominate yourself as a candidate."}
           </span>
           <div className={styles.btns}>
             {!userData?.euser?.registration_complete && (
