@@ -47,7 +47,10 @@ DEGREE = (
     ('B','Btech'),
     ('M','Mtech'),
     ('P',"PG"),
-    ("Msc","MS")
+    ("Msc","Msc"),
+    ("Mdes","Mdes"),
+    ("Bdes","Bdes"),
+    ("Dual","Dual Degree")
 )
 
 HOSTELS = [
