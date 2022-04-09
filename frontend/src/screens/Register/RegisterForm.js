@@ -127,6 +127,8 @@ const RegisterForm = () => {
           <option value="Bdes">Bdes</option>
           <option value="Mdes">Mdes</option>
           <option value="Dual">Dual Degree</option>
+          <option value="MA">MA</option>
+          <option value="MSR">MSR</option>
         </select>
         {validationErrors?.degree ? (
           <p className="text-red-400 text-sm">{validationErrors.degree}</p>
