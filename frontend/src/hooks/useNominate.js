@@ -85,8 +85,11 @@ const useNominate = () => {
       navigate("/", { replace: true });
       return;
     }
-
-    const data = { ...candidate, ...updatedData };
+    if (!updatedData || Object.keys(updatedData).length == 0) {
+      setMessage("Everything is up to date");
+      return;
+    }
+    const data = { ...updatedData };
     setLoading(true);
     try {
       const finalData = {};
@@ -130,8 +133,9 @@ const useNominate = () => {
     } catch (err) {
       console.log(err);
       setError(
-        err.response?.data?.detail ||
-          "Something went wrong!Please try logging in again."
+        err.response?.data
+          ? "Please check your response"
+          : "Something went wrong!Please check try refreshing again."
       );
       setLoading(false);
       return;
