@@ -48,6 +48,11 @@ DEGREE = (
     ('P','PG')
 )
 
+GENDER = (
+    ('Male','Male'),
+    ('Female','Female')
+)
+
 HOSTELS = [
     ('lohit', 'Lohit'),
     ('brahmaputra', 'Brahmaputra'),
@@ -71,6 +76,7 @@ class EUser(models.Model):
     name = models.CharField(max_length=100,blank=True,null=True)
     roll_number = models.CharField(max_length=100,blank=True,null=True)
     degree = models.CharField(choices=DEGREE,max_length=70,blank=True,null=True)
+    gender = models.CharField(choices=GENDER,max_length=70,blank=True,null=True)
     hostel = models.CharField(choices=HOSTELS,max_length=50,blank=True,null=True)
     branch = models.CharField(choices=BRANCH,max_length=50,blank=True,null=True)
     email = models.EmailField(unique=True)
