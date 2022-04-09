@@ -201,7 +201,7 @@ const AboutScreen = () => {
             id="room_no"
             name="room_no"
             className={`${styles.input} md:w-11/12 w-full mb-1`}
-            defaultValue={candidate?.cpi}
+            defaultValue={candidate?.room_no}
             onChange={onChange}
             disabled={isNominationComplete}
           />
