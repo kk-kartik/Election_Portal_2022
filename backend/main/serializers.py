@@ -59,9 +59,9 @@ class CandidateOrganizerSerializer(serializers.ModelSerializer):
         model = Candidate
         exclude = ['election',"user"]
     
-
-
 class FaqSerializer(serializers.ModelSerializer):
     class Meta:
         model = Faq
         exclude = ["election"]
+
+    
