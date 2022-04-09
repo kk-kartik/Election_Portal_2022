@@ -33,7 +33,11 @@ const Register = () => {
       <h1 className={styles.regText}>Register</h1>
       <div className={styles.regCont}>
         <div className={`${styles.reg}`}>
-          <span>Register for the Gymkhana Elections to cast your votes</span>
+          <span>
+            {userData && userData?.euser?.registration_complete
+              ? "Complete your nomination profile for the Gymkhana Elections."
+              : "Register for the Gymkhana Elections to cast your votes"}
+          </span>
           <div className={styles.btns}>
             {!userData?.euser?.registration_complete && (
               <button
