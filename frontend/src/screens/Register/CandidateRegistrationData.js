@@ -76,6 +76,10 @@ const CandidateRegistrationData = ({
           <option value="B">B.Tech</option>
           <option value="M">M.Tech</option>
           <option value="P">PhD</option>
+          <option value="Msc">MSc</option>
+          <option value="Bdes">Bdes</option>
+          <option value="Mdes">Mdes</option>
+          <option value="Dual">Dual Degree</option>
         </select>
         {validationErrors?.degree ? (
           <p className="text-red-400 text-sm">{validationErrors.degree}</p>
