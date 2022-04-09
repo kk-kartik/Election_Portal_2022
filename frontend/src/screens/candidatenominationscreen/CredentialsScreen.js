@@ -80,6 +80,8 @@ const CredentialsScreen = () => {
           <p>Upload all the important documents and credentials</p>
         ))}
 
+      {message && <p className="text-blue-500 my-2">{message}</p>}
+
       {/* <h2 className="mb-2">Uploaded credentials</h2> */}
 
       <FixedUploadField
@@ -103,7 +105,7 @@ const CredentialsScreen = () => {
       {candidate.credentials && Object.keys(candidate.credentials).length != 0 && (
         <>
           {Object.keys(candidate.credentials).map((k, i) => {
-            if (k !== "Grade Card" && k !== "Thesis incomplete proof"){
+            if (k !== "Grade Card" && k !== "Thesis incomplete proof") {
               return (
                 <UploadField
                   handleFile={handleFile}
@@ -123,6 +125,7 @@ const CredentialsScreen = () => {
         isNominationComplete={isNominationComplete}
       />
       <br />
+
       {/* <SaveAndNext
         error={error}
         message={message}

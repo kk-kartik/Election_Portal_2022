@@ -12,6 +12,8 @@ const PicIntroUpload = ({
   setImageURL,
   intro,
   validationErrors,
+  isNominationComplete,
+  onIntroChange,
 }) => {
   const [isPopUp, setIsPopUp] = useState(false);
   const [fileName, setFileName] = useState(null);
@@ -28,25 +30,29 @@ const PicIntroUpload = ({
             {" "}
             Upload your profile picture here
           </div>
-          <input
-            accept="image/*"
-            type="file"
-            id="select-image"
-            style={{ display: "none" }}
-            onChange={(e) => {
-              setUploadImage(e.target.files[0]);
-              console.log(e.target.files[0]);
-              setFileName(e.target.files[0].name);
-              setImgType(e.target.files[0].type);
-              setIsPopUp(true);
-            }}
-            required
-          />
-          <label htmlFor="select-image">
-            <div class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium text-center py-2 px-6 rounded border-2">
-              Upload File
-            </div>
-          </label>
+          {!isNominationComplete && (
+            <>
+              <input
+                accept="image/*"
+                type="file"
+                id="select-image"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  setUploadImage(e.target.files[0]);
+                  console.log(e.target.files[0]);
+                  setFileName(e.target.files[0].name);
+                  setImgType(e.target.files[0].type);
+                  setIsPopUp(true);
+                }}
+                required
+              />
+              <label htmlFor="select-image">
+                <div class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium text-center py-2 px-6 rounded border-2">
+                  Upload File
+                </div>
+              </label>
+            </>
+          )}
           {imageURL && <Avatar imageURL={imageURL} />}
           {isPopUp && (
             <ImageEditor
@@ -59,15 +65,19 @@ const PicIntroUpload = ({
           )}
         </div>
       </div>
-      {/* this is textbox */}
+      {validationErrors?.image ? (
+        <p className="text-red-400 text-sm">{validationErrors.image}</p>
+      ) : (
+        <br />
+      )}
       <div className="mt-3 font-medium">Brief Introduction :</div>
       <textarea
         type="text"
         placeholder="Write 300 words of introduction..."
-        name="intro"
+        name="about"
         className="w-full h-48 p-2 mt-1 border-2"
         defaultValue={intro}
-        onChange={(e) => setIntro(e.target.value)}
+        onChange={onIntroChange}
         required
       ></textarea>
       {validationErrors?.about ? (

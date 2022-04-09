@@ -39,6 +39,25 @@ const WitnessDataForm = ({
         ) : (
           <br />
         )}
+        <label for="email" className="font-semibold text-sm text-gray-800">
+          Email:{" "}
+        </label>
+        <br />
+        <input
+          required
+          type="text"
+          id="email"
+          name="email"
+          className={`${styles.input} md:w-11/12 w-full mb-1`}
+          defaultValue={data?.email}
+          onChange={onChange}
+          disabled={isNominationComplete}
+        />
+        {validationErrors?.email ? (
+          <p className="text-red-400 text-sm">{validationErrors.email}</p>
+        ) : (
+          <br />
+        )}
         <label for="rollno" className="font-semibold text-sm text-gray-800">
           Roll No.:{" "}
         </label>
