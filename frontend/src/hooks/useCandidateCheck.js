@@ -6,10 +6,12 @@ const useCandidateCheck = () => {
   const userData = useSelector((store) => store.auth);
 
   const checkCandidate = async () => {
-    if (userData && userData?.candidates?.length !== 0) {
-      setIsCandidate(true);
-    } else {
-      setIsCandidate(false);
+    if (userData) {
+      if (userData?.candidates?.length !== 0) {
+        setIsCandidate(true);
+      } else {
+        setIsCandidate(false);
+      }
     }
   };
 
