@@ -18,6 +18,7 @@ import SaveAndNext from "./SaveAndNext";
 import * as yup from "yup";
 import { validateYupSchema } from "formik";
 import CandidateRegistrationData from "../Register/CandidateRegistrationData";
+import { set } from "react-hook-form";
 
 const convertoUrl = (image) => {
   if (!image) return null;
@@ -32,7 +33,6 @@ const convertoUrl = (image) => {
 const AboutScreen = () => {
   const {
     candidate,
-    navigate,
     error,
     setError,
     loading,
@@ -45,23 +45,14 @@ const AboutScreen = () => {
   const userData = useSelector((store) => store.auth);
   const [profileData, setProfileData] = useState(null);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [uploadImage, setUploadImage] = useState(null);
   const [imageURL, setImageURL] = useState(null);
-  const [intro, setIntro] = useState(null);
   const [candidateData, setCandidateData] = useState(null);
   const [candidateDataErrors, setcandidateDataErrors] = useState(null);
   const [validationErrors, setValidationErrors] = useState(null);
-
   const onChange = (e) => {
-    const cData = {
-      cpi: candidate.cpi,
-      contact_no: candidate.contact_no,
-      backlogs: candidate.backlogs,
-      active_backlogs: candidate.active_backlogs,
-    };
     setCandidateData((prev) => ({
-      ...cData,
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -76,6 +67,10 @@ const AboutScreen = () => {
       .required("Please enter your phone number")
       .matches(/^[0-9]+$/, "Must be only digits")
       .min(6, "Phone no should have atleast 6 digits"),
+    semester: yup.string().required("Semester is required"),
+    room_no: yup.string().required("Room no is required"),
+    about: yup.string().required("Please add your intro"),
+    image: yup.string().required("Please add your profile pic"),
   });
 
   let aboutSchema = yup.object().shape({
@@ -94,8 +89,13 @@ const AboutScreen = () => {
       .max(12, "Roll number shouldn't be more than 12 digits")
       .typeError("Please enter digits only"),
   });
-
   useEffect(() => {
+    if (uploadImage) {
+      setCandidateData((prev) => ({
+        ...prev,
+        image: "Image uploaded",
+      }));
+    }
     if (uploadImage) {
       setImageURL(URL.createObjectURL(uploadImage));
     } else {
@@ -129,39 +129,24 @@ const AboutScreen = () => {
       }
     }
     setError(null);
-    if (candidate.about == "" && (!intro || intro.length == 0)) {
-      setValidationErrors((prev) => ({
-        ...prev,
-        about: "Intro should be minimum 50 words.",
-      }));
-      return;
-    }
-
     setValidationErrors(null);
-    if (!candidate.image && !uploadImage) {
-      setMessage("Please upload profile pic");
-      return;
-    }
-    setMessage(null);
-    let data = {};
-    if (intro) {
-      data["about"] = intro;
-    } else {
-      data["about"] = candidate.about;
-    }
-    if (uploadImage) {
-      data["image"] = uploadImage;
-    }
 
-    const cData = {
-      cpi: candidate?.cpi || "",
-      contact_no: candidate?.contact_no || "",
-      backlogs: candidate?.backlogs || "",
-      active_backlogs: candidate?.active_backlogs || "",
+    let cData = {
+      about: candidate.about || "",
+      image: candidate.image || "",
+      cpi: candidate.cpi || "",
+      room_no: candidate.room_no || "",
+      semester: candidate.semester || "",
+      contact_no: candidate.contact_no || "",
+      backlogs: candidate.backlogs || "",
+      active_backlogs: candidate.active_backlogs || "",
     };
-
+    const uploadData = {
+      ...cData,
+      ...candidateData,
+    };
     try {
-      await candidateSchema.validate(candidateData || cData, {
+      await candidateSchema.validate(uploadData, {
         abortEarly: false,
       });
     } catch (err) {
@@ -175,17 +160,14 @@ const AboutScreen = () => {
       return;
     }
     setcandidateDataErrors(null);
-
-    if (candidateData) {
-      data = {
-        ...data,
-        ...candidateData,
-      };
-    }
+    const data = candidateData;
+    if (data) data["image"] = uploadImage;
     setValidationErrors(null);
     setError(null);
     setMessage(null);
-    updateNomination(data, "/nominate/agendas");
+    console.log("Here");
+    updateNomination(data);
+    navigate("/nominate/agendas");
   };
 
   return (
@@ -198,6 +180,27 @@ const AboutScreen = () => {
             validationErrors={validationErrors}
             isNominationComplete={isNominationComplete}
           />
+          <label for="room_no" className="font-semibold text-sm text-gray-800">
+            Room_no:{" "}
+          </label>
+          <br />
+          <input
+            required
+            type="text"
+            id="room_no"
+            name="room_no"
+            className={`${styles.input} md:w-11/12 w-full mb-1`}
+            defaultValue={candidate?.cpi}
+            onChange={onChange}
+            disabled={isNominationComplete}
+          />
+          {candidateDataErrors?.room_no ? (
+            <p className="text-red-400 text-sm">
+              {candidateDataErrors.room_no}
+            </p>
+          ) : (
+            <br />
+          )}
           <label for="cpi" className="font-semibold text-sm text-gray-800">
             Cpi:{" "}
           </label>
@@ -217,26 +220,23 @@ const AboutScreen = () => {
           ) : (
             <br />
           )}
-          <label
-            for="contact_no"
-            className="font-semibold text-sm text-gray-800"
-          >
-            Contact No:{" "}
+          <label for="semester" className="font-semibold text-sm text-gray-800">
+            Semester:{" "}
           </label>
           <br />
           <input
             required
             type="text"
-            disabled={isNominationComplete}
-            id="contact_no"
-            name="contact_no"
+            id="semester"
+            name="semester"
             className={`${styles.input} md:w-11/12 w-full mb-1`}
-            defaultValue={candidate?.contact_no}
+            defaultValue={candidate?.cpi}
             onChange={onChange}
+            disabled={isNominationComplete}
           />
-          {candidateDataErrors?.contact_no ? (
+          {candidateDataErrors?.semester ? (
             <p className="text-red-400 text-sm">
-              {candidateDataErrors.contact_no}
+              {candidateDataErrors.semester}
             </p>
           ) : (
             <br />
@@ -273,7 +273,7 @@ const AboutScreen = () => {
             id="active_backlogs"
             name="active_backlogs"
             className={`${styles.input} md:w-11/12 w-full mb-1`}
-            defaultValue={candidate?.backlogs}
+            defaultValue={candidate?.active_backlogs}
             onChange={onChange}
           />
           {candidateDataErrors?.active_backlogs ? (
@@ -283,17 +283,41 @@ const AboutScreen = () => {
           ) : (
             <br />
           )}
+          <label
+            for="contact_no"
+            className="font-semibold text-sm text-gray-800"
+          >
+            Contact No:{" "}
+          </label>
+          <br />
+          <input
+            required
+            type="text"
+            disabled={isNominationComplete}
+            id="contact_no"
+            name="contact_no"
+            className={`${styles.input} md:w-11/12 w-full mb-1`}
+            defaultValue={candidate?.contact_no}
+            onChange={onChange}
+          />
+          {candidateDataErrors?.contact_no ? (
+            <p className="text-red-400 text-sm">
+              {candidateDataErrors.contact_no}
+            </p>
+          ) : (
+            <br />
+          )}
         </div>
         <div className="w-full">
           <PicIntroUpload
-            setIntro={setIntro}
             isNominationComplete={isNominationComplete}
             imageURL={imageURL || convertoUrl(candidate?.image)}
             uploadImage={uploadImage}
             setUploadImage={setUploadImage}
             setImageURL={setImageURL}
-            intro={intro || candidate?.about}
-            validationErrors={validationErrors}
+            intro={candidateData?.about || candidate?.about}
+            validationErrors={candidateDataErrors}
+            onIntroChange={onChange}
           />
         </div>
       </div>

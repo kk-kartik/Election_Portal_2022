@@ -12,7 +12,9 @@ const PicIntroUpload = ({
   intro,
   validationErrors,
   isNominationComplete,
+  onIntroChange,
 }) => {
+  console.log(onIntroChange);
   const [crop, setCrop] = useState({ aspect: 4 / 3 });
   return (
     <div className="p-3 m-6 mt-0">
@@ -70,14 +72,19 @@ const PicIntroUpload = ({
           )}
         </div>
       </div>
+      {validationErrors?.image ? (
+        <p className="text-red-400 text-sm">{validationErrors.image}</p>
+      ) : (
+        <br />
+      )}
       <div className="mt-3 font-medium">Brief Introduction :</div>
       <textarea
         type="text"
         placeholder="Write 300 words of introduction..."
-        name="intro"
+        name="about"
         className="w-full h-48 p-2 mt-1 border-2"
         defaultValue={intro}
-        onChange={(e) => setIntro(e.target.value)}
+        onChange={onIntroChange}
         required
         disabled={isNominationComplete}
       ></textarea>

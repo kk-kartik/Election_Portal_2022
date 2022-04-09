@@ -33,6 +33,7 @@ const WitnessesScreen = () => {
       .string()
       .required("Please enter the name")
       .min(3, "Please enter a valid name"),
+    email: yup.string().email().required("Please enter a valid iitg email"),
     degree: yup.string().required(),
     branch: yup.string().required(),
     hostel: yup.string().required(),
