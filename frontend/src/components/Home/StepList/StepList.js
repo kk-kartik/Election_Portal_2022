@@ -59,7 +59,7 @@ const StepList = () => {
     {
       text: "Submit your form",
       imgSrc: submit,
-      done: candidate.isComplete,
+      done: candidate.nomination_complete,
       link: "verification",
     },
   ];
