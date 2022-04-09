@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { verifyLogin } from "../api/index";
 
 const useAuthCheck = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const checkLogin = async () => {
     if (
       document.cookie.includes("electiontoken") ||

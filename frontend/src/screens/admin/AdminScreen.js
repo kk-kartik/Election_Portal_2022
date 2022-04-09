@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../../components/Admin/Sidebar/Sidebar";
 import "./AdminScreen.css";
 import { useSelector } from "react-redux";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import ImportantDatesScreen from "./ImportantDates/ImportantDatesScreen";
 import AddImportantDateScreen from "./ImportantDates/AddImportantDateScreen";
@@ -14,10 +14,21 @@ import DebatesScreen from "./Debates/DebateScreen";
 import AddDebateScreen from "./Debates/AddDebateScreen";
 import EditDebateScreen from "./Debates/EditDebateScreen";
 import CandidatesScreen from "./Candidates/CandidateScreen";
+import useAuthCheck from "../../hooks/useAuthCheck";
 
 const AdminScreen = () => {
   let loginBool = useSelector((store) => store.auth);
   console.log("timepass", { loginBool });
+  const isLoggedIn = useAuthCheck();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login", { replace: true });
+      return;
+    }
+  }, [isLoggedIn]);
+
   return (
     <div className="bg-gray-100 font-family-karla flex">
       {loginBool ? (

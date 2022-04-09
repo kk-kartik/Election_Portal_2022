@@ -128,7 +128,7 @@ const TopNav = ({}) => {
                     setLoginClicked(false);
                     setDropClick(false);
                     dispatch({ type: SET_CANDIDATE_DATA, data: {} });
-                    navigate("/");
+                    navigate("/", { replace: true });
                   }}
                   className="font-medium hover:bg-blue-100 px-3 py-2 rounded"
                 >
