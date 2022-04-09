@@ -52,6 +52,7 @@ const AboutScreen = () => {
   const [candidateDataErrors, setcandidateDataErrors] = useState(null);
   const [validationErrors, setValidationErrors] = useState(null);
   const onChange = (e) => {
+    setMessage(null);
     setCandidateData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -91,6 +92,7 @@ const AboutScreen = () => {
   });
   useEffect(() => {
     if (uploadImage) {
+      setMessage(null);
       setCandidateData((prev) => ({
         ...prev,
         image: "Image uploaded",
@@ -148,6 +150,7 @@ const AboutScreen = () => {
       backlogs: candidate.backlogs || "",
       active_backlogs: candidate.active_backlogs || "",
     };
+    console.log(cData, candidateData);
     const uploadData = {
       ...cData,
       ...candidateData,
@@ -166,8 +169,16 @@ const AboutScreen = () => {
       }
     }
     const data = candidateData;
-    if (data && uploadImage) data["image"] = uploadImage;
-    updateNomination(data);
+    console.log(uploadImage, data);
+    if (data && uploadImage) {
+      data["image"] = uploadImage;
+    }
+    await updateNomination(data);
+    setCandidateData(null);
+    if (uploadImage) {
+      setUploadImage(null);
+      setImageURL(null);
+    }
   };
 
   return (
