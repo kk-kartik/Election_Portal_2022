@@ -87,6 +87,23 @@ const TextEditor = (props) => {
                 editorState={editorState}
                 onEditorStateChange={handleEditorChange}
                 placeholder="Write about your agenda here..."
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "fontFamily",
+                    "list",
+                    "textAlign",
+                    //"colorPicker",
+                    //"link",
+                    //"embedded",
+                    "emoji",
+                    //"image",
+                    "remove",
+                    "history",
+                  ],
+                }}
               />
             </div>
             <div className="flex flex-row-reverse p-2">
