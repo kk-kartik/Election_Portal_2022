@@ -104,6 +104,8 @@ const StepList = () => {
               let path = "";
               if (!userData) {
                 path = "/login";
+              } else if (!userData?.euser?.registration_complete) {
+                path = "/register";
               } else if (userData && userData.candidates.length) {
                 path = "/nominate/about";
               } else path = `/nominate/post`;
