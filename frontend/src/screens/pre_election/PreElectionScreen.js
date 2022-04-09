@@ -10,6 +10,7 @@ import StatsScreen from "./StatsScreen";
 import RulesScreen from "./RulesScreen";
 import OrganisersScreen from "./OrganisersScreen";
 import lime from "../../assets/Lime.jpg";
+import NewFooter from "../../components/Footer/NewFooter";
 const Layout = () => {
   return (
     <div
@@ -144,7 +145,8 @@ const PreElectionScreen = () => {
           </Route>
         </Routes>
       </div>
-      <Footer />
+      {/* <Footer /> */}
+      <NewFooter />
     </>
   );
 };
