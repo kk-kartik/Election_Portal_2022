@@ -55,6 +55,10 @@ const WitnessesScreen = () => {
   });
   const submitData = async () => {
     console.log(proposedByData, secondedByData);
+    setSValidationErrors(null);
+    setPValidationErrors(null);
+    setMessage(null);
+
     if (secondedByData) {
       try {
         const res = await aboutSchema.validate(secondedByData, {
@@ -67,11 +71,9 @@ const WitnessesScreen = () => {
             err.inner.forEach((e) => (newError[e.params.path] = e.errors[0]));
             return newError;
           });
-          return;
         }
       }
     }
-    setPValidationErrors(null);
     if (proposedByData) {
       try {
         await aboutSchema.validate(proposedByData, { abortEarly: false });
@@ -83,20 +85,15 @@ const WitnessesScreen = () => {
             return newError;
           });
         }
-        return;
       }
     }
-    setSValidationErrors(null);
     const data = {
       proposed_by: proposedByData || candidate.proposed_by,
       seconded_by: secondedByData || candidate.seconded_by,
     };
-    console.log(data.proposed_by.name == "" || data.seconded_by.name == "");
     if (data.proposed_by.name == "" || data.seconded_by.name == "") {
       setMessage("Please fill both witness details");
-      return;
     }
-    setMessage(null);
     updateNomination(data, "/nominate/verification");
   };
 

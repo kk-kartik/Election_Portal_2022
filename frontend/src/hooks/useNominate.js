@@ -137,9 +137,9 @@ const useNominate = () => {
       return;
     }
 
-    if (next && !error) {
-      navigate(next);
-    }
+    // if (next && !error) {
+    //   navigate(next);
+    // }
     setMessage("Saved");
     setLoading(false);
   };

@@ -21,12 +21,18 @@ const VideoScreen = () => {
 
   const videoRef = useRef(null);
   let embedId = "";
-  const CheckURL = (url) => {
-    var regExp = /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
-    var match = url.match(regExp);
-    return match && match[1].length == 11 ? match[1] : false;
+  const CheckURL = (value) => {
+    var regEx =
+      "^(?:https?:)?//[^/]*(?:youtube(?:-nocookie)?.com|youtu.be).*[=/]([-\\w]{11})(?:\\?|=|&|$)";
+    var matches = value.match(regEx);
+    if (matches) {
+      return matches[1];
+    }
+    return false;
   };
   const submitData = async () => {
+    console.log(videoRef.current.value);
+    console.log(CheckURL(videoRef.current.value));
     if (!videoRef.current.value || !CheckURL(videoRef.current.value)) {
       setError("Please add valid url");
       return;

@@ -103,11 +103,30 @@ const AboutScreen = () => {
     }
   }, [uploadImage]);
 
+  const saveUserData = async () => {
+    try {
+      const res = await userRegistration(profileData);
+      dispatch(getUser());
+    } catch (err) {
+      setError(
+        err.response?.data?.detail ||
+          "Something went wrong!Please again or refresh the browser"
+      );
+      return;
+    }
+  };
+
   const submitData = async () => {
+    setError(null);
+    setValidationErrors(null);
+    setcandidateDataErrors(null);
+    setMessage(null);
+
     if (profileData) {
       try {
         await aboutSchema.validate(profileData, { abortEarly: false });
       } catch (err) {
+        saveUserData();
         if (err.inner) {
           setValidationErrors((prev) => {
             const newError = {};
@@ -117,20 +136,8 @@ const AboutScreen = () => {
         }
         return;
       }
-      try {
-        const res = await userRegistration(profileData);
-        dispatch(getUser());
-      } catch (err) {
-        setError(
-          err.response?.data?.detail ||
-            "Something went wrong!Please again or refresh the browser"
-        );
-        return;
-      }
+      saveUserData();
     }
-    setError(null);
-    setValidationErrors(null);
-
     let cData = {
       about: candidate.about || "",
       image: candidate.image || "",
@@ -157,17 +164,10 @@ const AboutScreen = () => {
           return newError;
         });
       }
-      return;
     }
-    setcandidateDataErrors(null);
     const data = candidateData;
-    if (data) data["image"] = uploadImage;
-    setValidationErrors(null);
-    setError(null);
-    setMessage(null);
-    console.log("Here");
+    if (data && uploadImage) data["image"] = uploadImage;
     updateNomination(data);
-    navigate("/nominate/agendas");
   };
 
   return (
