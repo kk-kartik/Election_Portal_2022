@@ -46,7 +46,8 @@ BRANCH = (
 DEGREE = (
     ('B','Btech'),
     ('M','Mtech'),
-    ('P',"PG")
+    ('P',"PG"),
+    ("Msc","MS")
 )
 
 HOSTELS = [
