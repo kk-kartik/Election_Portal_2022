@@ -19,6 +19,7 @@ export const styles = (theme) => ({
     fontWeight: "600",
     padding: "0.625rem 2.75rem",
     fontSize: "100%",
+    textTransform: "none",
   },
   controls: {
     padding: 16,
