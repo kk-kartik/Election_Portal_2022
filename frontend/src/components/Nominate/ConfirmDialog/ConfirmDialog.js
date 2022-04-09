@@ -20,7 +20,7 @@ const ConfirmDialog = (props) => {
           <br />
           <div className="flex flex-col sm:flex-row">
             <button
-              className="px-3 py-1 mr-2 border-2 rounded-md bg-red-500 text-white hover:bg-red-600"
+              className="px-3 py-1 mr-2 border-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
               onClick={() => {
                 props.finalSubmit();
                 props.setIsOpen(false);
@@ -29,7 +29,7 @@ const ConfirmDialog = (props) => {
               Yes
             </button>
             <button
-              className="px-3 py-1 mr-2 border-2 rounded-md bg-green-500 text-white hover:bg-green-600"
+              className="px-3 py-1 mr-2 border-2 rounded-md bg-white text-black hover:bg-gray-300"
               onClick={() => props.setIsOpen(false)}
             >
               No

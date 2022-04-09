@@ -103,7 +103,7 @@ const CredentialsScreen = () => {
       {candidate.credentials && Object.keys(candidate.credentials).length != 0 && (
         <>
           {Object.keys(candidate.credentials).map((k, i) => {
-            if (k !== "Grade Card" && k !== "Thesis incomplete proof"){
+            if (k !== "Grade Card" && k !== "Thesis incomplete proof") {
               return (
                 <UploadField
                   handleFile={handleFile}
@@ -123,6 +123,7 @@ const CredentialsScreen = () => {
         isNominationComplete={isNominationComplete}
       />
       <br />
+      {message && <p className="text-blue-500 mb-2">{message}</p>}
       {/* <SaveAndNext
         error={error}
         message={message}

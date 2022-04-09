@@ -104,18 +104,21 @@ const VerificationBox = () => {
             Preview Nomination Form
           </a>
         </button>
-        <button
-          className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
-          disabled={!isComplete}
-          onClick={() => setIsOpen(!isOpen)}
-          //onClick={submitNominationForm}
-        >
-          <div className={`${isComplete ? styles.text1 : styles.text2}`}>
-            {isNominationComplete
+        {!isNominationComplete && (
+          <button
+            className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
+            disabled={!isComplete}
+            onClick={() => setIsOpen(!isOpen)}
+            //onClick={submitNominationForm}
+          >
+            <div className={`${isComplete ? styles.text1 : styles.text2}`}>
+              {/* {isNominationComplete
               ? "Sent for Nomination"
-              : "Send for Nomination"}
-          </div>
-        </button>
+              : "Send for Nomination"} */}
+              Send for Nomination
+            </div>
+          </button>
+        )}
       </div>
       <p className={`${styles.lastdate} mt-2`}>
         *No changes will possible once form is sent for verificaton
@@ -131,7 +134,10 @@ const VerificationBox = () => {
         </div>
       </div>
       {isOpen && (
-        <ConfirmDialog setIsOpen={setIsOpen} finalSubmit={submitNominationForm}/>
+        <ConfirmDialog
+          setIsOpen={setIsOpen}
+          finalSubmit={submitNominationForm}
+        />
       )}
     </div>
   );

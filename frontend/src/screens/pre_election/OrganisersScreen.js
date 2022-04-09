@@ -37,14 +37,14 @@ const ElectionTeamList = [
 const WebTeamList = [
   {
     name: "Kunal Solanke",
-    post: "WebOps Head",
+    post: "WebOps Team",
     contact: "9511852924",
     image: { Kunal_img },
     imagename: "Kunal_img",
   },
   {
     name: "Vishnu Rai",
-    post: "Web3 Head",
+    post: "Web3 Team",
     contact: "7578968856",
     image: { Vishnu_img },
     imagename: "Vishnu_img",

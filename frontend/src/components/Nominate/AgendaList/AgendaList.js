@@ -58,11 +58,11 @@ const AgendaList = () => {
           </button>
         </div>
       )}
-      {loading && <p className="text-sm text-green">Saving...</p>}
+      {loading && <p className="text-sm text-blue-500">Saving...</p>}
       {error ? (
-        <p className="text-red">{error}</p>
+        <p className="text-red-300">{error}</p>
       ) : message ? (
-        <p className="text-green">{error}</p>
+        <p className="text-green-400">{error}</p>
       ) : null}
       <br />
     </div>
