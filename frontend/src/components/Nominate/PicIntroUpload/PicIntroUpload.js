@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import "react-image-crop/dist/ReactCrop.css";
 import Avatar from "./Avatar";
@@ -18,6 +18,8 @@ const PicIntroUpload = ({
   const [isPopUp, setIsPopUp] = useState(false);
   const [fileName, setFileName] = useState(null);
   const [imgType, setImgType] = useState(null);
+  const [imageSrcURL, setImageSrcURL] = useState(null);
+  const imgInput = useRef(null);
   return (
     <div className="w-full p-3 m-6 mt-0">
       <div className="font-medium">Profile Pic : </div>
@@ -37,9 +39,11 @@ const PicIntroUpload = ({
                 type="file"
                 id="select-image"
                 style={{ display: "none" }}
+                ref={imgInput}
                 onChange={(e) => {
-                  setUploadImage(e.target.files[0]);
-                  console.log(e.target.files[0]);
+                  setImageSrcURL(URL.createObjectURL(e.target.files[0]));
+                  // setUploadImage(e.target.files[0]);
+                  //console.log(e.target.files[0]);
                   setFileName(e.target.files[0].name);
                   setImgType(e.target.files[0].type);
                   setIsPopUp(true);
@@ -53,14 +57,17 @@ const PicIntroUpload = ({
               </label>
             </>
           )}
-          {imageURL && <Avatar imageURL={imageURL} />}
-          {isPopUp && (
+          <Avatar imageURL={imageURL} uploadImage={uploadImage} />
+          {imageSrcURL && (
             <ImageEditor
-              imageURL={imageURL}
+              imageURL={imageSrcURL}
               setIsPopUp={setIsPopUp}
               setUploadImage={setUploadImage}
+              setImageSrcUrl={setImageSrcURL}
               fileName={fileName}
               imgType={imgType}
+              isPopUp={isPopUp}
+              imgInput={imgInput}
             />
           )}
         </div>

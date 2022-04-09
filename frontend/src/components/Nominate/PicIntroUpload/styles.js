@@ -10,7 +10,15 @@ export const styles = (theme) => ({
   },
   cropButton: {
     flexShrink: 0,
-    marginLeft: 16,
+    display: "block",
+    marginLeft: "auto",
+    backgroundColor: "#2B00FF",
+    color: "white",
+    boxShadow: "0px 2px 1px rgb(0 0 0 / 5%), 0px 0px 1px rgb(0 0 0 / 25%)",
+    borderRadius: "6px",
+    fontWeight: "600",
+    padding: "0.625rem 2.75rem",
+    fontSize: "100%",
   },
   controls: {
     padding: 16,
