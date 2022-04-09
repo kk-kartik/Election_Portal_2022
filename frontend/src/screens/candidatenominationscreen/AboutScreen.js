@@ -230,7 +230,7 @@ const AboutScreen = () => {
             id="semester"
             name="semester"
             className={`${styles.input} md:w-11/12 w-full mb-1`}
-            defaultValue={candidate?.cpi}
+            defaultValue={candidate?.semester}
             onChange={onChange}
             disabled={isNominationComplete}
           />
