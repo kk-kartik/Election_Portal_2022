@@ -71,7 +71,7 @@ const WitnessesScreen = () => {
         }
       }
     }
-
+    setPValidationErrors(null);
     if (proposedByData) {
       try {
         await aboutSchema.validate(proposedByData, { abortEarly: false });
@@ -86,7 +86,6 @@ const WitnessesScreen = () => {
         return;
       }
     }
-    setPValidationErrors(null);
     setSValidationErrors(null);
     const data = {
       proposed_by: proposedByData || candidate.proposed_by,

@@ -80,6 +80,8 @@ const CredentialsScreen = () => {
           <p>Upload all the important documents and credentials</p>
         ))}
 
+      {message && <p className="text-blue-500 my-2">{message}</p>}
+
       {/* <h2 className="mb-2">Uploaded credentials</h2> */}
 
       <FixedUploadField
@@ -123,7 +125,7 @@ const CredentialsScreen = () => {
         isNominationComplete={isNominationComplete}
       />
       <br />
-      {message && <p className="text-blue-500 mb-2">{message}</p>}
+
       {/* <SaveAndNext
         error={error}
         message={message}
