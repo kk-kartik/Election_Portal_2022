@@ -15,10 +15,11 @@ import AddDebateScreen from "./Debates/AddDebateScreen";
 import EditDebateScreen from "./Debates/EditDebateScreen";
 import CandidatesScreen from "./Candidates/CandidateScreen";
 import useAuthCheck from "../../hooks/useAuthCheck";
+import CandidateProfileScreen from "./Candidates/CandidateProfileScreen";
 
 const AdminScreen = () => {
-  let loginBool = useSelector((store) => store.auth);
-  console.log("timepass", { loginBool });
+  let userData = useSelector((store) => store.auth);
+  console.log("timepass", { userData });
   const isLoggedIn = useAuthCheck();
   const navigate = useNavigate();
 
@@ -31,9 +32,9 @@ const AdminScreen = () => {
 
   return (
     <div className="bg-gray-100 font-family-karla flex">
-      {loginBool ? (
+      {userData ? (
         <>
-          {loginBool?.is_staff ? (
+          {userData?.is_staff ? (
             <Sidebar>
               <Routes>
                 <Route
@@ -67,6 +68,11 @@ const AdminScreen = () => {
                   path={`/candidates`}
                   element={<CandidatesScreen />}
                 />
+                <Route
+                  exact
+                  path={`/candidates/:id`}
+                  element={<CandidateProfileScreen />}
+                />
 
                 <Route exact path={`/faq`} element={<FAQScreen />} />
                 <Route exact path={`/faq/add`} element={<AddFAQScreen />} />
@@ -79,6 +85,12 @@ const AdminScreen = () => {
                 <h1 className="text-2xl sm:text-3xl font-bold text-center">
                   You are Not Authorized.
                 </h1>
+                <p className="text-center mt-2 text-xl">
+                  Go back to{" "}
+                  <Link to="/" className="text-blue-600 hover:underline">
+                    home
+                  </Link>
+                </p>
               </div>
             </div>
           )}
