@@ -84,7 +84,7 @@ class ProfileAPIView(ElectionMixin,generics.GenericAPIView):
         euser = user.euser
         candidates = Candidate.objects.filter(election=election,user=euser)
         euser_data = EuserSerializer(euser,context=self.get_serializer_context()).data
-        candidates_data = CandidateSerializer(candidates,many=True,context=self.get_serializer_context()).data
+        candidates_data = CandidateReadSerializer(candidates,many=True,context=self.get_serializer_context()).data
         user_data = UserSerializer(user,context=self.get_serializer_context()).data
 
         return Response({**user_data,"euser":euser_data,"candidates":candidates_data},status=status.HTTP_200_OK)
