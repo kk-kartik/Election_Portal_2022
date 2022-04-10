@@ -165,6 +165,7 @@ class Candidate(models.Model):
     proposed_by = models.JSONField(null=True,blank=True,default=get_default_witness)
     seconded_by = models.JSONField(null=True,blank=True,default=get_default_witness)
     credentials = models.JSONField(null=True,blank=True,default=dict)
+    verified_credentials = models.JSONField(null=True,blank=True,default=dict)
     proposed_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     seconded_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     nomination_complete = models.BooleanField(default=False)
