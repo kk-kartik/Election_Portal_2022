@@ -9,6 +9,8 @@ function capitalizeFirstLetter(string) {
 }
 const ProfileNavBar = () => {
   const candidate = useSelector((store) => store.candidate);
+  const userData = useSelector((store) => store.auth);
+  console.log(candidate);
   return (
     <RouteNavbar
       text={[
@@ -29,20 +31,25 @@ const ProfileNavBar = () => {
       ]}
       mobWidth="w-full"
     >
-      <div className="flex">
-        <span className="font-normal text-3xl underline hidden lg:block">
-          <Link to="/">Gymkhana Elections 2022</Link>
-        </span>
-        <span className="font-normal text-3xl hidden lg:block">&nbsp; / </span>
-        <span className="font-normal text-2xl sm:text-3xl">
-          &nbsp;My Profile
-        </span>
-
-        {candidate && candidate.position && (
-          <span className="font-normal text-2xl sm:text-3xl">
-            ({candidate?.position?.title})
+      <div className="flex items-center">
+        <div className="flex flex-wrap items-center">
+          <span className="font-normal text-3xl underline hidden lg:block">
+            <Link to="/">Gymkhana Elections 2022</Link>
           </span>
-        )}
+          <span className="font-normal text-3xl hidden lg:block">
+            &nbsp; /{" "}
+          </span>
+          <span className="font-normal text-2xl sm:text-3xl">
+            &nbsp;My Profile
+          </span>
+
+          {userData && userData.candidates.length != 0 && (
+            <span className="font-normal text-sm md:text-2xl lg:text-3xl">
+              ({userData.candidates[0].position.title})
+            </span>
+          )}
+        </div>
+
         <button className={`${styles.notver} py-1 px-3 sm:px-5 ml-auto mr-4`}>
           {`Verification ${capitalizeFirstLetter(
             candidate?.nomination_status

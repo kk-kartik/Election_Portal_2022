@@ -87,9 +87,9 @@ const WitnessDataForm = ({ data, setData, validationErrors, isFormClosed }) => {
           disabled={isFormClosed}
         >
           <option value="">Select </option>
-          <option value="B">B.Tech</option>
-          <option value="M">M.Tech</option>
-          <option value="P">PhD</option>
+          <option value="BTech">B.Tech</option>
+          <option value="MTech">M.Tech</option>
+          <option value="PhD">PhD</option>
           <option value="Msc">MSc</option>
           <option value="Bdes">Bdes</option>
           <option value="Mdes">Mdes</option>
@@ -116,24 +116,24 @@ const WitnessDataForm = ({ data, setData, validationErrors, isFormClosed }) => {
           disabled={isFormClosed}
         >
           <option value="">Select</option>
-          <option value="01">CSE</option>
-          <option value="02">ECE</option>
-          <option value="03">ME</option>
-          <option value="04">Civil</option>
-          <option value="05">Design</option>
-          <option value="06">BSBE</option>
-          <option value="07">CL</option>
-          <option value="08">EEE</option>
-          <option value="21">Physics</option>
-          <option value="22">Chemistry</option>
-          <option value="23">MNC</option>
-          <option value="41">HSS</option>
-          <option value="51">Energy</option>
-          <option value="52">Environment</option>
-          <option value="53">Nano-Tech</option>
-          <option value="54">Rural-Tech</option>
-          <option value="55">Linguistics</option>
-          <option value="61">Others</option>
+          <option>CSE</option>
+          <option>ECE</option>
+          <option>ME</option>
+          <option>Civil</option>
+          <option>Design</option>
+          <option>BSBE</option>
+          <option>CL</option>
+          <option>EEE</option>
+          <option>Physics</option>
+          <option>Chemistry</option>
+          <option>MNC</option>
+          <option>HSS</option>
+          <option>Energy</option>
+          <option>Environment</option>
+          <option>Nano-Tech</option>
+          <option>Rural-Tech</option>
+          <option>Linguistics</option>
+          <option>Others</option>
         </select>
         {validationErrors?.branch ? (
           <p className="text-red-400 text-sm">{validationErrors.branch}</p>
@@ -154,21 +154,21 @@ const WitnessDataForm = ({ data, setData, validationErrors, isFormClosed }) => {
           disabled={isFormClosed}
         >
           <option value="">Select </option>
-          <option value="lohit">Lohit</option>
-          <option value="dhansiri">Dhansiri</option>
-          <option value="dihing">Dihing</option>
-          <option value="disang">Disang</option>
-          <option value="dibang">Dibang</option>
-          <option value="manas">Manas</option>
-          <option value="umiam">Umiam</option>
-          <option value="kapili">Kapili</option>
-          <option value="subansiri">Subansiri</option>
-          <option value="kameng">Kameng</option>
-          <option value="barak">Barak</option>
-          <option value="msh">Married Scholar Hostel</option>
-          <option value="brahmaputra">Brahmaputra</option>
-          <option value="siang">Siang</option>
-          <option value="not-alloted">Not Alloted</option>
+          <option>Lohit</option>
+          <option>Dhansiri</option>
+          <option>Dihing</option>
+          <option>Disang</option>
+          <option>Dibang</option>
+          <option>Manas</option>
+          <option>Umiam</option>
+          <option>Kapili</option>
+          <option>Subansiri</option>
+          <option>Kameng</option>
+          <option>Barak</option>
+          <option>Married Scholar Hostel</option>
+          <option>Brahmaputra</option>
+          <option>Siang</option>
+          <option>Not Alloted</option>
         </select>
         {validationErrors?.hostel ? (
           <p className="text-red-400 text-sm">{validationErrors.hostel}</p>
