@@ -18,6 +18,59 @@ from django.views.generic.base import View
 # from wkhtmltopdf.views import PDFTemplateResponse
 
 
+BRANCH = {
+    'None':"None",
+    '01': 'CSE',
+    '02': 'ECE',
+    '03': 'ME',
+    '04': 'Civil',
+    '05': 'Design',
+    '06': 'BSBE',
+    '07': 'CL',
+    '08': 'EEE',
+    '21': 'Physics',
+    '22': 'Chemistry',
+    '23': 'MNC',
+    '41': 'HSS',
+    '51': 'Energy',
+    '52': 'Environment',
+    '53': 'Nano-Tech',
+    '54': 'Rural-Tech',
+    '55': 'Linguistics',
+	'61': 'Others',
+}
+
+DEGREE = {
+    'M':'Mtech',
+    'B':'Btech',
+    'P':"PG",
+    "Msc":"Msc",
+    "Mdes":"Mdes",
+    "Bdes":"Bdes",
+    "Dual":"Dual Degree",
+    "MA":"MA",
+    "MSR":"MSR"
+}
+
+HOSTELS = {
+    'lohit': 'Lohit',
+    'brahmaputra': 'Brahmaputra',
+    'siang': 'Siang',
+    'manas': 'Manas',
+    'dibang': 'Dibang',
+    'disang': 'Disang',
+    'kameng': 'Kameng',
+    'umiam': 'Umiam',
+    'barak': 'Barak',
+    'kapili': 'Kapili',
+    'dihing': 'Dihing',
+    'subansiri': 'Subansiri',
+    'dhansiri': 'Dhansiri',
+    'dibang': 'Dibang',
+    'msh': 'Married Scholar Hostel',
+    'not-alloted': 'Not Alloted',
+}
+
 def create_pdf(request, name_slug, template_src, instance):
     template = get_template(template_src)
     html  = template.render({**instance.__dict__})
@@ -30,6 +83,19 @@ def create_pdf(request, name_slug, template_src, instance):
     base_url = 'https://swc.iitg.ac.in/elections_api/media/'
     candidate_url = base_url + str(instance.image)
     temp_dict['image'] = candidate_url
+    mbranch = BRANCH[instance.user.branch]
+    pbranch = instance.proposed_by['branch']
+    sbranch = instance.seconded_by['branch']
+    mhostel = HOSTELS[instance.user.hostel]
+    phostel = instance.proposed_by['hostel']
+    shostel = instance.seconded_by['hostel']
+    temp_dict['mbranch'] = mbranch
+    temp_dict['pbranch'] = pbranch
+    temp_dict['sbranch'] = sbranch
+    temp_dict['mhostel'] = mhostel
+    temp_dict['phostel'] = phostel
+    temp_dict['shostel'] = shostel
+    print(mhostel,phostel,shostel)
 
     print(candidate_url)
     # print("#####")
@@ -46,7 +112,7 @@ def create_pdf(request, name_slug, template_src, instance):
     pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
     # print(pdf)
     if not pdf.err:
-        instance.agenda_pdf.save(instance.user.name + '-agenda.pdf', ContentFile(result.getvalue()))
+        instance.agenda_pdf.save(str(instance.user.name) + '-agenda.pdf', ContentFile(result.getvalue()))
         # instance.agenda_pdf.save(instance.user.email + '-agenda.pdf', ContentFile(result.getvalue()))
         # print(instance.user.name + 'agenda.pdf')
         # return HttpResponse(result.getvalue(), content_type='application/pdf')
