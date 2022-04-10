@@ -47,7 +47,10 @@ const StepList = () => {
     {
       text: "Write your agendas",
       imgSrc: agenda,
-      done: !!candidate.agenda_text,
+      done:
+        candidate &&
+        candidate.agenda_text &&
+        Object.keys(candidate.agenda_text).length >= 3,
       link: "agendas",
     },
     {

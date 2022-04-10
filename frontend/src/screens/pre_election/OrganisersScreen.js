@@ -10,6 +10,11 @@ import Kunal_img from "../../assets/team_images/Kunal.jpg";
 import Bhargav_img from "../../assets/team_images/Bhargav.jpg";
 import Saket_img from "../../assets/team_images/Saket.png";
 import Sarthak_img from "../../assets/team_images/Sarthak.jpg";
+import Arjun_img from "../../assets/team_images/Arjun.jpeg";
+import Nishtha_img from "../../assets/team_images/Nistha.jpg";
+import Chinmay_img from "../../assets/team_images/Chinmay.jpg";
+import Nivedit_img from "../../assets/team_images/Nivedit.jpg";
+import Toshit_img from "../../assets/team_images/Toshit.jpg";
 const ElectionTeamList = [
   {
     name: "Praveen Sai Teella",
@@ -31,6 +36,41 @@ const ElectionTeamList = [
     contact: "8340459570",
     image: { Antash_img },
     imagename: "Antash_img",
+  },
+  {
+    name: "Arjun Bhardwaj",
+    post: "Core Team",
+    contact: "9362314614",
+    image: { Arjun_img },
+    imagename: "Arjun_img",
+  },
+  {
+    name: "Nishtha Rathod",
+    post: "Core Team",
+    contact: "8469510331",
+    image: { Nishtha_img },
+    imagename: "Nishtha_img",
+  },
+  {
+    name: "Chinmay Jagdish Zinjal",
+    post: "Core Team",
+    contact: "7709595217",
+    image: { Chinmay_img },
+    imagename: "Chinmay_img",
+  },
+  {
+    name: "Nivedit ukey",
+    post: "Core Team",
+    contact: "9370432794",
+    image: { Nivedit_img },
+    imagename: "Nivedit_img",
+  },
+  {
+    name: "Toshit Kumar",
+    post: "Core Team",
+    contact: "6377436574",
+    image: { Toshit_img },
+    imagename: "Toshit_img",
   },
 ];
 
