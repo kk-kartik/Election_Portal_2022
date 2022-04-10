@@ -7,7 +7,7 @@ const CandidateRegistrationData = ({
   data,
   setData,
   validationErrors,
-  isNominationComplete,
+  isFormClosed,
 }) => {
   const onChange = (e) => {
     setData((prev) => ({
@@ -32,7 +32,7 @@ const CandidateRegistrationData = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.name}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.name ? (
           <p className="text-red-400 text-sm">{validationErrors.name}</p>
@@ -52,7 +52,7 @@ const CandidateRegistrationData = ({
           defaultValue={data?.roll_number != "" ? data?.roll_number : null}
           onChange={onChange}
           maxLength={9}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.roll_number ? (
           <p className="text-red-400 text-sm">{validationErrors.roll_number}</p>
@@ -70,7 +70,7 @@ const CandidateRegistrationData = ({
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           defaultValue={data?.degree != "" ? data?.degree : null}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         >
           <option value="">Select </option>
           <option value="B">B.Tech</option>
@@ -99,7 +99,7 @@ const CandidateRegistrationData = ({
           defaultValue={data?.branch != "" ? data?.branch : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         >
           <option value="">Select</option>
           <option value="01">CSE</option>
@@ -137,7 +137,7 @@ const CandidateRegistrationData = ({
           defaultValue={data?.hostel != "" ? data?.hostel : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         >
           <option value="">Select </option>
           <option value="lohit">Lohit</option>

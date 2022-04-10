@@ -17,6 +17,8 @@ const VideoScreen = () => {
     setError,
     updateNomination,
     isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
   } = useNominate();
 
   const videoRef = useRef(null);
@@ -58,7 +60,7 @@ const VideoScreen = () => {
         className={`${styles.input} md:w-1/2 lg:w-2/5 w-full`}
         defaultValue={candidate?.video}
         ref={videoRef}
-        disabled={isNominationComplete}
+        disabled={isFormClosed}
       />
       {candidate.video && (
         <div className="w-full md:w-1/2 my-4">
@@ -66,13 +68,22 @@ const VideoScreen = () => {
         </div>
       )}
 
-      {!isNominationComplete && (
+      {!isFormClosed && (
         <SaveAndNext
           error={error}
           message={message}
           loading={loading}
           submit={submitData}
         />
+      )}
+      {isNominationComplete ? (
+        <p className="text-blue-500">Your Nomination is complete</p>
+      ) : (
+        <>
+          {isDeadlineOver && (
+            <p className="text-blue-500">Nomination Deadline is over.</p>
+          )}
+        </>
       )}
     </>
   );

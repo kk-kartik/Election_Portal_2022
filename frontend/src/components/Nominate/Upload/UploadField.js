@@ -50,7 +50,7 @@ const UploadField = (props) => {
                 value={props.title}
               ></input>
             )}
-            <div className="flex">
+            <div className="flex flex-wrap">
               {props.link && (
                 <button className={`${styles.button} mt-2 mr-2 text-black`}>
                   <a
@@ -64,24 +64,28 @@ const UploadField = (props) => {
                   </a>
                 </button>
               )}
-              {!props.title && (
-                <button
-                  className={`${styles.button} mt-2`}
-                  onClick={handleClick}
-                >
-                  <div className="flex">
-                    <img src={doc} alt="doc" />
-                    <p className="pl-2">Attach proof</p>
-                  </div>
-                </button>
-              )}
-              {props.title && (
-                <button
-                  className={`${styles.button} mt-2 text-red-500`}
-                  onClick={() => props.credDelete(props.title)}
-                >
-                  Remove File
-                </button>
+              {!props.isFormClosed && (
+                <>
+                  {!props.title && (
+                    <button
+                      className={`${styles.button} mt-2`}
+                      onClick={handleClick}
+                    >
+                      <div className="flex">
+                        <img src={doc} alt="doc" />
+                        <p className="pl-2">Attach proof</p>
+                      </div>
+                    </button>
+                  )}
+                  {props.title && (
+                    <button
+                      className={`${styles.button} mt-2 text-red-500`}
+                      onClick={() => props.credDelete(props.title)}
+                    >
+                      Remove File
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>

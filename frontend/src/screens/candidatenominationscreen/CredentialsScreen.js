@@ -21,6 +21,8 @@ const CredentialsScreen = () => {
     updateNomination,
     setError,
     isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
   } = useNominate();
 
   const [credentials, setCredentials] = useState([]);
@@ -88,6 +90,7 @@ const CredentialsScreen = () => {
         handleFile={handleFile}
         credDelete={credDelete}
         title="Grade Card"
+        isFormClosed={isFormClosed}
         link={candidate.credentials && candidate.credentials["Grade Card"]}
       />
 
@@ -95,6 +98,7 @@ const CredentialsScreen = () => {
         <FixedUploadField
           handleFile={handleFile}
           credDelete={credDelete}
+          isFormClosed={isFormClosed}
           title="Thesis incomplete proof"
           link={
             candidate.credentials &&
@@ -122,9 +126,18 @@ const CredentialsScreen = () => {
         handleFile={handleFile}
         credentials={credentials}
         setCredentials={setCredentials}
-        isNominationComplete={isNominationComplete}
+        isFormClosed={isFormClosed}
       />
       <br />
+      {isNominationComplete ? (
+        <p className="text-blue-500">Your Nomination is complete</p>
+      ) : (
+        <>
+          {isDeadlineOver && (
+            <p className="text-blue-500">Nomination Deadline is over.</p>
+          )}
+        </>
+      )}
 
       {/* <SaveAndNext
         error={error}

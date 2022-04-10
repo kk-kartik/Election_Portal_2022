@@ -12,7 +12,7 @@ const PicIntroUpload = ({
   setImageURL,
   intro,
   validationErrors,
-  isNominationComplete,
+  isFormClosed,
   onIntroChange,
   tagline,
 }) => {
@@ -29,7 +29,7 @@ const PicIntroUpload = ({
         style={({ height: "fit-content" }, { "min-height": "12rem" })}
       >
         <div>
-          {!isNominationComplete && (
+          {!isFormClosed && (
             <>
               <div className="mb-3 text-center">
                 {" "}
@@ -87,7 +87,7 @@ const PicIntroUpload = ({
         className="w-full h-12 p-2 mt-1 border-2"
         defaultValue={tagline}
         onChange={onIntroChange}
-        disabled={isNominationComplete}
+        disabled={isFormClosed}
         required
       ></input>
       {validationErrors?.tagline ? (
@@ -103,7 +103,7 @@ const PicIntroUpload = ({
         className="w-full h-48 p-2 mt-1 border-2"
         defaultValue={intro}
         onChange={onIntroChange}
-        disabled={isNominationComplete}
+        disabled={isFormClosed}
         required
       ></textarea>
       {validationErrors?.about ? (

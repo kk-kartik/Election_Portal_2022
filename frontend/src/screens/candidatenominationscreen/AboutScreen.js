@@ -73,6 +73,8 @@ const AboutScreen = () => {
     message,
     updateNomination,
     isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
   } = useNominate();
   const userData = useSelector((store) => store.auth);
   const [profileData, setProfileData] = useState(null);
@@ -191,7 +193,7 @@ const AboutScreen = () => {
             data={profileData || userData?.euser}
             setData={setProfileData}
             validationErrors={validationErrors}
-            isNominationComplete={isNominationComplete}
+            isFormClosed={isFormClosed}
           />
           <label for="room_no" className="font-semibold text-sm text-gray-800">
             Room_no:{" "}
@@ -205,7 +207,7 @@ const AboutScreen = () => {
             className={`${styles.input} md:w-11/12 w-full mb-1`}
             defaultValue={candidate?.room_no}
             onChange={onChange}
-            disabled={isNominationComplete}
+            disabled={isFormClosed}
           />
           {candidateDataErrors?.room_no ? (
             <p className="text-red-400 text-sm">
@@ -226,7 +228,7 @@ const AboutScreen = () => {
             className={`${styles.input} md:w-11/12 w-full mb-1`}
             defaultValue={candidate?.cpi}
             onChange={onChange}
-            disabled={isNominationComplete}
+            disabled={isFormClosed}
           />
           {candidateDataErrors?.cpi ? (
             <p className="text-red-400 text-sm">{candidateDataErrors.cpi}</p>
@@ -245,7 +247,7 @@ const AboutScreen = () => {
             className={`${styles.input} md:w-11/12 w-full mb-1`}
             defaultValue={candidate?.semester}
             onChange={onChange}
-            disabled={isNominationComplete}
+            disabled={isFormClosed}
           />
           {candidateDataErrors?.semester ? (
             <p className="text-red-400 text-sm">
@@ -260,7 +262,7 @@ const AboutScreen = () => {
           <br />
           <input
             required
-            disabled={isNominationComplete}
+            disabled={isFormClosed}
             type="text"
             id="backlogs"
             name="backlogs"
@@ -281,7 +283,7 @@ const AboutScreen = () => {
           <br />
           <input
             required
-            disabled={isNominationComplete}
+            disabled={isFormClosed}
             type="text"
             id="active_backlogs"
             name="active_backlogs"
@@ -306,7 +308,7 @@ const AboutScreen = () => {
           <input
             required
             type="text"
-            disabled={isNominationComplete}
+            disabled={isFormClosed}
             id="contact_no"
             name="contact_no"
             className={`${styles.input} md:w-11/12 w-full mb-1`}
@@ -323,7 +325,7 @@ const AboutScreen = () => {
         </div>
         <div className="w-full">
           <PicIntroUpload
-            isNominationComplete={isNominationComplete}
+            isFormClosed={isFormClosed}
             imageURL={imageURL || convertoUrl(candidate?.image)}
             uploadImage={uploadImage}
             setUploadImage={setUploadImage}
@@ -336,13 +338,22 @@ const AboutScreen = () => {
         </div>
       </div>
       <div class="flex justify-center md:justify-start">
-        {!isNominationComplete && (
+        {!isNominationComplete && !isDeadlineOver && (
           <SaveAndNext
             error={error}
             message={message}
             loading={loading}
             submit={submitData}
           />
+        )}
+        {isNominationComplete ? (
+          <p className="text-blue-500">Your Nomination is complete</p>
+        ) : (
+          <>
+            {isDeadlineOver && (
+              <p className="text-blue-500">Nomination Deadline is over.</p>
+            )}
+          </>
         )}
       </div>
     </>

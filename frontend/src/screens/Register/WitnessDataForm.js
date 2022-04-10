@@ -3,12 +3,7 @@ import styles from "./RegisterScreen.module.css";
 import { userRegistration } from "../../api/index";
 import { useNavigate } from "react-router-dom";
 
-const WitnessDataForm = ({
-  data,
-  setData,
-  validationErrors,
-  isNominationComplete,
-}) => {
+const WitnessDataForm = ({ data, setData, validationErrors, isFormClosed }) => {
   const onChange = (e) => {
     setData((prev) => ({
       ...data,
@@ -32,7 +27,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.name}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.name ? (
           <p className="text-red-400 text-sm">{validationErrors.name}</p>
@@ -51,7 +46,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.email}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.email ? (
           <p className="text-red-400 text-sm">{validationErrors.email}</p>
@@ -71,7 +66,7 @@ const WitnessDataForm = ({
           defaultValue={data?.roll_number != "" ? data?.roll_number : null}
           onChange={onChange}
           maxLength={9}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.roll_number ? (
           <p className="text-red-400 text-sm">{validationErrors.roll_number}</p>
@@ -89,7 +84,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           defaultValue={data?.degree != "" ? data?.degree : null}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         >
           <option value="">Select </option>
           <option value="B">B.Tech</option>
@@ -118,7 +113,7 @@ const WitnessDataForm = ({
           defaultValue={data?.branch != "" ? data?.branch : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         >
           <option value="">Select</option>
           <option value="01">CSE</option>
@@ -156,7 +151,7 @@ const WitnessDataForm = ({
           defaultValue={data?.hostel != "" ? data?.hostel : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         >
           <option value="">Select </option>
           <option value="lohit">Lohit</option>
@@ -191,7 +186,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.room_no}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.room_no ? (
           <p className="text-red-400 text-sm">{validationErrors.room_no}</p>
@@ -210,7 +205,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.cpi}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.cpi ? (
           <p className="text-red-400 text-sm">{validationErrors.cpi}</p>
@@ -228,7 +223,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.semester}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.semester ? (
           <p className="text-red-400 text-sm">{validationErrors.semester}</p>
@@ -247,7 +242,7 @@ const WitnessDataForm = ({
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.contact_no}
           onChange={onChange}
-          disabled={isNominationComplete}
+          disabled={isFormClosed}
         />
         {validationErrors?.contact_no ? (
           <p className="text-red-400 text-sm">{validationErrors.contact_no}</p>

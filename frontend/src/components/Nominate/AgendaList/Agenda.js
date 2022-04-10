@@ -72,24 +72,28 @@ const Agenda = (props) => {
                 alt="icon"
                 onClick={agendaDelete}
               ></img> */}
-              <button
-                className={`${styles.button} mt-2 mr-2`}
-                onClick={() => {
-                  props.setTitle(props.title);
-                  props.setIsOpen(true);
-                }}
-              >
-                <div className="flex">
-                  {/* <img src={doc} alt="doc" /> */}
-                  <p className="">Edit</p>
-                </div>
-              </button>
-              <button
-                className={`${styles.button} mt-2 text-red-500`}
-                onClick={agendaDelete}
-              >
-                Delete
-              </button>
+              {!props.isFormClosed && (
+                <>
+                  <button
+                    className={`${styles.button} mt-2 mr-2`}
+                    onClick={() => {
+                      props.setTitle(props.title);
+                      props.setIsOpen(true);
+                    }}
+                  >
+                    <div className="flex">
+                      {/* <img src={doc} alt="doc" /> */}
+                      <p className="">Edit</p>
+                    </div>
+                  </button>
+                  <button
+                    className={`${styles.button} mt-2 text-red-500`}
+                    onClick={agendaDelete}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

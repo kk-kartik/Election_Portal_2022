@@ -16,7 +16,12 @@ const Upload = (props) => {
 
   const onCLick = (e) => {
     e.preventDefault();
-    let credential = <UploadField handleFile={props.handleFile} />;
+    let credential = (
+      <UploadField
+        handleFile={props.handleFile}
+        isFormClosed={props.isFormClosed}
+      />
+    );
     props.setCredentials((credentials) => {
       return [credential];
     });
@@ -48,7 +53,7 @@ const Upload = (props) => {
       </div>
       <div></div>
       <div>{props.credentials}</div>
-      {!props.isNominationComplete && (
+      {!props.isFormClosed && (
         <div className="pt-8">
           <button
             className={`px-5 text-white ${styles.credbutton}`}

@@ -29,8 +29,9 @@ const VerificationBox = () => {
     setError,
     setMessage,
     isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
   } = useNominate();
-
   const userData = useSelector((store) => store.auth);
   const [isOpen, setIsOpen] = useState(false);
   const [witnessComplete, setwitnessComplete] = useState(false);
@@ -145,7 +146,7 @@ const VerificationBox = () => {
             Preview Nomination Form
           </a>
         </button>
-        {!isNominationComplete && (
+        {!isNominationComplete && !isDeadlineOver && (
           <button
             className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
             disabled={!isComplete}
@@ -164,6 +165,15 @@ const VerificationBox = () => {
       <p className={`${styles.lastdate} mt-2`}>
         *No changes will possible once form is sent for verificaton
       </p>
+      {isNominationComplete ? (
+        <p className="text-blue-500">Your Nomination is complete</p>
+      ) : (
+        <>
+          {isDeadlineOver && (
+            <p className="text-blue-500">Nomination Deadline is over.</p>
+          )}
+        </>
+      )}
       {error && <p className="text-red-600 mt-5">{error}</p>}
       {message && <p className="text-green-600 mt-5">{message}</p>}
       <div className={`flex mt-4`}>

@@ -45,6 +45,8 @@ const WitnessesScreen = () => {
     setError,
     setMessage,
     isNominationComplete,
+    isFormClosed,
+    isDeadlineOver,
   } = useNominate();
 
   const [proposedByData, setProposedyData] = useState(null);
@@ -117,7 +119,7 @@ const WitnessesScreen = () => {
             }
             setData={setProposedyData}
             validationErrors={pvalidationErrors}
-            isNominationComplete={isNominationComplete}
+            isFormClosed={isFormClosed}
           />
           <br />
           {/* <div className="font-semibold text-s text-gray-800">Signature :</div> */}
@@ -136,7 +138,7 @@ const WitnessesScreen = () => {
           </div>
           <br />
           <WitnessDataForm
-            isNominationComplete={isNominationComplete}
+            isFormClosed={isFormClosed}
             data={
               secondedByData ||
               (candidate?.proposed_by ? candidate.seconded_by : {})
@@ -156,13 +158,22 @@ const WitnessesScreen = () => {
         </div>
       </div>
       <div className="sm:pl-6 mb-4">
-        {!isNominationComplete && (
+        {!isFormClosed && (
           <SaveAndNext
             error={error}
             message={message}
             loading={loading}
             submit={submitData}
           />
+        )}
+        {isNominationComplete ? (
+          <p className="text-blue-500">Your Nomination is complete</p>
+        ) : (
+          <>
+            {isDeadlineOver && (
+              <p className="text-blue-500">Nomination Deadline is over.</p>
+            )}
+          </>
         )}
       </div>
     </div>
