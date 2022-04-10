@@ -3,7 +3,7 @@ from .serializers import *
 from .models import *
 from rest_framework.response import Response
 from rest_framework import status,mixins,generics,viewsets,permissions
-from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly
+from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate
 from dj_rest_auth.jwt_auth import JWTAuthentication
 from .mixins import ElectionMixin
 from authentication.default_authentication_classes import default_authentication_classes
@@ -55,7 +55,7 @@ def create_pdf(request, name_slug, template_src, instance):
 
 
 class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
-    serializer_class=CandidateSerializer
+    serializer_class=CandidateBriefSerializer
     permission_classes=[permissions.AllowAny]
     authentication_classes =default_authentication_classes
     
@@ -107,7 +107,7 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOrganizerOrCandidateWriteOnly]
+    permission_classes = [permissions.IsAuthenticated,OnlyOrganizerOrCandidate]
     serializer_class = CandidateSerializer
     authentication_classes=default_authentication_classes
     

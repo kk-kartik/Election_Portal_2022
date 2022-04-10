@@ -44,6 +44,42 @@ class IsOrganizerOrCandidateWriteOnly(permissions.BasePermission):
         except Exception as err:
             print(repr(err))
             return False
+
+
+class OnlyOrganizerOrCandidate(permissions.BasePermission):
+    """
+    Global write permission check for election organizer(s).
+    """
+    message = 'Invalid Access! This API can be accessed only by one of the organizers of the election.'
+
+    def has_object_permission(self, request, view,obj):
+        if view.action=="create":
+            return True
+
+        user = request.user
+        election=view.election
+
+        try:
+            is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
+            if is_organizer:
+                return True
+        except Exception as err:
+            print(repr(err))
+
+        if view.action == "list":
+            return is_organizer
+        else:
+            return False
+        
+        try:
+            euser = user.euser
+            candidates = Candidate.objects.filter(election=election,user=euser)
+            is_candidate=candidates.filter(pk=obj.id).exists()
+        except Exception as err:
+            print(repr(err))
+            is_candidate=False
+        
+        return is_organizer or is_candidate
         
         
 

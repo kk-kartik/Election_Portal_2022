@@ -65,3 +65,9 @@ class FaqSerializer(serializers.ModelSerializer):
     class Meta:
         model = Faq
         exclude = ["election"]
+
+
+class CandidateBriefSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Candidate
+        exclude=["election","agenda_pdf","user","position","agenda_text","credentials","verified_credentials","proposed_by","seconded_by","cpi","backlogs","active_backlogs",]
