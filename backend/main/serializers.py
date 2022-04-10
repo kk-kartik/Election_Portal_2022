@@ -30,10 +30,10 @@ class EuserSerializer(serializers.ModelSerializer):
         fields ="__all__"
 
 class CandidateReadSerializer(serializers.ModelSerializer):
-    user = EuserSerializer(required=False)
     class Meta:
         model = Candidate
         fields = "__all__"
+        depth=1
 
 class PositionSerializer(serializers.ModelSerializer):
     class Meta:
