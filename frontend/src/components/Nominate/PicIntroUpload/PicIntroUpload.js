@@ -14,6 +14,7 @@ const PicIntroUpload = ({
   validationErrors,
   isNominationComplete,
   onIntroChange,
+  tagline,
 }) => {
   const [isPopUp, setIsPopUp] = useState(false);
   const [fileName, setFileName] = useState(null);
@@ -26,12 +27,13 @@ const PicIntroUpload = ({
         style={({ height: "fit-content" }, { "min-height": "12rem" })}
       >
         <div>
-          <div className="mb-3 text-center">
-            {" "}
-            Upload your profile picture here
-          </div>
           {!isNominationComplete && (
             <>
+              <div className="mb-3 text-center">
+                {" "}
+                Upload your profile picture here
+              </div>
+
               <input
                 accept="image/*"
                 type="file"
@@ -70,6 +72,22 @@ const PicIntroUpload = ({
       ) : (
         <br />
       )}
+      <div className="mt-1 font-medium">Tagline:</div>
+      <input
+        type="text"
+        placeholder="Your tagline line for the elections"
+        name="tagline"
+        className="w-full h-12 p-2 mt-1 border-2"
+        defaultValue={tagline}
+        onChange={onIntroChange}
+        disabled={isNominationComplete}
+        required
+      ></input>
+      {validationErrors?.tagline ? (
+        <p className="text-red-400 text-sm">{validationErrors.tagline}</p>
+      ) : (
+        <br />
+      )}
       <div className="mt-3 font-medium">Brief Introduction :</div>
       <textarea
         type="text"
@@ -78,6 +96,7 @@ const PicIntroUpload = ({
         className="w-full h-48 p-2 mt-1 border-2"
         defaultValue={intro}
         onChange={onIntroChange}
+        disabled={isNominationComplete}
         required
       ></textarea>
       {validationErrors?.about ? (
