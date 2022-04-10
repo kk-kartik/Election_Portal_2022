@@ -35,8 +35,14 @@ const ProfileNavBar = () => {
         </span>
         <span className="font-normal text-3xl hidden lg:block">&nbsp; / </span>
         <span className="font-normal text-2xl sm:text-3xl">
-          &nbsp;My Profile &nbsp;
+          &nbsp;My Profile
         </span>
+
+        {candidate && candidate.position && (
+          <span className="font-normal text-2xl sm:text-3xl">
+            ({candidate?.position?.title})
+          </span>
+        )}
         <button className={`${styles.notver} py-1 px-3 sm:px-5 ml-auto mr-4`}>
           {`Verification ${capitalizeFirstLetter(
             candidate?.nomination_status
