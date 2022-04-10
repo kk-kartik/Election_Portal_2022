@@ -20,6 +20,38 @@ import { validateYupSchema } from "formik";
 import CandidateRegistrationData from "../Register/CandidateRegistrationData";
 import { set } from "react-hook-form";
 
+export const candidateSchema = yup.object().shape({
+  cpi: yup.string().required("Cpi is required"),
+  backlogs: yup.string().required("Please enter NA if None"),
+  active_backlogs: yup.string().required("Please enter NA if None"),
+  contact_no: yup
+    .string()
+    .required("Please enter your phone number")
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(6, "Phone no should have atleast 6 digits"),
+  semester: yup.string().required("Semester is required"),
+  room_no: yup.string().required("Room no is required"),
+  about: yup.string().required("Please add your intro"),
+  image: yup.string().required("Please add your profile pic"),
+  tagline: yup.string().required("Please enter your tagline"),
+});
+
+export const aboutSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required("Please enter your name")
+    .min(3, "Please enter a valid name"),
+  degree: yup.string().required().min(1, "Please select your degree"),
+  branch: yup.string().required().min(1, "Please select your branch"),
+  hostel: yup.string().required().min(1, "Please select your hostel"),
+  roll_number: yup
+    .string()
+    .required()
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(9, "Roll number should have atleast 9 digits")
+    .max(12, "Roll number shouldn't be more than 12 digits")
+    .typeError("Please enter digits only"),
+});
 const convertoUrl = (image) => {
   if (!image) return null;
   if (
@@ -59,37 +91,6 @@ const AboutScreen = () => {
     }));
   };
 
-  let candidateSchema = yup.object().shape({
-    cpi: yup.string().required("Cpi is required"),
-    backlogs: yup.string().required("Please enter NA if None"),
-    active_backlogs: yup.string().required("Please enter NA if None"),
-    contact_no: yup
-      .string()
-      .required("Please enter your phone number")
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .min(6, "Phone no should have atleast 6 digits"),
-    semester: yup.string().required("Semester is required"),
-    room_no: yup.string().required("Room no is required"),
-    about: yup.string().required("Please add your intro"),
-    image: yup.string().required("Please add your profile pic"),
-  });
-
-  let aboutSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required("Please enter your name")
-      .min(3, "Please enter a valid name"),
-    degree: yup.string().required().min(1, "Please select your degree"),
-    branch: yup.string().required().min(1, "Please select your branch"),
-    hostel: yup.string().required().min(1, "Please select your hostel"),
-    roll_number: yup
-      .string()
-      .required()
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .min(9, "Roll number should have atleast 9 digits")
-      .max(12, "Roll number shouldn't be more than 12 digits")
-      .typeError("Please enter digits only"),
-  });
   useEffect(() => {
     if (uploadImage) {
       setMessage(null);
@@ -149,6 +150,7 @@ const AboutScreen = () => {
       contact_no: candidate.contact_no || "",
       backlogs: candidate.backlogs || "",
       active_backlogs: candidate.active_backlogs || "",
+      tagline: candidate.tagline || "",
     };
     console.log(cData, candidateData);
     const uploadData = {
@@ -327,6 +329,7 @@ const AboutScreen = () => {
             setUploadImage={setUploadImage}
             setImageURL={setImageURL}
             intro={candidateData?.about || candidate?.about}
+            tagline={candidateData?.tagline || candidate?.tagline}
             validationErrors={candidateDataErrors}
             onIntroChange={onChange}
           />

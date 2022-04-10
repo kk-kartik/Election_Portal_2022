@@ -9,6 +9,32 @@ import useNominate from "../../hooks/useNominate";
 import SaveAndNext from "./SaveAndNext";
 import * as yup from "yup";
 
+export const witnessSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required("Please enter the name")
+    .min(3, "Please enter a valid name"),
+  email: yup.string().email().required("Please enter a valid iitg email"),
+  degree: yup.string().required(),
+  branch: yup.string().required(),
+  hostel: yup.string().required(),
+  roll_number: yup
+    .string()
+    .required()
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(9, "Roll number should have atleast 9 digits")
+    .max(12, "Roll number shouldn't be more than 12 digits")
+    .typeError("Please enter digits only"),
+  cpi: yup.string().required("Cpi is required"),
+  semester: yup.string().required("Semester is required"),
+  room_no: yup.string().required("Room no is required"),
+  contact_no: yup
+    .string()
+    .required("Please enter your phone number")
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(6, "Phone no should have atleast 6 digits"),
+});
+
 const WitnessesScreen = () => {
   const {
     candidate,
@@ -28,31 +54,6 @@ const WitnessesScreen = () => {
 
   const [signs, setSigns] = useState({});
 
-  let aboutSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required("Please enter the name")
-      .min(3, "Please enter a valid name"),
-    email: yup.string().email().required("Please enter a valid iitg email"),
-    degree: yup.string().required(),
-    branch: yup.string().required(),
-    hostel: yup.string().required(),
-    roll_number: yup
-      .string()
-      .required()
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .min(9, "Roll number should have atleast 9 digits")
-      .max(12, "Roll number shouldn't be more than 12 digits")
-      .typeError("Please enter digits only"),
-    cpi: yup.string().required("Cpi is required"),
-    semester: yup.string().required("Semester is required"),
-    room_no: yup.string().required("Room no is required"),
-    contact_no: yup
-      .string()
-      .required("Please enter your phone number")
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .min(6, "Phone no should have atleast 6 digits"),
-  });
   const submitData = async () => {
     console.log(proposedByData, secondedByData);
     setSValidationErrors(null);
@@ -61,7 +62,7 @@ const WitnessesScreen = () => {
 
     if (secondedByData) {
       try {
-        const res = await aboutSchema.validate(secondedByData, {
+        const res = await witnessSchema.validate(secondedByData, {
           abortEarly: false,
         });
       } catch (err) {
@@ -76,7 +77,7 @@ const WitnessesScreen = () => {
     }
     if (proposedByData) {
       try {
-        await aboutSchema.validate(proposedByData, { abortEarly: false });
+        await witnessSchema.validate(proposedByData, { abortEarly: false });
       } catch (err) {
         if (err.inner) {
           setPValidationErrors((prev) => {

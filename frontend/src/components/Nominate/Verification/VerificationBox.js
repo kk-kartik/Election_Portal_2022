@@ -8,9 +8,14 @@ import verifySVG from "./verify.svg";
 import styles from "./VerificationBox.module.css";
 import { useSelector } from "react-redux";
 import { API, updateCandidateData } from "../../../api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useNominate from "../../../hooks/useNominate";
 import ConfirmDialog from "../ConfirmDialog/ConfirmDialog";
+import {
+  aboutSchema,
+  candidateSchema,
+} from "../../../screens/candidatenominationscreen/AboutScreen";
+import { witnessSchema } from "../../../screens/candidatenominationscreen/WitnessesScreen";
 
 const lastDateOfVerification = "11/04/22";
 
@@ -28,6 +33,13 @@ const VerificationBox = () => {
 
   const userData = useSelector((store) => store.auth);
   const [isOpen, setIsOpen] = useState(false);
+  const [witnessComplete, setwitnessComplete] = useState(false);
+  const [profileComplete, setprofileComplete] = useState(false);
+
+  useEffect(() => {
+    checkWitnessData();
+    checkProfile();
+  }, []);
 
   const checkCreds = () => {
     if (
@@ -51,11 +63,40 @@ const VerificationBox = () => {
   };
 
   const submitNominationForm = async () => {
-    if (!isComplete) {
-      setError("Please complete nomination form");
+    if (!(isComplete && profileComplete && witnessComplete)) {
+      setError("Please complete all the steps,by verifying the tabs");
       return;
     }
     updateNomination({ nomination_complete: true });
+    setIsOpen(false);
+  };
+
+  const checkProfile = async () => {
+    try {
+      await candidateSchema.validate(candidate, { abortEarly: false });
+      await aboutSchema.validate(userData.euser, { abortEarly: false });
+      setprofileComplete(true);
+    } catch (err) {
+      console.log(err);
+      setprofileComplete(false);
+    }
+  };
+
+  const checkWitnessData = async () => {
+    console.log("Cheking witness data");
+    try {
+      await witnessSchema.validate(candidate.proposed_by, {
+        abortEarly: false,
+      });
+      await witnessSchema.validate(candidate.seconded_by, {
+        abortEarly: false,
+      });
+      setwitnessComplete(true);
+    } catch (err) {
+      console.log("Witness schema not validated");
+      console.log(err);
+      setprofileComplete(false);
+    }
   };
 
   return (
@@ -65,6 +106,11 @@ const VerificationBox = () => {
           svg={postSVG}
           text={"Register for the Post"}
           done={!!candidate.id}
+        />
+        <Tile
+          svg={formSVG}
+          text={"Complete your election profile"}
+          done={profileComplete}
         />
         <Tile
           svg={videoSVG}
@@ -80,17 +126,12 @@ const VerificationBox = () => {
             Object.keys(candidate.agenda_text).length >= 3
           }
         />
-        {/* <Tile svg={formSVG} text={"Generate Nomination form"} done={true} /> */}
+
         <Tile svg={plusSVG} text={"Add Credentials"} done={checkCreds()} />
         <Tile
           svg={verifySVG}
           text={"Add Witness Data"}
-          done={
-            !(
-              candidate?.proposed_by?.name == "" ||
-              candidate?.seconded_by?.name == ""
-            )
-          }
+          done={witnessComplete}
         />
       </div>
       <div className={`flex mt-4`}>
@@ -108,7 +149,7 @@ const VerificationBox = () => {
           <button
             className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
             disabled={!isComplete}
-            onClick={() => setIsOpen(!isOpen)}
+            onClick={() => setIsOpen(true)}
             //onClick={submitNominationForm}
           >
             <div className={`${isComplete ? styles.text1 : styles.text2}`}>
