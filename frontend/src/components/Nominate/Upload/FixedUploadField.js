@@ -27,7 +27,7 @@ const FixedUploadField = (props) => {
         <div className="p-6 flex items-center ">
           <div className="w-full">
             <p>{props.title}</p>
-            <div className="flex">
+            <div className="flex flex-wrap">
               {props.link && (
                 <button className={`${styles.button} mt-2 mr-2 text-black`}>
                   <a
@@ -41,12 +41,17 @@ const FixedUploadField = (props) => {
                   </a>
                 </button>
               )}
-              <button className={`${styles.button} mt-2`} onClick={handleClick}>
-                <div className="flex">
-                  <img src={doc} alt="doc" />
-                  <p className="pl-2">Attach proof</p>
-                </div>
-              </button>
+              {!props.isFormClosed && (
+                <button
+                  className={`${styles.button} mt-2`}
+                  onClick={handleClick}
+                >
+                  <div className="flex">
+                    <img src={doc} alt="doc" />
+                    <p className="pl-2">Attach proof</p>
+                  </div>
+                </button>
+              )}
             </div>
           </div>
           <div className="ml-auto mr-12">

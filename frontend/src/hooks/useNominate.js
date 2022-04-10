@@ -1,4 +1,4 @@
-const { useState } = require("react");
+const { useState, useEffect } = require("react");
 const { useDispatch, useSelector } = require("react-redux");
 const { useNavigate } = require("react-router-dom");
 const { MULTIPARTAPI, updateCandidateData } = require("../api");
@@ -32,6 +32,11 @@ function jsonToFormData(data) {
 
   return formData;
 }
+const deadline = 1649662251052;
+// const deadline = 1649549824000;
+const checkDeadline = () => {
+  return new Date(Date.now()).getTime() >= deadline;
+};
 
 const useNominate = () => {
   const [error, setError] = useState(null);
@@ -41,7 +46,10 @@ const useNominate = () => {
   const dispatch = useDispatch();
   const candidate = useSelector((store) => store.candidate);
   const userData = useSelector((store) => store.auth);
+
+  const isDeadlineOver = checkDeadline();
   const isNominationComplete = candidate?.nomination_complete;
+  const isFormClosed = isNominationComplete || isDeadlineOver;
   const checkCreds = () => {
     if (
       candidate &&
@@ -77,8 +85,10 @@ const useNominate = () => {
     !!candidate.proposed_by?.name;
 
   const updateNomination = async (updatedData, next = null) => {
-    if (isNominationComplete) {
-      setMessage("Nomination is already submitted");
+    if (isNominationComplete || isDeadlineOver) {
+      setMessage(
+        "Nomination is already submitted or nomination deadline is finished"
+      );
       return;
     }
     if (!candidate) {
@@ -159,6 +169,8 @@ const useNominate = () => {
     message,
     setMessage,
     isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
   };
 };
 

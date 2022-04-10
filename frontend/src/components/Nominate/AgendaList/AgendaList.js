@@ -13,6 +13,8 @@ const AgendaList = () => {
     updateNomination,
     loading,
     isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
   } = useNominate();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -29,6 +31,7 @@ const AgendaList = () => {
             setTitle={setTitle}
             updateNomination={updateNomination}
             candidate={candidate}
+            isFormClosed={isFormClosed}
           />
         ))}
       {!candidate ||
@@ -48,7 +51,7 @@ const AgendaList = () => {
       )}
       {/* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}></textarea> */}
       {/* <Agenda count={count} title={title} agenda={agenda} long={true} /> */}
-      {!isNominationComplete && (
+      {!isFormClosed && (
         <div className="pt-8">
           <button
             className={`text-white ${styles.button} px-5 ml-2`}
@@ -64,6 +67,15 @@ const AgendaList = () => {
       ) : message ? (
         <p className="text-green-400">{error}</p>
       ) : null}
+      {isNominationComplete ? (
+        <p className="text-blue-500">Your Nomination is complete</p>
+      ) : (
+        <>
+          {isDeadlineOver && (
+            <p className="text-blue-500">Nomination Deadline is over.</p>
+          )}
+        </>
+      )}
       <br />
     </div>
   );
