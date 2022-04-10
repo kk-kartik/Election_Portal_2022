@@ -16,7 +16,7 @@ import {
         try {
             console.log(id);
             const { data } = await api.updateCandidateData(id, formData);
-            console.log(data);
+            console.log("editCandidateData", data);
             dispatch({ type: EDIT_CANDIDATE_DATA, payload: data.data });
         } catch (error) {
             console.log(error.message);
