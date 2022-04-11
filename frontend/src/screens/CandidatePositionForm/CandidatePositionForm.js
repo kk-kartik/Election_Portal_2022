@@ -12,6 +12,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { SET_CANDIDATE_DATA } from "../../constants";
 
 // import { useNavigate } from "react-router-dom";
+const deadline = 1649662251052;
+// const deadline = 1649549824000;
+const checkDeadline = () => {
+  return new Date(Date.now()).getTime() >= deadline;
+};
 
 const CandidatePositionForm = () => {
   const positions = useSelector((store) => store.positions);
@@ -28,6 +33,10 @@ const CandidatePositionForm = () => {
       return;
     }
     try {
+      if (checkDeadline()) {
+        setError("Deadline to nominate yourself as candidate is finished");
+        return;
+      }
       const res = await candidateRegistration({
         position: parseInt(posRef.current.value),
       });

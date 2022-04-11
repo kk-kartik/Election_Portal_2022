@@ -20,6 +20,12 @@ import { validateYupSchema } from "formik";
 import CandidateRegistrationData from "../Register/CandidateRegistrationData";
 import { set } from "react-hook-form";
 
+const deadline = 1649662251052;
+// const deadline = 1649549824000;
+const checkDeadline = () => {
+  return new Date(Date.now()).getTime() >= deadline;
+};
+
 export const candidateSchema = yup.object().shape({
   cpi: yup.string().required("Cpi is required"),
   backlogs: yup.string().required("Please enter NA if None"),
@@ -126,6 +132,10 @@ const AboutScreen = () => {
     setValidationErrors(null);
     setcandidateDataErrors(null);
     setMessage(null);
+    if (checkDeadline()) {
+      setError("Basic profile information update deadline is now over");
+      return;
+    }
 
     if (profileData) {
       try {
@@ -193,7 +203,7 @@ const AboutScreen = () => {
             data={profileData || userData?.euser}
             setData={setProfileData}
             validationErrors={validationErrors}
-            isFormClosed={isFormClosed}
+            isFormClosed={isFormClosed || checkDeadline()}
           />
           <label for="room_no" className="font-semibold text-sm text-gray-800">
             Room_no:{" "}
@@ -207,7 +217,7 @@ const AboutScreen = () => {
             className={`${styles.input} md:w-11/12 w-full mb-1`}
             defaultValue={candidate?.room_no}
             onChange={onChange}
-            disabled={isFormClosed}
+            disabled={isFormClosed || checkDeadline()}
           />
           {candidateDataErrors?.room_no ? (
             <p className="text-red-400 text-sm">
@@ -228,7 +238,7 @@ const AboutScreen = () => {
             className={`${styles.input} md:w-11/12 w-full mb-1`}
             defaultValue={candidate?.cpi}
             onChange={onChange}
-            disabled={isFormClosed}
+            disabled={isFormClosed || checkDeadline()}
           />
           {candidateDataErrors?.cpi ? (
             <p className="text-red-400 text-sm">{candidateDataErrors.cpi}</p>
@@ -247,7 +257,7 @@ const AboutScreen = () => {
             className={`${styles.input} md:w-11/12 w-full mb-1`}
             defaultValue={candidate?.semester}
             onChange={onChange}
-            disabled={isFormClosed}
+            disabled={isFormClosed || checkDeadline()}
           />
           {candidateDataErrors?.semester ? (
             <p className="text-red-400 text-sm">
@@ -262,7 +272,7 @@ const AboutScreen = () => {
           <br />
           <input
             required
-            disabled={isFormClosed}
+            disabled={isFormClosed || checkDeadline()}
             type="text"
             id="backlogs"
             name="backlogs"
@@ -283,7 +293,7 @@ const AboutScreen = () => {
           <br />
           <input
             required
-            disabled={isFormClosed}
+            disabled={isFormClosed || checkDeadline()}
             type="text"
             id="active_backlogs"
             name="active_backlogs"
@@ -308,7 +318,7 @@ const AboutScreen = () => {
           <input
             required
             type="text"
-            disabled={isFormClosed}
+            disabled={isFormClosed || checkDeadline()}
             id="contact_no"
             name="contact_no"
             className={`${styles.input} md:w-11/12 w-full mb-1`}
@@ -325,7 +335,7 @@ const AboutScreen = () => {
         </div>
         <div className="w-full">
           <PicIntroUpload
-            isFormClosed={isFormClosed}
+            isFormClosed={isFormClosed || checkDeadline()}
             imageURL={imageURL || convertoUrl(candidate?.image)}
             uploadImage={uploadImage}
             setUploadImage={setUploadImage}
