@@ -1,8 +1,11 @@
-import React from "react";
+import React, {useState} from "react";
 import { AgendaSVG } from "../NameTag/AgendaSVG";
 import styles from "./ProfileCard.module.css"
 import pic from "./profilepic.svg";
+import styles2 from "../../../../screens/CandidatePositionForm/CandidatePositionForm.module.css"
+import ShareModal from "../ShareModal/ShareModal";
 const ProfileCard = () => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <div className={`mr-10 mt-6 ${styles.container} p-4`}>
@@ -17,13 +20,16 @@ const ProfileCard = () => {
               </div>
           </div>
           <div className="bg-gray-100 p-4">
-            <p className="italic text-2xl text-gray-600">“Teamwork Divides the Task and Multiplies Success”</p>
+            <p className="italic text-xl text-gray-600">“Teamwork Divides the Task and Multiplies Success”</p>
           </div>
         <div className="flex space-x-2  hidden sm:block py-6">
-            <button className="px-5 py-2.5 border-2 rounded ">
+        {isOpen && (
+          <ShareModal setIsOpen={setIsOpen} url={window.location.href} />
+        )}
+            <button className={styles2.button} onClick={() => setIsOpen(true)}>
               Share this profile
             </button>
-            <button className="px-5 py-2.5 border-2 rounded bg-pink-500 text-white">
+            <button className={styles2.button3}>
               <div className="flex items-center">
                 Agenda
                 <AgendaSVG />
