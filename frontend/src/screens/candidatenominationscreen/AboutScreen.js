@@ -146,7 +146,9 @@ const AboutScreen = () => {
           userData.euser.degree &&
           userData.euser.degree !== ""
         ) {
-          setMessage("Your profile data has been saved!");
+          setMessage(
+            "Your profile data has been saved and considered for nominations!Please complete rest of form if not completed to be eligible for nominations"
+          );
           return;
         }
         setMessage(
