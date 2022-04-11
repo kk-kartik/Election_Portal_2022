@@ -48,7 +48,7 @@ const useNominate = () => {
   const userData = useSelector((store) => store.auth);
 
   const [isDeadlineOver, setIsDeadlineOver] = useState(checkDeadline());
-  const isNominationComplete = candidate?.nomination_complete;
+  const isNominationComplete = false;
   const isFormClosed = isNominationComplete || isDeadlineOver;
   const checkCreds = () => {
     if (

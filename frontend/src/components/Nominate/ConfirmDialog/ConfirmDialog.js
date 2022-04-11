@@ -16,7 +16,7 @@ const ConfirmDialog = (props) => {
               Close
             </button>
           </div>
-          <p>You wouldn't be able to change your details any further.</p>
+          <p>Sync current nomination status.</p>
           <br />
           <div className="flex flex-col sm:flex-row">
             <button

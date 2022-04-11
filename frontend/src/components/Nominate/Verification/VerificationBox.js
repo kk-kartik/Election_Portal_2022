@@ -150,7 +150,7 @@ const VerificationBox = () => {
             Preview Nomination Form
           </a>
         </button>
-        {!isNominationComplete && !isDeadlineOver && (
+        {/* {!isNominationComplete && !isDeadlineOver && (
           <button
             className={`${isComplete ? styles.btn1 : styles.btn2} py-2 px-4`}
             disabled={!isComplete}
@@ -158,16 +158,13 @@ const VerificationBox = () => {
             //onClick={submitNominationForm}
           >
             <div className={`${isComplete ? styles.text1 : styles.text2}`}>
-              {/* {isNominationComplete
-              ? "Sent for Nomination"
-              : "Send for Nomination"} */}
-              Send for Nomination
+              Sync profile
             </div>
           </button>
-        )}
+        )} */}
       </div>
       <p className={`${styles.lastdate} mt-2`}>
-        *No changes will possible once form is sent for verificaton
+        Your data is synced and will be auto updated on deadline.
       </p>
       {isNominationComplete ? (
         <p className="text-blue-500">Your Nomination is complete</p>
