@@ -14,6 +14,7 @@ from xhtml2pdf import pisa
 from django.template.loader import get_template
 from django.http import HttpResponse
 from django.core.files.base import ContentFile
+from django.db.models import Q
 
 from django.views.generic.base import View
 # from wkhtmltopdf.views import PDFTemplateResponse
@@ -325,3 +326,56 @@ class DownloadNominations(ElectionMixin,generics.GenericAPIView):
     
     def get(self,request,*args,**kwargs):
         return HttpResponse("done")
+
+class DownloadNominations(ElectionMixin,generics.GenericAPIView):
+    authentication_classes=default_authentication_classes
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self,request,*args,**kwargs):
+        if not request.user.is_staff:
+            return HttpResponse("Invalid access")
+        election = self.election
+        candidates = election.candidates_e.exclude(
+            Q(cpi=None)|
+            Q(user__roll_number=None)|
+            Q(user__email=None)|
+            Q(backlogs=None)|
+            Q(active_backlogs=None)|
+            Q(semester=None)|
+            Q(contact_no=None)
+        )
+
+        response = HttpResponse(content_type='text/csv')  
+        response['Content-Disposition'] = 'attachment; filename="nominations.csv"'  
+        writer = csv.writer(response)
+        writer.writerow(["Sr.No","Position","Name","Email","Roll no","Degree","Cpi","Backlogs","Active Backlogs","Credentials","Nomintaion Complete"])
+        for i,candidate in enumerate(candidates.all()):
+            # if "Grade Card" not in candidate.credentials.keys() :
+            #     continue
+
+            # if not candidate.credentials["Grade Card"]:
+            #     continue
+
+            # if candidate.postion.title == "PG Senator":
+            #     if "Thesis incomplete proof" not in candidate.credentials.keys() :
+            #         continue
+
+            #     if not candidate.credentials["Thesis incomplete proof"]:
+            #         continue
+
+
+            writer.writerow([
+                i+1,
+                candidate.position.title,
+                candidate.user.name,
+                candidate.user.email,
+                candidate.user.roll_number,
+                candidate.user.degree,
+                candidate.cpi,
+                candidate.backlogs,
+                candidate.active_backlogs,
+                candidate.credentials,
+                candidate.nomination_complete
+            ])
+            
+        return response  
