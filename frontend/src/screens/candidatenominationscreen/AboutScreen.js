@@ -127,6 +127,15 @@ const AboutScreen = () => {
     }
   };
 
+  useEffect(() => {
+    if (checkDeadline()) {
+      setMessage(
+        "Your profile info has been submitted!Please contact EC if you couldn't fill the basic data i.e. cpi,semester,roll number,backlogs,active backlogs,contact no."
+      );
+      return;
+    }
+  }, []);
+
   const submitData = async () => {
     setError(null);
     setValidationErrors(null);
