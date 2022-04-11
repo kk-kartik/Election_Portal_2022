@@ -201,7 +201,15 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
         
         candidates = self.election.candidates_e.all()
         if is_organizer:
-            return candidates.filter(nomination_complete=True)
+            return candidates.exclude(
+                        Q(cpi=None)|
+                        Q(user__roll_number=None)|
+                        Q(user__email=None)|
+                        Q(backlogs=None)|
+                        Q(active_backlogs=None)|
+                        Q(semester=None)|
+                        Q(contact_no=None)
+                    )
         return candidates
     
     def perform_create(self,serializer):
