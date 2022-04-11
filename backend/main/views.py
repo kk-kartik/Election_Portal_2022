@@ -1,3 +1,4 @@
+import csv
 from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
@@ -318,3 +319,53 @@ class IsOrganizerView(ElectionMixin,generics.GenericAPIView):
         
         return Response({'isOrganizer':is_organizer},status=status.HTTP_200_OK)
         
+
+class DownloadNominations(ElectionMixin,generics.GenericAPIView):
+    authentication_classes=default_authentication_classes
+    permission_classes = [permissions.IsAuthenticated,OnlyOrganizerOrCandidate]
+    
+    def get(self,request,*args,**kwargs):
+        election = self.election
+        candidates = election.candidates_e.exclude(
+            cpi=None,
+            user__roll_number=None,
+            user__email=None,
+            backlogs=None,
+            active_backlogs=None,
+            semester=None,
+            contact_no=None
+        )
+
+        response = HttpResponse(content_type='text/csv')  
+        response['Content-Disposition'] = 'attachment; filename="nominations.csv"'  
+        writer = csv.writer(response)
+        writer.writerow(["Sr.No","Position","Name","Email","Roll no","Degree","Cpi","Backlogs","Active Backlogs","Credentials"])
+        for i,candidate in enumerate(candidates.all()):
+            if "Grade Card" not in candidate.credentials.keys() :
+                continue
+
+            if not candidate.credentials["Grade Card"]:
+                continue
+
+            if candidate.user.degree == "P":
+                if "Thesis incomplete proof" not in candidate.credentials.keys() :
+                    continue
+
+                if not candidate.credentials["Thesis incomplete proof"]:
+                    continue
+
+
+            writer.writerow([
+                i+1,
+                candidate.position.title,
+                candidate.user.name,
+                candidate.user.email,
+                candidate.user.roll_number,
+                candidate.user.degree,
+                candidate.cpi,
+                candidate.backlogs,
+                candidate.active_backlogs,
+                candidate.credentials
+            ])
+            
+        return response  
