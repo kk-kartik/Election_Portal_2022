@@ -191,11 +191,13 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     
     def get_queryset(self):
         try:
-            is_organizer = Voter.objects.filter(election_organizers__id=self.election.id,user__id=self.user.euser.id).exists()
+            is_organizer = self.election.organizers.filter(user__id=self.request.user.euser.id).exists()
         except Exception as err:
+            print(err)
             is_organizer=False
 
         print(list(self.election.candidates_e.all())[0])
+        print(is_organizer)
         # print(self.)
         # create_pdf('for_pdf.html', list(self.election.candidates_e.all())[0])
         
