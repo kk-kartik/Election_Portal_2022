@@ -10,9 +10,12 @@ router.register("faqs",viewset=views.FAQViewSet,basename="faqs")
 router.register("debates",viewset=views.DebatesViewSet,basename="debates")
 
 urlpatterns = [
-    path("<str:position_slug>/candidates",views.PositionCandidatesView.as_view(),name="position_candidates"),
+    path("pos_candidates/",views.PositionCandidatesView.as_view(),name="position_candidates"),
+    path("candidate_pdf/<int:id>/",views.CandidateAgendaPdf.as_view(),name="position_candidate_pdf"),
     path("registration/complete/",views.RegistrationCompleteView.as_view(),name="candidate_profile"),
     path("profile/",views.ProfileAPIView.as_view(),name="voter_profile"),
     path("add_credentials/",views.CredentialCreateAPIView.as_view(),name="credentials_view"),
+    path("is_organizer/",views.IsOrganizerView.as_view(),name="is_organizer"),
+    path("download_nominations/",views.DownloadNominations.as_view(),name="download_candidates"),
     path("",include(router.urls))
 ]

@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import TopNav from "../../components/Home/TopNav/TopNav";
 import ProfileNavBar from "../../components/Nominate/ProfileNavBar/ProfileNavBar";
@@ -8,15 +8,27 @@ import WitnessesScreen from "./WitnessesScreen";
 import CredentialsScreen from "./CredentialsScreen";
 import VerificationScreen from "./VerificationScreen";
 import VideoScreen from "./VideoScreen";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../actions/auth";
+import NewFooter from "../../components/Footer/NewFooter";
 
 const Layout = () => {
   return (
-    <div className="md:ml-20 mt-12 mr-4 ml-4">
+    <div
+      className="mt-12 ml-1 mr-1 md:ml-16 md:mr-10"
+      style={{ maxWidth: "1240px", minHeight:"60vh" }}
+    >
       <Outlet />
     </div>
   );
 };
 const CandidateNominateScreen = () => {
+  const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    dispatch(getUser());
+  },[])
+
   return (
     <>
       {/* <TopNav /> */}
@@ -34,6 +46,7 @@ const CandidateNominateScreen = () => {
           <Route path="witnesses" exact element={<WitnessesScreen />} />
         </Route>
       </Routes>
+      <NewFooter />
     </>
   );
 };

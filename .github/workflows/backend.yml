@@ -1,11 +1,11 @@
 name: Backend Deployment
 on:
     workflow_dispatch:
-    push:
-        paths:
-            - "backend/**"
-        branches:
-            - "main"
+    # push:
+    #     paths:
+    #         - "backend/**"
+    #     branches:
+    #         - "main"
 
 jobs:
 

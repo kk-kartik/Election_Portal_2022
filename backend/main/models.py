@@ -3,6 +3,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from PIL import Image
 
 STATUS_CHOICES = (
     ('pending','To be started'),
@@ -43,8 +44,15 @@ BRANCH = (
 )
 
 DEGREE = (
-    ('U','UG'),
-    ('P','PG')
+    ('B','Btech'),
+    ('M','Mtech'),
+    ('P',"PG"),
+    ("Msc","Msc"),
+    ("Mdes","Mdes"),
+    ("Bdes","Bdes"),
+    ("Dual","Dual Degree"),
+    ("MA","MA"),
+    ("MSR","MSR")
 )
 
 HOSTELS = [
@@ -67,17 +75,17 @@ HOSTELS = [
 ]
 
 class EUser(models.Model):
-    name = models.CharField(max_length=100)
-    roll_number = models.CharField(max_length=9)
-    degree = models.CharField(choices=DEGREE,max_length=70)
-    hostel = models.CharField(choices=HOSTELS,max_length=50)
-    branch = models.CharField(choices=BRANCH,max_length=50)
+    name = models.CharField(max_length=100,blank=True,null=True)
+    roll_number = models.CharField(max_length=100,blank=True,null=True)
+    degree = models.CharField(choices=DEGREE,max_length=70,blank=True,null=True)
+    hostel = models.CharField(choices=HOSTELS,max_length=50,blank=True,null=True)
+    branch = models.CharField(choices=BRANCH,max_length=50,blank=True,null=True)
     email = models.EmailField(unique=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='euser')
     registration_complete = models.BooleanField(default=False)
 
     def __str__(self) -> str:
-        return str(self.id)
+        return str(self.email) + '_' + str(self.id)
 
 class Election(models.Model):
     name = models.CharField(max_length=250)
@@ -98,11 +106,16 @@ class Voter(models.Model):
     user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='voter_ids')
     is_voted = models.BooleanField(default=False)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='voters')
-    election_organizers = models.ForeignKey(Election,null=True,on_delete=models.SET_NULL,related_name='organizers') # change the name of field to election
-    election_creator = models.OneToOneField(Election,null=True,on_delete=models.SET_NULL,related_name='created_by')
+    election_organizers = models.ForeignKey(Election,blank=True,null=True,on_delete=models.DO_NOTHING,related_name='organizers') # change the name of field to election
+    election_creator = models.OneToOneField(Election,blank=True,null=True,on_delete=models.DO_NOTHING,related_name='created_by')
 
     class Meta:
         unique_together = (('user', 'election'), ('user', 'election_organizers'))
+
+    def __str__(self) -> str:
+        if self.election_organizers:
+            return 'ORG_' + str(self.user)
+        return str(self.user)
 
 class Position(models.Model):
     title = models.CharField(max_length=250,unique=True)
@@ -126,7 +139,8 @@ def get_default_witness():
         "email":"",
         "hostel":"",
         "room_no":"",
-        "semester":""
+        "semester":"",
+        "contact_no":""
     }
 
 class Candidate(models.Model):
@@ -151,24 +165,43 @@ class Candidate(models.Model):
     proposed_by = models.JSONField(null=True,blank=True,default=get_default_witness)
     seconded_by = models.JSONField(null=True,blank=True,default=get_default_witness)
     credentials = models.JSONField(null=True,blank=True,default=dict)
+    verified_credentials = models.JSONField(null=True,blank=True,default=dict)
     proposed_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     seconded_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     nomination_complete = models.BooleanField(default=False)
+
     
+
     class Meta:
         unique_together = (('position', 'election', 'user'))
+    
+    def __str__(self) -> str:
+        return str(self.position) + '_' + str(self.user)
 
+    # def save(self, *args, **kwargs):
+    #     super().save()  # saving image first
 
+    #     img = Image.open(self.image.path) # Open image using self
+    #     if img.height > 100 or img.width > 100:
+    #         new_img = (100, 100)
+    #         img.thumbnail(new_img)
+    #         img.save(self.image.path)  # saving image at the same path
 
 class Faq(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='faqs')
     question = models.TextField()
     answer = models.TextField()
 
+    def __str__(self) -> str:
+        return self.id
+
 class Imporatant_date(models.Model):
     title = models.CharField(max_length=250)
     date = models.DateField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='important_dates')
+
+    def __str__(self) -> str:
+        return self.title
 
 class Statistic(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='statistics')
@@ -176,16 +209,23 @@ class Statistic(models.Model):
     stat_total = models.JSONField()
     stat_title = models.CharField(max_length=250)
 
+    def __str__(self) -> str:
+        return self.stat_title
 
 class Debate(models.Model):
     title = models.CharField(max_length=250)
     debate_time = models.DateTimeField()
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='debates')
 
+    def __str__(self) -> str:
+        return self.title
 
 class Credentials(models.Model):
-    name=models.TextField(null=True,blank=True)
+    name = models.TextField(null=True,blank=True)
     file = models.FileField(upload_to="credentials/")
+
+    def __str__(self) -> str:
+        return self.name
 
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):

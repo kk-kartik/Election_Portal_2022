@@ -4,6 +4,17 @@ import { BASEURL, BASEAPIURL, VALIDAPIURL, ELECTIONAPI } from "../constants";
 export const API = axios.create({
   baseURL: `${BASEAPIURL}`,
   withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+export const MULTIPARTAPI = axios.create({
+  baseURL: `${BASEAPIURL}`,
+  withCredentials: true,
+  headers: {
+    "Content-Type": "multipart/form-data",
+  },
 });
 
 export const VALIDAPI = axios.create({
@@ -42,11 +53,11 @@ export const fetchPos = () => API.get("/positions");
 export const candidateRegistration = (data) => API.post("/candidates/", data);
 export const updateCandidateData = (id, data) =>
   API.patch(`/candidates/${id}/`, data);
-export const getCandidateData = () =>
-  API.get(`/candidates/`);
+export const getCandidateData = () => API.get(`/candidates/`);
 
 //credentials
-export const uploadCredentials = (data) => API.post("/add_credentials/", data);
+export const uploadCredentials = (data) =>
+  MULTIPARTAPI.post("/add_credentials/", data);
 //Debates API
 export const fetchDebates = () => API.get("/debates");
 export const addDebate = (newDebate) => API.post("/debates/", newDebate);

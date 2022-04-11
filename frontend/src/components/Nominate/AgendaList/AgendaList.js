@@ -6,16 +6,38 @@ import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import useNominate from "../../../hooks/useNominate";
 const AgendaList = () => {
-  const { candidate, error, message, updateNomination } = useNominate();
+  const {
+    candidate,
+    error,
+    message,
+    updateNomination,
+    loading,
+    isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
+  } = useNominate();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState(null);
 
   return (
     <div className="">
       {candidate?.agenda_text &&
         Object.keys(candidate?.agenda_text || []).map((a, i) => (
-          <Agenda title={a} agenda={parse(candidate.agenda_text[a])} />
+          <Agenda
+            title={a}
+            agenda={parse(candidate.agenda_text[a])}
+            setIsOpen={setIsOpen}
+            setTitle={setTitle}
+            updateNomination={updateNomination}
+            candidate={candidate}
+            isFormClosed={isFormClosed}
+          />
+        ))}
+      {!candidate ||
+        !candidate?.agenda_text ||
+        (Object.keys(candidate?.agenda_text || []).length < 3 && (
+          <p className="text-sm">Add Atleast 3 agendas</p>
         ))}
 
       {isOpen && (
@@ -24,18 +46,37 @@ const AgendaList = () => {
           setTitle={setTitle}
           updateNomination={updateNomination}
           candidate={candidate}
+          title={title}
         />
       )}
       {/* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}></textarea> */}
       {/* <Agenda count={count} title={title} agenda={agenda} long={true} /> */}
-      <div className="pt-8">
-        <button
-          className={`text-white ${styles.button} px-5`}
-          onClick={() => setIsOpen(true)}
-        >
-          Add Agenda
-        </button>
-      </div>
+      {!isFormClosed && (
+        <div className="pt-8">
+          <button
+            className={`text-white ${styles.button} px-5 ml-2`}
+            onClick={() => setIsOpen(true)}
+          >
+            Add Agenda
+          </button>
+        </div>
+      )}
+      {loading && <p className="text-sm text-blue-500">Saving...</p>}
+      {error ? (
+        <p className="text-red-300">{error}</p>
+      ) : message ? (
+        <p className="text-green-400">{error}</p>
+      ) : null}
+      {isNominationComplete ? (
+        <p className="text-blue-500">Your Nomination is complete</p>
+      ) : (
+        <>
+          {isDeadlineOver && (
+            <p className="text-blue-500">Nomination Deadline is over.</p>
+          )}
+        </>
+      )}
+      <br />
     </div>
   );
 };

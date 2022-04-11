@@ -10,9 +10,13 @@ import StatsScreen from "./StatsScreen";
 import RulesScreen from "./RulesScreen";
 import OrganisersScreen from "./OrganisersScreen";
 import lime from "../../assets/Lime.jpg";
+import NewFooter from "../../components/Footer/NewFooter";
 const Layout = () => {
   return (
-    <div className="md:ml-20 mt-12 mr-4 ml-4">
+    <div
+      className="mt-12  ml-1 mr-1 md:ml-16 md:mr-10"
+      style={{ maxWidth: "1240px" }}
+    >
       <Outlet />
     </div>
   );
@@ -20,7 +24,11 @@ const Layout = () => {
 const PreElectionScreen = () => {
   return (
     <>
-      <div>
+      <div
+        style={{
+          minHeight: "83vh",
+        }}
+      >
         {/* Pre-election navbar */}
 
         <BlockchainMessage />
@@ -137,7 +145,8 @@ const PreElectionScreen = () => {
           </Route>
         </Routes>
       </div>
-      <Footer />
+      {/* <Footer /> */}
+      <NewFooter />
     </>
   );
 };

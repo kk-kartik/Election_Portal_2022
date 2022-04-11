@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { BASEURL, SET_CANDIDATE_DATA } from "./constants";
+import { BASEURL, IS_PROD, SET_CANDIDATE_DATA } from "./constants";
 import PreElectionScreen from "./screens/pre_election/PreElectionScreen";
 import AdminScreen from "./screens/admin/AdminScreen";
 import CandidateNominateScreen from "./screens/candidatenominationscreen/CandidateNominateScreen";
@@ -18,7 +18,7 @@ import NominationRoute from "./custom-routes/NominationRoutes";
 
 function Pre() {
   return (
-    <div>
+    <div className="min-h-screen">
       <TopNav />
       <Routes>
         <Route path="/*" exact element={<PreElectionScreen />} />
@@ -60,30 +60,32 @@ function App() {
   const userData = useSelector((store) => store.auth);
   const candidate = useSelector((store) => store.candidate);
   const dispatch = useDispatch();
-  const isLoggedIn = useAuthCheck();
+  if (IS_PROD) {
+    window.console.log = () => {};
+  }
 
-  console.log("APP ", isLoggedIn);
+
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
   useEffect(() => {
-    console.log(userData);
+    console.log("userData: ", userData);
     if (
       userData &&
-      Object.keys(candidate).length == 0 &&
-      userData.candidates.length != 0
+      Object.keys(candidate).length === 0 &&
+      userData.candidates.length !== 0
     ) {
-      console.log("hi");
       dispatch({ type: SET_CANDIDATE_DATA, data: userData.candidates[0] });
     }
   }, [userData]);
+
   return (
     <BrowserRouter basename={BASEURL}>
       <Routes>
         <Route path="/*" exact element={<Pre />} />
-        <Route path="/election/*" exact element={<ElectionScreen />} />
+        {/* <Route path="/election/*" exact element={<ElectionScreen />} /> */}
         <Route path="/admin/*" exact element={<AdminScreen />} />
         <Route path="/login" exact element={<LoginScreen />} />
         {/* Route of the VOTING PORTAL */}

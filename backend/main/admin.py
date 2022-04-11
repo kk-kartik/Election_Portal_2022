@@ -2,6 +2,8 @@ from django.contrib import admin
 from .models import *
 
 admin.site.register(EUser)
+class EuserAdnmin(admin.ModelAdmin):
+    list_display = ['id','email','name']
 
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):

@@ -9,8 +9,6 @@ class CredentialSerializer(serializers.ModelSerializer):
         model = Credentials
         fields = "__all__"
 
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -32,10 +30,10 @@ class EuserSerializer(serializers.ModelSerializer):
         fields ="__all__"
 
 class CandidateReadSerializer(serializers.ModelSerializer):
-    user = EuserSerializer(required=False)
     class Meta:
         model = Candidate
         fields = "__all__"
+        depth=1
 
 class PositionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,14 +49,15 @@ class PositionReadSerializer(serializers.ModelSerializer):
 
 
 class CandidateSerializer(serializers.ModelSerializer):
+    nomination_status = serializers.ReadOnlyField()
     class Meta:
         model = Candidate
-        exclude = ['election',"user"]
+        exclude = ['election',"user","agenda_pdf"]
 
 class CandidateOrganizerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Candidate
-        fields = "__all__"
+        exclude = ['election',"user"]
     
 
 
@@ -66,3 +65,9 @@ class FaqSerializer(serializers.ModelSerializer):
     class Meta:
         model = Faq
         exclude = ["election"]
+
+
+class CandidateBriefSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Candidate
+        exclude=["election","agenda_pdf","user","position","agenda_text","credentials","verified_credentials","proposed_by","seconded_by","cpi","backlogs","active_backlogs",]

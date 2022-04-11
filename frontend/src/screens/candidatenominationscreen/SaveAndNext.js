@@ -3,17 +3,16 @@ import styles from "../Register/RegisterScreen.module.css";
 
 function SaveAndNext({ error, message, loading, submit }) {
   return (
-    <div className="mt-5">
-      {loading && <p className="text-sm text-green">Saving...</p>}
-      {error ? (
-        <p className="text-red">{error}</p>
-      ) : message ? (
-        <p className="text-green">{error}</p>
-      ) : null}
-      <p className="text-sm">Apply changes before proceeding</p>
+    <div className="my-2">
+      {loading && <p className="text-blue-500 mb-1">Saving...</p>}
+      {message && <p className="text-blue-500 mb-1">{message}</p>}
+
+      {error && <p className="text-red-300 mb-1">{error}</p>}
+      {/* <p className="text-sm">Apply changes before proceeding</p> */}
       <button className={styles.button} onClick={submit}>
-        Save & Next
+        Save
       </button>
+      <br />
     </div>
   );
 }

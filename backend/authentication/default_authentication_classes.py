@@ -1,5 +1,6 @@
 from rest_framework.authentication import BasicAuthentication,SessionAuthentication
 from dj_rest_auth.jwt_auth import JWTAuthentication,JWTCookieAuthentication
+from django.conf import settings
 
 class CsrfExemptSessionAuthentication(SessionAuthentication):
 
@@ -7,4 +8,5 @@ class CsrfExemptSessionAuthentication(SessionAuthentication):
         return  # To not perform the csrf check previously happening
 
 
-default_authentication_classes = [JWTCookieAuthentication,JWTAuthentication,BasicAuthentication,CsrfExemptSessionAuthentication]
+default_authentication_classes =[CsrfExemptSessionAuthentication]
+default_authentication_classes += [JWTCookieAuthentication,JWTAuthentication]

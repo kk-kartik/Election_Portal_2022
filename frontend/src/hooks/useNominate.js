@@ -1,7 +1,7 @@
-const { useState } = require("react");
+const { useState, useEffect } = require("react");
 const { useDispatch, useSelector } = require("react-redux");
 const { useNavigate } = require("react-router-dom");
-const { API, updateCandidateData } = require("../api");
+const { MULTIPARTAPI, updateCandidateData } = require("../api");
 const { SET_CANDIDATE_DATA } = require("../constants");
 
 function buildFormData(formData, data, parentKey) {
@@ -32,6 +32,11 @@ function jsonToFormData(data) {
 
   return formData;
 }
+const deadline = 1649662251052 + 6 * 60 * 60 * 1000;
+// const deadline = 1649549824000;
+const checkDeadline = () => {
+  return new Date(Date.now()).getTime() >= deadline;
+};
 
 const useNominate = () => {
   const [error, setError] = useState(null);
@@ -40,25 +45,68 @@ const useNominate = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const candidate = useSelector((store) => store.candidate);
+  const userData = useSelector((store) => store.auth);
+
+  const isDeadlineOver = checkDeadline();
+  const isNominationComplete = candidate?.nomination_complete;
+  const isFormClosed = isNominationComplete || isDeadlineOver;
+  const checkCreds = () => {
+    if (
+      candidate &&
+      candidate.credentials &&
+      candidate.credentials["Grade Card"]
+    ) {
+      if (userData?.euser?.degree !== "P") {
+        return true;
+      } else if (
+        userData?.euser?.degree === "P" &&
+        candidate.credentials["Thesis incomplete proof"]
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const isCredsComplete = checkCreds();
+  const isAgendaComplete =
+    candidate &&
+    candidate.agenda_text &&
+    Object.keys(candidate.agenda_text).length >= 3;
   const isComplete =
     !!candidate.id &&
     !!candidate.video &&
-    !!candidate.agenda_text &&
+    isAgendaComplete &&
+    isCredsComplete &&
     !!candidate.credentials &&
     !!candidate.proposed_by?.name;
 
   const updateNomination = async (updatedData, next = null) => {
+    if (isNominationComplete || isDeadlineOver) {
+      setMessage(
+        "Nomination is already submitted or nomination deadline is finished"
+      );
+      return;
+    }
     if (!candidate) {
       navigate("/", { replace: true });
       return;
     }
-
-    const data = { ...candidate, ...updatedData };
+    if (!updatedData || Object.keys(updatedData).length == 0) {
+      setMessage("Everything is up to date");
+      return;
+    }
+    const data = { ...updatedData };
     setLoading(true);
     try {
-      API.defaults.headers["Content-Type"] = "multipart/form-data";
       const finalData = {};
       Object.keys(data).forEach((k) => {
+        if (k === "nomination_status" || k === "agenda_pdf") {
+          return;
+        }
         if (
           k == "image" ||
           k == "proposed_by_sign" ||
@@ -95,14 +143,19 @@ const useNominate = () => {
     } catch (err) {
       console.log(err);
       setError(
-        err.response?.data?.detail ||
-          "Something went wrong!Please try logging in again."
+        err.response?.data
+          ? "Please check your response"
+          : "Something went wrong!Please check try refreshing again."
       );
+      setLoading(false);
+      return;
     }
+
+    // if (next && !error) {
+    //   navigate(next);
+    // }
+    setMessage("Saved");
     setLoading(false);
-    if (next && !error) {
-      navigate(next);
-    }
   };
 
   return {
@@ -115,6 +168,9 @@ const useNominate = () => {
     isComplete,
     message,
     setMessage,
+    isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
   };
 };
 
