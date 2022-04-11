@@ -47,7 +47,7 @@ const CandidatesScreen = () => {
               {candidates &&
                 candidates.length !== 0 &&
                 candidates.map((data, idx) => {
-                  if (data?.nomination_complete) {
+                  {/* if (data?.nomination_complete) { */}
                     return (
                       <tr key={idx}>
                         <td className="text-left py-3 px-4">
@@ -144,9 +144,9 @@ const CandidatesScreen = () => {
                         </td>
                       </tr>
                     );
-                  } else {
+                  {/* } else {
                     return null;
-                  }
+                  } */}
                 })}
             </tbody>
           </table>
