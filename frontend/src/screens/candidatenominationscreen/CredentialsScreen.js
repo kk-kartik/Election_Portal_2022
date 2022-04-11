@@ -94,7 +94,8 @@ const CredentialsScreen = () => {
         link={candidate.credentials && candidate.credentials["Grade Card"]}
       />
 
-      {userData?.euser?.degree === "P" && (
+      {(candidate?.position?.title === "PG Senator" ||
+        candidate?.position == 10) && (
         <FixedUploadField
           handleFile={handleFile}
           credDelete={credDelete}

@@ -48,10 +48,14 @@ const VerificationBox = () => {
       candidate.credentials &&
       candidate.credentials["Grade Card"]
     ) {
-      if (userData?.euser?.degree !== "P") {
+      if (
+        candidate?.position?.title !== "PG Senator" &&
+        candidate?.position !== 10
+      ) {
         return true;
       } else if (
-        userData?.euser?.degree === "P" &&
+        (candidate?.position?.title === "PG Senator" ||
+          candidate?.position === 10) &&
         candidate.credentials["Thesis incomplete proof"]
       ) {
         return true;
