@@ -90,8 +90,8 @@ class OnlyOrganizerOrCandidate(permissions.BasePermission):
         
         return is_organizer or is_candidate
 
-basic_info_deadline = 1649662251052+2*60*60*1000
-nomination_deadline = 1649662251052+6*60*60*1000
+basic_info_deadline = 1649734200000
+nomination_deadline = 1649759400000
 
 class CandidateDeadlinePermissions(permissions.BasePermission):
     message = "Invalid Access deadline to update specified details is now over"

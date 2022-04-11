@@ -32,7 +32,7 @@ function jsonToFormData(data) {
 
   return formData;
 }
-const deadline = 1649662251052 + 6 * 60 * 60 * 1000;
+const deadline = 1649759400000;
 // const deadline = 1649549824000;
 const checkDeadline = () => {
   return new Date(Date.now()).getTime() >= deadline;

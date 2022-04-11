@@ -163,7 +163,7 @@ const VerificationBox = () => {
           </button>
         )} */}
       </div>
-      <p className={`${styles.lastdate} mt-2`}>
+      <p className={`${styles.lastdate} mt-2 text-green-300`}>
         Your data is synced and will be auto updated on deadline.
       </p>
       {isNominationComplete ? (
