@@ -18,7 +18,6 @@ from django.core.files.base import ContentFile
 from django.views.generic.base import View
 # from wkhtmltopdf.views import PDFTemplateResponse
 
-
 BRANCH = {
     'None':"None",
     '01': 'CSE',
@@ -322,51 +321,7 @@ class IsOrganizerView(ElectionMixin,generics.GenericAPIView):
 
 class DownloadNominations(ElectionMixin,generics.GenericAPIView):
     authentication_classes=default_authentication_classes
-    permission_classes = [permissions.IsAuthenticated,OnlyOrganizerOrCandidate]
+    permission_classes = [permissions.IsAuthenticated]
     
     def get(self,request,*args,**kwargs):
-        election = self.election
-        candidates = election.candidates_e.exclude(
-            cpi=None,
-            user__roll_number=None,
-            user__email=None,
-            backlogs=None,
-            active_backlogs=None,
-            semester=None,
-            contact_no=None,
-        )
-
-        response = HttpResponse(content_type='text/csv')  
-        response['Content-Disposition'] = 'attachment; filename="nominations.csv"'  
-        writer = csv.writer(response)
-        writer.writerow(["Sr.No","Position","Name","Email","Roll no","Degree","Cpi","Backlogs","Active Backlogs","Credentials","Nomintaion Complete"])
-        for i,candidate in enumerate(candidates.all()):
-            # if "Grade Card" not in candidate.credentials.keys() :
-            #     continue
-
-            # if not candidate.credentials["Grade Card"]:
-            #     continue
-
-            # if candidate.postion.title == "PG Senator":
-            #     if "Thesis incomplete proof" not in candidate.credentials.keys() :
-            #         continue
-
-            #     if not candidate.credentials["Thesis incomplete proof"]:
-            #         continue
-
-
-            writer.writerow([
-                i+1,
-                candidate.position.title,
-                candidate.user.name,
-                candidate.user.email,
-                candidate.user.roll_number,
-                candidate.user.degree,
-                candidate.cpi,
-                candidate.backlogs,
-                candidate.active_backlogs,
-                candidate.credentials,
-                candidate.nomination_complete
-            ])
-            
-        return response  
+        return HttpResponse("done")
