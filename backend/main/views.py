@@ -4,7 +4,7 @@ from .serializers import *
 from .models import *
 from rest_framework.response import Response
 from rest_framework import status,mixins,generics,viewsets,permissions
-from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate
+from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions
 from dj_rest_auth.jwt_auth import JWTAuthentication
 from .mixins import ElectionMixin
 from authentication.default_authentication_classes import default_authentication_classes
@@ -131,7 +131,7 @@ class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
         return Candidate.objects.filter(election=self.election,nomination_status="approved")
 
 class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,CandidateDeadlinePermissions]
     serializer_class = EuserSerializer
     authentication_classes=default_authentication_classes
 
@@ -174,7 +174,7 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated,OnlyOrganizerOrCandidate]
+    permission_classes = [permissions.IsAuthenticated,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions]
     serializer_class = CandidateSerializer
     authentication_classes=default_authentication_classes
     
@@ -341,18 +341,18 @@ class DownloadNominations(ElectionMixin,generics.GenericAPIView):
         writer = csv.writer(response)
         writer.writerow(["Sr.No","Position","Name","Email","Roll no","Degree","Cpi","Backlogs","Active Backlogs","Credentials","Nomintaion Complete"])
         for i,candidate in enumerate(candidates.all()):
-            if "Grade Card" not in candidate.credentials.keys() :
-                continue
+            # if "Grade Card" not in candidate.credentials.keys() :
+            #     continue
 
-            if not candidate.credentials["Grade Card"]:
-                continue
+            # if not candidate.credentials["Grade Card"]:
+            #     continue
 
-            if candidate.postion.title == "PG Senator":
-                if "Thesis incomplete proof" not in candidate.credentials.keys() :
-                    continue
+            # if candidate.postion.title == "PG Senator":
+            #     if "Thesis incomplete proof" not in candidate.credentials.keys() :
+            #         continue
 
-                if not candidate.credentials["Thesis incomplete proof"]:
-                    continue
+            #     if not candidate.credentials["Thesis incomplete proof"]:
+            #         continue
 
 
             writer.writerow([
