@@ -38,9 +38,11 @@ const VerificationBox = () => {
   const [profileComplete, setprofileComplete] = useState(false);
 
   useEffect(() => {
-    checkWitnessData();
-    checkProfile();
-  }, []);
+    if (candidate) {
+      checkWitnessData();
+      checkProfile();
+    }
+  }, [candidate]);
 
   const checkCreds = () => {
     if (
