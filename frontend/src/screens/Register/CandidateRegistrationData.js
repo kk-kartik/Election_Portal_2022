@@ -17,6 +17,8 @@ const CandidateRegistrationData = ({
     }));
   };
 
+  console.log(data);
+
   return (
     <div>
       <form>
@@ -72,16 +74,36 @@ const CandidateRegistrationData = ({
           onChange={onChange}
           disabled={isFormClosed}
         >
-          <option value="">Select </option>
-          <option value="B">B.Tech</option>
-          <option value="M">M.Tech</option>
-          <option value="P">PhD</option>
-          <option value="Msc">MSc</option>
-          <option value="Bdes">Bdes</option>
-          <option value="Mdes">Mdes</option>
-          <option value="Dual">Dual Degree</option>
-          <option value="MA">MA</option>
-          <option value="MSR">MSR</option>
+          <option value="" selected={data?.degree == ""}>
+            Select{" "}
+          </option>
+          <option value="B" selected={data?.degree == "B"}>
+            B.Tech
+          </option>
+          <option value="M" selected={data?.degree == "M"}>
+            M.Tech
+          </option>
+          <option value="P" selected={data?.degree == "P"}>
+            PhD
+          </option>
+          <option value="Msc" selected={data?.degree == "Msc"}>
+            MSc
+          </option>
+          <option value="Bdes" selected={data?.degree == "Bdes"}>
+            Bdes
+          </option>
+          <option value="Mdes" selected={data?.degree == "Mdes"}>
+            Mdes
+          </option>
+          <option value="Dual" selected={data?.degree == "Dual"}>
+            Dual Degree
+          </option>
+          <option value="MA" selected={data?.degree == "MA"}>
+            MA
+          </option>
+          <option value="MSR" selected={data?.degree == "MSR"}>
+            MSR
+          </option>
         </select>
         {validationErrors?.degree ? (
           <p className="text-red-400 text-sm">{validationErrors.degree}</p>
@@ -101,25 +123,63 @@ const CandidateRegistrationData = ({
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           disabled={isFormClosed}
         >
-          <option value="">Select</option>
-          <option value="01">CSE</option>
-          <option value="02">ECE</option>
-          <option value="03">ME</option>
-          <option value="04">Civil</option>
-          <option value="05">Design</option>
-          <option value="06">BSBE</option>
-          <option value="07">CL</option>
-          <option value="08">EEE</option>
-          <option value="21">Physics</option>
-          <option value="22">Chemistry</option>
-          <option value="23">MNC</option>
-          <option value="41">HSS</option>
-          <option value="51">Energy</option>
-          <option value="52">Environment</option>
-          <option value="53">Nano-Tech</option>
-          <option value="54">Rural-Tech</option>
-          <option value="55">Linguistics</option>
-          <option value="61">Others</option>
+          <option value="" selected={data?.branch == ""}>
+            Select
+          </option>
+          <option value="01" selected={data?.branch == "01"}>
+            CSE
+          </option>
+          <option value="02" selected={data?.branch == "02"}>
+            ECE
+          </option>
+          <option value="03" selected={data?.branch == "03"}>
+            ME
+          </option>
+          <option value="04" selected={data?.branch == "04"}>
+            Civil
+          </option>
+          <option value="05" selected={data?.branch == "05"}>
+            Design
+          </option>
+          <option value="06" selected={data?.branch == "06"}>
+            BSBE
+          </option>
+          <option value="07" selected={data?.branch == "07"}>
+            CL
+          </option>
+          <option value="08" selected={data?.branch == "08"}>
+            EEE
+          </option>
+          <option value="21" selected={data?.branch == "21"}>
+            Physics
+          </option>
+          <option value="22" selected={data?.branch == "22"}>
+            Chemistry
+          </option>
+          <option value="23" selected={data?.branch == "23"}>
+            MNC
+          </option>
+          <option value="41" selected={data?.branch == "41"}>
+            HSS
+          </option>
+          <option value="51" selected={data?.branch == "51"}>
+            Energy
+          </option>
+          <option value="52" selected={data?.branch == "52"}>
+            Environment
+          </option>
+          <option value="53" selected={data?.branch == "53"}>
+            Nano-Tech
+          </option>
+          <option value="54" selected={data?.branch == "54"}>
+            Rural-Tech
+          </option>
+          <option value="55" selected={data?.branch == "55"}>
+            Linguistics
+          </option>
+          <option value="61" selected={data?.branch == "61"}>
+            Others
+          </option>
         </select>
         {validationErrors?.branch ? (
           <p className="text-red-400 text-sm">{validationErrors.branch}</p>
@@ -139,22 +199,54 @@ const CandidateRegistrationData = ({
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           disabled={isFormClosed}
         >
-          <option value="">Select </option>
-          <option value="lohit">Lohit</option>
-          <option value="dhansiri">Dhansiri</option>
-          <option value="dihing">Dihing</option>
-          <option value="disang">Disang</option>
-          <option value="dibang">Dibang</option>
-          <option value="manas">Manas</option>
-          <option value="umiam">Umiam</option>
-          <option value="kapili">Kapili</option>
-          <option value="subansiri">Subansiri</option>
-          <option value="kameng">Kameng</option>
-          <option value="barak">Barak</option>
-          <option value="msh">Married Scholar Hostel</option>
-          <option value="brahmaputra">Brahmaputra</option>
-          <option value="siang">Siang</option>
-          <option value="not-alloted">Not Alloted</option>
+          <option value="" selected={data?.hostel == ""}>
+            Select{" "}
+          </option>
+          <option value="lohit" selected={data?.hostel == "lohit"}>
+            Lohit
+          </option>
+          <option value="dhansiri" selected={data?.hostel == "dhansiri"}>
+            Dhansiri
+          </option>
+          <option value="dihing" selected={data?.hostel == "dihing"}>
+            Dihing
+          </option>
+          <option value="disang" selected={data?.hostel == "disang"}>
+            Disang
+          </option>
+          <option value="dibang" selected={data?.hostel == "dibang"}>
+            Dibang
+          </option>
+          <option value="manas" selected={data?.hostel == "manas"}>
+            Manas
+          </option>
+          <option value="umiam" selected={data?.hostel == "umiam"}>
+            Umiam
+          </option>
+          <option value="kapili" selected={data?.hostel == "kapili"}>
+            Kapili
+          </option>
+          <option value="subansiri" selected={data?.hostel == "subansiri"}>
+            Subansiri
+          </option>
+          <option value="kameng" selected={data?.hostel == "kameng"}>
+            Kameng
+          </option>
+          <option value="barak" selected={data?.hostel == "barak"}>
+            Barak
+          </option>
+          <option value="msh" selected={data?.hostel == "msh"}>
+            Married Scholar Hostel
+          </option>
+          <option value="brahmaputra" selected={data?.hostel == "brahmaputra"}>
+            Brahmaputra
+          </option>
+          <option value="siang" selected={data?.hostel == "siang"}>
+            Siang
+          </option>
+          <option value="not-alloted" selected={data?.hostel == "not-alloted"}>
+            Not Alloted
+          </option>
         </select>
         {validationErrors?.hostel ? (
           <p className="text-red-400 text-sm">{validationErrors.hostel}</p>

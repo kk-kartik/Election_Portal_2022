@@ -14,10 +14,10 @@ from xhtml2pdf import pisa
 from django.template.loader import get_template
 from django.http import HttpResponse
 from django.core.files.base import ContentFile
+from django.db.models import Q
 
 from django.views.generic.base import View
 # from wkhtmltopdf.views import PDFTemplateResponse
-
 
 BRANCH = {
     'None':"None",
@@ -322,18 +322,27 @@ class IsOrganizerView(ElectionMixin,generics.GenericAPIView):
 
 class DownloadNominations(ElectionMixin,generics.GenericAPIView):
     authentication_classes=default_authentication_classes
-    permission_classes = [permissions.IsAuthenticated,OnlyOrganizerOrCandidate]
+    permission_classes = [permissions.IsAuthenticated]
     
     def get(self,request,*args,**kwargs):
+        return HttpResponse("done")
+
+class DownloadNominations(ElectionMixin,generics.GenericAPIView):
+    authentication_classes=default_authentication_classes
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self,request,*args,**kwargs):
+        if not request.user.is_staff:
+            return HttpResponse("Invalid access")
         election = self.election
         candidates = election.candidates_e.exclude(
-            cpi=None,
-            user__roll_number=None,
-            user__email=None,
-            backlogs=None,
-            active_backlogs=None,
-            semester=None,
-            contact_no=None,
+            Q(cpi=None)|
+            Q(user__roll_number=None)|
+            Q(user__email=None)|
+            Q(backlogs=None)|
+            Q(active_backlogs=None)|
+            Q(semester=None)|
+            Q(contact_no=None)
         )
 
         response = HttpResponse(content_type='text/csv')  

@@ -86,16 +86,36 @@ const WitnessDataForm = ({ data, setData, validationErrors, isFormClosed }) => {
           onChange={onChange}
           disabled={isFormClosed}
         >
-          <option value="">Select </option>
-          <option value="BTech">B.Tech</option>
-          <option value="MTech">M.Tech</option>
-          <option value="PhD">PhD</option>
-          <option value="Msc">MSc</option>
-          <option value="Bdes">Bdes</option>
-          <option value="Mdes">Mdes</option>
-          <option value="Dual">Dual Degree</option>
-          <option value="MA">MA</option>
-          <option value="MSR">MSR</option>
+          <option value="" selected={data?.degree == ""}>
+            Select{" "}
+          </option>
+          <option value="BTech" selected={data?.degree == "BTech"}>
+            B.Tech
+          </option>
+          <option value="MTech" selected={data?.degree == "MTech"}>
+            M.Tech
+          </option>
+          <option value="PhD" selected={data?.degree == "PhD"}>
+            PhD
+          </option>
+          <option value="Msc" selected={data?.degree == "Msc"}>
+            MSc
+          </option>
+          <option value="Bdes" selected={data?.degree == "Bdes"}>
+            Bdes
+          </option>
+          <option value="Mdes" selected={data?.degree == "Mdes"}>
+            Mdes
+          </option>
+          <option value="Dual" selected={data?.degree == "Dual"}>
+            Dual Degree
+          </option>
+          <option value="MA" selected={data?.degree == "MA"}>
+            MA
+          </option>
+          <option value="MSR" selected={data?.degree == "MSR"}>
+            MSR
+          </option>
         </select>
         {validationErrors?.degree ? (
           <p className="text-red-400 text-sm">{validationErrors.degree}</p>
@@ -115,25 +135,27 @@ const WitnessDataForm = ({ data, setData, validationErrors, isFormClosed }) => {
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           disabled={isFormClosed}
         >
-          <option value="">Select</option>
-          <option>CSE</option>
-          <option>ECE</option>
-          <option>ME</option>
-          <option>Civil</option>
-          <option>Design</option>
-          <option>BSBE</option>
-          <option>CL</option>
-          <option>EEE</option>
-          <option>Physics</option>
-          <option>Chemistry</option>
-          <option>MNC</option>
-          <option>HSS</option>
-          <option>Energy</option>
-          <option>Environment</option>
-          <option>Nano-Tech</option>
-          <option>Rural-Tech</option>
-          <option>Linguistics</option>
-          <option>Others</option>
+          <option value="" selected={data?.branch == ""}>
+            Select
+          </option>
+          <option selected={data?.branch == "CSE"}>CSE</option>
+          <option selected={data?.branch == "ECE"}>ECE</option>
+          <option selected={data?.branch == "ME"}>ME</option>
+          <option selected={data?.branch == "Civil"}>Civil</option>
+          <option selected={data?.branch == "Design"}>Design</option>
+          <option selected={data?.branch == "BSBE"}>BSBE</option>
+          <option selected={data?.branch == "CL"}>CL</option>
+          <option selected={data?.branch == "EEE"}>EEE</option>
+          <option selected={data?.branch == "Physics"}>Physics</option>
+          <option selected={data?.branch == "Chemistry"}>Chemistry</option>
+          <option selected={data?.branch == "MNC"}>MNC</option>
+          <option selected={data?.branch == "HSS"}>HSS</option>
+          <option selected={data?.branch == "Energy"}>Energy</option>
+          <option selected={data?.branch == "Environment"}>Environment</option>
+          <option selected={data?.branch == "Nano-Tech"}>Nano-Tech</option>
+          <option selected={data?.branch == "Rural-Tech"}>Rural-Tech</option>
+          <option selected={data?.branch == "Linguistics"}>Linguistics</option>
+          <option selected={data?.branch == "Others"}>Others</option>
         </select>
         {validationErrors?.branch ? (
           <p className="text-red-400 text-sm">{validationErrors.branch}</p>
@@ -153,22 +175,26 @@ const WitnessDataForm = ({ data, setData, validationErrors, isFormClosed }) => {
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           disabled={isFormClosed}
         >
-          <option value="">Select </option>
-          <option>Lohit</option>
-          <option>Dhansiri</option>
-          <option>Dihing</option>
-          <option>Disang</option>
-          <option>Dibang</option>
-          <option>Manas</option>
-          <option>Umiam</option>
-          <option>Kapili</option>
-          <option>Subansiri</option>
-          <option>Kameng</option>
-          <option>Barak</option>
-          <option>Married Scholar Hostel</option>
-          <option>Brahmaputra</option>
-          <option>Siang</option>
-          <option>Not Alloted</option>
+          <option value="" selected={data?.hostel == ""}>
+            Select{" "}
+          </option>
+          <option selected={data?.hostel == "Lohit"}>Lohit</option>
+          <option selected={data?.hostel == "Dhansiri"}>Dhansiri</option>
+          <option selected={data?.hostel == "Dihing"}>Dihing</option>
+          <option selected={data?.hostel == "Disang"}>Disang</option>
+          <option selected={data?.hostel == "Dibang"}>Dibang</option>
+          <option selected={data?.hostel == "Manas"}>Manas</option>
+          <option selected={data?.hostel == "Umiam"}>Umiam</option>
+          <option selected={data?.hostel == "Kapili"}>Kapili</option>
+          <option selected={data?.hostel == "Subhansiri"}>Subansiri</option>
+          <option selected={data?.hostel == "Kameng"}>Kameng</option>
+          <option selected={data?.hostel == "Barak"}>Barak</option>
+          <option selected={data?.hostel == "Married Scholor Hostel"}>
+            Married Scholar Hostel
+          </option>
+          <option selected={data?.hostel == "Brahmaputra"}>Brahmaputra</option>
+          <option selected={data?.hostel == "Siang"}>Siang</option>
+          <option selected={data?.hostel == "Not Alloted"}>Not Alloted</option>
         </select>
         {validationErrors?.hostel ? (
           <p className="text-red-400 text-sm">{validationErrors.hostel}</p>

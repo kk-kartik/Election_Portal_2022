@@ -20,7 +20,7 @@ import { validateYupSchema } from "formik";
 import CandidateRegistrationData from "../Register/CandidateRegistrationData";
 import { set } from "react-hook-form";
 
-const deadline = 1649662251052 + 1.5 * 60 * 60 * 1000;
+const deadline = 1649662251052 + 2 * 60 * 60 * 1000;
 // const deadline = 1649549824000;
 const checkDeadline = () => {
   return new Date(Date.now()).getTime() >= deadline;
@@ -126,6 +126,38 @@ const AboutScreen = () => {
       return;
     }
   };
+
+  useEffect(() => {
+    if (userData && candidate) {
+      if (checkDeadline()) {
+        if (
+          candidate.semester &&
+          candidate.semester != "" &&
+          candidate.cpi &&
+          candidate.cpi != "" &&
+          candidate.backlogs &&
+          candidate.backlogs != "" &&
+          candidate.active_backlogs &&
+          candidate.active_backlogs != "" &&
+          candidate.contact_no &&
+          candidate.contact_no != "" &&
+          userData.euser.roll_number &&
+          userData.euser.roll_number !== "" &&
+          userData.euser.degree &&
+          userData.euser.degree !== ""
+        ) {
+          setMessage(
+            "Your profile data has been saved and considered for nominations!Please complete rest of form if not completed to be eligible for nominations"
+          );
+          return;
+        }
+        setMessage(
+          "Your basic profile data is incomplete.Please contact EC next steps"
+        );
+        return;
+      }
+    }
+  }, [userData, candidate]);
 
   const submitData = async () => {
     setError(null);
