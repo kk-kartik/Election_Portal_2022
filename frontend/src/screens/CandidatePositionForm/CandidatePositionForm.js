@@ -12,7 +12,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { SET_CANDIDATE_DATA } from "../../constants";
 
 // import { useNavigate } from "react-router-dom";
-const deadline = 1649662251052 + 2.5 * 60 * 60 * 1000;
+const deadline = 1649662251052 + 2 * 60 * 60 * 1000;
 // const deadline = 1649549824000;
 const checkDeadline = () => {
   return new Date(Date.now()).getTime() >= deadline;
