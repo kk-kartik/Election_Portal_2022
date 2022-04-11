@@ -128,13 +128,34 @@ const AboutScreen = () => {
   };
 
   useEffect(() => {
-    if (checkDeadline()) {
-      setMessage(
-        "Your profile info has been submitted!Please contact EC if you couldn't fill the basic data i.e. cpi,semester,roll number,backlogs,active backlogs,contact no."
-      );
-      return;
+    if (userData && candidate) {
+      if (checkDeadline()) {
+        if (
+          candidate.semester &&
+          candidate.semester != "" &&
+          candidate.cpi &&
+          candidate.cpi != "" &&
+          candidate.backlogs &&
+          candidate.backlogs != "" &&
+          candidate.active_backlogs &&
+          candidate.active_backlogs != "" &&
+          candidate.contact_no &&
+          candidate.contact_no != "" &&
+          userData.euser.roll_number &&
+          userData.euser.roll_number !== "" &&
+          userData.euser.degree &&
+          userData.euser.degree !== ""
+        ) {
+          setMessage("Your profile data has been saved!");
+          return;
+        }
+        setMessage(
+          "Your basic profile data is incomplete.Please contact EC next steps"
+        );
+        return;
+      }
     }
-  }, []);
+  }, [userData, candidate]);
 
   const submitData = async () => {
     setError(null);
