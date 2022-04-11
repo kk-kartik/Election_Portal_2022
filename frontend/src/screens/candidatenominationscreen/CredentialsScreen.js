@@ -94,7 +94,7 @@ const CredentialsScreen = () => {
         link={candidate.credentials && candidate.credentials["Grade Card"]}
       />
 
-      {(candidate?.position?.title === "PG Senator" ||
+      {/* {(candidate?.position?.title === "PG Senator" ||
         candidate?.position == 10) && (
         <FixedUploadField
           handleFile={handleFile}
@@ -106,11 +106,11 @@ const CredentialsScreen = () => {
             candidate.credentials["Thesis incomplete proof"]
           }
         />
-      )}
+      )} */}
       {candidate.credentials && Object.keys(candidate.credentials).length != 0 && (
         <>
           {Object.keys(candidate.credentials).map((k, i) => {
-            if (k !== "Grade Card" && k !== "Thesis incomplete proof") {
+            if (k !== "Grade Card") {
               return (
                 <UploadField
                   handleFile={handleFile}

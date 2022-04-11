@@ -48,20 +48,21 @@ const VerificationBox = () => {
       candidate.credentials &&
       candidate.credentials["Grade Card"]
     ) {
-      if (
-        candidate?.position?.title !== "PG Senator" &&
-        candidate?.position !== 10
-      ) {
-        return true;
-      } else if (
-        (candidate?.position?.title === "PG Senator" ||
-          candidate?.position === 10) &&
-        candidate.credentials["Thesis incomplete proof"]
-      ) {
-        return true;
-      } else {
-        return false;
-      }
+      return true;
+      // if (
+      //   candidate?.position?.title !== "PG Senator" &&
+      //   candidate?.position !== 10
+      // ) {
+      //   return true;
+      // } else if (
+      //   (candidate?.position?.title === "PG Senator" ||
+      //     candidate?.position === 10) &&
+      //   candidate.credentials["Thesis incomplete proof"]
+      // ) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
     } else {
       return false;
     }
@@ -163,7 +164,7 @@ const VerificationBox = () => {
           </button>
         )} */}
       </div>
-      <p className={`${styles.lastdate} mt-2 text-green-300`}>
+      <p className={`mt-2 text-blue-500`}>
         Your data is synced and will be auto updated on deadline.
       </p>
       {isNominationComplete ? (

@@ -56,16 +56,17 @@ const useNominate = () => {
       candidate.credentials &&
       candidate.credentials["Grade Card"]
     ) {
-      if (userData?.euser?.degree !== "P") {
-        return true;
-      } else if (
-        userData?.euser?.degree === "P" &&
-        candidate.credentials["Thesis incomplete proof"]
-      ) {
-        return true;
-      } else {
-        return false;
-      }
+      return true;
+      // if (userData?.euser?.degree !== "P") {
+      //   return true;
+      // } else if (
+      //   userData?.euser?.degree === "P" &&
+      //   candidate.credentials["Thesis incomplete proof"]
+      // ) {
+      //   return true;
+      // } else {
+      //   return false;
+      // }
     } else {
       return false;
     }
