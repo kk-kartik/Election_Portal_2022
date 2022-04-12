@@ -28,16 +28,21 @@ const CandidatesScreen = () => {
       ? candidates.slice(firstInd, lastInd)
       : [];
 
+  const searchedCandidates =
+    candidates && candidates.length !== 0
+      ? candidates.filter((c, i) => {
+          return (
+            c?.user?.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            c?.user?.roll_number
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
+            c?.position?.title.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+        })
+      : [];
 
-  const searchedCandidates = candidates.filter((c,i)=>{
-    return (
-      c.user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.user.roll_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      c.position.title.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  })
-  
-  candidatesToShow = searchQuery==="" ? paginatedCandidates : searchedCandidates;
+  candidatesToShow =
+    searchQuery === "" ? paginatedCandidates : searchedCandidates;
 
   return (
     <>
@@ -77,105 +82,103 @@ const CandidatesScreen = () => {
             <tbody className="text-gray-700">
               {console.log(candidates)}
               {candidatesToShow.map((data, idx) => {
-                  return (
-                    <tr key={idx}>
-                      <td className="text-left py-3 px-4">
-                        <Link to={`/admin/candidates/${data?.id}`} state={data}>
-                          <div className="hover:text-blue-500">
-                            <p>{data?.user.name}</p>
-                            <p className="text-sm">{data?.user.roll_number}</p>
-                          </div>
-                        </Link>
-                      </td>
-                      <td className="text-left py-3 px-4">
-                        {data?.position?.title}
-                      </td>
-                      <td className="text-left py-3 px-4">
-                        <a
-                          href={data?.video}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-blue-500 underline"
+                return (
+                  <tr key={idx}>
+                    <td className="text-left py-3 px-4">
+                      <Link to={`/admin/candidates/${data?.id}`} state={data}>
+                        <div className="hover:text-blue-500">
+                          <p>{data?.user.name}</p>
+                          <p className="text-sm">{data?.user.roll_number}</p>
+                        </div>
+                      </Link>
+                    </td>
+                    <td className="text-left py-3 px-4">
+                      {data?.position?.title}
+                    </td>
+                    <td className="text-left py-3 px-4">
+                      <a
+                        href={data?.video}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-blue-500 underline"
+                      >
+                        View
+                      </a>
+                    </td>
+                    <td className="text-left py-3 px-4">
+                      <a
+                        className="bg-violet-500 text-white p-2 py-1"
+                        href={`https://swc.iitg.ac.in/elections_api/sgc/candidate_pdf/${data?.id}/`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        View Form
+                      </a>
+                    </td>
+                    <td className="text-left py-3 px-4">
+                      <Link
+                        to={`/admin/candidates/${data?.id}`}
+                        state={data}
+                        className="bg-violet-500 text-white p-2 py-1"
+                      >
+                        View Credentials
+                      </Link>
+                    </td>
+                    <td className="text-left py-3 px-4">
+                      <select
+                        onChange={(e) => {
+                          console.log(e.target.value);
+                          const selectedOption = e.target.value;
+                          if (selectedOption === "send_back") {
+                            window.open(`mailto:${data?.user?.email}`);
+                          } else {
+                            dispatch(
+                              editCandidateData(data?.id, {
+                                nomination_status: e.target.value,
+                              })
+                            ).then(() => {
+                              console.log("edited");
+                            });
+                          }
+                        }}
+                        className="px-2 py-1 bg-gray-300"
+                      >
+                        <option
+                          value="pending"
+                          selected={
+                            data?.nomination_status === "pending" ? true : false
+                          }
                         >
-                          View
-                        </a>
-                      </td>
-                      <td className="text-left py-3 px-4">
-                        <a
-                          className="bg-violet-500 text-white p-2 py-1"
-                          href={`https://swc.iitg.ac.in/elections_api/sgc/candidate_pdf/${data?.id}/`}
-                          target="_blank"
-                          rel="noreferrer"
+                          Pending
+                        </option>
+                        <option
+                          value="approved"
+                          selected={
+                            data?.nomination_status === "approved"
+                              ? true
+                              : false
+                          }
                         >
-                          View Form
-                        </a>
-                      </td>
-                      <td className="text-left py-3 px-4">
-                        <Link
-                          to={`/admin/candidates/${data?.id}`}
-                          state={data}
-                          className="bg-violet-500 text-white p-2 py-1"
+                          Approve
+                        </option>
+                        <option
+                          value="rejected"
+                          selected={
+                            data?.nomination_status === "rejected"
+                              ? true
+                              : false
+                          }
                         >
-                          View Credentials
-                        </Link>
-                      </td>
-                      <td className="text-left py-3 px-4">
-                        <select
-                          onChange={(e) => {
-                            console.log(e.target.value);
-                            const selectedOption = e.target.value;
-                            if (selectedOption === "send_back") {
-                              window.open(`mailto:${data?.user?.email}`);
-                            } else {
-                              dispatch(
-                                editCandidateData(data?.id, {
-                                  nomination_status: e.target.value,
-                                })
-                              ).then(() => {
-                                console.log("edited");
-                              });
-                            }
-                          }}
-                          className="px-2 py-1 bg-gray-300"
-                        >
-                          <option
-                            value="pending"
-                            selected={
-                              data?.nomination_status === "pending"
-                                ? true
-                                : false
-                            }
-                          >
-                            Pending
-                          </option>
-                          <option
-                            value="approved"
-                            selected={
-                              data?.nomination_status === "approved"
-                                ? true
-                                : false
-                            }
-                          >
-                            Approve
-                          </option>
-                          <option
-                            value="rejected"
-                            selected={
-                              data?.nomination_status === "rejected"
-                                ? true
-                                : false
-                            }
-                          >
-                            Reject
-                          </option>
-                          <option value="send_back" selected={false}>
-                            Send Back
-                          </option>
-                        </select>
-                      </td>
-                    </tr>
-                  );
-                })}
+                          Reject
+                        </option>
+                        <option value="send_back" selected={false}>
+                          Send Back
+                        </option>
+                      </select>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
           {searchQuery === "" && (
