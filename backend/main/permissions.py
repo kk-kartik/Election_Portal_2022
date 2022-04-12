@@ -188,9 +188,8 @@ class OnlyOrganizerUpdate(permissions.BasePermission):
         
         if view.action in ["update","destroy"]:
             try:
-                is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
-                if is_organizer:
-                    return True
+                is_organizer = request.user.is_staff
+                return is_organizer
             except Exception as err:
                 return False
         
