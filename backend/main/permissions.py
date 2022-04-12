@@ -183,6 +183,7 @@ class OnlyOrganizerUpdate(permissions.BasePermission):
     message = "Invalid Access deadline to update specified details is now over"
 
     def has_permission(self,request,view):
+        print(view.action)
         if view.action=="create":
             return False
         
