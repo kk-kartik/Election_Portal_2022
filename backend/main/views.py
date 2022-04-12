@@ -202,6 +202,9 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
         
         if self.action =="list":
             try:
+                user = self.request.user
+                election = self.election
+                euser = user.euser
                 is_organizer = user.is_staff
             except Exception as err:
                 is_organizer=False
@@ -210,10 +213,10 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
                 return CandidateReadSerializer
 
         if self.action =="retrieve":     
-            user = self.request.user
-            election = self.election
-            euser = user.euser
             try:
+                user = self.request.user
+                election = self.election
+                euser = user.euser
                 candidates = election.candidates_e.filter(user=euser)
                 is_candidate = candidates.filter(pk=obj.id).exists()
             except Exception as err:
