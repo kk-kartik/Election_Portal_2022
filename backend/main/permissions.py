@@ -179,3 +179,19 @@ class CandidateDeadlinePermissions(permissions.BasePermission):
         
 
 
+class OnlyOrganizerUpdate(permissions.BasePermission):
+    message = "Invalid Access deadline to update specified details is now over"
+
+    def has_permission(self,request,view):
+        if view.action=="create":
+            return False
+        
+        if view.action in ["update","destroy"]:
+            try:
+                is_organizer = Voter.objects.filter(election_organizers__id=election.id,user__id=user.euser.id).exists()
+                if is_organizer:
+                    return True
+            except Exception as err:
+                return False
+        
+        return True

@@ -4,7 +4,7 @@ from .serializers import *
 from .models import *
 from rest_framework.response import Response
 from rest_framework import status,mixins,generics,viewsets,permissions
-from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions
+from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions,OnlyOrganizerUpdate
 from dj_rest_auth.jwt_auth import JWTAuthentication
 from .mixins import ElectionMixin
 from authentication.default_authentication_classes import default_authentication_classes
@@ -122,13 +122,21 @@ def create_pdf(request, name_slug, template_src, instance):
 
 
 class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
-    serializer_class=CandidateBriefSerializer
+    serializer_class=CandidateDetailSerializer
     permission_classes=[permissions.AllowAny]
     authentication_classes =default_authentication_classes
     
     def get_queryset(self):
-        position = Position.objects.filter(id=self.kwargs.get("position_id"))
-        return Candidate.objects.filter(election=self.election,nomination_status="approved")
+        position = get_object_or_404(Position,pk=self.kwargs.get("position_id"))
+        return self.election.candidates_e.filter(position__id=position.id).exclude(
+                    Q(cpi=None)|
+                    Q(user__roll_number=None)|
+                    Q(user__email=None)|
+                    Q(backlogs=None)|
+                    Q(active_backlogs=None)|
+                    Q(semester=None)|
+                    Q(contact_no=None)
+                )
 
 class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
     permission_classes = [permissions.IsAuthenticated,CandidateDeadlinePermissions]
@@ -174,45 +182,43 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions]
-    serializer_class = CandidateSerializer
+    permission_classes = [permissions.IsAuthenticated,OnlyOrganizerUpdate]
     authentication_classes=default_authentication_classes
     
-    def get_serializer_class(self):
-        if self.action in ["create",'update']:
-            try:
-                is_organizer = self.election.organizers.filter(user__id=self.request.user.euser.id).exists()
-            except:
-                is_organizer=False
-            if is_organizer:
-                return CandidateOrganizerSerializer
-            return CandidateSerializer
-        return CandidateReadSerializer
-    
     def get_queryset(self):
-        try:
-            is_organizer = self.election.organizers.filter(user__id=self.request.user.euser.id).exists()
-        except Exception as err:
-            print(err)
-            is_organizer=False
-
-        print(list(self.election.candidates_e.all())[0])
-        print(is_organizer)
-        # print(self.)
-        # create_pdf('for_pdf.html', list(self.election.candidates_e.all())[0])
-        
         candidates = self.election.candidates_e.all()
-        if is_organizer:
-            return candidates.exclude(
-                        Q(cpi=None)|
-                        Q(user__roll_number=None)|
-                        Q(user__email=None)|
-                        Q(backlogs=None)|
-                        Q(active_backlogs=None)|
-                        Q(semester=None)|
-                        Q(contact_no=None)
-                    )
-        return candidates
+        return candidates.exclude(
+                    Q(cpi=None)|
+                    Q(user__roll_number=None)|
+                    Q(user__email=None)|
+                    Q(backlogs=None)|
+                    Q(active_backlogs=None)|
+                    Q(semester=None)|
+                    Q(contact_no=None)
+                )
+    def get_serializer_class(self):
+        if self.action in ["create","destroy","update"]:
+            return CandidateSerializer
+
+        if self.action =="retrieve":     
+            user = self.request.user
+            election = self.election
+            euser = user.euser
+            try:
+                candidates = election.candidates_e.filter(user=euser)
+                is_candidate = candidates.filter(pk=obj.id).exists()
+            except Exception as err:
+                is_candidate=False
+            
+            try:
+                is_organizer = user.is_staff
+            except Exception as err:
+                is_organizer=False
+            
+            if is_candidate or is_organizer:
+                return CandidateReadSerializer
+
+        return CandidateBriefSerializer
     
     def perform_create(self,serializer):
         return serializer.save(election=self.election,user=self.request.user.euser)
