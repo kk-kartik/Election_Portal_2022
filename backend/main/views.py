@@ -199,6 +199,15 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["create","destroy","update"]:
             return CandidateSerializer
+        
+        if self.action =="list":
+            try:
+                is_organizer = user.is_staff
+            except Exception as err:
+                is_organizer=False
+            
+            if is_organizer:
+                return CandidateReadSerializer
 
         if self.action =="retrieve":     
             user = self.request.user
