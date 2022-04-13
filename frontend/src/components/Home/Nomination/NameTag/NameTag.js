@@ -7,12 +7,12 @@ const NameTag = () => {
 
   return (
     <>
-      <div className="mr-10 mt-6">
-        <div className="flex justify-between items-center">
+      <div className="mr-0 mt-6">
+        <div className="flex justify-between items-center flex-col mb-4">
           <div className="text-gray-400 font-semibold text-lg pb-8">
             Contesting for Vice President
           </div>
-          <div className="flex space-x-2  hidden sm:block">
+          <div className="flex space-x-2 ">
           {isOpen && (
           <ShareModal setIsOpen={setIsOpen} url={window.location.href} />
         )}
@@ -29,7 +29,7 @@ const NameTag = () => {
         </div>
         <div className="font-bold text-5xl text-gray-800 pb-2">Albert Fores</div>
         <div className={styles.pink}>
-          B.Tech, Electronics and Communication Engineering - 2023
+          B.Tech, Electronics and Communication Engineering
         </div>
       </div>
     </>

@@ -40,7 +40,9 @@
   align-items: center;
   padding: 10px 20px;
 }  
-
+.button3:hover{
+  background: linear-gradient(180deg, #e6186e 0%, #e0307a 100%);
+}
   .input {
     padding-left: 2%;
     padding-right: 2%;

@@ -16,13 +16,13 @@ const ProfileCard = () => {
               <div>
                 <div className="pb-1 text-xl"> ALbert Flores</div>
                 <div className="text-lg">B.Tech, Electronics and Communications</div>
-                <div className="text-lg"> IIT Guwahati, 2023 </div>
+                <div className="text-lg"> IIT Guwahati </div>
               </div>
           </div>
           <div className="bg-gray-100 p-4">
             <p className="italic text-xl text-gray-600">“Teamwork Divides the Task and Multiplies Success”</p>
           </div>
-        <div className="flex space-x-2  hidden sm:block py-6">
+        <div className="flex space-x-2 py-6">
         {isOpen && (
           <ShareModal setIsOpen={setIsOpen} url={window.location.href} />
         )}
