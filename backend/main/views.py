@@ -135,7 +135,8 @@ class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
                     Q(backlogs=None)|
                     Q(active_backlogs=None)|
                     Q(semester=None)|
-                    Q(contact_no=None)
+                    Q(contact_no=None)|
+                    Q(nomination_status="rejected")
                 )
 
 class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
@@ -194,7 +195,8 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
                     Q(backlogs=None)|
                     Q(active_backlogs=None)|
                     Q(semester=None)|
-                    Q(contact_no=None)
+                    Q(contact_no=None)|
+                    Q(nomination_status="rejected")
                 )
     def get_serializer_class(self):
         if self.action in ["create","destroy","update"]:
@@ -370,7 +372,8 @@ class DownloadNominations(ElectionMixin,generics.GenericAPIView):
             Q(backlogs=None)|
             Q(active_backlogs=None)|
             Q(semester=None)|
-            Q(contact_no=None)
+            Q(contact_no=None)|
+             Q(nomination_status="rejected")
         )
 
         response = HttpResponse(content_type='text/csv')  
