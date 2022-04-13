@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import AboutScreen from "./AboutScreen";
 import Footer from "../../components/Footer/Footer";
@@ -11,6 +11,8 @@ import RulesScreen from "./RulesScreen";
 import OrganisersScreen from "./OrganisersScreen";
 import lime from "../../assets/Lime.jpg";
 import NewFooter from "../../components/Footer/NewFooter";
+import { useDispatch, useSelector } from "react-redux";
+import { getPos, getCandidateFromPosition } from "../../actions/positions";
 const Layout = () => {
   return (
     <div
@@ -21,7 +23,22 @@ const Layout = () => {
     </div>
   );
 };
+
+const position_ids = [1,2,3,4,5,6,7,8,9,10,12]
 const PreElectionScreen = () => {
+  const positions = useSelector((store) => store.positions);
+  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    position_ids.forEach((pos)=>{dispatch(getCandidateFromPosition(pos))});
+  }, []);
+  // console.log("--positions--");
+  // console.log(positions);
+  
+  let all_positions = {};
+  positions.forEach((pos)=>{all_positions[`${pos.id}`] = pos.data});
+  // console.log("all-positions");
+  // console.log(all_positions);
   return (
     <>
       <div
@@ -51,32 +68,7 @@ const PreElectionScreen = () => {
                         {
                           title: "",
                           path: "vicepresident",
-                          persons: [
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 1,
-                            },
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 1,
-                            },
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 1,
-                            },
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 1,
-                            },
-                          ],
+                          persons: all_positions['1'],
                         },
                       ],
                     },
@@ -86,55 +78,59 @@ const PreElectionScreen = () => {
                         {
                           title: "Sports",
                           path: "sports",
-                          persons: [
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 1,
-                            },
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 2,
-                            },
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 3,
-                            },
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 4,
-                            },
-                            {
-                              image: lime,
-                              name: "Samantha Grace",
-                              motto: "Keep sleeping",
-                              uniqueid: 4,
-                            },
-                          ],
+                          persons: all_positions['6'],
                         },
+                        {
+                          title: "Welfare",
+                          path: "welfare",
+                          persons: all_positions['3'],
+                        },
+                        {
+                          title: "HAB",
+                          path: "hab",
+                          persons: all_positions['2'],
+                        },
+                        {
+                          title: "Sail",
+                          path: "sail",
+                          persons: all_positions['7'],
+                        },
+                        {
+                          title: "SWC",
+                          path: "swc",
+                          persons: all_positions['4'],
+                        },
+                        {
+                          title: "Cultural",
+                          path: "cultural",
+                          persons: all_positions['9'],
+                        },
+                      ],
+                    },
+                    {
+                      title: "Senator",
+                      subposts: [
+                        {
+                          title: "UG Senator",
+                          path: "ug",
+                          persons: all_positions['8'],
+                        },
+                        {
+                          title: "PG Senator",
+                          path: "pg",
+                          persons: all_positions['10'],
+                        },
+                        {
+                          title: "Girl Senator",
+                          path: "girl",
+                          persons: all_positions['12'],
+                        },
+        
                       ],
                     },
                   ]}
                   faq={[
-                    {
-                      question: "How is life?",
-                      answer: "Very bad",
-                    },
-                    {
-                      question: "How is health?",
-                      answer: "Very bad",
-                    },
-                    {
-                      question: "How is college?",
-                      answer: "Closed ",
-                    },
+                    
                   ]}
                 />
               }

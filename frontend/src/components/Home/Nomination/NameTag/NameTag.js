@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { AgendaSVG } from "./AgendaSVG";
 import ShareModal from "../ShareModal/ShareModal";
 import styles from "../../../../screens/CandidatePositionForm/CandidatePositionForm.module.css"
-const NameTag = () => {
+const NameTag = (props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -10,7 +10,7 @@ const NameTag = () => {
       <div className="mr-10 mt-6">
         <div className="flex justify-between items-center">
           <div className="text-gray-400 font-semibold text-lg pb-8">
-            Contesting for Vice President
+            Contesting for {props.position}
           </div>
           <div className="flex space-x-2  hidden sm:block">
           {isOpen && (
@@ -27,9 +27,9 @@ const NameTag = () => {
             </button>
           </div>
         </div>
-        <div className="font-bold text-5xl text-gray-800 pb-2">Albert Fores</div>
+        <div className="font-bold text-5xl text-gray-800 pb-2">{props.name}</div>
         <div className={styles.pink}>
-          B.Tech, Electronics and Communication Engineering - 2023
+          {props.degree}, {props.branch} 
         </div>
       </div>
     </>
