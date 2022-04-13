@@ -81,4 +81,4 @@ class CandidateDetailSerializer(serializers.ModelSerializer):
     branch = serializers.CharField(source="user.get_branch_display")
     class Meta:
         model = Candidate
-        fields = ["about","id","video","tagline","name","position","branch"]
+        fields = ["about","id","video","tagline","name","position","branch","agenda_text","image"]
