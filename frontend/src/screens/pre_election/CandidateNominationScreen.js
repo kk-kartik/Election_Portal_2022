@@ -8,7 +8,7 @@ import svg from "../../components/Nominate/AgendaList/style.svg"
 import svg2 from "../../components/Nominate/AgendaList/style2.svg"
 import styles from "../Register/RegisterScreen.module.css"
 import {getCandidateByID} from "../../api/index";
-import parse from "html-react-parser";
+
 const CandidateNominationScreen = () => {
 
   const [loaded, setLoaded] = useState(null);
@@ -16,15 +16,13 @@ const CandidateNominationScreen = () => {
   //    data = await getCandidateByID(id);
   //    return data
   // }
-
+  let id = window.location.href.match('candidate\/([0-9]+)')[1];
   let tr = <div>
     Loading</div>;
   if(loaded == null){
-    getCandidateByID("80").then((data)=>{console.log("---data---"); setLoaded(data.data); console.log(data.data)});
+    getCandidateByID(id).then((data)=>{console.log("---data---"); setLoaded(data.data); console.log(data.data)});
     return tr;
   }
-  const agenda = ['Setting up Career Counselling Cell (opportunities in non-tech, UPSC, CAT, GRE, MS, PhD and Post-Doc in foreign Universities\) options available for change of field.', 'Setting up Students Committee for CIF and common labs to organize Workshops quarterly for learning instruments in CIF and common labs.'];
-
   const getEmbedID = (value) => {
     var regEx =
       "^(?:https?:)?//[^/]*(?:youtube(?:-nocookie)?.com|youtu.be).*[=/]([-\\w]{11})(?:\\?|=|&|$)";
@@ -35,7 +33,7 @@ const CandidateNominationScreen = () => {
     <div className="m-2">
       <br />
       <div className="md:pl-16 pl-4">
-        <BreadCrumbs name={loaded.name} />
+        <BreadCrumbs name={loaded.name} position={loaded.position}/>
       </div>
       <div className="ml-auto mr-auto w-full md:w-1/2 ">
         <div className="p-4 pt-16 flex items-end">
@@ -46,12 +44,12 @@ const CandidateNominationScreen = () => {
           </div>
         </div>
         <div className="py-8">
-          <NameTag name = {loaded.name} branch={loaded.branch} />
+          <NameTag name = {loaded.name} branch={loaded.branch} position={loaded.position}/>
         </div>
-        {/* <AgendaList agenda={parse(loaded.agenda_text)} about={loaded.about}/> */}
+        <AgendaList agenda={loaded.agenda_text} about={loaded.about}/>
         <br />
         <br />
-        <ProfileCard />
+        <ProfileCard name = {loaded.name} branch={loaded.branch} tagline={loaded.tagline} image={loaded.image}/>
       </div>
     </div>
   );

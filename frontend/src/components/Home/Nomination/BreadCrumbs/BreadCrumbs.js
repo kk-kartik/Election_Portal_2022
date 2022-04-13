@@ -6,7 +6,7 @@ const BreadCrumbs = (props) => {
     <>
       <Breadcrumbs>
         <Breadcrumbs.Item href="/election_portal" className={styles.item}>Gymkhana Elections 2021</Breadcrumbs.Item>
-        <Breadcrumbs.Item href="/election_portal/candidate" className={styles.item}>Vice President</Breadcrumbs.Item>
+        <Breadcrumbs.Item href="/election_portal/candidate" className={styles.item}>{props.position}</Breadcrumbs.Item>
         <Breadcrumbs.Item href="/election_portal/candidate/*" className={styles.selected_item} selected>
           {props.name}
         </Breadcrumbs.Item>
