@@ -11,8 +11,15 @@ import { SET_CANDIDATE_DATA } from "../../constants";
 import useNominate from "../../hooks/useNominate";
 import styles from "../Register/RegisterScreen.module.css";
 import SaveAndNext from "./SaveAndNext";
+
+const deadline = 1649734200000;
+// const deadline = 1649549824000;
+const checkDeadline = () => {
+  return new Date(Date.now()).getTime() >= deadline;
+};
+
 const CredentialsScreen = () => {
-  const {
+  let {
     candidate,
     error,
     message,
@@ -24,6 +31,7 @@ const CredentialsScreen = () => {
     isDeadlineOver,
     isFormClosed,
   } = useNominate();
+  isFormClosed = isFormClosed || checkDeadline();
 
   const [credentials, setCredentials] = useState([]);
 

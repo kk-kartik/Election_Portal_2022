@@ -78,6 +78,7 @@ const Agenda = (props) => {
                     className={`${styles.button} mt-2 mr-2`}
                     onClick={() => {
                       props.setTitle(props.title);
+                      props.setIsOld(true);
                       props.setIsOpen(true);
                     }}
                   >

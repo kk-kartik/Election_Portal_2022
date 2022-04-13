@@ -4,7 +4,7 @@ from .serializers import *
 from .models import *
 from rest_framework.response import Response
 from rest_framework import status,mixins,generics,viewsets,permissions
-from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions,OnlyOrganizerUpdate
+from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions,OnlyOrganizerUpdate,OnlyOrganizerOrCandidateUpdate
 from dj_rest_auth.jwt_auth import JWTAuthentication
 from .mixins import ElectionMixin
 from authentication.default_authentication_classes import default_authentication_classes
@@ -187,7 +187,7 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,OnlyOrganizerUpdate]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,OnlyOrganizerOrCandidateUpdate]
     authentication_classes=default_authentication_classes
     
     def get_queryset(self):
@@ -202,6 +202,7 @@ class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
                     Q(contact_no=None)|
                     Q(nomination_status="rejected")
                 )
+                
     def get_serializer_class(self):
         if self.action in ["create","destroy","update"]:
             return CandidateSerializer

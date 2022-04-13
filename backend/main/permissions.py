@@ -195,3 +195,32 @@ class OnlyOrganizerUpdate(permissions.BasePermission):
                 return False
         
         return True
+
+
+class OnlyOrganizerOrCandidateUpdate(permissions.BasePermission):
+    message = "Access denied"
+
+    def has_permission(self,request,view):
+        if view.action=="create":
+            return False
+        
+        if view.action in ["update","destroy"]:
+            user = request.user
+            election = view.election
+
+            try:
+                is_organizer = request.user.is_staff
+            except Exception as err:
+                is_organizer = False
+            
+            try:
+                euser = user.euser
+                candidates = Candidate.objects.filter(election=election,user=euser)
+                is_candidate = candidates.filter(pk=obj.id).exists()
+            except Exception as err:
+                is_candidate = False
+            
+            return is_organizer or is_organizer
+
+        return True
+
