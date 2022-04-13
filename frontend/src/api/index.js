@@ -55,6 +55,7 @@ export const updateCandidateData = (id, data) =>
   API.patch(`/candidates/${id}/`, data);
 export const getCandidateData = () => API.get(`/candidates/`);
 export const getCandidateByPosition = (id) => API.get(`/${id}/candidates`);
+export const getCandidateByID = (id) => API.get(`/candidates/${id}/`);
 
 //credentials
 export const uploadCredentials = (data) =>

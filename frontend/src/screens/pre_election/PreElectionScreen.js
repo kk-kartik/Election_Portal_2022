@@ -32,13 +32,13 @@ const PreElectionScreen = () => {
   useEffect(() => {
     position_ids.forEach((pos)=>{dispatch(getCandidateFromPosition(pos))});
   }, []);
-  console.log("--positions--");
-  console.log(positions);
+  // console.log("--positions--");
+  // console.log(positions);
   
   let all_positions = {};
   positions.forEach((pos)=>{all_positions[`${pos.id}`] = pos.data});
-  console.log("all-positions");
-  console.log(all_positions);
+  // console.log("all-positions");
+  // console.log(all_positions);
   return (
     <>
       <div

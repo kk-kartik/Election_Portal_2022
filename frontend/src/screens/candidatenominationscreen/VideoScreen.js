@@ -8,6 +8,7 @@ import useNominate from "../../hooks/useNominate";
 import styles from "../Register/RegisterScreen.module.css";
 import SaveAndNext from "./SaveAndNext";
 import YoutubeEmbed from "../../components/Home/Nomination/Video/YoutubeEmbed";
+
 const VideoScreen = () => {
   const {
     error,

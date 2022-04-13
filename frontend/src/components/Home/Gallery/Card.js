@@ -8,8 +8,10 @@ const Card = (props) => {
       props.person.image +
       ")"
   };
+  // console.log("yashiii");
+  // console.log(props);
   return (
-    <div className="front shadow-lg" style={config}>
+    <div onClick={()=>{document.location = `/election_portal/candidate/${props.person.id}`}} className="front shadow-lg" style={config}>
       <a href={props.person.id}>
         <div className="title">{props.person.name}</div>
       </a>
