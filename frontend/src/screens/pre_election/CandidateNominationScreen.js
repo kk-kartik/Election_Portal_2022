@@ -44,12 +44,12 @@ const CandidateNominationScreen = () => {
           </div>
         </div>
         <div className="py-8">
-          <NameTag name = {loaded.name} branch={loaded.branch} position={loaded.position}/>
+          <NameTag name = {loaded.name} branch={loaded.branch} position={loaded.position} degree={loaded.degree}/>
         </div>
         <AgendaList agenda={loaded.agenda_text} about={loaded.about}/>
         <br />
         <br />
-        <ProfileCard name = {loaded.name} branch={loaded.branch} tagline={loaded.tagline} image={loaded.image}/>
+        <ProfileCard name = {loaded.name} branch={loaded.branch} tagline={loaded.tagline} image={loaded.image} degree={loaded.degree}/>
       </div>
     </div>
   );

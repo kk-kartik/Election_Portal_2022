@@ -29,7 +29,7 @@ const NameTag = (props) => {
         </div>
         <div className="font-bold text-5xl text-gray-800 pb-2">{props.name}</div>
         <div className={styles.pink}>
-          B.Tech, Electronics and Communication Engineering - 2023
+          {props.degree}, {props.branch} 
         </div>
       </div>
     </>

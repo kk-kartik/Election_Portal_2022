@@ -15,8 +15,8 @@ const ProfileCard = (props) => {
               </div>
               <div>
                 <div className="pb-1 text-xl"> {props.name}</div>
-                <div className="text-lg">B.Tech, {props.branch}</div>
-                <div className="text-lg"> IIT Guwahati, 2023 </div>
+                <div className="text-lg">{props.degree}, {props.branch}</div>
+                <div className="text-lg"> IIT Guwahati </div>
               </div>
           </div>
           <div className="bg-gray-100 p-4">
