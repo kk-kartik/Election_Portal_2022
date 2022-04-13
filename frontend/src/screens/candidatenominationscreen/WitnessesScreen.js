@@ -34,9 +34,14 @@ export const witnessSchema = yup.object().shape({
     .matches(/^[0-9]+$/, "Must be only digits")
     .min(6, "Phone no should have atleast 6 digits"),
 });
+const deadline = 1649734200000;
+// const deadline = 1649549824000;
+const checkDeadline = () => {
+  return new Date(Date.now()).getTime() >= deadline;
+};
 
 const WitnessesScreen = () => {
-  const {
+  let {
     candidate,
     error,
     message,
@@ -48,6 +53,8 @@ const WitnessesScreen = () => {
     isFormClosed,
     isDeadlineOver,
   } = useNominate();
+
+  isFormClosed = isFormClosed || checkDeadline();
 
   const [proposedByData, setProposedyData] = useState(null);
   const [secondedByData, setSecondedByData] = useState(null);

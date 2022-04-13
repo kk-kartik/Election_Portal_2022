@@ -23,7 +23,7 @@ import { set } from "react-hook-form";
 const deadline = 1649734200000;
 // const deadline = 1649549824000;
 const checkDeadline = () => {
-  return false;
+  return new Date(Date.now()).getTime() >= deadline;
 };
 
 export const candidateSchema = yup.object().shape({

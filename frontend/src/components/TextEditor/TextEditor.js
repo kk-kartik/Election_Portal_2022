@@ -84,6 +84,11 @@ const TextEditor = (props) => {
                 onChange={(e) => props.setTitle(e.target.value)}
                 disabled={props.isOld}
               />
+              {props.isOld && (
+                <p clasName="text-sm text-blue-500">
+                  Agenda title is not editable
+                </p>
+              )}
             </div>
             <div className={` ${styles.editor} p-2`}>
               <Editor
