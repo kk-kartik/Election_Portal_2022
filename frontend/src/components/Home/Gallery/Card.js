@@ -12,7 +12,7 @@ const Card = (props) => {
   // console.log(props);
   return (
     <div onClick={()=>{document.location = `/election_portal/candidate/${props.person.id}`}} className="front shadow-lg" style={config}>
-      <a href={props.person.id}>
+      <a href={`candidate/${props.person.id}`}>
         <div className="title">{props.person.name}</div>
       </a>
       <div className="title smallTitle">{props.person.tagline}</div>

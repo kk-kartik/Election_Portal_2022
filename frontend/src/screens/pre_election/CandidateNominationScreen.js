@@ -8,6 +8,7 @@ import svg from "../../components/Nominate/AgendaList/style.svg"
 import svg2 from "../../components/Nominate/AgendaList/style2.svg"
 import styles from "../Register/RegisterScreen.module.css"
 import {getCandidateByID} from "../../api/index";
+import branch_code from "../../constants/branch"
 
 const CandidateNominationScreen = () => {
 
@@ -29,6 +30,10 @@ const CandidateNominationScreen = () => {
     var matches = value.match(regEx);
     return matches[1]; 
   };
+  let branch = loaded.branch;
+  if(branch_code[branch]){
+    branch=branch_code[branch];
+  }
   return (
     <div className="m-2">
       <br />
@@ -44,12 +49,12 @@ const CandidateNominationScreen = () => {
           </div>
         </div>
         <div className="py-8">
-          <NameTag name = {loaded.name} branch={loaded.branch} position={loaded.position} degree={loaded.degree}/>
+          <NameTag name = {loaded.name} branch={branch} position={loaded.position} degree={loaded.degree}/>
         </div>
         <AgendaList agenda={loaded.agenda_text} about={loaded.about}/>
         <br />
         <br />
-        <ProfileCard name = {loaded.name} branch={loaded.branch} tagline={loaded.tagline} image={loaded.image} degree={loaded.degree}/>
+        <ProfileCard name = {loaded.name} branch={branch} tagline={loaded.tagline} image={loaded.image} degree={loaded.degree}/>
       </div>
     </div>
   );
