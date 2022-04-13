@@ -136,7 +136,11 @@ class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
                     Q(active_backlogs=None)|
                     Q(semester=None)|
                     Q(contact_no=None)|
-                    Q(nomination_status="rejected")
+                    Q(nomination_status="rejected")|
+                    Q(video=None)|
+                    Q(image=None)|
+                    Q(agenda_text=None)|
+                    Q(user__name=None)
                 )
 
 class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
@@ -373,7 +377,7 @@ class DownloadNominations(ElectionMixin,generics.GenericAPIView):
             Q(active_backlogs=None)|
             Q(semester=None)|
             Q(contact_no=None)|
-             Q(nomination_status="rejected")
+            Q(nomination_status="rejected")
         )
 
         response = HttpResponse(content_type='text/csv')  
