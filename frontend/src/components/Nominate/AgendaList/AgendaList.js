@@ -19,6 +19,7 @@ const AgendaList = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState(null);
+  const [isOld, setIsOld] = useState(false);
 
   return (
     <div className="">
@@ -32,6 +33,7 @@ const AgendaList = () => {
             updateNomination={updateNomination}
             candidate={candidate}
             isFormClosed={isFormClosed}
+            setIsOld={setIsOld}
           />
         ))}
       {!candidate ||
@@ -47,6 +49,8 @@ const AgendaList = () => {
           updateNomination={updateNomination}
           candidate={candidate}
           title={title}
+          isOld={isOld}
+          setIsOld={setIsOld}
         />
       )}
       {/* <textarea value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}></textarea> */}
