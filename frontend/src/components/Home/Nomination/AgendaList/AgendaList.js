@@ -1,12 +1,14 @@
 import React from "react";
 import parse from "html-react-parser";
 import styles from "./AgendaList.module.css"
+import FAQCard from "../../FAQ/FAQCard";
 const Agenda = (p) => {
   return (
     <div className="p-2">
-      <div className="font-semibold text-lg">{p.title}</div>
+      {/* <div className="font-semibold text-lg">{p.title}</div> */}
       <div className="p-2 leading-8 text-justify">
-        <ol className={`list-decimal text-gray-600 text-lg leading-8 ${styles.list}`}>{parse(p.agenda)}</ol>
+        <FAQCard question={p.title} answer={parse(p.agenda)}/>
+        {/* <ol className={`list-decimal text-gray-600 text-lg leading-8 ${styles.list}`}></ol> */}
       </div>
     </div>
   );
