@@ -69,11 +69,12 @@ class FaqSerializer(serializers.ModelSerializer):
 
 class CandidateBriefSerializer(serializers.ModelSerializer):
     branch = serializers.CharField(source="user.get_branch_display")
+    degree = serializers.CharField(source="user.get_degree_display")
     position = serializers.CharField(source="position.title")
     name=serializers.CharField(source="user.name")
     class Meta:
         model = Candidate
-        fields=["id","video","image","about","agenda_text","agenda_pdf","position","branch","name","nomination_status","tagline"]
+        fields=["id","video","image","about","agenda_text","agenda_pdf","position","branch","name","nomination_status","tagline","semester","degree"]
 
 class CandidateDetailSerializer(serializers.ModelSerializer):
     position = serializers.CharField(source="position.title")
