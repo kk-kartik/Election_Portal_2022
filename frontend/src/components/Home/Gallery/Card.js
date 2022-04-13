@@ -10,10 +10,10 @@ const Card = (props) => {
   };
   return (
     <div className="front shadow-lg" style={config}>
-      <a href={props.person.uniqueid}>
+      <a href={props.person.id}>
         <div className="title">{props.person.name}</div>
       </a>
-      <div className="title smallTitle">{props.person.motto}</div>
+      <div className="title smallTitle">{props.person.tagline}</div>
     </div>
   );
 };
