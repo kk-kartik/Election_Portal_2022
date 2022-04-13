@@ -1,9 +1,16 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { AgendaSVG } from "./AgendaSVG";
 import ShareModal from "../ShareModal/ShareModal";
-import styles from "../../../../screens/CandidatePositionForm/CandidatePositionForm.module.css"
+import styles from "../../../../screens/CandidatePositionForm/CandidatePositionForm.module.css";
 const NameTag = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  let capital_name = props.name;
+  let arr = capital_name.split(" ");
+  arr.forEach((e, index, theArray) => {
+    theArray[index] = e.charAt(0) + e.slice(1).toLowerCase();
+  });
+
+  capital_name = arr.join(" ");
 
   return (
     <>
@@ -13,9 +20,9 @@ const NameTag = (props) => {
             Contesting for {props.position}
           </div>
           <div className="flex space-x-2  hidden sm:block">
-          {isOpen && (
-          <ShareModal setIsOpen={setIsOpen} url={window.location.href} />
-        )}
+            {isOpen && (
+              <ShareModal setIsOpen={setIsOpen} url={window.location.href} />
+            )}
             <button className={styles.button} onClick={() => setIsOpen(true)}>
               Share this profile
             </button>
@@ -27,9 +34,11 @@ const NameTag = (props) => {
             </button>
           </div>
         </div>
-        <div className="font-bold text-5xl text-gray-800 pb-2">{props.name}</div>
+        <div className="font-bold text-5xl text-gray-800 pb-2">
+          {capital_name}
+        </div>
         <div className={styles.pink}>
-          {props.degree}, {props.branch} 
+          {props.degree}, {props.branch}
         </div>
       </div>
     </>
