@@ -8,20 +8,23 @@ import svg from "../../components/Nominate/AgendaList/style.svg"
 import svg2 from "../../components/Nominate/AgendaList/style2.svg"
 import styles from "../Register/RegisterScreen.module.css"
 import {getCandidateByID} from "../../api/index";
-import branch_code from "../../constants/branch"
+import branch_code from "../../constants/branch";
+import { useParams } from "react-router-dom";
 
 
 const CandidateNominationScreen = () => {
   const [loaded, setLoaded] = useState(null);
+  const {id} = useParams();
   // const getData = async (id) => {
   //    data = await getCandidateByID(id);
   //    return data
   // }
-  let id = window.location.href.match("candidate/([0-9]+)")[1];
+  //let id = window.location.href.match("candidate/([0-9]+)")[1];
+
   let tr = <div>Loading</div>;
   if (loaded == null) {
     getCandidateByID(id).then((data) => {
-      console.log("---data---");
+      console.log("---data---",data.data);
       setLoaded(data.data);
       console.log(data.data);
     });
