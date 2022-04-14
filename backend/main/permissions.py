@@ -220,7 +220,7 @@ class OnlyOrganizerOrCandidateUpdate(permissions.BasePermission):
             except Exception as err:
                 is_candidate = False
             
-            return is_organizer or is_organizer
+            return is_organizer or is_candidate
 
         return True
 

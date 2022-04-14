@@ -384,7 +384,7 @@ class DownloadNominations(ElectionMixin,generics.GenericAPIView):
         response = HttpResponse(content_type='text/csv')  
         response['Content-Disposition'] = 'attachment; filename="nominations.csv"'  
         writer = csv.writer(response)
-        writer.writerow(["Sr.No","Position","Name","Email","Roll no","Degree","Cpi","Backlogs","Active Backlogs","Credentials","Nomintaion Complete"])
+        writer.writerow(["Sr.No","Position","Name","Email","Roll no","Degree","Cpi","Backlogs","Active Backlogs","Credentials","Hostel"])
         for i,candidate in enumerate(candidates.all()):
             # if "Grade Card" not in candidate.credentials.keys() :
             #     continue
@@ -411,7 +411,7 @@ class DownloadNominations(ElectionMixin,generics.GenericAPIView):
                 candidate.backlogs,
                 candidate.active_backlogs,
                 candidate.credentials,
-                candidate.nomination_complete
+                candidate.user.hostel
             ])
             
         return response  
