@@ -9,7 +9,7 @@ import svg2 from "../../components/Nominate/AgendaList/style2.svg";
 import styles from "../Register/RegisterScreen.module.css";
 import { getCandidateByID } from "../../api/index";
 import branch_code from "../../constants/branch";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import MoreCandidates from "../../components/Home/Nomination/MoreCandidates/MoreCandidates";
 import NewFooter from "../../components/Footer/NewFooter";
 import { Helmet } from "react-helmet";
@@ -17,6 +17,7 @@ import { Helmet } from "react-helmet";
 const CandidateNominationScreen = () => {
   const [loaded, setLoaded] = useState({});
   const [branch, setBranch] = useState("");
+  const [error, setError] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -24,6 +25,9 @@ const CandidateNominationScreen = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("---data---", data);
+        if(data.detail && data.detail==="Not found."){
+          setError(true);
+        }
         setLoaded(data);
         let br = data.branch;
         if(branch_code[br]) {
@@ -43,16 +47,17 @@ const CandidateNominationScreen = () => {
   return (
     <>
       <div className="m-2">
-        {/* <Helmet>
-          <meta property="og:URL" content={loaded.image} />
-          <meta property="og:type" content="article" />
-          <meta property="og:title" content={loaded.name} />
-          <meta property="og:description" content={loaded.about} />
-          <meta property="og:image" content={loaded.image} />
-        </Helmet> */}
         <br />
+        {error && <Navigate to="/" />}
         {loaded.name ? (
           <>
+            <Helmet>
+              <meta property="og:URL" content={loaded.image} />
+              <meta property="og:type" content="article" />
+              <meta property="og:title" content={loaded.name} />
+              <meta property="og:description" content={loaded.about} />
+              <meta property="og:image" content={loaded.image} />
+            </Helmet>
             <div className="md:pl-16 pl-4">
               <BreadCrumbs name={loaded.name} position={loaded.position} />
             </div>
@@ -92,7 +97,15 @@ const CandidateNominationScreen = () => {
             </div>
           </>
         ) : (
-          <div style={{minHeight:"70vh", display:"flex",justifyContent:"center"}}>Loading</div>
+          <div
+            style={{
+              minHeight: "70vh",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            Loading...
+          </div>
         )}
       </div>
       <NewFooter></NewFooter>
