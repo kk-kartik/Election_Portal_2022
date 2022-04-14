@@ -11,8 +11,8 @@ export const getPos = () => async (dispatch) => {
 };
 export const getCandidateFromPosition = (id) => async (dispatch) => {
   try {
-      // console.log(id);
-      const { data } = await api.getCandidateByPosition(id);
+      const res = await api.getCandidateByPosition(id);
+      const data = await res.json();
       dispatch({ type: GET_CANDIDATE_FROM_POS, payload: {id: id , data: data} });
   } catch (error) {
       console.log(error.message);
