@@ -204,6 +204,10 @@ class OnlyOrganizerOrCandidateUpdate(permissions.BasePermission):
         if view.action=="create":
             return False
         
+
+        return True
+    
+    def has_object_permission(self,request,view,obj):
         if view.action in ["update","destroy"]:
             user = request.user
             election = view.election
@@ -221,6 +225,7 @@ class OnlyOrganizerOrCandidateUpdate(permissions.BasePermission):
                 is_candidate = False
             
             return is_organizer or is_candidate
-
+        
         return True
+        
 
