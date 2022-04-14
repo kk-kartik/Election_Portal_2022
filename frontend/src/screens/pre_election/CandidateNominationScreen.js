@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import BreadCrumbs from "../../components/Home/Nomination/BreadCrumbs/BreadCrumbs";
 import NameTag from "../../components/Home/Nomination/NameTag/NameTag";
 import AgendaList from "../../components/Home/Nomination/AgendaList/AgendaList";
@@ -12,14 +12,19 @@ import branch_code from "../../constants/branch";
 import { useParams } from "react-router-dom";
 import MoreCandidates from "../../components/Home/Nomination/MoreCandidates/MoreCandidates";
 import NewFooter from "../../components/Footer/NewFooter";
+import { Helmet } from "react-helmet";
+
 const CandidateNominationScreen = () => {
   const [loaded, setLoaded] = useState(null);
   const {id} = useParams();
-  // const getData = async (id) => {
-  //    data = await getCandidateByID(id);
-  //    return data
-  // }
-  //let id = window.location.href.match("candidate/([0-9]+)")[1];
+
+  useEffect(()=>{
+    getCandidateByID(id).then((data) => {
+      console.log("---data---", data.data);
+      setLoaded(data.data);
+      console.log(data.data);
+    }).catch(e=>console.log(e));
+  },[id])
 
   let tr = <div>Loading</div>;
   if (loaded == null) {
@@ -42,6 +47,13 @@ const CandidateNominationScreen = () => {
   }
   return (
     <div className="m-2">
+      <Helmet>
+        <meta property="og:URL" content={loaded.image} />
+        <meta property="og:type" content="article" />
+        <meta property="og:title" content={loaded.name} />
+        <meta property="og:description" content={loaded.about} />
+        <meta property="og:image" content={loaded.image} />
+      </Helmet>
       <br />
       <div className="md:pl-16 pl-4">
         <BreadCrumbs name={loaded.name} position={loaded.position} />
