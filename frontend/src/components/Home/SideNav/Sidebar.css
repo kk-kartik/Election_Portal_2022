@@ -20,16 +20,17 @@
     color: #414757;
     font-size: 1.15rem;
     cursor: pointer;
-    transition: all 0.4s ease-out;
+    transition: all 0.1s ease-in-out;
   }
   .dropdown-link :hover {
-    background: #b3b8c5;
-    color: #000;
+    /* background: #b3b8c5; */
+    color: rgb(43 0 255);
+    font-weight: 700;
   }
   
   .selected {
-    border-left: solid #632ce4;
+    border-left: solid rgb(43 0 255);
     border-left-width: 4px;
-    color: #632ce4;
+    color: rgb(43 0 255);
   }
   
