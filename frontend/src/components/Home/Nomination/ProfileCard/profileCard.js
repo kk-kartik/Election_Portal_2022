@@ -32,7 +32,9 @@ const ProfileCard = (props) => {
             Share this profile
           </button>
           <button className={styles2.button3}>
-            <div className="flex items-center">
+            <div className="flex items-center" onClick={() => {
+                window.open(props.agenda_pdf);
+              }}>
               Agenda
               <AgendaSVG />
             </div>

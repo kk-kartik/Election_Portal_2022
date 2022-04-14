@@ -2,12 +2,13 @@ import React from "react";
 import "./CardStyle.css";
 import { Link } from "react-router-dom";
 
-const Card = ({person}) => {
+const Card = ({ person }) => {
   const config = {
     "background-image":
       "linear-gradient(0deg,rgba(10, 10, 10, 0.8) 0%,rgba(255, 255, 255, 0) 100%), url(" +
-        person.image +
-      ")"
+      person.image +
+      ")",
+    "min-width": "10rem",
   };
 
   return (

@@ -10,8 +10,8 @@ import styles from "../Register/RegisterScreen.module.css"
 import {getCandidateByID} from "../../api/index";
 import branch_code from "../../constants/branch";
 import { useParams } from "react-router-dom";
-
-
+import MoreCandidates from "../../components/Home/Nomination/MoreCandidates/MoreCandidates";
+import NewFooter from "../../components/Footer/NewFooter";
 const CandidateNominationScreen = () => {
   const [loaded, setLoaded] = useState(null);
   const {id} = useParams();
@@ -37,8 +37,8 @@ const CandidateNominationScreen = () => {
     return matches[1];
   };
   let branch = loaded.branch;
-  if(branch_code[branch]){
-    branch=branch_code[branch];
+  if (branch_code[branch]) {
+    branch = branch_code[branch];
   }
   return (
     <div className="m-2">
@@ -56,17 +56,31 @@ const CandidateNominationScreen = () => {
           </div>
         </div>
         <div className="py-8">
-
-          <NameTag name = {loaded.name} branch={branch} position={loaded.position} degree={loaded.degree}/>
-
+          <NameTag
+            name={loaded.name}
+            branch={branch}
+            position={loaded.position}
+            degree={loaded.degree}
+            agenda_pdf={loaded.agenda_pdf}
+          />
         </div>
         <AgendaList agenda={loaded.agenda_text} about={loaded.about} />
         <br />
         <br />
 
-        <ProfileCard name = {loaded.name} branch={branch} tagline={loaded.tagline} image={loaded.image} degree={loaded.degree}/>
-
+        <ProfileCard
+          name={loaded.name}
+          branch={branch}
+          tagline={loaded.tagline}
+          image={loaded.image}
+          degree={loaded.degree}
+          agenda_pdf={loaded.agenda_pdf}
+        />
+        <div className="">
+          <MoreCandidates loaded={loaded} />
+        </div>
       </div>
+      <NewFooter></NewFooter>
     </div>
   );
 };
