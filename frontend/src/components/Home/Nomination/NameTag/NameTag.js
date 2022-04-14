@@ -26,7 +26,12 @@ const NameTag = (props) => {
             <button className={styles.button} onClick={() => setIsOpen(true)}>
               Share this profile
             </button>
-            <button className={styles.button3}>
+            <button
+              className={styles.button3}
+              onClick={() => {
+                window.open(props.agenda_pdf);
+              }}
+            >
               <div className="flex items-center">
                 Agenda
                 <AgendaSVG />

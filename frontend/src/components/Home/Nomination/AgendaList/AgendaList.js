@@ -1,18 +1,20 @@
-import React from "react";
+import { React, useState } from "react";
 import parse from "html-react-parser";
-import styles from "./AgendaList.module.css"
+import styles from "./AgendaList.module.css";
 import FAQCard from "../../FAQ/FAQCard";
+import styles2 from "../../../Nominate/AgendaNavbar/AgendaNavbar.module.css";
+
 const Agenda = (p) => {
   return (
-    <div className="p-2">
+    <div className="pb-1">
       {/* <div className="font-semibold text-lg">{p.title}</div> */}
-      <div className="p-2 leading-8 text-justify">
-        <FAQCard question={p.title} answer={parse(p.agenda)}/>
+      <div className="leading-8">
+        <FAQCard question={p.title} answer={parse(p.agenda)} />
         {/* <ol className={`list-decimal text-gray-600 text-lg leading-8 ${styles.list}`}></ol> */}
       </div>
     </div>
   );
-}
+};
 const AgendaList = (props) => {
   // const list = props.agenda;
 
@@ -23,17 +25,34 @@ const AgendaList = (props) => {
   //     </li>
   //   );
   // });
-  
+  const [less, setLess] = useState(true);
   let agendas = [];
-  
-for (const [key, value] of Object.entries(props.agenda)) {
-  console.log(key, value);
-  agendas = [...agendas,<Agenda key={key} title={key} agenda={value}/>]
-}
+  let showText;
+  if (less) {
+    showText = "Show More";
+  } else {
+    showText = "Show Less";
+  }
+  for (const [key, value] of Object.entries(props.agenda)) {
+    agendas = [...agendas, <Agenda key={key} title={key} agenda={value} />];
+    if (less && agendas.length === 3) {
+      break;
+    }
+  }
+
   return (
     <>
-      <div className="font-semibold text-xl pb-4">My Agendas</div>
-
+      <div className="flex">
+        <div className="font-semibold text-xl pb-4">My Agendas</div>
+        <div
+          className={`mr-0 ml-auto cursor-pointer ${styles2.link}`}
+          onClick={() => {
+            setLess(!less);
+          }}
+        >
+          {showText}
+        </div>
+      </div>
       {/* <div className="p-2 leading-8 text-justify">
         <ul className="list-decimal text-gray-600 text-lg leading-8  ">{props.agenda}</ul>
       </div> */}
@@ -43,7 +62,6 @@ for (const [key, value] of Object.entries(props.agenda)) {
       <div className="text-gray-600 text-lg p-2 leading-8 text-justify">
         {props.about}
       </div>
-
     </>
   );
 };
