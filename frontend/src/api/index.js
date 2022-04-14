@@ -9,14 +9,6 @@ export const API = axios.create({
   },
 });
 
-export const API_CRED_OFF = axios.create({
-  baseURL: `${BASEAPIURL}`,
-  withCredentials: false,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
-
 export const MULTIPARTAPI = axios.create({
   baseURL: `${BASEAPIURL}`,
   withCredentials: true,
@@ -61,9 +53,10 @@ export const fetchPos = () => API.get("/positions");
 export const candidateRegistration = (data) => API.post("/candidates/", data);
 export const updateCandidateData = (id, data) =>
   API.patch(`/candidates/${id}/`, data);
-export const getCandidateData = () => API_CRED_OFF.get(`/candidates/`);
-export const getCandidateByPosition = (id) => API_CRED_OFF.get(`/${id}/candidates`);
-export const getCandidateByID = (id) => API_CRED_OFF.get(`/candidates/${id}/`);
+export const getCandidateDataAdmin = () => API.get(`/candidates/`);
+export const getCandidateData = () => API.get(`/candidates/`,{withCredentials:false});
+export const getCandidateByPosition = (id) => API.get(`/${id}/candidates`,{withCredentials:false});
+export const getCandidateByID = (id) => API.get(`/candidates/${id}/`,{withCredentials:false});
 
 //credentials
 export const uploadCredentials = (data) =>

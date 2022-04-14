@@ -6,7 +6,7 @@ import {
   
   export const getCandidateData = () => async (dispatch) => {
     try {
-        const data = await api.getCandidateData();
+        const data = await api.getCandidateDataAdmin();
         dispatch({ type: GET_CANDIDATE_DATA, payload: data.data });
     } catch (error) {
         console.log(error.message);
