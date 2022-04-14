@@ -47,7 +47,7 @@ function Pre() {
           element={<CandidatePositionForm />}
         />
         <Route
-          path="/candidate/:name"
+          path="/candidate/:id"
           exact
           element={<CandidateNominationScreen />}
         />

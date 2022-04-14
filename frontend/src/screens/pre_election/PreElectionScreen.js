@@ -27,7 +27,7 @@ const Layout = () => {
 const position_ids = [1,2,3,4,5,6,7,8,9,10,12]
 const PreElectionScreen = () => {
   const positions = useSelector((store) => store.positions);
-  // const navigate = useNavigate();
+  console.log("Positions: ",positions);
   const dispatch = useDispatch();
   useEffect(() => {
     position_ids.forEach((pos)=>{dispatch(getCandidateFromPosition(pos))});

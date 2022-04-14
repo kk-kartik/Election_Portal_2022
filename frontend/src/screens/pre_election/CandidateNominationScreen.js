@@ -4,26 +4,27 @@ import NameTag from "../../components/Home/Nomination/NameTag/NameTag";
 import AgendaList from "../../components/Home/Nomination/AgendaList/AgendaList";
 import YoutubeEmbed from "../../components/Home/Nomination/Video/YoutubeEmbed";
 import ProfileCard from "../../components/Home/Nomination/ProfileCard/profileCard";
-import svg from "../../components/Nominate/AgendaList/style.svg";
-import svg2 from "../../components/Nominate/AgendaList/style2.svg";
-import styles from "../Register/RegisterScreen.module.css";
-import { getCandidateByID } from "../../api/index";
+import svg from "../../components/Nominate/AgendaList/style.svg"
+import svg2 from "../../components/Nominate/AgendaList/style2.svg"
+import styles from "../Register/RegisterScreen.module.css"
+import {getCandidateByID} from "../../api/index";
 import branch_code from "../../constants/branch";
-import Card from "../../components/Home/Gallery/Card";
+import { useParams } from "react-router-dom";
 import MoreCandidates from "../../components/Home/Nomination/MoreCandidates/MoreCandidates";
 import NewFooter from "../../components/Footer/NewFooter";
-
 const CandidateNominationScreen = () => {
   const [loaded, setLoaded] = useState(null);
+  const {id} = useParams();
   // const getData = async (id) => {
   //    data = await getCandidateByID(id);
   //    return data
   // }
-  let id = window.location.href.match("candidate/([0-9]+)")[1];
+  //let id = window.location.href.match("candidate/([0-9]+)")[1];
+
   let tr = <div>Loading</div>;
   if (loaded == null) {
     getCandidateByID(id).then((data) => {
-      console.log("---data---");
+      console.log("---data---",data.data);
       setLoaded(data.data);
       console.log(data.data);
     });
