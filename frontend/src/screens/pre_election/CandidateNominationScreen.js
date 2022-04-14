@@ -14,6 +14,8 @@ import MoreCandidates from "../../components/Home/Nomination/MoreCandidates/More
 import NewFooter from "../../components/Footer/NewFooter";
 import { Helmet } from "react-helmet";
 
+const hostname = "https://swc.iitg.ac.in"
+
 const CandidateNominationScreen = () => {
   const [loaded, setLoaded] = useState({});
   const [branch, setBranch] = useState("");
@@ -52,9 +54,17 @@ const CandidateNominationScreen = () => {
         {loaded.name ? (
           <>
             <Helmet>
-              <meta property="og:URL" content={loaded.image} />
+              <title>{loaded.name} | Nomination Profile</title>
+              <meta name="description" content={loaded.about} />
+              <meta
+                property="og:URL"
+                content={hostname+window.location.pathname+window.location.search}
+              />
               <meta property="og:type" content="article" />
-              <meta property="og:title" content={loaded.name} />
+              <meta
+                property="og:title"
+                content={`${loaded.name} | Nomination Profile`}
+              />
               <meta property="og:description" content={loaded.about} />
               <meta property="og:image" content={loaded.image} />
             </Helmet>
