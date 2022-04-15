@@ -49,7 +49,10 @@ const MoreCandidates = (props) => {
   return (
     <>
       <span className={`${styles.heading} pt-8 pb-6`}>More Candidates</span>
-      <div className="flex gap-4 overflow-scroll lg:overflow-hidden">
+      <div
+        className="relative flex gap-4 overflow-scroll lg:overflow-hidden"
+        style={{ zIndex: "-1000" }}
+      >
         {randomCard}
       </div>
     </>
