@@ -17,11 +17,13 @@ const SubMenu = ({ item, index }) => {
             : `sidebar-link flex justify-between text-black rounded-md font-bold border md:flex`
         }
         style={{
-          transition: "all 0.4s ease-out"
+          transition: "all 0.4s ease-out",
         }}
         to={item.subposts[0].path}
-        onClick={item.subposts.length > 0 && item.subposts[0].title && showSubnav}
-        activeClassName=" decoration-blue-500 md:border-4 md:border-purple-600 md:text-purple-600 md:text-purple-600"
+        onClick={
+          item.subposts.length > 0 && item.subposts[0].title && showSubnav
+        }
+        activeClassName=" decoration-blue-500 md:border-4 md:border-blue-600 md:text-blue-600 md:text-blue-600"
       >
         <div>
           <span className="sidebar-label">{item.title}</span>
