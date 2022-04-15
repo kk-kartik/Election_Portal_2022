@@ -258,6 +258,8 @@ class CandidateAgendaPdf(generics.GenericAPIView):
     authentication_classes=default_authentication_classes
 
     def get(self,request,name_slug,id):
+        if not request.user.is_staff:
+            return HttpResponse("Invalid access")
         try:
             instance = Candidate.objects.get(id=id)
             
