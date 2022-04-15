@@ -16,7 +16,7 @@ const BlockchainMessage = () => {
           </defs>
         </svg>
         </div>
-        &nbsp; Candidates can now nominate themselves by creating a candidate profile &nbsp;
+        &nbsp; Nominations are successfully done and voters can view nominated candidates. &nbsp;
         {/* <div className={styles.svgg}>
           <svg
             width="16"
