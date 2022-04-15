@@ -38,7 +38,9 @@ const NameTag = (props) => {
           </button>
         </div>
       </div>
-      <div className="font-bold text-4xl sm:text-5xl text-gray-800 my-1 sm:my-2 sm:mt-4">
+      <div
+        className={`font-bold text-4xl sm:text-5xl text-gray-800 my-1 sm:my-2 sm:mt-4 ${styles.atkinson}`}
+      >
         {capital_name}
       </div>
       <div className={styles.pink}>
