@@ -25,7 +25,7 @@ const NameTag = (props) => {
           <button className={styles.button} onClick={() => setIsOpen(true)}>
             Share this profile
           </button>
-          <button
+          {/* <button
             className={styles.button3}
             onClick={() => {
               window.open(props.agenda_pdf);
@@ -35,7 +35,7 @@ const NameTag = (props) => {
               Agenda
               <AgendaSVG />
             </div>
-          </button>
+          </button> */}
         </div>
       </div>
       <div
@@ -57,7 +57,7 @@ const NameTag = (props) => {
         >
           Share this profile
         </button>
-        <button
+        {/* <button
           className={styles.button3}
           onClick={() => {
             window.open(props.agenda_pdf);
@@ -68,7 +68,7 @@ const NameTag = (props) => {
             Agenda
             <AgendaSVG />
           </div>
-        </button>
+        </button> */}
       </div>
     </div>
   );

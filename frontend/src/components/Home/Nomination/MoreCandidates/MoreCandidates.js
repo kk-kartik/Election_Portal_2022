@@ -37,8 +37,8 @@ const MoreCandidates = (props) => {
       approved_list = [...approved_list, element];
   });
   shuffle(approved_list);
-  //   console.log("--approved candidates--");
-  //   console.log(approved_list);
+  console.log("--approved candidates--");
+  console.log(approved_list);
   let randomCard;
   if (approved_list.length > 0)
     randomCard = [
