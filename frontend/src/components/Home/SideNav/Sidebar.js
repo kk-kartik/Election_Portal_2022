@@ -1,6 +1,6 @@
 import React from "react";
 import { SidebarData } from "./SidebarData";
-import "./Sidebar.css";
+import styles from "./Sidebar.module.css";
 import SubMenu from "./SubMenu";
 
 const Sidebar = (props) => {

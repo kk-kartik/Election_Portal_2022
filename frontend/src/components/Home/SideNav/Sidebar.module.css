@@ -1,4 +1,4 @@
-.sidebar-link {
+.sidebarLink {
   align-items: center;
   padding: 1.1rem;
   height: 2.8rem;
@@ -6,11 +6,11 @@
   cursor: pointer;
 }
 
-.sidebar-label {
-  margin-left: 16px;
+.sidebarLabel {
+  /* margin-left: 16px; */
 }
 
-.dropdown-link {
+.dropdownLink {
   background: #fff;
   height: 2.8rem;
   padding-left: 1rem;
@@ -22,7 +22,7 @@
   cursor: pointer;
   transition: all 0.1s ease-in-out;
 }
-.dropdown-link :hover {
+.dropdownLink :hover {
   /* background: #b3b8c5; */
   color: #2b00ff;
   font-weight: 700;
@@ -32,4 +32,9 @@
   border-left: solid #2b00ff;
   border-left-width: 4px;
   color: #2b00ff;
+}
+
+.electionBlue {
+  color: #2b00ff;
+  border-color: #2b00ff;
 }
