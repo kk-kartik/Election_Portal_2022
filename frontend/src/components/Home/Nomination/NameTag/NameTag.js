@@ -13,40 +13,62 @@ const NameTag = (props) => {
   capital_name = arr.join(" ");
 
   return (
-    <>
-      <div className="mr-10 mt-6">
-        <div className="flex justify-between items-center">
-          <div className="text-gray-400 font-semibold text-lg pb-8">
-            Contesting for {props.position}
-          </div>
-          <div className="flex space-x-2  hidden sm:block">
-            {isOpen && (
-              <ShareModal setIsOpen={setIsOpen} url={window.location.href} />
-            )}
-            <button className={styles.button} onClick={() => setIsOpen(true)}>
-              Share this profile
-            </button>
-            <button
-              className={styles.button3}
-              onClick={() => {
-                window.open(props.agenda_pdf);
-              }}
-            >
-              <div className="flex items-center">
-                Agenda
-                <AgendaSVG />
-              </div>
-            </button>
-          </div>
+    <div className="">
+      <div className="w-full flex justify-between items-center">
+        <div className="flex justify-center items-center text-gray-400 font-semibold text-base sm:text-lg">
+          <p>Contesting for {props.position}</p>
         </div>
-        <div className="font-bold text-5xl text-gray-800 pb-2">
-          {capital_name}
-        </div>
-        <div className={styles.pink}>
-          {props.degree}, {props.branch}
+        <div className="hidden space-x-2 sm:block">
+          {isOpen && (
+            <ShareModal setIsOpen={setIsOpen} url={window.location.href} />
+          )}
+          <button className={styles.button} onClick={() => setIsOpen(true)}>
+            Share this profile
+          </button>
+          <button
+            className={styles.button3}
+            onClick={() => {
+              window.open(props.agenda_pdf);
+            }}
+          >
+            <div className="flex items-center">
+              Agenda
+              <AgendaSVG />
+            </div>
+          </button>
         </div>
       </div>
-    </>
+      <div className="font-bold text-4xl sm:text-5xl text-gray-800 my-1 sm:my-2 sm:mt-4">
+        {capital_name}
+      </div>
+      <div className={styles.pink}>
+        {props.degree}, {props.branch}
+      </div>
+      <div className="flex justify-between items-center my-2 space-x-2 sm:hidden">
+        {isOpen && (
+          <ShareModal setIsOpen={setIsOpen} url={window.location.href} />
+        )}
+        <button
+          className={styles.button}
+          style={{ width: "50%", padding: "6px 20px" }}
+          onClick={() => setIsOpen(true)}
+        >
+          Share this profile
+        </button>
+        <button
+          className={styles.button3}
+          onClick={() => {
+            window.open(props.agenda_pdf);
+          }}
+          style={{ width: "50%", padding: "6px 20px" }}
+        >
+          <div className="flex justify-center items-center">
+            Agenda
+            <AgendaSVG />
+          </div>
+        </button>
+      </div>
+    </div>
   );
 };
 

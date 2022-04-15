@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import BreadCrumbs from "../../components/Home/Nomination/BreadCrumbs/BreadCrumbs";
 import NameTag from "../../components/Home/Nomination/NameTag/NameTag";
 import AgendaList from "../../components/Home/Nomination/AgendaList/AgendaList";
@@ -21,8 +21,14 @@ const CandidateNominationScreen = () => {
   const [branch, setBranch] = useState("");
   const [error, setError] = useState(false);
   const { id } = useParams();
+  const pageRef = useRef(null);
+
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[])
 
   useEffect(() => {
+    pageRef.current.scrollIntoView({ behavior: "smooth" });
     getCandidateByID(id)
       .then((res) => res.json())
       .then((data) => {
@@ -47,8 +53,8 @@ const CandidateNominationScreen = () => {
   };
 
   return (
-    <>
-      <div className="m-2">
+    <div ref={pageRef}>
+      <div className="m-2 mx-4">
         <br />
         {error && <Navigate to="/" />}
         {loaded.name ? (
@@ -72,15 +78,15 @@ const CandidateNominationScreen = () => {
               <BreadCrumbs name={loaded.name} position={loaded.position} />
             </div>
             <div className="ml-auto mr-auto w-full md:w-1/2 ">
-              <div className="pt-16 pb-10 relative items-end">
+              <div className="py-6 sm:pt-16 sm:pb-10 relative items-end">
                 <YoutubeEmbed embedId={getEmbedID(loaded.video)} />
 
-                <div className={`absolute z-40  ${styles.svgs}`}>
+                <div className={`hidden sm:block absolute z-40  ${styles.svgs}`}>
                   <img src={svg} className="mr-4" alt="." />
                   <img src={svg2} className="ml-6" alt="." />
                 </div>
               </div>
-              <div className="py-8">
+              <div className="py-2 mb-2 sm:py-8">
                 <NameTag
                   name={loaded.name}
                   branch={branch}
@@ -119,7 +125,7 @@ const CandidateNominationScreen = () => {
         )}
       </div>
       <NewFooter></NewFooter>
-    </>
+    </div>
   );
 };
 

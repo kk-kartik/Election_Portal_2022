@@ -43,7 +43,7 @@ const AgendaList = (props) => {
   return (
     <>
       <div className="flex">
-        <div className="font-semibold text-xl pb-4">My Agendas</div>
+        <div className="font-bold text-lg pb-4">My Agendas</div>
         <div
           className={`mr-0 ml-auto cursor-pointer ${styles2.link}`}
           onClick={() => {
@@ -58,8 +58,8 @@ const AgendaList = (props) => {
       </div> */}
       {agendas}
 
-      <div className="font-semibold text-lg py-4">About me</div>
-      <div className="text-gray-600 text-lg p-2 leading-8 text-justify">
+      <div className="font-bold text-lg mt-2 sm:mt-4 pt-4">About me</div>
+      <div className="text-gray-600 text-base pt-2 px-0 leading-8 text-justify">
         {props.about}
       </div>
     </>

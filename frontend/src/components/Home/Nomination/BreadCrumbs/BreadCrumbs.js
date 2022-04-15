@@ -19,7 +19,7 @@ const BreadCrumbs = (props) => {
   return (
     <>
       <Breadcrumbs>
-        <Breadcrumbs.Item href="/election_portal" className={styles.item}>Gymkhana Elections 2021</Breadcrumbs.Item>
+        <Breadcrumbs.Item href="/election_portal" className={styles.item}>Gymkhana Elections 2022</Breadcrumbs.Item>
         <Breadcrumbs.Item href={`/election_portal/nominations/${pos2urlMap[props.position]}`} className={styles.item}>{props.position}</Breadcrumbs.Item>
         <Breadcrumbs.Item href="/election_portal/candidate/*" className={styles.selected_item} selected>
           {props.name}

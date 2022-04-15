@@ -11,7 +11,7 @@ const FAQCard = (props) => {
       className="p-6 rounded-md shadow hover:shadow-md cursor-pointer"
     >
       <div
-        className="flex justify-between pb-1 font-bold"
+        className="flex justify-between pb-1 font-semibold"
         style={
           answerOpen
             ? { "margin-bottom": "10px", transition: "all 0.3s ease-out" }

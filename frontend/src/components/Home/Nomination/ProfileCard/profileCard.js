@@ -8,17 +8,17 @@ const ProfileCard = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <div className={`mr-10 mt-6 ${styles.container} p-4`}>
+      <div className={`mr-10 sm:mt-4 ${styles.container} p-2`}>
         <div className="flex pb-2">
           <div className="pr-4">
             <img src={props.image} className="w-auto h-20" alt="profile" />
           </div>
           <div>
             <div className="pb-1 text-xl"> {props.name}</div>
-            <div className="text-lg">
+            <div className="text-base text-gray-700">
               {props.degree}, {props.branch}
             </div>
-            <div className="text-lg"> IIT Guwahati </div>
+            <div className="text-base text-gray-700"> IIT Guwahati </div>
           </div>
         </div>
         <div className="bg-gray-100 p-4">
