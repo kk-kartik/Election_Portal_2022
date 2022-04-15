@@ -187,7 +187,7 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,OnlyOrganizerOrCandidateUpdate]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,OnlyOrganizerUpdate]
     authentication_classes=default_authentication_classes
     
     def get_queryset(self):

@@ -20,7 +20,7 @@ const AgendaList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [title, setTitle] = useState(null);
   const [isOld, setIsOld] = useState(false);
-
+  console.log(isFormClosed);
   return (
     <div className="">
       {candidate?.agenda_text &&

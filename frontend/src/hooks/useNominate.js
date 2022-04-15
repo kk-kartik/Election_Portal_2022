@@ -35,7 +35,7 @@ function jsonToFormData(data) {
 const deadline = 1649759400000;
 // const deadline = 1649549824000;
 const checkDeadline = () => {
-  return false;
+  return true;
 };
 
 const useNominate = () => {

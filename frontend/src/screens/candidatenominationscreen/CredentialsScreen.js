@@ -31,7 +31,6 @@ const CredentialsScreen = () => {
     isDeadlineOver,
     isFormClosed,
   } = useNominate();
-  isFormClosed = isFormClosed || checkDeadline();
 
   const [credentials, setCredentials] = useState([]);
 
