@@ -35,7 +35,7 @@ const AgendaList = (props) => {
   }
   for (const [key, value] of Object.entries(props.agenda)) {
     agendas = [...agendas, <Agenda key={key} title={key} agenda={value} />];
-    if (less && agendas.length === 3) {
+    if (less && agendas.length === 4) {
       break;
     }
   }
