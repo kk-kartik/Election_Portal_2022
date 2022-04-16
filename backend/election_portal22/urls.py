@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib import admin
+from main.admin import organizer_admin_site
 from django.urls import path,include
 # from rest_framework_swagger.views import get_swagger_view
 
@@ -24,6 +25,9 @@ from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 
 urlpatterns = [
+    path('elections_api/jet/', include('jet.urls', 'jet')),  # Django JET URLS
+    path('elections_api/jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+    path("elections_api/org_admin/",organizer_admin_site.urls),
     path('elections_api/admin/', admin.site.urls),
     path('elections_api/auth/', include('authentication.urls')),
     path('elections_api/<str:name_slug>/',include('main.urls')),
