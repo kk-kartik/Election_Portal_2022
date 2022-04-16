@@ -3,7 +3,7 @@ import { Breadcrumbs } from "@primer/react";
 import styles from "./BreadCrumbs.module.css"
 
 const pos2urlMap = {
-  "President, SGC": "vicepresident",
+  "Vice President, SGC": "vicepresident",
   "General Secretary Welfare Board": "welfare",
   "General Secretary Sports Board": "sports",
   "General Secretary Technical Board": "technical",
