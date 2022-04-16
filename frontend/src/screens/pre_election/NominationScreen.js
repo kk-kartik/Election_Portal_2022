@@ -4,18 +4,18 @@ import CardGallery from "../../components/Home/Gallery/CardGallery";
 import FAQSection from "../../components/Home/FAQ/FAQSection";
 import StepList from "../../components/Home/StepList/StepList";
 import SideBarSection from "../../components/Home/SideNav/Sidebar";
+import StickyBox from "react-sticky-box";
 const NominationScreen = (props) => {
   return (
     <>
-      <h1 className="p-3 pt-0 font-medium text-xl">
-        Steps For Nominating Yourself
-      </h1>
       <StepList />
       <div className="grid grid-cols-12 gap-4 lg:mr-12">
-        <div className="col-span-12 md:col-span-3 hidden">
-          <SideBarSection posts={props.posts} />
+        <div className="mt-2 sm:mt-12 col-span-12 md:col-span-3 hidden">
+          <StickyBox offsetTop={20} offsetBottom={20}>
+            <SideBarSection posts={props.posts} />
+          </StickyBox>
         </div>
-        <div className="col-span-12 md:col-span-9">
+        <div className="mt-2 sm:mt-12 col-span-12 md:col-span-9">
           <Routes>
             {props.posts.map((post) => {
               return post.subposts.map((subpost) => {

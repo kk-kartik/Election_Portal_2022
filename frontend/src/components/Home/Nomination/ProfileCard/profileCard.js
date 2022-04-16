@@ -43,7 +43,7 @@ const ProfileCard = (props) => {
           <button className={styles2.button} onClick={() => setIsOpen(true)}>
             Share this profile
           </button>
-          <button className={styles2.button3}>
+          {/* <button className={styles2.button3}>
             <div
               className="flex items-center"
               onClick={() => {
@@ -53,7 +53,7 @@ const ProfileCard = (props) => {
               Agenda
               <AgendaSVG />
             </div>
-          </button>
+          </button> */}
         </div>
       </div>
     </>

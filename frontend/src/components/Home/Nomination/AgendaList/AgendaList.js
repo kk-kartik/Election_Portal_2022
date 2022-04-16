@@ -44,22 +44,23 @@ const AgendaList = (props) => {
     <>
       <div className="flex">
         <div className="font-bold text-lg pb-4">My Agendas</div>
-        <div
-          className={`mr-0 ml-auto cursor-pointer ${styles2.link}`}
-          onClick={() => {
-            setLess(!less);
-          }}
-        >
-          {showText}
-        </div>
       </div>
       {/* <div className="p-2 leading-8 text-justify">
         <ul className="list-decimal text-gray-600 text-lg leading-8  ">{props.agenda}</ul>
       </div> */}
       {agendas}
 
+      <div
+        className={`mt-2 ml-auto cursor-pointer ${styles2.link}`}
+        onClick={() => {
+          setLess(!less);
+        }}
+      >
+        {showText}
+      </div>
+
       <div className="font-bold text-lg mt-2 sm:mt-4 pt-4">About me</div>
-      <div className="text-gray-600 text-base pt-2 px-0 leading-8 text-justify">
+      <div className="text-gray-600 text-base pt-2 px-0 leading-7 text-justify">
         {props.about}
       </div>
     </>

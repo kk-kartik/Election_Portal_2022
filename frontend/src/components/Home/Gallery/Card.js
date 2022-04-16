@@ -3,7 +3,7 @@ import "./CardStyle.css";
 import { Link } from "react-router-dom";
 
 const Card = ({ person }) => {
-  let capital_name = person.name;
+  let capital_name = person?.name || person?.user?.name;
   let arr = capital_name.split(" ");
   arr.forEach((e, index, theArray) => {
     theArray[index] = e.charAt(0) + e.slice(1).toLowerCase();
