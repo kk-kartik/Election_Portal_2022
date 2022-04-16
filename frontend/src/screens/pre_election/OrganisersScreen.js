@@ -15,6 +15,10 @@ import Nishtha_img from "../../assets/team_images/Nistha.jpg";
 import Chinmay_img from "../../assets/team_images/Chinmay.jpg";
 import Nivedit_img from "../../assets/team_images/Nivedit.jpg";
 import Toshit_img from "../../assets/team_images/Toshit.jpg";
+import grace_img from "../../assets/team_images/grace.png"
+import yashi_img from "../../assets/team_images/yashi.jpg"
+import sarthak_img from "../../assets/team_images/sarthakd_img.png"
+import vignesh_img from "../../assets/team_images/Vighnesh_Image.jpg"
 const ElectionTeamList = [
   {
     name: "Praveen Sai Teella",
@@ -117,6 +121,35 @@ const WebTeamList = [
     image: { Sarthak_img },
     imagename: "Sarthak_img",
   },
+  {
+    name: "Sarthak Diwan",
+    post: "Frontend Team",
+    contact: "7018236559",
+    image: { sarthak_img },
+    imagename: "sarthak_img",
+  },
+  {
+    name: "Yashi Natu",
+    post: "Frontend Team",
+    contact: "9752886479",
+    image: { yashi_img },
+    imagename: "yashi_img",
+  },
+  {
+    name: "Grace Mary Matson",
+    post: "Frontend Team",
+    contact: "9480575380",
+    image: { grace_img },
+    imagename: "grace_img",
+  },
+  {
+    name: "Vignesh Deshpande",
+    post: "Frontend Team",
+    contact: "9819532497",
+    image: { vignesh_img },
+    imagename: "vignesh_img",
+  },
+
 ];
 
 const OrganisersScreen = () => {

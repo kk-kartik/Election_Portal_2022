@@ -6,6 +6,7 @@ const pos2urlMap = {
   "President, SGC": "vicepresident",
   "General Secretary Welfare Board": "welfare",
   "General Secretary Sports Board": "sports",
+  "General Secretary Technical Board": "technical",
   "General Secretary Cultural Board": "cultural",
   "General Secretary HAB": "hab",
   "General Secretary SAIL": "sail",
