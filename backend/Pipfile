@@ -18,6 +18,8 @@ dj-rest-auth = {extras = ["with_social"], version = "*"}
 psycopg2-binary="*"
 xhtml2pdf="*"
 django-xhtml2pdf="*"
+django-jet-reboot = "*"
+feedparser = "*"
 
 [dev-packages]
 

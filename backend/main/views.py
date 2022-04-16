@@ -258,11 +258,11 @@ class CandidateAgendaPdf(generics.GenericAPIView):
     authentication_classes=default_authentication_classes
 
     def get(self,request,name_slug,id):
-        if not request.user.is_staff:
-            return HttpResponse("Invalid access")
         try:
             instance = Candidate.objects.get(id=id)
-            
+            if not request.user.is_staff and instance.user.user.id != request.user.id:
+                return HttpResponse("Invalid Access")
+
         except Exception as e:
             return HttpResponse({"some error has occured in CandidateAgendaPdf"})
         create_pdf(request, name_slug, 'for_pdf.html', instance)
