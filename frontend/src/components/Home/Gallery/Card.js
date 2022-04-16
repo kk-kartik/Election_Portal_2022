@@ -20,7 +20,7 @@ const Card = ({ person }) => {
 
   return (
     <Link to={`/candidate/${person.id}`}>
-      <div className="!rounded-md front shadow-lg" style={config}>
+      <div className={`!rounded-md front shadow-lg`} style={config}>
         <div className="title text-xl font-bold">{capital_name}</div>
         <div className="title smallTitle">{person.tagline}</div>
       </div>
