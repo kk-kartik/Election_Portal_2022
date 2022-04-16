@@ -1,3 +1,4 @@
+from enum import unique
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
@@ -226,6 +227,26 @@ class Credentials(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+import random
+import string
+def create_id():
+    our_choices = string.ascii_lowercase + string.digits + "!@#$%^&*"
+    id = ''.join(random.choices(our_choices, k=8))
+    print(our_choices)
+    try:
+        obj = VoterCard.objects.filter(uniqueid = id)
+        if not obj:
+            print(id)
+            return id
+        return create_id()
+    except Exception as e:
+        print(e)
+        
+class VoterCard(models.Model):
+    election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='votercard')
+    uniqueid = models.CharField(max_length=10,default = create_id)
+    is_used = models.BooleanField(default=False)
 
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):

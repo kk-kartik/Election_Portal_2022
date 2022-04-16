@@ -8,6 +8,8 @@ router.register("candidates",viewset=views.CandidatesViewSet,basename="candidate
 router.register("positions",viewset=views.PositionsViewSet,basename="positions")
 router.register("faqs",viewset=views.FAQViewSet,basename="faqs")
 router.register("debates",viewset=views.DebatesViewSet,basename="debates")
+router.register("votercard",viewset=views.VoterCardView,basename="votercard")
+
 
 urlpatterns = [
     path("<int:position_id>/candidates/",views.PositionCandidatesView.as_view(),name="position_candidates"),

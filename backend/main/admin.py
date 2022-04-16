@@ -45,6 +45,10 @@ class Imporatant_dateAdmin(admin.ModelAdmin):
 class StatisticAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Statistic._meta.get_fields()]
 
+@admin.register(VoterCard)
+class VoterCardAdmin(admin.ModelAdmin):
+    list_display = ['uniqueid']
+
 
 
 from django.contrib.admin import AdminSite
@@ -64,3 +68,4 @@ organizer_admin_site.register(Debate,DebateAdmin)
 organizer_admin_site.register(Faq,FAQsAdmin)
 organizer_admin_site.register(EUser,EuserAdnmin)
 organizer_admin_site.register(Election)
+organizer_admin_site.register(VoterCard)

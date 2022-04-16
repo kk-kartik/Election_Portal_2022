@@ -323,6 +323,20 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
          return serializer.save(election=self.election)
 
 
+class VoterCardView(ElectionMixin,viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
+    serializer_class = VoterCardSerializer
+    authentication_classes=default_authentication_classes
+
+    def get_queryset(self):
+        return self.election.votercard.all()
+    
+    def perform_create(self,serializer):
+        return serializer.save(election=self.election)
+    
+    def perform_update(self,serializer):
+         return serializer.save(election=self.election)
+
 class DebatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
     serializer_class = DebateSerializer

@@ -45,6 +45,10 @@ class PositionSerializer(serializers.ModelSerializer):
         model = Position
         exclude = ["election"]
 
+class VoterCardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VoterCard
+        exclude = ["election"]
 
 class PositionReadSerializer(serializers.ModelSerializer):
     candidates_p = CandidateReadSerializer(many=True)
