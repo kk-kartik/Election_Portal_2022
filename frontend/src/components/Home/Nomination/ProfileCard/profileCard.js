@@ -34,7 +34,7 @@ const ProfileCard = (props) => {
           </div>
         </div>
         <div className={`bg-gray-100 p-4 mt-4 ${styles.atkinson}`}>
-          <p className="italic text-xl text-gray-600">“{props.tagline}”</p>
+          <p className="italic text-lg sm:text-xl text-gray-600">“{props.tagline}”</p>
         </div>
         <div className="flex space-x-2  hidden sm:block py-6">
           {isOpen && (
