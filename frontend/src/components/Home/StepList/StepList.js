@@ -37,7 +37,6 @@ const StepList = () => {
     useNominate();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.auth);
-  console.log("muk lage", userData);
   const steps = [
     {
       text: "Register for the post",

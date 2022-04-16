@@ -13,7 +13,7 @@ const HomeRouteNavBar = () => {
       ]}
       routes={[
         "",
-        "nominations",
+        "nominations/vicepresident",
         // "stats",
         "rules",
         "organisers",

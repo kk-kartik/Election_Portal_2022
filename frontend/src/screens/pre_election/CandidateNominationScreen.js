@@ -40,6 +40,8 @@ const CandidateNominationScreen = () => {
         let br = data.branch;
         if(branch_code[br]) {
           setBranch(branch_code[br]);
+        }else{
+          setBranch(br);
         }
       })
       .catch((e) => console.log(e));
