@@ -37,8 +37,8 @@ const PreElectionScreen = () => {
   
   let all_positions = {};
   positions.forEach((pos)=>{all_positions[`${pos.id}`] = pos.data});
-  // console.log("all-positions");
-  // console.log(all_positions);
+  console.log("all-positions");
+  console.log(all_positions);
   return (
     <>
       <div
@@ -84,6 +84,11 @@ const PreElectionScreen = () => {
                           title: "Welfare",
                           path: "welfare",
                           persons: all_positions['3'],
+                        },
+                        {
+                          title: "Technical",
+                          path: "technical",
+                          persons: all_positions['5'],
                         },
                         {
                           title: "HAB",
