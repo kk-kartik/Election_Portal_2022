@@ -19,6 +19,7 @@ import grace_img from "../../assets/team_images/grace.png"
 import yashi_img from "../../assets/team_images/yashi.jpg"
 import sarthak_img from "../../assets/team_images/sarthakd_img.png"
 import vignesh_img from "../../assets/team_images/Vighnesh_Image.jpg"
+import { Helmet } from "react-helmet";
 const ElectionTeamList = [
   {
     name: "Praveen Sai Teella",
@@ -155,6 +156,9 @@ const WebTeamList = [
 const OrganisersScreen = () => {
   return (
     <>
+      <Helmet>
+        <title>Organisers | Election Portal</title>
+      </Helmet>
       <div className="text-2xl mt-8 flex justify-center sm:justify-start">
         Election Team
       </div>

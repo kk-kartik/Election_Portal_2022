@@ -5,9 +5,13 @@ import FAQSection from "../../components/Home/FAQ/FAQSection";
 import StepList from "../../components/Home/StepList/StepList";
 import SideBarSection from "../../components/Home/SideNav/Sidebar";
 import StickyBox from "react-sticky-box";
+import { Helmet } from "react-helmet";
 const NominationScreen = (props) => {
   return (
     <>
+      <Helmet>
+        <title>Nominations | Election Portal</title>
+      </Helmet>
       <StepList />
       <div className="grid grid-cols-12 gap-4 lg:mr-12">
         <div className="mt-2 sm:mt-12 col-span-12 md:col-span-3">
