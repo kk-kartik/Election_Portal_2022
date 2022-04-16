@@ -46,7 +46,7 @@ BRANCH = (
 DEGREE = (
     ('B','Btech'),
     ('M','Mtech'),
-    ('P',"PG"),
+    ('P',"PhD"),
     ("Msc","Msc"),
     ("Mdes","Mdes"),
     ("Bdes","Bdes"),
