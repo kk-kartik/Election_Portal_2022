@@ -15,11 +15,11 @@ import { DateConvert } from "../../../utils";
 
 const Debates = () => {
   const [numberCard, setNumberCard] = useState(
-    parseInt(document.getElementById("container").innerWidth / 350)
+    parseInt(window.innerWidth / 350)
   );
   useEffect(() => {
     function handleResize() {
-      setNumberCard(parseInt(document.getElementById("container").innerWidth / 350));
+      setNumberCard(parseInt(window.innerWidth / 350));
     }
     window.addEventListener("resize", handleResize);
   });
@@ -36,7 +36,7 @@ const Debates = () => {
       <div>
         <Swiper
           modules={[Navigation, Pagination]}
-          spaceBetween={120}
+          spaceBetween={30}
           slidesPerView={Math.min(numberCard, 4)}
           pagination={{ clickable: true }}
           // navigation
