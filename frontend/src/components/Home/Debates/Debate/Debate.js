@@ -19,7 +19,7 @@ const Debate = (props) => {
               <img src={calender} alt="calender" className={styles.image} />
             </td>
             <td>
-              <h5> &nbsp; {props.date}</h5>
+              <h5> &nbsp; {props.time.split("T",1)}</h5>
             </td>
           </tr>
         </table>
@@ -30,7 +30,7 @@ const Debate = (props) => {
               <img src={clock} alt="clock" className={styles.image} />
             </td>
             <td>
-              <h5> &nbsp; {props.time}</h5>
+              <h5> &nbsp; {props.time.split("T")[1].split("Z")}</h5>
             </td>
           </tr>
         </table>

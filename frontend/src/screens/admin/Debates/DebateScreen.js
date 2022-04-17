@@ -55,10 +55,10 @@ const DebatesScreen = () => {
                     <tr key={idx}>
                       <td className="text-left py-3 px-4">{data?.title}</td>
                       <td className="text-left py-3 px-4">
-                        {DateConvert(data?.date)}
+                        {data?.debate_time.split("T",1)}
                       </td>
                       <td className="text-left py-3 px-4">
-                        {data?.time}
+                        {data?.debate_time.split("T")[1].split("Z")}
                       </td>
                       <td className="text-left py-3 px-4">
                         <Link

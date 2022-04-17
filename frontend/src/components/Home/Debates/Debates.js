@@ -47,7 +47,7 @@ const Debates = () => {
             debates.map((data, idx) => {
               return (
                 <SwiperSlide>
-                  <Debate title={data?.title} date={DateConvert(data?.date)} time={data?.time}/>
+                  <Debate title={data?.title} time={data?.debate_time}/>
                 </SwiperSlide>
               );
             })}
