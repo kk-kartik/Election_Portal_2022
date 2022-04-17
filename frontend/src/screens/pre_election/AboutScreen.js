@@ -12,7 +12,7 @@ const AboutScreen = () => {
       </Helmet>
       <Register />
       <Dates />
-      {/* <Debates /> */}
+      <Debates />
     </>
   );
 };
