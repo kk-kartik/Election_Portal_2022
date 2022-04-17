@@ -7,57 +7,50 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getDebates,
+} from "../../../actions/debates";
+import { DateConvert } from "../../../utils";
+
 const Debates = () => {
   const [numberCard, setNumberCard] = useState(
-    parseInt(window.innerWidth / 300)
+    parseInt(document.getElementById("container").innerWidth / 350)
   );
   useEffect(() => {
     function handleResize() {
-      // console.log("resized to: ", window.innerWidth, "x", window.innerHeight);
-      setNumberCard(parseInt(window.innerWidth / 300));
+      setNumberCard(parseInt(document.getElementById("container").innerWidth / 350));
     }
     window.addEventListener("resize", handleResize);
   });
 
-  // let y = parseInt(window.innerWidth / 300);
+  const debates = useSelector((state) => state.debates);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getDebates());
+  }, [dispatch]);
 
   return (
-    <div className="pb-8">
+    <div className="pb-8" id="container">
       <h1 className="text-2xl text-gray-800 pt-8 pb-4">Upcoming Debates </h1>
       <div>
         <Swiper
           modules={[Navigation, Pagination]}
-          spaceBetween={30}
-          slidesPerView={Math.min(numberCard, 8)}
+          spaceBetween={120}
+          slidesPerView={Math.min(numberCard, 4)}
           pagination={{ clickable: true }}
           // navigation
           centeredSlides={true}
           centeredSlidesBounds={true}
         >
-          <SwiperSlide>
-            <Debate />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Debate />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Debate />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Debate />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Debate />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Debate />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Debate />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Debate />
-          </SwiperSlide>
+          {debates.length !== 0 &&
+            debates.map((data, idx) => {
+              return (
+                <SwiperSlide>
+                  <Debate title={data?.title} date={DateConvert(data?.date)} time={data?.time}/>
+                </SwiperSlide>
+              );
+            })}
         </Swiper>
       </div>
     </div>

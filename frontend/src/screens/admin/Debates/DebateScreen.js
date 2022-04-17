@@ -37,6 +37,9 @@ const DebatesScreen = () => {
                   Date
                 </th>
                 <th className="px-5 py-3 border-b-2 text-left text-sm font-semibold uppercase tracking-wider">
+                  Time
+                </th>
+                <th className="px-5 py-3 border-b-2 text-left text-sm font-semibold uppercase tracking-wider">
                   Edit
                 </th>
                 <th className="px-5 py-3 border-b-2 text-left text-sm font-semibold uppercase tracking-wider">
@@ -53,6 +56,9 @@ const DebatesScreen = () => {
                       <td className="text-left py-3 px-4">{data?.title}</td>
                       <td className="text-left py-3 px-4">
                         {DateConvert(data?.date)}
+                      </td>
+                      <td className="text-left py-3 px-4">
+                        {data?.time}
                       </td>
                       <td className="text-left py-3 px-4">
                         <Link
