@@ -1,0 +1,38 @@
+.App {
+  padding: 1rem 5rem;
+}
+
+.icon {
+  display: flex;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  box-shadow: 1px 1px solid #000;
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+}
+
+.education {
+  margin-bottom: 2.5rem;
+}
+
+.edu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.pro {
+  padding-left: 3rem;
+}
+
+.bottom {
+  padding-left: 2rem;
+}
