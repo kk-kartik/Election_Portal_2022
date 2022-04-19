@@ -2,10 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn {
-  @apply py-2 px-6 rounded;
-}
-
-.btn-blue {
-  @apply bg-blue-500 text-blue-100;
+.voting-portal-2022-wrapper{
+  max-width: 1280px;
+  margin: auto;
 }
