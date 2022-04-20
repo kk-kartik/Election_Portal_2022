@@ -4,18 +4,10 @@ import { useParams } from "react-router-dom";
 import { pos2idMap } from "../constants";
 import { getCandidateByPos } from "../redux/actions/candidates";
 import { Link } from "react-router-dom";
-import web3 from "../ethereum/webThree";
-import election from "../ethereum/election";
 import CandidateCard from "../components/CandidateCard/CandidateCard";
-import styles from "../components/buttons/buttons.module.css"
+import styles from "../components/buttons/buttons.module.css";
 import SideBarSection from "../components/SideNav/Sidebar";
 import { posts } from "../constants";
-const Tx = require("ethereumjs-tx").Transaction;
-
-const publicKey = "0xD0e203A04Eb4024Fbd90768b46E37aC67F1Cd707";
-const privateKey =
-  "9f94794beb1b094dfa4dd85f1190703500e5179fe4b53767dcfc785eaa4620b0";
-const contractAddress = "0x4e6a5bfb44c6d243a44ed5f6704be50c38ac289f";
 
 const VotingScreen = () => {
   const dispatch = useDispatch();
@@ -24,45 +16,6 @@ const VotingScreen = () => {
 
   useEffect(() => {
     dispatch(getCandidateByPos(pos2idMap[position], position));
-
-    // Web3 transaction start
-    const countVotes = async () => {
-      const counts = await election.methods.voterCount().call();
-      console.log(counts);
-    };
-    //counting total vote casted
-    countVotes();
-
-    //voting start. Votes contain encrypted vote and voterid
-    const methodFunction = async () => {
-      const votes = "123";
-      const voterId = "12";
-
-      const functionAbi = election.methods.store(voterId, votes).encodeABI();
-
-      web3.eth.getTransactionCount(publicKey, function (err, nonce) {
-        var details = {
-          from: web3.utils.toChecksumAddress(publicKey),
-          nonce: web3.utils.toHex(nonce),
-          gasPrice: web3.utils.toHex(web3.utils.toWei("100", "gwei")),
-          gasLimit: 500000,
-          to: contractAddress,
-          value: 0,
-          data: functionAbi,
-        };
-
-        var tx = new Tx(details, { chain: "rinkeby" });
-        tx.sign(Buffer.from(privateKey, "hex"));
-        var serializedTx = tx.serialize();
-
-        web3.eth
-          .sendSignedTransaction("0x" + serializedTx.toString("hex"))
-          .on("receipt", console.log)
-          .on("error", console.log);
-      });
-    };
-
-    methodFunction();
     //Web3 part over
   }, [position]);
 
@@ -72,28 +25,26 @@ const VotingScreen = () => {
     <div className="">
       <SideBarSection posts={posts} />
       <div className="ml-80">
-      <div className="p-6">
-        <div className="flex flex-end w-3/4">
-
-        <h2 className="text-lg">
-          <span className="font-bold ml-12">{candidates.all[0]["position"]}</span>
-        </h2>
-        <div className={`${styles.bg} mr-0 ml-auto`}>
-          Single Vote
+        <div className="p-6">
+          <div className="flex flex-end w-3/4">
+            <h2 className="text-lg">
+              <span className="font-bold ml-12">
+                {candidates.all[0]["position"]}
+              </span>
+            </h2>
+            <div className={`${styles.bg} mr-0 ml-auto`}>Single Vote</div>
+          </div>
+          <ul>
+            {candidates &&
+              candidates[position]?.map((candidate, i) => {
+                return <CandidateCard person={candidate} />;
+              })}
+          </ul>
+          <div className="flex ml-16 gap-2 ">
+            <button className={styles.none}>None of the above</button>
+            <button className={styles.button2}>Next</button>
+          </div>
         </div>
-        </div>
-        <ul>
-          {candidates &&
-            candidates[position]?.map((candidate, i) => {
-              return <CandidateCard person={candidate} />;
-            })}
-        </ul>
-        <div className="flex ml-16 gap-2 "> 
-
-        <button className={styles.none}>None of the above</button>
-        <button className={styles.button2}>Next</button>
-        </div>
-      </div>
       </div>
     </div>
   );

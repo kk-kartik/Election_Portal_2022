@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { BASEURL } from "./constants";
 import { getAllCandidates } from "./redux/actions/candidates";
@@ -9,9 +9,9 @@ import StatusScreen from "./screens/StatusScreen";
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getAllCandidates());
-  },[])
+  }, [dispatch]);
 
   return (
     <div className="voting-portal-2022-wrapper">
@@ -20,7 +20,7 @@ function App() {
           <Route path="/" exact component={WelcomeScreen} />
           <Route path="/status" exact component={StatusScreen} />
           <Route path="/:position" exact component={VotingScreen} />
-          
+
           {/* {There would other routes as per flow} */}
         </Switch>
       </BrowserRouter>
