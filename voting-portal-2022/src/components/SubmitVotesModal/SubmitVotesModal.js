@@ -13,9 +13,9 @@ const SubmitVotesModal = () => {
                 <SubmitVotesField post="Hostal Affairs Board" candidate="Ralph Edwards" />
                 <SubmitVotesField post="Students Web Commitee" candidate="Dianne Russell" />
                 <SubmitVotesField post="Sports Board" candidate="NOTA" cClass="text-orange-500"/>
-                <SubmitVotesField post="PG Senete" candidate="Marvin McKinney, Eleanor Penaasdasd, asd sad" long={true} />
-                <SubmitVotesField post="UG Senete" candidate="Marvin McKinney, Eleanor Penaidjasidji, asomdomoas" long={true}/>
-                <SubmitVotesField post="Girls Senete" candidate="Ronald Richards" long={true}/>
+                <SubmitVotesField post="PG Senate" candidate="Marvin McKinney, Eleanor Penaasdasd, asd sad" long={true} />
+                <SubmitVotesField post="UG Senate" candidate="Marvin McKinney, Eleanor Penaidjasidji, asomdomoas" long={true}/>
+                <SubmitVotesField post="Girls Senate" candidate="Ronald Richards" long={true}/>
             </div>
             <div className="mr-11 ml-8 mt-5 mb-8 flex items-center">
                 <input type="checkbox" id="check" name="check" className={`${styles.checkBox} w-5 h-5`}>
