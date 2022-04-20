@@ -12,7 +12,7 @@ const StatusScreen = () =>{
                 <div className="w-24 h-24">
                     <img src={iitglogo} alt="" />
                 </div>
-                <div className="text-6xl font-bold w-64 leading-relaxed text-gray-700">
+                <div className="text-6xl font-bold w-64 leading-relaxed text-gray-700 font-atkinson">
                     Gymkhana Elections 2022
                 </div>
             </div>

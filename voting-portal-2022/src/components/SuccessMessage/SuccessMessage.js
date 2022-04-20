@@ -5,7 +5,7 @@ const SuccessMessage = (props) => {
         <div className="w-80">
             <div className="flex flex-col">
                 <div className="bg-greenBg flex flex-row justify-between items-center p-3 rounded-2xl">
-                    <div className="text-white font-bold text-xl">
+                    <div className="text-white font-bold text-xl font-atkinson">
                         Success
                     </div>
                     <div className="w-8 h-8">

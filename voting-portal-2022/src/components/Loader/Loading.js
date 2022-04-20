@@ -1,5 +1,6 @@
 import React from "react"
 import styles from "./Loading.module.css"
+
 const Loading = (props) =>{
     return(
         <div className="flex flex-row items-center w-96 shadow-md px-4 rounded-2xl py-8">
