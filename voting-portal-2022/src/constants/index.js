@@ -21,17 +21,12 @@ export const pos2idMap = {
 };
 export const posts=[
   {
-    title: "Vice President",
+    title: "Executives",
     subposts: [
       {
-        title: "",
+        title: "Vice President",
         path: "vicepresident",
       },
-    ],
-  },
-  {
-    title: "Board Secretary",
-    subposts: [
       {
         title: "Sports",
         path: "sports",
@@ -63,7 +58,7 @@ export const posts=[
     ],
   },
   {
-    title: "Senator",
+    title: "Senate",
     subposts: [
       {
         title: "UG Senator",

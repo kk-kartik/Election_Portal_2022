@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./CandidateCard.module.css";
+import SingleVote from "../buttons/buttons";
 const Agenda = (p) => {
   return (
     <ol>{p.title}</ol>
@@ -44,7 +45,7 @@ const CandidateCard = (props) => {
   }
   return (
     <div
-      className={`${styles.card} m-10 w-fit h-fit flex flex-col md:flex-row`}
+      className={`${styles.card} m-10 w-3/4 h-fit flex flex-col md:flex-row`}
     >
       <div className="pr-8 self-center">
         <img
@@ -76,9 +77,11 @@ const CandidateCard = (props) => {
         </div>
 
         <div className="pt-4">
-          <button className={styles.button}> Vote for {toPascalCase(props.person.name)} </button>
+        <SingleVote name={toPascalCase(props.person.name)} />
+          {/* <button className={styles.button}> Vote for  </button> */}
         </div>
       </div>
+     
       </div>
   );
 };

@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import web3 from "../ethereum/webThree";
 import election from "../ethereum/election";
 import CandidateCard from "../components/CandidateCard/CandidateCard";
+import styles from "../components/buttons/buttons.module.css"
 import SideBarSection from "../components/SideNav/Sidebar";
 import { posts } from "../constants";
 const Tx = require("ethereumjs-tx").Transaction;
@@ -71,23 +72,28 @@ const VotingScreen = () => {
     <div className="">
       <SideBarSection posts={posts} />
       <div className="ml-80">
-        <p>VotingScreen for {position}</p>
-        <p className="mb-4">This is the main screen for voting</p>
-        <Link to="/swc" className="p-2 mt-3 bg-blue-700 text-white">
-          Link to vote for SWC (just for test)
-        </Link>
-        <div className="p-6">
-          <h2 className="text-lg underline">
-            Candidate list for <span className="font-bold">{position}</span>{" "}
-            position:
-          </h2>
-          <ul>
-            {candidates &&
-              candidates[position]?.map((candidate, i) => {
-                return <CandidateCard person={candidate} />;
-              })}
-          </ul>
+      <div className="p-6">
+        <div className="flex flex-end w-3/4">
+
+        <h2 className="text-lg">
+          <span className="font-bold ml-12">{candidates.all[0]["position"]}</span>
+        </h2>
+        <div className={`${styles.bg} mr-0 ml-auto`}>
+          Single Vote
         </div>
+        </div>
+        <ul>
+          {candidates &&
+            candidates[position]?.map((candidate, i) => {
+              return <CandidateCard person={candidate} />;
+            })}
+        </ul>
+        <div className="flex ml-16 gap-2 "> 
+
+        <button className={styles.none}>None of the above</button>
+        <button className={styles.button2}>Next</button>
+        </div>
+      </div>
       </div>
     </div>
   );

@@ -5,9 +5,10 @@
   cursor: pointer;
 }
 
-/* .sidebarLabel {
-   margin-left: 16px; 
-} */
+.sidebarLabel {
+   color: #2D333B;
+   font-size: 1rem;
+}
 
 .dropdownLink {
   background: #F9F9F9;
@@ -21,10 +22,9 @@
   cursor: pointer;
   transition: all 0.1s ease-in-out;
 }
-.dropdownLink :hover {
-  /* background: #b3b8c5; */
-  color: #2b00ff;
-  font-weight: 500;
+.dropdownLink:hover {
+  background: #EDEEEF;
+
 }
 
 .selected {

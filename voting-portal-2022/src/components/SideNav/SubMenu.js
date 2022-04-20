@@ -6,21 +6,22 @@ const SubMenu = ({ item, index }) => {
   return (
     <>
       {item.subposts.length === 1 ? (
-        <NavLink
-          className={
-            position === item.subposts[0].path
-              ? `${styles.sidebarLabel} ${styles.selected} rounded-md ml-1 p-3 py-2 text-lg flex justify-between text-black font-bold md:border-blue-700 md:border-l-4 md:border-b-0 md:border-t-0 md:border-r-0 md:text-blue-700 ${styles.electionBlue}`
-              : `${styles.sidebarLabel} rounded-md p-3 py-2 ml-1 text-lg flex justify-between text-black font-bold md:flex`
-          }
-          style={{
-            transition: "all 0.4s ease-out",
-          }}
-          to={item.subposts[0].path}
-        >
-          <div>
-            <span className={`${styles.sidebarLabel}`}>{item.title}</span>
-          </div>
-        </NavLink>
+        // <NavLink
+        //   className={
+        //     position === item.subposts[0].path
+        //       ? `${styles.sidebarLabel} ${styles.selected} rounded-md ml-1 p-3 py-2 text-lg flex justify-between text-black font-bold md:border-blue-700 md:border-l-4 md:border-b-0 md:border-t-0 md:border-r-0 md:text-blue-700 ${styles.electionBlue}`
+        //       : `${styles.sidebarLabel} rounded-md p-3 py-2 ml-1 text-lg flex justify-between text-black font-bold md:flex`
+        //   }
+        //   style={{
+        //     transition: "all 0.4s ease-out",
+        //   }}
+        //   to={item.subposts[0].path}
+        // >
+        //   <div>
+        //     <span className={`${styles.sidebarLabel}`}>{item.title}</span>
+        //   </div>
+        // </NavLink>
+        <></>
       ) : (
         <div
           // className={
@@ -28,7 +29,7 @@ const SubMenu = ({ item, index }) => {
           //     ? `${styles.sidebarLabel} cursor-pointer p-3 text-lg flex justify-between text-black rounded-md border font-bold md:border-blue-700 md:border-l-4 md:border-b-0 md:border-t-0 md:border-r-0 md:text-blue-700 ${styles.electionBlue}`
           //     : `${styles.sidebarLabel} cursor-pointer p-3 text-lg flex justify-between text-black rounded-md font-bold border md:flex`
           // }
-          className={`${styles.sidebarLabel} p-3 text-lg ml-1 flex justify-between text-black font-bold md:flex`}
+          className={`${styles.sidebarLabel} p-3 text-lg ml-1 flex justify-between font-semibold md:flex`}
           style={{
             transition: "all 0.4s ease-out",
           }}
@@ -39,7 +40,7 @@ const SubMenu = ({ item, index }) => {
         </div>
       )}
 
-      {item.subposts.length > 1 && item.subposts.map((item, index) => {
+      {item.subposts.map((item, index) => {
         return (
           <NavLink
             className={() =>
