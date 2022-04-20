@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { pos2idMap } from "../constants";
 import { getCandidateByPos } from "../redux/actions/candidates";
 import { Link } from "react-router-dom";
+import CandidateCard from "../components/CandidateCard/CandidateCard";
 
 const VotingScreen = () => {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ const VotingScreen = () => {
         <ul>
           {candidates &&
             candidates[position]?.map((candidate, i) => {
-              return <li key={candidate.id}>{candidate.name}</li>;
+              return <CandidateCard person={candidate} />;
             })}
         </ul>
       </div>
