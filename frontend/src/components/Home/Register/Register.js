@@ -3,6 +3,7 @@ import styles from "./Register.module.css";
 import RegisterSVG from "./RegisterSVG";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Vote from "./Vote";
 
 const Register = () => {
   let navigate = useNavigate();
@@ -32,6 +33,7 @@ const Register = () => {
   };
 
   return (
+    <>
     <div className={`${styles.cont} w-full md:w-4/6 px-2 md:p-0 `}>
       {/* <h1 className={styles.regText}>Register</h1> */}
       <div className={styles.regCont}>
@@ -79,6 +81,8 @@ const Register = () => {
         </div>
       </div>
     </div>
+    {/* <Vote name={"Shubham Gandhi"} prog={"B.Tech"} roll_no={"180123046"} hostel={"UMIAM"}/> */}
+  </>
   );
 };
 
