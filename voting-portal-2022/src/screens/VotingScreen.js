@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { pos2idMap } from "../constants";
 import { getCandidateByPos } from "../redux/actions/candidates";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
+import CandidateCard from "../components/CandidateCard/CandidateCard"
 import web3 from "../ethereum/webThree";
 import election from "../ethereum/election";
 const Tx = require("ethereumjs-tx").Transaction;
@@ -13,9 +13,7 @@ const publicKey = "0xD0e203A04Eb4024Fbd90768b46E37aC67F1Cd707";
 const privateKey =
   "9f94794beb1b094dfa4dd85f1190703500e5179fe4b53767dcfc785eaa4620b0";
 const contractAddress = "0x4e6a5bfb44c6d243a44ed5f6704be50c38ac289f";
-=======
-import CandidateCard from "../components/CandidateCard/CandidateCard";
->>>>>>> dfcbed9cece93801bb281670200f17df26d4a184
+
 
 const VotingScreen = () => {
   const dispatch = useDispatch();
