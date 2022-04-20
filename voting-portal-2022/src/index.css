@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 .voting-portal-2022-wrapper{
-  max-width: 1280px;
+  /* max-width: 1280px; */
   margin: auto;
 }
