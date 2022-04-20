@@ -51,5 +51,9 @@
     color: #F3AC81;
 }
 
-
-
+.bg {
+    background: #EAEAEA;
+    border-radius: 4px;
+    padding: 8px;
+    color: #4B5563;
+}

@@ -134,9 +134,15 @@ const VotingScreen = () => {
         />
       <div className="ml-80">
       <div className="p-6">
+        <div className="flex flex-end w-3/4">
+
         <h2 className="text-lg">
-          <span className="font-bold">{position}</span>
+          <span className="font-bold ml-12">{candidates.all[0]["position"]}</span>
         </h2>
+        <div className={`${styles.bg} mr-0 ml-auto`}>
+          Single Vote
+        </div>
+        </div>
         <ul>
           {candidates &&
             candidates[position]?.map((candidate, i) => {
