@@ -17,4 +17,61 @@ export const pos2idMap = {
   cultural: "9",
   pg: "10",
   girl: "12",
+  
 };
+export const posts=[
+  {
+    title: "Executives",
+    subposts: [
+      {
+        title: "Vice President",
+        path: "vicepresident",
+      },
+      {
+        title: "Sports",
+        path: "sports",
+      },
+      {
+        title: "Welfare",
+        path: "welfare",
+      },
+      {
+        title: "Technical",
+        path: "technical",
+      },
+      {
+        title: "HAB",
+        path: "hab",
+      },
+      {
+        title: "Sail",
+        path: "sail",
+      },
+      {
+        title: "SWC",
+        path: "swc",
+      },
+      {
+        title: "Cultural",
+        path: "cultural",
+      },
+    ],
+  },
+  {
+    title: "Senate",
+    subposts: [
+      {
+        title: "UG Senator",
+        path: "ug",
+      },
+      {
+        title: "PG Senator",
+        path: "pg",
+      },
+      {
+        title: "Girl Senator",
+        path: "girl",
+      },
+    ],
+  },
+];
