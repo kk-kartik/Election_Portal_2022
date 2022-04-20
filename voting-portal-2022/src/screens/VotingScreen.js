@@ -4,18 +4,15 @@ import { useParams } from "react-router-dom";
 import { pos2idMap } from "../constants";
 import { getCandidateByPos } from "../redux/actions/candidates";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import web3 from "../ethereum/webThree";
 import election from "../ethereum/election";
+import CandidateCard from "../components/CandidateCard/CandidateCard";
 const Tx = require("ethereumjs-tx").Transaction;
 
 const publicKey = "0xD0e203A04Eb4024Fbd90768b46E37aC67F1Cd707";
 const privateKey =
   "9f94794beb1b094dfa4dd85f1190703500e5179fe4b53767dcfc785eaa4620b0";
 const contractAddress = "0x4e6a5bfb44c6d243a44ed5f6704be50c38ac289f";
-=======
-import CandidateCard from "../components/CandidateCard/CandidateCard";
->>>>>>> dfcbed9cece93801bb281670200f17df26d4a184
 
 const VotingScreen = () => {
   const dispatch = useDispatch();
@@ -70,15 +67,9 @@ const VotingScreen = () => {
 
   return (
     <div className="p-1">
-      <p>VotingScreen for {position}</p>
-      <p className="mb-4">This is the main screen for voting</p>
-      <Link to="/swc" className="p-2 mt-3 bg-blue-700 text-white">
-        Link to vote for SWC (just for test)
-      </Link>
       <div className="p-6">
-        <h2 className="text-lg underline">
-          Candidate list for <span className="font-bold">{position}</span>{" "}
-          position:
+        <h2 className="text-lg">
+          <span className="font-bold">{position}</span>
         </h2>
         <ul>
           {candidates &&

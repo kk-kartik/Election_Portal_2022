@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./CandidateCard.module.css";
+import SingleVote from "../buttons/buttons";
 const Agenda = (p) => {
   return (
     <ol>{p.title}</ol>
@@ -79,6 +80,7 @@ const CandidateCard = (props) => {
           <button className={styles.button}> Vote for {toPascalCase(props.person.name)} </button>
         </div>
       </div>
+      <SingleVote />
       </div>
   );
 };
