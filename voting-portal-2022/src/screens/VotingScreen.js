@@ -8,14 +8,13 @@ import web3 from "../ethereum/webThree";
 import election from "../ethereum/election";
 import CandidateCard from "../components/CandidateCard/CandidateCard";
 import SideBarSection from "../components/SideNav/Sidebar";
+import { posts } from "../constants";
 const Tx = require("ethereumjs-tx").Transaction;
 
 const publicKey = "0xD0e203A04Eb4024Fbd90768b46E37aC67F1Cd707";
 const privateKey =
   "9f94794beb1b094dfa4dd85f1190703500e5179fe4b53767dcfc785eaa4620b0";
 const contractAddress = "0x4e6a5bfb44c6d243a44ed5f6704be50c38ac289f";
-
-
 
 const VotingScreen = () => {
   const dispatch = useDispatch();
@@ -70,90 +69,27 @@ const VotingScreen = () => {
 
   return (
     <div className="">
-        <SideBarSection
-          posts={[
-            {
-              title: "Vice President",
-              subposts: [
-                {
-                  title: "",
-                  path: "vicepresident",
-                },
-              ],
-            },
-            {
-              title: "Board Secretary",
-              subposts: [
-                {
-                  title: "Sports",
-                  path: "sports",
-                },
-                {
-                  title: "Welfare",
-                  path: "welfare",
-                },
-                {
-                  title: "Technical",
-                  path: "technical",
-                },
-                {
-                  title: "HAB",
-                  path: "hab",
-                },
-                {
-                  title: "Sail",
-                  path: "sail",
-                },
-                {
-                  title: "SWC",
-                  path: "swc",
-                },
-                {
-                  title: "Cultural",
-                  path: "cultural",
-                },
-              ],
-            },
-            {
-              title: "Senator",
-              subposts: [
-                {
-                  title: "UG Senator",
-                  path: "ug",
-                },
-                {
-                  title: "PG Senator",
-                  path: "pg",
-                },
-                {
-                  title: "Girl Senator",
-                  path: "girl",
-                },
-              ],
-            },
-          ]}
-        />
+      <SideBarSection posts={posts} />
       <div className="ml-80">
-      <p>VotingScreen for {position}</p>
-      <p className="mb-4">This is the main screen for voting</p>
-      <Link to="/swc" className="p-2 mt-3 bg-blue-700 text-white">
-        Link to vote for SWC (just for test)
-      </Link>
-      <div className="p-6">
-        <h2 className="text-lg underline">
-          Candidate list for <span className="font-bold">{position}</span>{" "}
-          position:
-        </h2>
-        <ul>
-          {candidates &&
-            candidates[position]?.map((candidate, i) => {
-              return <CandidateCard person={candidate} />;
-            })}
-        </ul>
-      </div>
+        <p>VotingScreen for {position}</p>
+        <p className="mb-4">This is the main screen for voting</p>
+        <Link to="/swc" className="p-2 mt-3 bg-blue-700 text-white">
+          Link to vote for SWC (just for test)
+        </Link>
+        <div className="p-6">
+          <h2 className="text-lg underline">
+            Candidate list for <span className="font-bold">{position}</span>{" "}
+            position:
+          </h2>
+          <ul>
+            {candidates &&
+              candidates[position]?.map((candidate, i) => {
+                return <CandidateCard person={candidate} />;
+              })}
+          </ul>
+        </div>
       </div>
     </div>
-
   );
 };
 

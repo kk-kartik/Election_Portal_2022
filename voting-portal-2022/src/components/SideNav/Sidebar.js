@@ -1,11 +1,12 @@
 import React from "react";
 import SubMenu from "./SubMenu";
 import gymkhana from "../../assets/gymkhana.png";
+import styles from "./Sidebar.module.css";
 
 const Sidebar = (props) => {
   return (
     <div
-      className="shadow-lg rounded-2xl fixed top-0 left-0 h-screen bg-white overflow-auto w-1/5 pr-1 text-sm"
+      className="shadow-lg rounded-2xl fixed top-0 left-0 h-screen overflow-auto w-1/5 pr-1 text-sm"
       style={{
         backgroundColor: "#F9F9F9",
       }}
@@ -18,6 +19,11 @@ const Sidebar = (props) => {
       {props.posts.map((item, index) => {
         return <SubMenu item={item} key={index} />;
       })}
+
+      <div className="flex justify-center items-center my-6 mb-10">
+        <button className={styles.button}> Seal and Submit
+        </button>
+      </div>
     </div>
   );
 };
