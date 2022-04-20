@@ -12,6 +12,10 @@
     font-weight: 600;
 }
 
+.button1:hover {
+    background: #d4d4d4;
+}
+
 .button2 {
     background: #2604CC;
     box-shadow: inset 0px 2px 0px rgba(0, 0, 0, 0.05);
@@ -23,6 +27,10 @@
     padding-bottom: 10px;
     font-weight: 600;
 
+}
+
+.button2:hover{
+    background: #18018b;
 }
 
 .button3 {
@@ -49,6 +57,12 @@
     padding-bottom: 10px;
     font-weight: 600;
     color: #F3AC81;
+}
+
+.none:hover {
+    background: #F3AC81;
+    border: 1px solid #FAFBFC;
+    color: #ffffff;
 }
 
 .bg {
