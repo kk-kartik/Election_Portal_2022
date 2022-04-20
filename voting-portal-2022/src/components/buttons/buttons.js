@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import styles from "./buttons.module.css";
 import check from "./check.svg"
 import cancel from "./cancel.svg"
-const SingleVote = () =>  {
+const SingleVote = (props) =>  {
     const [vote, setVoted] = useState(false);
     const handleChange = () => {
         setVoted(!vote);
@@ -10,14 +10,14 @@ const SingleVote = () =>  {
     return(
         <div> 
             {!vote && <button className={styles.button1} onClick={handleChange}>
-              Vote         </button>}
+              Vote for {props.name}        </button>}
             {vote &&  <button className={styles.button2} onClick={handleChange}>
               <div className="flex">
                   <div className="pr-2 pt-1">
                   <img src={check}/>
                   </div>
                   <div>
-                  Voted
+                  Voted for {props.name}
                   </div>
               </div>
         </button> }
