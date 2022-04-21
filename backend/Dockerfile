@@ -13,7 +13,7 @@ ENV PYTHONFAULTHANDLER=1 \
     PIPENV_NOSPIN=true \
     PIPENV_DOTENV_LOCATION=.env
 
-RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y curl python3-dev build-essential && rm -rf /var/lib/apt/lists/*
 
 RUN pip install pipenv
 
