@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from django.core.mail import send_mail
 from django.core.mail import EmailMessage
 
-
+from .data_variable import data
 from io import BytesIO
 from xhtml2pdf import pisa
 from django.template.loader import get_template
@@ -346,11 +346,11 @@ def send_email(email,uniqueid_email):
 def voter_card(request,name_slug):
     if request.method == 'POST':
         try:
-            email = request.data['email']
+            roll_no = request.data['roll_no']
         except Exception as e:
             print(e)
-            return Response({'Expected "email" keys as a json object!'},status=status.HTTP_400_BAD_REQUEST)
-        voter_obj = Voter.objects.filter(user__email=email)
+            return Response({'Expected "roll_no" key as a json object!'},status=status.HTTP_400_BAD_REQUEST)
+        voter_obj = Voter.objects.filter(user__roll_number=roll_no)
         if not voter_obj:
              return Response({'Incomplete registration'},status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -358,18 +358,17 @@ def voter_card(request,name_slug):
             is_voted = voter_obj.is_voted
             if is_voted:
                 return Response({'Already Voted!'},status=status.HTTP_400_BAD_REQUEST)
-            voter_card = VoterCard.objects.filter(id=voter_obj.id)
+            voter_card = VoterCard.objects.filter(voter__id=voter_obj.id)
             if not voter_card:
                 voter_card = VoterCard(voter=voter_obj)
                 voter_card.save()
             else:
                 voter_card = voter_card[0]
-            uniqueid = voter_card.uniqueid
+            email = voter_obj.user.email
             uniqueid_email = voter_card.uniqueid_email
             send_email(email,uniqueid_email)
             serialized_voter = VoterSerializer(voter_obj)
             return Response(serialized_voter.data)
-            # return Response({'Voter ID':uniqueid})
 
 @api_view(['POST'])
 def get_voter_id(request,name_slug):
@@ -395,16 +394,18 @@ def voter_card_check(request,name_slug):
     if request.method == 'POST':
         try:
             uniqueid = request.data['voterid']
-            uniqueid_email = request.data['otp']
         except Exception as e:
             print(e)
-            return Response({"Expected 'voterid' and 'otp' keys as a json object!"},status=status.HTTP_400_BAD_REQUEST)
-        voter_card_obj = VoterCard.objects.filter(uniqueid=uniqueid,uniqueid_email=uniqueid_email)
+            return Response({"Expected 'voterid' keys as a json object!"},status=status.HTTP_400_BAD_REQUEST)
+        voter_card_obj = VoterCard.objects.filter(uniqueid=uniqueid)
         if not voter_card_obj:
             return Response({'No voter card exists, call voterid to create one!'},status=status.HTTP_400_BAD_REQUEST)
         else:
             voter_card_obj = voter_card_obj[0]
             voter = voter_card_obj.voter
+            roll_number = voter.user.roll_number
+            if not roll_number in data:
+                return Response({f"Not a valid roll number {roll_number}!"},status=status.HTTP_400_BAD_REQUEST)
             if not voter.is_voted:
                 return Response({
                         'gender': voter.user.gender,
@@ -413,30 +414,6 @@ def voter_card_check(request,name_slug):
                     })
             else:
                 return Response({'Invalid voter!'},status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['POST'])
-def store_vote(request,name_slug):
-    if request.method == 'POST':
-        try:
-            uniqueid = request.data['voterid']
-            vote = request.data['vote']
-        except Exception as e:
-            print(e)
-            return Response({"Expected 'voterid' and 'vote' keys as a json object!"},status=status.HTTP_400_BAD_REQUEST)
-        voter_card_obj = VoterCard.objects.filter(uniqueid=uniqueid)
-        if not voter_card_obj:
-            return Response({'No voter card exists, call voterid to create one!'},status=status.HTTP_400_BAD_REQUEST)
-        else:
-            voter_card_obj = voter_card_obj[0]
-            voter = voter_card_obj.voter
-            if not voter.is_voted:
-                voter_card_obj.vote = vote
-                voter.is_voted = True
-                voter.save()
-                voter_card_obj.save()
-                return Response({'status':'Vote stored succesfully.'})
-            else:
-                return Response({'Voter has already voted!'},status=status.HTTP_400_BAD_REQUEST)
 
 
 def get_hostel():
@@ -504,24 +481,51 @@ def handle_stats(stat_title, stat_key, default_func):
     stats.stat_cnt = stat_cnt
     stats.save()
 
+
+
+def update_stats(email):
+    user_obj = EUser.objects.filter(email=email)
+    if not user_obj:
+        return 400
+        # return Response({'User is not registered.'},status=status.HTTP_400_BAD_REQUEST)
+    else:
+        user_obj = user_obj[0]
+        hostel = user_obj.hostel
+        branch = user_obj.branch
+        handle_stats("Hostel",hostel,get_hostel)
+        handle_stats("Branch",branch,get_branch)
+        return 200
+        # return Response({'status':'true'})
+
 @api_view(['POST'])
-def update_stats(request,name_slug):
+def store_vote(request,name_slug):
     if request.method == 'POST':
         try:
-            email = request.data['email']
+            uniqueid = request.data['voterid']
+            vote = request.data['vote']
         except Exception as e:
             print(e)
-            return Response({'Expected "email" key as a json object!'},status=status.HTTP_400_BAD_REQUEST)
-        user_obj = EUser.objects.filter(email=email)
-        if not user_obj:
-             return Response({'User is not registered.'},status=status.HTTP_400_BAD_REQUEST)
+            return Response({"Expected 'voterid' and 'vote' keys as a json object!"},status=status.HTTP_400_BAD_REQUEST)
+        voter_card_obj = VoterCard.objects.filter(uniqueid=uniqueid)
+        if not voter_card_obj:
+            return Response({'No voter card exists, call voterid to create one!'},status=status.HTTP_400_BAD_REQUEST)
         else:
-            user_obj = user_obj[0]
-            hostel = user_obj.hostel
-            branch = user_obj.branch
-            handle_stats("Hostel",hostel,get_hostel)
-            handle_stats("Branch",branch,get_branch)
-            return Response({'status':'true'})
+            voter_card_obj = voter_card_obj[0]
+            voter = voter_card_obj.voter
+            if not voter.is_voted:
+                voter_card_obj.vote = vote
+                status_stats = update_stats(voter.user.email)
+                if status_stats == 400:
+                    return Response({'User is not registered.'},status=status.HTTP_400_BAD_REQUEST)
+                voter.is_voted = True
+                voter.save()
+                voter_card_obj.voter = None
+                voter_card_obj.uniqueid_email = "None"
+                voter_card_obj.save()
+                return Response({'status':'Vote stored succesfully.'})
+            else:
+                return Response({'Voter has already voted!'},status=status.HTTP_400_BAD_REQUEST)
+
 
 
 @api_view(['GET'])
