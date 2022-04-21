@@ -2,8 +2,8 @@ import election from "../ethereum/election";
 import web3 from "../ethereum/webThree";
 import { publicKey, privateKey, contractAddress } from "../constants";
 
-import { Transaction as Tx } from "@ethereumjs/tx"
-import Common,{Chain} from "@ethereumjs/common"
+import { Transaction as Tx } from "@ethereumjs/tx";
+import Common, { Chain } from "@ethereumjs/common";
 
 export const countVotes = async () => {
   const counts = await election.methods.voterCount().call();
@@ -13,9 +13,9 @@ export const countVotes = async () => {
 export const methodFunction = async (votes, voterId) => {
   // const votes = "1,2,32,67";
   // const voterId = "12";
- 
- //  TO-DO (encrypt vote)
-   
+
+  //  TO-DO (encrypt vote)
+
   const functionAbi = election.methods.store(voterId, votes).encodeABI();
 
   web3.eth.getTransactionCount(publicKey, function (err, nonce) {
@@ -28,9 +28,9 @@ export const methodFunction = async (votes, voterId) => {
       value: 0,
       data: functionAbi,
     };
-    const common = new Common({chain:Chain.Rinkeby});
+    const common = new Common({ chain: Chain.Rinkeby });
 
-    var tx = Tx.fromTxData(details,{common});
+    var tx = Tx.fromTxData(details, { common });
     tx.sign(Buffer.from(privateKey, "hex"));
     var serializedTx = tx.serialize();
 
@@ -40,4 +40,3 @@ export const methodFunction = async (votes, voterId) => {
       .on("error", console.log);
   });
 };
-
