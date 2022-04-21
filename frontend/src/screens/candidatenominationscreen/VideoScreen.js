@@ -8,19 +8,34 @@ import useNominate from "../../hooks/useNominate";
 import styles from "../Register/RegisterScreen.module.css";
 import SaveAndNext from "./SaveAndNext";
 import YoutubeEmbed from "../../components/Home/Nomination/Video/YoutubeEmbed";
+
 const VideoScreen = () => {
-  const { error, message, loading, candidate, setError, updateNomination } =
-    useNominate();
+  const {
+    error,
+    message,
+    loading,
+    candidate,
+    setError,
+    updateNomination,
+    isNominationComplete,
+    isDeadlineOver,
+    isFormClosed,
+  } = useNominate();
 
   const videoRef = useRef(null);
   let embedId = "";
-  const CheckURL = (url) => {
-    var regExp =
-      /^https?\:\/\/(?:www\.youtube(?:\-nocookie)?\.com\/|m\.youtube\.com\/|youtube\.com\/)?(?:ytscreeningroom\?vi?=|youtu\.be\/|vi?\/|user\/.+\/u\/\w{1,2}\/|embed\/|watch\?(?:.*\&)?vi?=|\&vi?=|\?(?:.*\&)?vi?=)([^#\&\?\n\/<>"']*)/i;
-    var match = url.match(regExp);
-    return match && match[1].length == 11 ? match[1] : false;
+  const CheckURL = (value) => {
+    var regEx =
+      "^(?:https?:)?//[^/]*(?:youtube(?:-nocookie)?.com|youtu.be).*[=/]([-\\w]{11})(?:\\?|=|&|$)";
+    var matches = value.match(regEx);
+    if (matches) {
+      return matches[1];
+    }
+    return false;
   };
   const submitData = async () => {
+    console.log(videoRef.current.value);
+    console.log(CheckURL(videoRef.current.value));
     if (!videoRef.current.value || !CheckURL(videoRef.current.value)) {
       setError("Please add valid url");
       return;
@@ -46,6 +61,7 @@ const VideoScreen = () => {
         className={`${styles.input} md:w-1/2 lg:w-2/5 w-full`}
         defaultValue={candidate?.video}
         ref={videoRef}
+        disabled={isFormClosed}
       />
       {candidate.video && (
         <div className="w-full md:w-1/2 my-4">
@@ -53,12 +69,23 @@ const VideoScreen = () => {
         </div>
       )}
 
-      <SaveAndNext
-        error={error}
-        message={message}
-        loading={loading}
-        submit={submitData}
-      />
+      {!isFormClosed && (
+        <SaveAndNext
+          error={error}
+          message={message}
+          loading={loading}
+          submit={submitData}
+        />
+      )}
+      {isNominationComplete ? (
+        <p className="text-blue-500">Your Nomination is complete</p>
+      ) : (
+        <>
+          {isDeadlineOver && (
+            <p className="text-blue-500">Nomination Deadline is over.</p>
+          )}
+        </>
+      )}
     </>
   );
 };

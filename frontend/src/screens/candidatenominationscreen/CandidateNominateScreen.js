@@ -10,12 +10,13 @@ import VerificationScreen from "./VerificationScreen";
 import VideoScreen from "./VideoScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../actions/auth";
+import NewFooter from "../../components/Footer/NewFooter";
 
 const Layout = () => {
   return (
     <div
-      className="mt-12  ml-1 mr-1 md:ml-16 md:mr-10"
-      style={{ maxWidth: "1240px" }}
+      className="mt-12 ml-1 mr-1 md:ml-16 md:mr-10"
+      style={{ maxWidth: "1240px", minHeight:"60vh" }}
     >
       <Outlet />
     </div>
@@ -45,6 +46,7 @@ const CandidateNominateScreen = () => {
           <Route path="witnesses" exact element={<WitnessesScreen />} />
         </Route>
       </Routes>
+      <NewFooter />
     </>
   );
 };

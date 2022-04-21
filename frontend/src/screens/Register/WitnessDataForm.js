@@ -3,7 +3,7 @@ import styles from "./RegisterScreen.module.css";
 import { userRegistration } from "../../api/index";
 import { useNavigate } from "react-router-dom";
 
-const WitnessDataForm = ({ data, setData, validationErrors }) => {
+const WitnessDataForm = ({ data, setData, validationErrors, isFormClosed }) => {
   const onChange = (e) => {
     setData((prev) => ({
       ...data,
@@ -27,9 +27,29 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           className={`${styles.input} md:w-11/12 w-full mb-1`}
           defaultValue={data?.name}
           onChange={onChange}
+          disabled={isFormClosed}
         />
         {validationErrors?.name ? (
           <p className="text-red-400 text-sm">{validationErrors.name}</p>
+        ) : (
+          <br />
+        )}
+        <label for="email" className="font-semibold text-sm text-gray-800">
+          Email:{" "}
+        </label>
+        <br />
+        <input
+          required
+          type="text"
+          id="email"
+          name="email"
+          className={`${styles.input} md:w-11/12 w-full mb-1`}
+          defaultValue={data?.email}
+          onChange={onChange}
+          disabled={isFormClosed}
+        />
+        {validationErrors?.email ? (
+          <p className="text-red-400 text-sm">{validationErrors.email}</p>
         ) : (
           <br />
         )}
@@ -46,6 +66,7 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           defaultValue={data?.roll_number != "" ? data?.roll_number : null}
           onChange={onChange}
           maxLength={9}
+          disabled={isFormClosed}
         />
         {validationErrors?.roll_number ? (
           <p className="text-red-400 text-sm">{validationErrors.roll_number}</p>
@@ -63,11 +84,38 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
           defaultValue={data?.degree != "" ? data?.degree : null}
           onChange={onChange}
+          disabled={isFormClosed}
         >
-          <option value="">Select </option>
-          <option value="U">B.Tech</option>
-          <option value="P">M.Tech</option>
-          <option value="P">PhD</option>
+          <option value="" selected={data?.degree == ""}>
+            Select{" "}
+          </option>
+          <option value="BTech" selected={data?.degree == "BTech"}>
+            B.Tech
+          </option>
+          <option value="MTech" selected={data?.degree == "MTech"}>
+            M.Tech
+          </option>
+          <option value="PhD" selected={data?.degree == "PhD"}>
+            PhD
+          </option>
+          <option value="Msc" selected={data?.degree == "Msc"}>
+            MSc
+          </option>
+          <option value="Bdes" selected={data?.degree == "Bdes"}>
+            Bdes
+          </option>
+          <option value="Mdes" selected={data?.degree == "Mdes"}>
+            Mdes
+          </option>
+          <option value="Dual" selected={data?.degree == "Dual"}>
+            Dual Degree
+          </option>
+          <option value="MA" selected={data?.degree == "MA"}>
+            MA
+          </option>
+          <option value="MSR" selected={data?.degree == "MSR"}>
+            MSR
+          </option>
         </select>
         {validationErrors?.degree ? (
           <p className="text-red-400 text-sm">{validationErrors.degree}</p>
@@ -85,26 +133,29 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           defaultValue={data?.branch != "" ? data?.branch : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
+          disabled={isFormClosed}
         >
-          <option value="">Select</option>
-          <option value="01">CSE</option>
-          <option value="02">ECE</option>
-          <option value="03">ME</option>
-          <option value="04">Civil</option>
-          <option value="05">Design</option>
-          <option value="06">BSBE</option>
-          <option value="07">CL</option>
-          <option value="08">EEE</option>
-          <option value="21">Physics</option>
-          <option value="22">Chemistry</option>
-          <option value="23">MNC</option>
-          <option value="41">HSS</option>
-          <option value="51">Energy</option>
-          <option value="52">Environment</option>
-          <option value="53">Nano-Tech</option>
-          <option value="54">Rural-Tech</option>
-          <option value="55">Linguistics</option>
-          <option value="61">Others</option>
+          <option value="" selected={data?.branch == ""}>
+            Select
+          </option>
+          <option selected={data?.branch == "CSE"}>CSE</option>
+          <option selected={data?.branch == "ECE"}>ECE</option>
+          <option selected={data?.branch == "ME"}>ME</option>
+          <option selected={data?.branch == "Civil"}>Civil</option>
+          <option selected={data?.branch == "Design"}>Design</option>
+          <option selected={data?.branch == "BSBE"}>BSBE</option>
+          <option selected={data?.branch == "CL"}>CL</option>
+          <option selected={data?.branch == "EEE"}>EEE</option>
+          <option selected={data?.branch == "Physics"}>Physics</option>
+          <option selected={data?.branch == "Chemistry"}>Chemistry</option>
+          <option selected={data?.branch == "MNC"}>MNC</option>
+          <option selected={data?.branch == "HSS"}>HSS</option>
+          <option selected={data?.branch == "Energy"}>Energy</option>
+          <option selected={data?.branch == "Environment"}>Environment</option>
+          <option selected={data?.branch == "Nano-Tech"}>Nano-Tech</option>
+          <option selected={data?.branch == "Rural-Tech"}>Rural-Tech</option>
+          <option selected={data?.branch == "Linguistics"}>Linguistics</option>
+          <option selected={data?.branch == "Others"}>Others</option>
         </select>
         {validationErrors?.branch ? (
           <p className="text-red-400 text-sm">{validationErrors.branch}</p>
@@ -122,26 +173,105 @@ const WitnessDataForm = ({ data, setData, validationErrors }) => {
           defaultValue={data?.hostel != "" ? data?.hostel : null}
           onChange={onChange}
           className={`${styles.input} md:w-11/12 w-full  mb-1`}
+          disabled={isFormClosed}
         >
-          <option value="">Select </option>
-          <option value="lohit">Lohit</option>
-          <option value="dhansiri">Dhansiri</option>
-          <option value="dihing">Dihing</option>
-          <option value="disang">Disang</option>
-          <option value="dibang">Dibang</option>
-          <option value="manas">Manas</option>
-          <option value="umiam">Umiam</option>
-          <option value="kapili">Kapili</option>
-          <option value="subansiri">Subansiri</option>
-          <option value="kameng">Kameng</option>
-          <option value="barak">Barak</option>
-          <option value="msh">Married Scholar Hostel</option>
-          <option value="brahmaputra">Brahmaputra</option>
-          <option value="siang">Siang</option>
-          <option value="not-alloted">Not Alloted</option>
+          <option value="" selected={data?.hostel == ""}>
+            Select{" "}
+          </option>
+          <option selected={data?.hostel == "Lohit"}>Lohit</option>
+          <option selected={data?.hostel == "Dhansiri"}>Dhansiri</option>
+          <option selected={data?.hostel == "Dihing"}>Dihing</option>
+          <option selected={data?.hostel == "Disang"}>Disang</option>
+          <option selected={data?.hostel == "Dibang"}>Dibang</option>
+          <option selected={data?.hostel == "Manas"}>Manas</option>
+          <option selected={data?.hostel == "Umiam"}>Umiam</option>
+          <option selected={data?.hostel == "Kapili"}>Kapili</option>
+          <option selected={data?.hostel == "Subhansiri"}>Subansiri</option>
+          <option selected={data?.hostel == "Kameng"}>Kameng</option>
+          <option selected={data?.hostel == "Barak"}>Barak</option>
+          <option selected={data?.hostel == "Married Scholor Hostel"}>
+            Married Scholar Hostel
+          </option>
+          <option selected={data?.hostel == "Brahmaputra"}>Brahmaputra</option>
+          <option selected={data?.hostel == "Siang"}>Siang</option>
+          <option selected={data?.hostel == "Not Alloted"}>Not Alloted</option>
         </select>
         {validationErrors?.hostel ? (
           <p className="text-red-400 text-sm">{validationErrors.hostel}</p>
+        ) : (
+          <br />
+        )}
+        <label for="cpi" className="font-semibold text-sm text-gray-800">
+          Room no:{" "}
+        </label>
+        <input
+          required
+          type="text"
+          id="room_no"
+          name="room_no"
+          className={`${styles.input} md:w-11/12 w-full mb-1`}
+          defaultValue={data?.room_no}
+          onChange={onChange}
+          disabled={isFormClosed}
+        />
+        {validationErrors?.room_no ? (
+          <p className="text-red-400 text-sm">{validationErrors.room_no}</p>
+        ) : (
+          <br />
+        )}
+        <label for="cpi" className="font-semibold text-sm text-gray-800">
+          Cpi:{" "}
+        </label>
+        <br />
+        <input
+          required
+          type="text"
+          id="cpi"
+          name="cpi"
+          className={`${styles.input} md:w-11/12 w-full mb-1`}
+          defaultValue={data?.cpi}
+          onChange={onChange}
+          disabled={isFormClosed}
+        />
+        {validationErrors?.cpi ? (
+          <p className="text-red-400 text-sm">{validationErrors.cpi}</p>
+        ) : (
+          <br />
+        )}
+        <label for="cpi" className="font-semibold text-sm text-gray-800">
+          Semester:{" "}
+        </label>
+        <input
+          required
+          type="text"
+          id="semester"
+          name="semester"
+          className={`${styles.input} md:w-11/12 w-full mb-1`}
+          defaultValue={data?.semester}
+          onChange={onChange}
+          disabled={isFormClosed}
+        />
+        {validationErrors?.semester ? (
+          <p className="text-red-400 text-sm">{validationErrors.semester}</p>
+        ) : (
+          <br />
+        )}
+        <label for="contact_no" className="font-semibold text-sm text-gray-800">
+          Contact No:{" "}
+        </label>
+        <br />
+        <input
+          required
+          type="text"
+          id="contact_no"
+          name="contact_no"
+          className={`${styles.input} md:w-11/12 w-full mb-1`}
+          defaultValue={data?.contact_no}
+          onChange={onChange}
+          disabled={isFormClosed}
+        />
+        {validationErrors?.contact_no ? (
+          <p className="text-red-400 text-sm">{validationErrors.contact_no}</p>
         ) : (
           <br />
         )}

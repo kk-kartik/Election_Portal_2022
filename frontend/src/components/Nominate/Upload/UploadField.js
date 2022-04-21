@@ -14,10 +14,10 @@ const UploadField = (props) => {
     hiddenFileInput.current.click();
   };
 
-  const fileName = (str)=> {
+  const fileName = (str) => {
     const arr = props.link.split("/");
-    return arr[arr.length-1];
-  }
+    return arr[arr.length - 1];
+  };
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
@@ -28,7 +28,7 @@ const UploadField = (props) => {
     <div className="mb-2">
       <div className={`w-full md:w-3/5 ${styles.container}`}>
         <div className="p-6 flex items-center ">
-          <div className="w-1/2">
+          <div className="w-full">
             {!props.link && (
               <input
                 type="text"
@@ -50,7 +50,7 @@ const UploadField = (props) => {
                 value={props.title}
               ></input>
             )}
-            <div className="flex">
+            <div className="flex flex-wrap">
               {props.link && (
                 <button className={`${styles.button} mt-2 mr-2 text-black`}>
                   <a
@@ -64,24 +64,28 @@ const UploadField = (props) => {
                   </a>
                 </button>
               )}
-              {!props.title && (
-                <button
-                  className={`${styles.button} mt-2`}
-                  onClick={handleClick}
-                >
-                  <div className="flex">
-                    <img src={doc} alt="doc" />
-                    <p className="pl-2">Attach proof</p>
-                  </div>
-                </button>
-              )}
-              {props.title && (
-                <button
-                  className={`${styles.button} mt-2 text-red-500`}
-                  onClick={() => props.credDelete(props.title)}
-                >
-                  Remove File
-                </button>
+              {!props.isFormClosed && (
+                <>
+                  {!props.title && (
+                    <button
+                      className={`${styles.button} mt-2`}
+                      onClick={handleClick}
+                    >
+                      <div className="flex">
+                        <img src={doc} alt="doc" />
+                        <p className="pl-2">Attach proof</p>
+                      </div>
+                    </button>
+                  )}
+                  {props.title && (
+                    <button
+                      className={`${styles.button} mt-2 text-red-500`}
+                      onClick={() => props.credDelete(props.title)}
+                    >
+                      Remove File
+                    </button>
+                  )}
+                </>
               )}
             </div>
           </div>

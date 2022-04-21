@@ -47,7 +47,7 @@ function Pre() {
           element={<CandidatePositionForm />}
         />
         <Route
-          path="/candidate/:name"
+          path="/candidate/:id"
           exact
           element={<CandidateNominationScreen />}
         />
@@ -60,12 +60,11 @@ function App() {
   const userData = useSelector((store) => store.auth);
   const candidate = useSelector((store) => store.candidate);
   const dispatch = useDispatch();
-  const isLoggedIn = useAuthCheck();
   if (IS_PROD) {
     window.console.log = () => {};
   }
 
-  console.log("isLoggedIn: ", isLoggedIn);
+
 
   useEffect(() => {
     dispatch(getUser());
@@ -86,7 +85,7 @@ function App() {
     <BrowserRouter basename={BASEURL}>
       <Routes>
         <Route path="/*" exact element={<Pre />} />
-        <Route path="/election/*" exact element={<ElectionScreen />} />
+        {/* <Route path="/election/*" exact element={<ElectionScreen />} /> */}
         <Route path="/admin/*" exact element={<AdminScreen />} />
         <Route path="/login" exact element={<LoginScreen />} />
         {/* Route of the VOTING PORTAL */}

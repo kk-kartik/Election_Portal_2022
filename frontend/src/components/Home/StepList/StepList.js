@@ -33,13 +33,8 @@ const StepCompleted = ({ text, imgSrc, done, link }) => (
 );
 
 const StepList = () => {
-  const {
-    candidate,
-    error,
-    message,
-    updateNomination,
-    isComplete,
-  } = useNominate();
+  const { candidate, error, message, updateNomination, isComplete } =
+    useNominate();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.auth);
   const steps = [
@@ -52,7 +47,10 @@ const StepList = () => {
     {
       text: "Write your agendas",
       imgSrc: agenda,
-      done: !!candidate.agenda_text,
+      done:
+        candidate &&
+        candidate.agenda_text &&
+        Object.keys(candidate.agenda_text).length >= 3,
       link: "agendas",
     },
     {
@@ -64,64 +62,75 @@ const StepList = () => {
     {
       text: "Submit your form",
       imgSrc: submit,
-      done: candidate.isComplete,
+      done: candidate.nomination_complete,
       link: "verification",
     },
   ];
   return (
     <>
-      <div
-        className="md:w-7/12 rounded-md py-6 px-8 m-3 overflow-x-auto"
-        style={{
-          boxShadow:
-            "0px 0px 2px rgb(0 0 0 / 20%), 0px 2px 10px rgb(0 0 0 / 10%)",
-        }}
-      >
-        <div className="flex justify-start items-center">
-          {steps.map(({ text, imgSrc, done, link }, index) => {
-            if (userData!==null && done) {
-              return (
-                <StepCompleted
-                  key={index}
-                  text={text}
-                  imgSrc={imgSrc}
-                  done={done}
-                  link={link}
-                />
-              );
-            } else {
-              return (
-                <Step
-                  key={index}
-                  text={text}
-                  imgSrc={imgSrc}
-                  done={done}
-                  link={link}
-                />
-              );
-            }
-          })}
-        </div>
-        <div className="flex">
-          <button
-            class="bg-[#2B00FF] hover:bg-[#2B00AA] text-[14px] font-family-roboto text-white font-medium py-2 px-4 rounded mr-3 sm:mr-4"
-            onClick={() => {
-              let path = "";
-              if (!userData) {
-                path = "/login";
-              } else if (userData && userData.candidates.length) {
-                path = "/nominate/about";
-              } else path = `/nominate/post`;
-              navigate(path);
+      {userData && userData.candidates.length ? (
+        <>
+          <h1 className="p-3 pt-0 font-medium text-xl">
+            Steps For Nominating Yourself
+          </h1>
+          <div
+            className=" rounded-md py-6 px-8 m-3 overflow-x-auto w-max"
+            style={{
+              boxShadow:
+                "0px 0px 2px rgb(0 0 0 / 20%), 0px 2px 10px rgb(0 0 0 / 10%)",
             }}
           >
-            {candidate?.id ? "View Nomination" : "Apply Now"}
-          </button>
-          {/* <button class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium py-2 px-6 rounded border-2">
+            <div className="flex justify-start items-center">
+              {steps.map(({ text, imgSrc, done, link }, index) => {
+                if (userData !== null && done) {
+                  return (
+                    <StepCompleted
+                      key={index}
+                      text={text}
+                      imgSrc={imgSrc}
+                      done={done}
+                      link={link}
+                    />
+                  );
+                } else {
+                  return (
+                    <Step
+                      key={index}
+                      text={text}
+                      imgSrc={imgSrc}
+                      done={done}
+                      link={link}
+                    />
+                  );
+                }
+              })}
+            </div>
+            <div className="flex">
+              <button
+                class="bg-[#2B00FF] hover:bg-[#2B00AA] text-[14px] font-family-roboto text-white font-medium py-2 px-4 rounded mr-3 sm:mr-4"
+                onClick={() => {
+                  let path = "";
+                  if (!userData) {
+                    path = "/login";
+                  } else if (!userData?.euser?.registration_complete) {
+                    path = "/register";
+                  } else if (userData && userData.candidates.length) {
+                    path = "/nominate/about";
+                  } else path = `/nominate/post`;
+                  navigate(path);
+                }}
+              >
+                {userData && userData?.candidates.length !== 0
+                  ? "View Nomination"
+                  : "Apply Now"}
+              </button>
+              {/* <button class=" hover:bg-gray-300 bg-coolGray-50 text-[14px] font-medium py-2 px-6 rounded border-2">
             Learn More
           </button> */}
-        </div>
-      </div>
+            </div>
+          </div>
+        </>
+      ) : null}
     </>
   );
 };

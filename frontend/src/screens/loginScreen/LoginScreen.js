@@ -10,6 +10,7 @@ import { getUser, logout } from "../../actions/auth";
 import { useNavigate } from "react-router-dom";
 import { ELECTIONAPI, IS_PROD, OUTLOOK_LOGIN_URL } from "../../constants";
 import cards from "../../assets/images_1.png";
+import bg from "../../assets/authBg.jpeg";
 import Footer from "../../components/Footer/Footer";
 
 const LoginScreen = () => {
@@ -87,16 +88,16 @@ const LoginScreen = () => {
             <img className="h-12 w-12 md:h-20 md:w-20" src={iitglogo} alt="" />
           </div>
           <div>
-            <p class="text-lg sm:text-xl" style={{ color: "#4b5563" }}>
+            <p className="text-sm" style={{ color: "#4b5563" }}>
               Indian Institute of Technology Guwahati
             </p>
           </div>
         </div>
         <div className="mt-16 ml-4">
-          <p className="text-4xl font-medium mb-2" style={{ color: "#2e2f2f" }}>
+          <p className="text-2xl font-medium mb-2" style={{ color: "#2e2f2f" }}>
             Sign In
           </p>
-          <p className="text-lg font-normal" style={{ color: "#4b5563" }}>
+          <p className=" font-normal" style={{ color: "#4b5563" }}>
             Register yourself by using IITG email
           </p>
         </div>
@@ -247,7 +248,7 @@ const LoginScreen = () => {
             </div>
           </div>
           <div className="hidden md:block">
-            <img src={cards} alt="cards" className="h-screen" />
+            <img src={bg} alt="cards" className="h-screen" />
           </div>
         </div>
         {/* <div className="flex flex-col">

@@ -7,14 +7,14 @@ const HomeRouteNavBar = () => {
       text={[
         "About",
         "Nominations",
-        // "Statistics",
+        "Statistics",
         "Rules and Regulations",
         "Organizers",
       ]}
       routes={[
         "",
-        "nominations",
-        // "stats",
+        "nominations/vicepresident",
+        "stats",
         "rules",
         "organisers",
       ]}

@@ -9,15 +9,52 @@ import useNominate from "../../hooks/useNominate";
 import SaveAndNext from "./SaveAndNext";
 import * as yup from "yup";
 
+export const witnessSchema = yup.object().shape({
+  name: yup
+    .string()
+    .required("Please enter the name")
+    .min(3, "Please enter a valid name"),
+  email: yup.string().email().required("Please enter a valid iitg email"),
+  degree: yup.string().required(),
+  branch: yup.string().required(),
+  hostel: yup.string().required(),
+  roll_number: yup
+    .string()
+    .required()
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(9, "Roll number should have atleast 9 digits")
+    .max(12, "Roll number shouldn't be more than 12 digits")
+    .typeError("Please enter digits only"),
+  cpi: yup.string().required("Cpi is required"),
+  semester: yup.string().required("Semester is required"),
+  room_no: yup.string().required("Room no is required"),
+  contact_no: yup
+    .string()
+    .required("Please enter your phone number")
+    .matches(/^[0-9]+$/, "Must be only digits")
+    .min(6, "Phone no should have atleast 6 digits"),
+});
+const deadline = 1649734200000;
+// const deadline = 1649549824000;
+const checkDeadline = () => {
+  return new Date(Date.now()).getTime() >= deadline;
+};
+
 const WitnessesScreen = () => {
-  const {
+  let {
     candidate,
     error,
     message,
     updateNomination,
     loading,
     setError,
+    setMessage,
+    isNominationComplete,
+    isFormClosed,
+    isDeadlineOver,
   } = useNominate();
+
+  isFormClosed = isFormClosed || checkDeadline();
 
   const [proposedByData, setProposedyData] = useState(null);
   const [secondedByData, setSecondedByData] = useState(null);
@@ -27,9 +64,16 @@ const WitnessesScreen = () => {
   const [signs, setSigns] = useState({});
 
   const submitData = async () => {
+    console.log(proposedByData, secondedByData);
+    setSValidationErrors(null);
+    setPValidationErrors(null);
+    setMessage(null);
+
     if (secondedByData) {
       try {
-        await aboutSchema.validate(secondedByData, { abortEarly: false });
+        const res = await witnessSchema.validate(secondedByData, {
+          abortEarly: false,
+        });
       } catch (err) {
         if (err.inner) {
           setSValidationErrors((prev) => {
@@ -40,10 +84,9 @@ const WitnessesScreen = () => {
         }
       }
     }
-
     if (proposedByData) {
       try {
-        await aboutSchema.validate(proposedByData, { abortEarly: false });
+        await witnessSchema.validate(proposedByData, { abortEarly: false });
       } catch (err) {
         if (err.inner) {
           setPValidationErrors((prev) => {
@@ -52,37 +95,17 @@ const WitnessesScreen = () => {
             return newError;
           });
         }
-        return;
       }
     }
     const data = {
-      ...signs,
       proposed_by: proposedByData || candidate.proposed_by,
       seconded_by: secondedByData || candidate.seconded_by,
     };
     if (data.proposed_by.name == "" || data.seconded_by.name == "") {
-      setError("Please enter witness details");
-      return;
+      setMessage("Please fill both witness details");
     }
     updateNomination(data, "/nominate/verification");
   };
-
-  let aboutSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required("Please enter the name")
-      .min(3, "Please enter a valid name"),
-    degree: yup.string().required(),
-    branch: yup.string().required(),
-    hostel: yup.string().required(),
-    roll_number: yup
-      .string()
-      .required()
-      .matches(/^[0-9]+$/, "Must be only digits")
-      .min(9, "Roll number should have atleast 9 digits")
-      .max(12, "Roll number shouldn't be more than 12 digits")
-      .typeError("Please enter digits only"),
-  });
 
   const onChange = (e) => {
     setSigns((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
@@ -103,6 +126,7 @@ const WitnessesScreen = () => {
             }
             setData={setProposedyData}
             validationErrors={pvalidationErrors}
+            isFormClosed={isFormClosed}
           />
           <br />
           {/* <div className="font-semibold text-s text-gray-800">Signature :</div> */}
@@ -121,6 +145,7 @@ const WitnessesScreen = () => {
           </div>
           <br />
           <WitnessDataForm
+            isFormClosed={isFormClosed}
             data={
               secondedByData ||
               (candidate?.proposed_by ? candidate.seconded_by : {})
@@ -140,12 +165,23 @@ const WitnessesScreen = () => {
         </div>
       </div>
       <div className="sm:pl-6 mb-4">
-        <SaveAndNext
-          error={error}
-          message={message}
-          loading={loading}
-          submit={submitData}
-        />
+        {!isFormClosed && (
+          <SaveAndNext
+            error={error}
+            message={message}
+            loading={loading}
+            submit={submitData}
+          />
+        )}
+        {isNominationComplete ? (
+          <p className="text-blue-500">Your Nomination is complete</p>
+        ) : (
+          <>
+            {isDeadlineOver && (
+              <p className="text-blue-500">Nomination Deadline is over.</p>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

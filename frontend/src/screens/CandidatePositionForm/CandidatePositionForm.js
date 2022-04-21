@@ -12,6 +12,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { SET_CANDIDATE_DATA } from "../../constants";
 
 // import { useNavigate } from "react-router-dom";
+const deadline = 1649734200000;
+// const deadline = 1649549824000;
+const checkDeadline = () => {
+  return new Date(Date.now()).getTime() >= deadline;
+};
 
 const CandidatePositionForm = () => {
   const positions = useSelector((store) => store.positions);
@@ -24,15 +29,19 @@ const CandidatePositionForm = () => {
 
   const registerCandidate = async () => {
     if (!posRef.current.value) {
-      setError("Please select valid post!!");
+      setError("Please select a position!");
       return;
     }
     try {
+      if (checkDeadline()) {
+        setError("Deadline to nominate yourself as candidate is finished");
+        return;
+      }
       const res = await candidateRegistration({
         position: parseInt(posRef.current.value),
       });
       dispatch({ type: SET_CANDIDATE_DATA, data: res.data });
-      dispatch(getUser());
+      await dispatch(getUser());
       navigate("/nominate/about");
     } catch (err) {
       setError(
@@ -84,6 +93,7 @@ const CandidatePositionForm = () => {
               required
               ref={posRef}
             >
+              <option value="">Select Position</option>
               {positions?.map((p) => (
                 <option value={p.id} key={p.id}>
                   {p.title}
@@ -94,7 +104,7 @@ const CandidatePositionForm = () => {
             <br />
           </form>
         </div>
-        {error && <p className="text-red">{error}</p>}
+        {error && <p className="text-red-500 mb-1">{error}</p>}
 
         <button
           className={styles.button2}

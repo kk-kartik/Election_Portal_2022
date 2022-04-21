@@ -1,9 +1,10 @@
+import csv
 from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
 from rest_framework.response import Response
 from rest_framework import status,mixins,generics,viewsets,permissions
-from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly
+from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions,OnlyOrganizerUpdate,OnlyOrganizerOrCandidateUpdate
 from dj_rest_auth.jwt_auth import JWTAuthentication
 from .mixins import ElectionMixin
 from authentication.default_authentication_classes import default_authentication_classes
@@ -13,10 +14,63 @@ from xhtml2pdf import pisa
 from django.template.loader import get_template
 from django.http import HttpResponse
 from django.core.files.base import ContentFile
+from django.db.models import Q
 
 from django.views.generic.base import View
 # from wkhtmltopdf.views import PDFTemplateResponse
 
+BRANCH = {
+    'None':"None",
+    '01': 'CSE',
+    '02': 'ECE',
+    '03': 'ME',
+    '04': 'Civil',
+    '05': 'Design',
+    '06': 'BSBE',
+    '07': 'CL',
+    '08': 'EEE',
+    '21': 'Physics',
+    '22': 'Chemistry',
+    '23': 'MNC',
+    '41': 'HSS',
+    '51': 'Energy',
+    '52': 'Environment',
+    '53': 'Nano-Tech',
+    '54': 'Rural-Tech',
+    '55': 'Linguistics',
+	'61': 'Others',
+}
+
+DEGREE = {
+    'M':'Mtech',
+    'B':'Btech',
+    'P':"PG",
+    "Msc":"Msc",
+    "Mdes":"Mdes",
+    "Bdes":"Bdes",
+    "Dual":"Dual Degree",
+    "MA":"MA",
+    "MSR":"MSR"
+}
+
+HOSTELS = {
+    'lohit': 'Lohit',
+    'brahmaputra': 'Brahmaputra',
+    'siang': 'Siang',
+    'manas': 'Manas',
+    'dibang': 'Dibang',
+    'disang': 'Disang',
+    'kameng': 'Kameng',
+    'umiam': 'Umiam',
+    'barak': 'Barak',
+    'kapili': 'Kapili',
+    'dihing': 'Dihing',
+    'subansiri': 'Subansiri',
+    'dhansiri': 'Dhansiri',
+    'dibang': 'Dibang',
+    'msh': 'Married Scholar Hostel',
+    'not-alloted': 'Not Alloted',
+}
 
 def create_pdf(request, name_slug, template_src, instance):
     template = get_template(template_src)
@@ -30,6 +84,19 @@ def create_pdf(request, name_slug, template_src, instance):
     base_url = 'https://swc.iitg.ac.in/elections_api/media/'
     candidate_url = base_url + str(instance.image)
     temp_dict['image'] = candidate_url
+    mbranch = BRANCH[instance.user.branch]
+    pbranch = instance.proposed_by['branch']
+    sbranch = instance.seconded_by['branch']
+    mhostel = HOSTELS[instance.user.hostel]
+    phostel = instance.proposed_by['hostel']
+    shostel = instance.seconded_by['hostel']
+    temp_dict['mbranch'] = mbranch
+    temp_dict['pbranch'] = pbranch
+    temp_dict['sbranch'] = sbranch
+    temp_dict['mhostel'] = mhostel
+    temp_dict['phostel'] = phostel
+    temp_dict['shostel'] = shostel
+    print(mhostel,phostel,shostel)
 
     print(candidate_url)
     # print("#####")
@@ -46,7 +113,7 @@ def create_pdf(request, name_slug, template_src, instance):
     pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
     # print(pdf)
     if not pdf.err:
-        instance.agenda_pdf.save(instance.user.name + '-agenda.pdf', ContentFile(result.getvalue()))
+        instance.agenda_pdf.save(str(instance.user.name) + '-agenda.pdf', ContentFile(result.getvalue()))
         # instance.agenda_pdf.save(instance.user.email + '-agenda.pdf', ContentFile(result.getvalue()))
         # print(instance.user.name + 'agenda.pdf')
         # return HttpResponse(result.getvalue(), content_type='application/pdf')
@@ -55,16 +122,29 @@ def create_pdf(request, name_slug, template_src, instance):
 
 
 class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
-    serializer_class=CandidateSerializer
+    serializer_class=CandidateDetailSerializer
     permission_classes=[permissions.AllowAny]
     authentication_classes =default_authentication_classes
     
     def get_queryset(self):
-        position = Position.objects.filter(id=self.kwargs.get("position_id"))
-        return Candidate.objects.filter(election=self.election,nomination_status="approved")
+        position = get_object_or_404(Position,pk=self.kwargs.get("position_id"))
+        return self.election.candidates_e.filter(position__id=position.id).exclude(
+                    Q(cpi=None)|
+                    Q(user__roll_number=None)|
+                    Q(user__email=None)|
+                    Q(backlogs=None)|
+                    Q(active_backlogs=None)|
+                    Q(semester=None)|
+                    Q(contact_no=None)|
+                    Q(nomination_status="rejected")|
+                    Q(video=None)|
+                    Q(image=None)|
+                    Q(agenda_text=None)|
+                    Q(user__name=None)
+                )
 
 class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated,CandidateDeadlinePermissions]
     serializer_class = EuserSerializer
     authentication_classes=default_authentication_classes
 
@@ -84,7 +164,7 @@ class ProfileAPIView(ElectionMixin,generics.GenericAPIView):
         euser = user.euser
         candidates = Candidate.objects.filter(election=election,user=euser)
         euser_data = EuserSerializer(euser,context=self.get_serializer_context()).data
-        candidates_data = CandidateSerializer(candidates,many=True,context=self.get_serializer_context()).data
+        candidates_data = CandidateReadSerializer(candidates,many=True,context=self.get_serializer_context()).data
         user_data = UserSerializer(user,context=self.get_serializer_context()).data
 
         return Response({**user_data,"euser":euser_data,"candidates":candidates_data},status=status.HTTP_200_OK)
@@ -107,35 +187,57 @@ class ImportantDatesViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 class CandidatesViewSet(ElectionMixin,viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOrganizerOrCandidateWriteOnly]
-    serializer_class = CandidateSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,OnlyOrganizerUpdate]
     authentication_classes=default_authentication_classes
     
-    def get_serializer_class(self):
-        if self.action in ["create",'update']:
-            try:
-                is_organizer = self.election.organizers.filter(user__id=self.request.user.euser.id).exists()
-            except:
-                is_organizer=False
-            if is_organizer:
-                return CandidateOrganizerSerializer
-            return CandidateSerializer
-        return CandidateReadSerializer
-    
     def get_queryset(self):
-        try:
-            is_organizer = Voter.objects.filter(election_organizers__id=self.election.id,user__id=self.user.euser.id).exists()
-        except Exception as err:
-            is_organizer=False
-
-        print(list(self.election.candidates_e.all())[0])
-        # print(self.)
-        # create_pdf('for_pdf.html', list(self.election.candidates_e.all())[0])
-        
         candidates = self.election.candidates_e.all()
-        if is_organizer:
-            return candidates.filter(nomination_complete=True)
-        return candidates
+        return candidates.exclude(
+                    Q(cpi=None)|
+                    Q(user__roll_number=None)|
+                    Q(user__email=None)|
+                    Q(backlogs=None)|
+                    Q(active_backlogs=None)|
+                    Q(semester=None)|
+                    Q(contact_no=None)|
+                    Q(nomination_status="rejected")
+                )
+                
+    def get_serializer_class(self):
+        if self.action in ["create","destroy","update"]:
+            return CandidateSerializer
+        
+        if self.action =="list":
+            try:
+                user = self.request.user
+                election = self.election
+                euser = user.euser
+                is_organizer = user.is_staff
+            except Exception as err:
+                is_organizer=False
+            
+            if is_organizer:
+                return CandidateReadSerializer
+
+        if self.action =="retrieve":     
+            try:
+                user = self.request.user
+                election = self.election
+                euser = user.euser
+                candidates = election.candidates_e.filter(user=euser)
+                is_candidate = candidates.filter(pk=obj.id).exists()
+            except Exception as err:
+                is_candidate=False
+            
+            try:
+                is_organizer = user.is_staff
+            except Exception as err:
+                is_organizer=False
+            
+            if is_candidate or is_organizer:
+                return CandidateReadSerializer
+
+        return CandidateBriefSerializer
     
     def perform_create(self,serializer):
         return serializer.save(election=self.election,user=self.request.user.euser)
@@ -158,7 +260,9 @@ class CandidateAgendaPdf(generics.GenericAPIView):
     def get(self,request,name_slug,id):
         try:
             instance = Candidate.objects.get(id=id)
-            
+            if not request.user.is_staff and instance.user.user.id != request.user.id:
+                return HttpResponse("Invalid Access")
+
         except Exception as e:
             return HttpResponse({"some error has occured in CandidateAgendaPdf"})
         create_pdf(request, name_slug, 'for_pdf.html', instance)
@@ -252,3 +356,64 @@ class IsOrganizerView(ElectionMixin,generics.GenericAPIView):
         
         return Response({'isOrganizer':is_organizer},status=status.HTTP_200_OK)
         
+
+class DownloadNominations(ElectionMixin,generics.GenericAPIView):
+    authentication_classes=default_authentication_classes
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self,request,*args,**kwargs):
+        return HttpResponse("done")
+
+class DownloadNominations(ElectionMixin,generics.GenericAPIView):
+    authentication_classes=default_authentication_classes
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def get(self,request,*args,**kwargs):
+        if not request.user.is_staff:
+            return HttpResponse("Invalid access")
+        election = self.election
+        candidates = election.candidates_e.exclude(
+            Q(cpi=None)|
+            Q(user__roll_number=None)|
+            Q(user__email=None)|
+            Q(backlogs=None)|
+            Q(active_backlogs=None)|
+            Q(semester=None)|
+            Q(contact_no=None)|
+            Q(nomination_status="rejected")
+        )
+
+        response = HttpResponse(content_type='text/csv')  
+        response['Content-Disposition'] = 'attachment; filename="nominations.csv"'  
+        writer = csv.writer(response)
+        writer.writerow(["Sr.No","Position","Name","Email","Roll no","Degree","Cpi","Backlogs","Active Backlogs","Credentials","Hostel"])
+        for i,candidate in enumerate(candidates.all()):
+            # if "Grade Card" not in candidate.credentials.keys() :
+            #     continue
+
+            # if not candidate.credentials["Grade Card"]:
+            #     continue
+
+            # if candidate.postion.title == "PG Senator":
+            #     if "Thesis incomplete proof" not in candidate.credentials.keys() :
+            #         continue
+
+            #     if not candidate.credentials["Thesis incomplete proof"]:
+            #         continue
+
+
+            writer.writerow([
+                i+1,
+                candidate.position.title,
+                candidate.user.name,
+                candidate.user.email,
+                candidate.user.roll_number,
+                candidate.user.degree,
+                candidate.cpi,
+                candidate.backlogs,
+                candidate.active_backlogs,
+                candidate.credentials,
+                candidate.user.hostel
+            ])
+            
+        return response  

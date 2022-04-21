@@ -44,8 +44,15 @@ BRANCH = (
 )
 
 DEGREE = (
-    ('U','UG'),
-    ('P','PG')
+    ('B','Btech'),
+    ('M','Mtech'),
+    ('P',"PhD"),
+    ("Msc","Msc"),
+    ("Mdes","Mdes"),
+    ("Bdes","Bdes"),
+    ("Dual","Dual Degree"),
+    ("MA","MA"),
+    ("MSR","MSR")
 )
 
 HOSTELS = [
@@ -99,8 +106,8 @@ class Voter(models.Model):
     user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='voter_ids')
     is_voted = models.BooleanField(default=False)
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='voters')
-    election_organizers = models.ForeignKey(Election,blank=True,on_delete=models.DO_NOTHING,related_name='organizers') # change the name of field to election
-    election_creator = models.OneToOneField(Election,blank=True,on_delete=models.DO_NOTHING,related_name='created_by')
+    election_organizers = models.ForeignKey(Election,blank=True,null=True,on_delete=models.DO_NOTHING,related_name='organizers') # change the name of field to election
+    election_creator = models.OneToOneField(Election,blank=True,null=True,on_delete=models.DO_NOTHING,related_name='created_by')
 
     class Meta:
         unique_together = (('user', 'election'), ('user', 'election_organizers'))
@@ -132,7 +139,8 @@ def get_default_witness():
         "email":"",
         "hostel":"",
         "room_no":"",
-        "semester":""
+        "semester":"",
+        "contact_no":""
     }
 
 class Candidate(models.Model):
@@ -157,6 +165,7 @@ class Candidate(models.Model):
     proposed_by = models.JSONField(null=True,blank=True,default=get_default_witness)
     seconded_by = models.JSONField(null=True,blank=True,default=get_default_witness)
     credentials = models.JSONField(null=True,blank=True,default=dict)
+    verified_credentials = models.JSONField(null=True,blank=True,default=dict)
     proposed_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     seconded_by_sign = models.ImageField(upload_to="witness_signs/",null=True,blank=True)
     nomination_complete = models.BooleanField(default=False)

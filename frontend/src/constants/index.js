@@ -25,6 +25,7 @@ export const EDIT_CANDIDATE_DATA = "EDIT_CANDIDATE_DATA";
 
 //POS constants
 export const GET_POS = "GET_POS";
+export const GET_CANDIDATE_FROM_POS = "GET_CANDIDATE_FROM_POS";
 //Debates Constants
 export const GET_DEBATES = "GET_DEBATES";
 export const ADD_DEBATE = "ADD_DEBATE";

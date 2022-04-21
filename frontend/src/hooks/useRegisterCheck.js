@@ -6,13 +6,15 @@ const useRegisterCheck = () => {
   const userData = useSelector((store) => store.auth);
 
   const checkRegistration = async () => {
-    if (
-      userData.euser.registration_complete !== undefined &&
-      userData.euser.registration_complete 
-    ) {
-      setIsRegistered(true);
-    } else {
-      setIsRegistered(false);
+    if (userData) {
+      if (
+        userData.euser.registration_complete !== undefined &&
+        userData.euser.registration_complete
+      ) {
+        setIsRegistered(true);
+      } else {
+        setIsRegistered(false);
+      }
     }
   };
 

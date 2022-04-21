@@ -6,7 +6,7 @@ import {
   
   export const getCandidateData = () => async (dispatch) => {
     try {
-        const data = await api.getCandidateData();
+        const data = await api.getCandidateDataAdmin();
         dispatch({ type: GET_CANDIDATE_DATA, payload: data.data });
     } catch (error) {
         console.log(error.message);
@@ -16,7 +16,7 @@ import {
         try {
             console.log(id);
             const { data } = await api.updateCandidateData(id, formData);
-            console.log(data);
+            console.log("editCandidateData", data);
             dispatch({ type: EDIT_CANDIDATE_DATA, payload: data.data });
         } catch (error) {
             console.log(error.message);

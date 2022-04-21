@@ -52,6 +52,7 @@ const TextEditor = (props) => {
     };
 
     props.updateNomination(data);
+    props.setIsOld(false);
     props.setIsOpen(false);
     props.setTitle(null);
   };
@@ -66,6 +67,7 @@ const TextEditor = (props) => {
               className={`ml-auto self-center ${styles.link}`}
               onClick={() => {
                 props.setTitle(null);
+                props.setIsOld(false);
                 props.setIsOpen(false);
               }}
             >
@@ -80,13 +82,36 @@ const TextEditor = (props) => {
                 className={` ${styles.input} p-2 w-full`}
                 value={props.title}
                 onChange={(e) => props.setTitle(e.target.value)}
+                disabled={props.isOld}
               />
+              {props.isOld && (
+                <p clasName="text-sm text-blue-500">
+                  Agenda title is not editable
+                </p>
+              )}
             </div>
             <div className={` ${styles.editor} p-2`}>
               <Editor
                 editorState={editorState}
                 onEditorStateChange={handleEditorChange}
                 placeholder="Write about your agenda here..."
+                toolbar={{
+                  options: [
+                    "inline",
+                    "blockType",
+                    "fontSize",
+                    "fontFamily",
+                    "list",
+                    "textAlign",
+                    //"colorPicker",
+                    //"link",
+                    //"embedded",
+                    "emoji",
+                    //"image",
+                    "remove",
+                    "history",
+                  ],
+                }}
               />
             </div>
             <div className="flex flex-row-reverse p-2">
