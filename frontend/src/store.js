@@ -8,6 +8,7 @@ import positions from "./reducers/positions";
 import debates from "./reducers/debates";
 import candidate from "./reducers/candidate";
 import candidates from "./reducers/candidates";
+import getStats from "./reducers/getStats"
 const reducer = combineReducers({
   importantDates,
   FAQ,
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   candidate,
   debates,
   candidates,
+  getStats,
 });
 
 const initialState = {};

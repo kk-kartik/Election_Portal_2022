@@ -22,6 +22,11 @@ TYPE = (
     ('S','Seconded by')
 )
 
+GENDER = (
+    ('Male','Male'),
+    ('Female','Female')
+)
+
 BRANCH = (
     ('01', 'CSE'),
     ('02', 'ECE'),
@@ -80,6 +85,7 @@ class EUser(models.Model):
     degree = models.CharField(choices=DEGREE,max_length=70,blank=True,null=True)
     hostel = models.CharField(choices=HOSTELS,max_length=50,blank=True,null=True)
     branch = models.CharField(choices=BRANCH,max_length=50,blank=True,null=True)
+    gender = models.CharField(choices=GENDER,max_length=50,blank=True,null=True)
     email = models.EmailField(unique=True)
     user = models.OneToOneField(User,on_delete=models.CASCADE,related_name='euser')
     registration_complete = models.BooleanField(default=False)
@@ -205,12 +211,15 @@ class Imporatant_date(models.Model):
 
 class Statistic(models.Model):
     election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='statistics')
-    stat_cnt = models.JSONField()
-    stat_total = models.JSONField()
+    stat_cnt = models.JSONField(blank=True,null=True)
+    stat_total = models.JSONField(blank=True,null=True)
     stat_title = models.CharField(max_length=250)
 
     def __str__(self) -> str:
         return self.stat_title
+
+    class Meta:
+        unique_together = (('election', 'stat_title'))
 
 class Debate(models.Model):
     title = models.CharField(max_length=250)
@@ -226,6 +235,43 @@ class Credentials(models.Model):
 
     def __str__(self) -> str:
         return self.name
+
+import random
+import string
+def create_id():
+    our_choices = string.ascii_lowercase + string.digits + "!@#$%^&*"
+    id = ''.join(random.choices(our_choices, k=8))
+    print(our_choices)
+    try:
+        obj = VoterCard.objects.filter(uniqueid = id)
+        if not obj:
+            print(id)
+            return id
+        return create_id()
+    except Exception as e:
+        print(e)
+
+def create_id_email():
+    our_choices = string.digits
+    id = ''.join(random.choices(our_choices, k=6))
+    print(our_choices)
+    try:
+        obj = VoterCard.objects.filter(uniqueid_email = id)
+        if not obj:
+            print(id)
+            return id
+        return create_id()
+    except Exception as e:
+        print(e)
+        
+class VoterCard(models.Model):
+    voter = models.OneToOneField(Voter,on_delete=models.CASCADE,related_name='voter',blank=True,null=True)
+    uniqueid = models.CharField(max_length=10,default = create_id)
+    uniqueid_email = models.CharField(max_length=10,default = create_id_email)
+    vote = models.TextField(blank=True,null=True)
+
+    def __str__(self) -> str:
+        return str(self.voter)
 
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):

@@ -8,6 +8,11 @@ router.register("candidates",viewset=views.CandidatesViewSet,basename="candidate
 router.register("positions",viewset=views.PositionsViewSet,basename="positions")
 router.register("faqs",viewset=views.FAQViewSet,basename="faqs")
 router.register("debates",viewset=views.DebatesViewSet,basename="debates")
+router.register("statistics",viewset=views.StatisticsView,basename="statistics")
+router.register("statistics_update",viewset=views.StatisticsUpdateView,basename="statistics_update")
+
+
+
 
 urlpatterns = [
     path("<int:position_id>/candidates/",views.PositionCandidatesView.as_view(),name="position_candidates"),
@@ -17,5 +22,11 @@ urlpatterns = [
     path("add_credentials/",views.CredentialCreateAPIView.as_view(),name="credentials_view"),
     path("is_organizer/",views.IsOrganizerView.as_view(),name="is_organizer"),
     path("download_nominations/",views.DownloadNominations.as_view(),name="download_candidates"),
+    path("voting/voterid/",views.voter_card,name="voterid"),
+    path("voting/voterid_check/",views.voter_card_check,name="voter_card_check"),
+    path("voting/store_vote/",views.store_vote,name="store_vote"),
+    path("voting/get_voter_id/",views.get_voter_id,name="get_voter_id"),
+    path("get_stats/",views.get_stats,name="get_stats"),
+    # path("statistics_update/",views.StatisticsUpdateView.as_view(),name="statistics_update"),
     path("",include(router.urls))
 ]

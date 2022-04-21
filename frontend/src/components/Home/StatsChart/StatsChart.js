@@ -5,74 +5,6 @@ import { useState } from "react";
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Bar, Chart } from 'react-chartjs-2'
 
-
-const color_map = [{
-  name: "Brahmaputra",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Lohit",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Dihing",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Manas",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Disang",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Kapili",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Umiam",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Barak",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Siang",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Dibang",
-  color: "rgba(75, 192, 192, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Subhansiri",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Dhansiri",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-},
-{
-  name: "Married Scholar",
-  color: "rgba(255, 99, 132, 0.2)",
-  borderColor: "black"
-}
-]
-
 function dynamicColors() {
   var r = Math.floor(Math.random() * 255);
   var g = Math.floor(Math.random() * 255);
@@ -87,19 +19,31 @@ function poolColors(a) {
   return pool;
 }
 
-export const data = {
-    labels: color_map.map((x)=>{return x.name}),
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3,3,3,3,7,8,9,11],
-        backgroundColor: poolColors(color_map.length),
-        borderColor: poolColors(color_map.length),
-        borderWidth: 0,
-      },
-    ],
-  };
-const StatsChart = () => {
+const StatsChart = ({hostel, dept}) => {
+  const hostelData = {
+      labels: hostel.map((d)=>{return d.name}),
+      datasets: [
+        {
+          label: '# of Votes',
+          data: hostel.map((d)=>{return d.count}),
+          backgroundColor: poolColors(11),
+          borderColor: poolColors(11),
+          borderWidth: 0,
+        },
+      ],
+    };
+    const deptData = {
+      labels: dept.map((d)=>{return d.name}),
+      datasets: [
+        {
+          label: '# of Votes',
+          data: dept.map((d)=>{return d.count}),
+          backgroundColor: poolColors(11),
+          borderColor: poolColors(11),
+          borderWidth: 0,
+        },
+      ],
+    };
   const [active, setActive] = useState(0);
     const hostDeptClickListener = (elem)=>{
       if(elem.target.innerText === "Hostels"){
@@ -112,6 +56,10 @@ const StatsChart = () => {
           setActive(1);
         }
       }
+    }
+    let data = hostelData;
+    if(active){
+      data=deptData;
     }
   return (
     <>
