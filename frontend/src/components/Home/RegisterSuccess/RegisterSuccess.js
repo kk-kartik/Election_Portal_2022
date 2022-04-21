@@ -1,8 +1,28 @@
 import styles from "./RegisterSuccess.module.css"
 import Icon from "./icon.svg"
+import { useSelector } from "react-redux";
+import DEPT from "../../../constants/depts"
+
 const RegisterSuccess = (props) => {
+    const userData = useSelector((store) => store.auth);
+    // console.log("userData", userData);
+    let hid = ""
+    if(userData == null || userData?.euser?.registration_complete == false){
+        hid = "hidden";
+    }
+    let roll_no = "";
+    for(let i=0; i<userData?.euser?.roll_number.length; i++){
+        if(i%3 == 0){
+            roll_no += " "
+        }
+        roll_no += userData?.euser?.roll_number[i]
+    }
+    let voter_type = "PG";
+    if(userData?.euser?.degree == "U"){
+        voter_type = "UG";
+    }
     return (
-    <div className={`${styles.cont} p-4 max-w-sm ml-auto mr-auto`}>
+    <div className={`${styles.cont} p-4 max-w-sm ml-auto mr-auto ${hid}`}>
         <div className={`grid ${styles.grid} gap-5`}>
             <img src={Icon} className={`${styles.img} max-w-fit`}/>
             <div className={`flex flex-col`}>
@@ -10,7 +30,7 @@ const RegisterSuccess = (props) => {
                     Name
                 </div>
                 <div className={`${styles.text}`}>
-                    John Doe
+                    {userData?.euser?.name}
                 </div>
             </div>
             <div className={`flex flex-col`}>
@@ -18,7 +38,7 @@ const RegisterSuccess = (props) => {
                     Roll No
                 </div>
                 <div className={`${styles.text}`}>
-                    220 123 045
+                    {roll_no}
                 </div>
             </div>
             <div className={`flex flex-col`}>
@@ -28,7 +48,7 @@ const RegisterSuccess = (props) => {
                     Voter Type
                 </div>
                 <div className={`${styles.text}`}>
-                    UG (M)
+                    {voter_type} (M)
                 </div>
             </div>
             <div className={`flex flex-col`}>
@@ -36,7 +56,7 @@ const RegisterSuccess = (props) => {
                     Hostel
                 </div>
                 <div className={`${styles.text}`}>
-                    My Hostel
+                    {userData?.euser?.hostel}
                 </div>
             </div>
             <div className={`flex flex-col`}>
@@ -46,7 +66,7 @@ const RegisterSuccess = (props) => {
                     Branch
                 </div>
                 <div className={`${styles.text}`}>
-                    My Branch
+                    {DEPT[userData?.euser?.branch]}
                 </div>
             </div>
         </div>

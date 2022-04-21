@@ -8,13 +8,16 @@ import RegisterSuccess from "../../components/Home/RegisterSuccess/RegisterSucce
 const AboutScreen = () => {
   return (
     <>
+    <div className="px-4">
       <Helmet>
         <title>Election Portal</title>
       </Helmet>
       <Register />
       <Dates />
-      <Debates />
-      {/* <RegisterSuccess /> */}
+      {/* <Debates /> */}
+      <RegisterSuccess />
+
+    </div>
     </>
   );
 };
