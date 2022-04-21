@@ -50,9 +50,14 @@ def verify(data,signature):
 def decrypt(encrypted_data):
     key_pem = read_rsa_key()
     key = RSA.import_key(key_pem,passphrase)
+    stel = None
     decryptor = PKCS1_v1_5.new(key)
 
-    return decryptor.decrypt(base64.b64decode(encrypted_data))
+    decrypted_data_bs4 = decryptor.decrypt(base64.b64decode(encrypted_data),stel)
+    if stel:
+        raise Exception("Error decrypting data")
+    
+    return str(decrypted_data_bs4,encoding="utf-8")
 
 #Helper function to test decrypt method,expects bytes string
 def encrypt(data):
