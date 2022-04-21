@@ -3,75 +3,81 @@ import web3 from "./webThree.js";
 const instance = new web3.eth.Contract(
   [
     {
-      inputs: [],
-      name: "count",
-      outputs: [
-        {
-          internalType: "string[]",
-          name: "",
-          type: "string[]",
-        },
-      ],
-      stateMutability: "nonpayable",
-      type: "function",
+      "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
     },
     {
-      inputs: [
+      "inputs": [
         {
-          internalType: "string",
-          name: "voterId",
-          type: "string",
-        },
-        {
-          internalType: "string",
-          name: "vote",
-          type: "string",
-        },
+          "internalType": "string",
+          "name": "voterId",
+          "type": "string"
+        }
       ],
-      name: "store",
-      outputs: [],
-      stateMutability: "nonpayable",
-      type: "function",
+      "name": "count",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      inputs: [],
-      stateMutability: "nonpayable",
-      type: "constructor",
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "voterId",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "vote",
+          "type": "string"
+        }
+      ],
+      "name": "store",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
     },
     {
-      inputs: [],
-      name: "voterCount",
-      outputs: [
+      "inputs": [],
+      "name": "voterCount",
+      "outputs": [
         {
-          internalType: "int256",
-          name: "",
-          type: "int256",
-        },
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
       ],
-      stateMutability: "view",
-      type: "function",
+      "stateMutability": "view",
+      "type": "function"
     },
     {
-      inputs: [
+      "inputs": [
         {
-          internalType: "string",
-          name: "",
-          type: "string",
-        },
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
       ],
-      name: "voterlist",
-      outputs: [
+      "name": "voterlist",
+      "outputs": [
         {
-          internalType: "int256",
-          name: "",
-          type: "int256",
-        },
+          "internalType": "int256",
+          "name": "",
+          "type": "int256"
+        }
       ],
-      stateMutability: "view",
-      type: "function",
-    },
+      "stateMutability": "view",
+      "type": "function"
+    }
   ],
-  "0x4e6a5bfb44c6d243a44ed5f6704be50c38ac289f"
+  "0x5179BB109548f4e5D06fA9a90a3142C4F4A96419"
 );
 
 export default instance;
