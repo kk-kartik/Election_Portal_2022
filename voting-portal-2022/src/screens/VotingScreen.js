@@ -29,7 +29,7 @@ const VotingScreen = () => {
           <div className="flex flex-end w-3/4">
             <h2 className="text-lg">
               <span className="font-bold ml-12">
-                {candidates.all[0]["position"]}
+                {/* {candidates.all[0]["position"]} */}
               </span>
             </h2>
             <div className={`${styles.bg} mr-0 ml-auto`}>Single Vote</div>

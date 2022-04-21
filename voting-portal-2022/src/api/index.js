@@ -35,3 +35,7 @@ export const getCandidateByID = (id) =>
 export const getVoteCount = () => countVotes;
 
 export const postAllVotes = (votes, id) => methodFunction(votes, id);
+
+export const getVoterID = (otp) => API.post('/voting/get_voter_id/',{otp});
+export const checkVoterID = (voterid) =>
+  API.post("/voting/voterid_check/", { voterid });

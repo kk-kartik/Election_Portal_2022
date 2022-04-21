@@ -4,8 +4,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { BASEURL } from "./constants";
 import { getAllCandidates } from "./redux/actions/candidates";
 import VotingScreen from "./screens/VotingScreen";
-import WelcomeScreen from "./screens/WelcomeScreen";
 import StatusScreen from "./screens/StatusScreen";
+import Loading from "./components/Loader/Loading";
+import StartVotingButton from "./components/StartVotingButton/StartVotingButton";
+import VotingIdGenScreen from "./screens/VotingIdGenScreen";
+import EnterVoterIdScreen from "./screens/EnterVoterIdScreen";
+
 function App() {
   const dispatch = useDispatch();
 
@@ -17,11 +21,27 @@ function App() {
     <div className="voting-portal-2022-wrapper">
       <BrowserRouter basename={BASEURL}>
         <Switch>
-          <Route path="/" exact component={WelcomeScreen} />
-          <Route path="/status" exact component={StatusScreen} />
+          <Route
+            path="/"
+            exact
+            render={() => (
+              <StatusScreen>
+                <StartVotingButton />
+              </StatusScreen>
+            )}
+          />
+          <Route path="/enterid" exact component={EnterVoterIdScreen} />
+          <Route path="/otp" exact component={VotingIdGenScreen} />
+          <Route
+            path="/status"
+            exact
+            render={() => (
+              <StatusScreen>
+                <Loading text="Please wait till we process your vote" />
+              </StatusScreen>
+            )}
+          />
           <Route path="/:position" exact component={VotingScreen} />
-
-          {/* {There would other routes as per flow} */}
         </Switch>
       </BrowserRouter>
     </div>
