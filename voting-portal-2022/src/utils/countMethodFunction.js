@@ -2,7 +2,7 @@ import election from "../ethereum/election";
 import web3 from "../ethereum/webThree";
 import { publicKey, privateKey, contractAddress } from "../constants";
 
-import { Transaction as Tx } from "@ethereumjs/tx";
+import { Transaction } from "@ethereumjs/tx";
 import Common, { Chain } from "@ethereumjs/common";
 
 export const countVotes = async () => {
