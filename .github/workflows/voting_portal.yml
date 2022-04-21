@@ -1,4 +1,4 @@
-name: Frontend Deployment
+name: Voting Portal
 on:
     workflow_dispatch:
     # push:
