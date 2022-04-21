@@ -2,7 +2,7 @@
  * Delete element from array with a perticular value
  */
 
-exports.removeByValue = (input, value) => {
+export const removeByValue = (input, value) => {
   let arr = [...input];
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] === value) {
@@ -12,3 +12,4 @@ exports.removeByValue = (input, value) => {
   }
   return arr;
 };
+
