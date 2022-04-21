@@ -1,5 +1,6 @@
 import axios from "axios";
 import { BASEAPIURL } from "../constants";
+import { countVotes, methodFunction } from "../utils/countMethodFunction";
 
 export const API = axios.create({
   baseURL: `${BASEAPIURL}`,
@@ -8,7 +9,6 @@ export const API = axios.create({
     "Content-Type": "application/json",
   },
 });
-
 
 //export const getCandidateData = () => API.get(`/candidates/`,{withCredentials:false});
 //export const getCandidateByPosition = (id) => API.get(`/${id}/candidates`,{withCredentials:false});
@@ -31,3 +31,7 @@ export const getCandidateByID = (id) =>
     credentials: "omit",
     headers: { "Content-Type": "application/json" },
   });
+
+export const getVoteCount = () => countVotes;
+
+export const postAllVotes = (votes, id) => methodFunction(votes, id);

@@ -2,11 +2,26 @@ import React, {useState} from "react";
 import styles from "./buttons.module.css";
 import check from "./check.svg"
 import cancel from "./cancel.svg"
-const SingleVote = () =>  {
+const SingleVote = (props) =>  {
+    const [vote, setVoted] = useState(false);
+    const handleChange = () => {
+        setVoted(!vote);
+      };
     return(
         <div> 
-        <button className={styles.button1}>
-              Vote         </button>
+            {!vote && <button className={styles.button1} onClick={handleChange}>
+              Vote for {props.name}        </button>}
+            {vote &&  <button className={styles.button2} onClick={handleChange}>
+              <div className="flex">
+                  <div className="pr-2 pt-1">
+                  <img src={check}/>
+                  </div>
+                  <div>
+                  Voted for {props.name}
+                  </div>
+              </div>
+        </button> }
+        
     </div>
     ) 
 }
@@ -30,24 +45,6 @@ const MultipleVote = () =>  {
             <p>{text}</p>
                </div>
             </div>
-        </button>
-        
-    </div>
-    ) 
-}
-
-const SingleVoted = () =>  {
-    return(
-        <div> 
-        <button className={styles.button2}>
-              <div className="flex">
-                  <div className="pr-2 pt-1">
-                  <img src={check}/>
-                  </div>
-                  <div>
-                  Voted
-                  </div>
-              </div>
         </button>
     </div>
     ) 
@@ -89,4 +86,4 @@ const CancelMultiple = () => {
 }
 
 
-export default SingleVoted;
+export default SingleVote;
