@@ -77,6 +77,10 @@ export const getCandidateByID = (id) =>
     headers: { "Content-Type": "application/json" },
   });
 
+export const getStats = () => {
+  return API.get("/get_stats/");
+};
+
 //credentials
 export const uploadCredentials = (data) =>
   MULTIPARTAPI.post("/add_credentials/", data);
