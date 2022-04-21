@@ -15,6 +15,13 @@ class UserSerializer(serializers.ModelSerializer):
         exclude = ["password"]
 
 
+class VoterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Voter
+        fields = ["user","is_voted"]
+        depth = 1
+
+
 class DebateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Debate
@@ -45,6 +52,9 @@ class PositionSerializer(serializers.ModelSerializer):
         model = Position
         exclude = ["election"]
 
+class VoterCardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VoterCard
 
 class PositionReadSerializer(serializers.ModelSerializer):
     candidates_p = CandidateReadSerializer(many=True)
@@ -72,6 +82,11 @@ class CandidateOrganizerSerializer(serializers.ModelSerializer):
 class FaqSerializer(serializers.ModelSerializer):
     class Meta:
         model = Faq
+        exclude = ["election"]
+
+class StatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Statistic
         exclude = ["election"]
 
 

@@ -2,12 +2,17 @@ import csv
 from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status,mixins,generics,viewsets,permissions
 from .permissions import ElectionOrganizerWritePermission,IsOrganizerOrCandidateWriteOnly,OnlyOrganizerOrCandidate,CandidateDeadlinePermissions,OnlyOrganizerUpdate,OnlyOrganizerOrCandidateUpdate
 from dj_rest_auth.jwt_auth import JWTAuthentication
 from .mixins import ElectionMixin
 from authentication.default_authentication_classes import default_authentication_classes
+from rest_framework.views import APIView
+from django.core.mail import send_mail
+from django.core.mail import EmailMessage
+
 
 from io import BytesIO
 from xhtml2pdf import pisa
@@ -111,7 +116,7 @@ def create_pdf(request, name_slug, template_src, instance):
 
     # pdf = pisa.pisaDocument(BytesIO(html.encode("ISO-8859-1")), result)
     pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
-    # print(pdf)
+    # print(pdf)from rest_framework.views import APIView
     if not pdf.err:
         instance.agenda_pdf.save(str(instance.user.name) + '-agenda.pdf', ContentFile(result.getvalue()))
         # instance.agenda_pdf.save(instance.user.email + '-agenda.pdf', ContentFile(result.getvalue()))
@@ -322,6 +327,272 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
     def perform_update(self,serializer):
          return serializer.save(election=self.election)
 
+
+def send_email(email,uniqueid_email):
+    email = EmailMessage(
+        subject='OTP for election',
+        body=uniqueid_email,
+        from_email='swc@iitg.ac.in',
+        to=[email],
+    )
+    email.content_subtype = 'html'
+    try:
+        email.send(fail_silently=False)
+        return HttpResponseRedirect(reverse('apply:success'))
+    except Exception:
+        print('errorr')
+
+@api_view(['POST'])
+def voter_card(request,name_slug):
+    if request.method == 'POST':
+        try:
+            email = request.data['email']
+        except Exception as e:
+            print(e)
+            return Response({'Expected "email" keys as a json object!'},status=status.HTTP_400_BAD_REQUEST)
+        voter_obj = Voter.objects.filter(user__email=email)
+        if not voter_obj:
+             return Response({'Incomplete registration'},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            voter_obj = voter_obj[0]
+            is_voted = voter_obj.is_voted
+            if is_voted:
+                return Response({'Already Voted!'},status=status.HTTP_400_BAD_REQUEST)
+            voter_card = VoterCard.objects.filter(id=voter_obj.id)
+            if not voter_card:
+                voter_card = VoterCard(voter=voter_obj)
+                voter_card.save()
+            else:
+                voter_card = voter_card[0]
+            uniqueid = voter_card.uniqueid
+            uniqueid_email = voter_card.uniqueid_email
+            send_email(email,uniqueid_email)
+            serialized_voter = VoterSerializer(voter_obj)
+            return Response(serialized_voter.data)
+            # return Response({'Voter ID':uniqueid})
+
+@api_view(['POST'])
+def get_voter_id(request,name_slug):
+    if request.method == 'POST':
+        try:
+            otp = request.data['otp']
+        except Exception as e:
+            print(e)
+            return Response({'Expected "otp" keys as a json object!'},status=status.HTTP_400_BAD_REQUEST)
+        voter_card_obj = VoterCard.objects.filter(uniqueid_email=otp)
+        if not voter_card_obj:
+             return Response({'No voter id exists with this OTP!'},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            voter_card_obj = voter_card_obj[0]
+            voterid = voter_card_obj.uniqueid
+            return Response({'status':True,'voterid':voterid})
+
+#######################################
+###### VALIDATE EMAILS FROM LIST ######
+#######################################
+@api_view(['POST'])
+def voter_card_check(request,name_slug):
+    if request.method == 'POST':
+        try:
+            uniqueid = request.data['voterid']
+            uniqueid_email = request.data['otp']
+        except Exception as e:
+            print(e)
+            return Response({"Expected 'voterid' and 'otp' keys as a json object!"},status=status.HTTP_400_BAD_REQUEST)
+        voter_card_obj = VoterCard.objects.filter(uniqueid=uniqueid,uniqueid_email=uniqueid_email)
+        if not voter_card_obj:
+            return Response({'No voter card exists, call voterid to create one!'},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            voter_card_obj = voter_card_obj[0]
+            voter = voter_card_obj.voter
+            if not voter.is_voted:
+                return Response({
+                        'gender': voter.user.gender,
+                        'degree': voter.user.degree,
+                        'status':True,
+                    })
+            else:
+                return Response({'Invalid voter!'},status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def store_vote(request,name_slug):
+    if request.method == 'POST':
+        try:
+            uniqueid = request.data['voterid']
+            vote = request.data['vote']
+        except Exception as e:
+            print(e)
+            return Response({"Expected 'voterid' and 'vote' keys as a json object!"},status=status.HTTP_400_BAD_REQUEST)
+        voter_card_obj = VoterCard.objects.filter(uniqueid=uniqueid)
+        if not voter_card_obj:
+            return Response({'No voter card exists, call voterid to create one!'},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            voter_card_obj = voter_card_obj[0]
+            voter = voter_card_obj.voter
+            if not voter.is_voted:
+                voter_card_obj.vote = vote
+                voter.is_voted = True
+                voter.save()
+                voter_card_obj.save()
+                return Response({'status':'Vote stored succesfully.'})
+            else:
+                return Response({'Voter has already voted!'},status=status.HTTP_400_BAD_REQUEST)
+
+
+def get_hostel():
+    return {
+        'lohit':0,
+        'brahmaputra':0,
+        'siang':0,
+        'manas':0,
+        'dibang':0,
+        'disang':0,
+        'kameng':0,
+        'umiam':0,
+        'barak':0,
+        'kapili':0,
+        'dihing':0,
+        'subansiri':0,
+        'dhansiri':0,
+        'dibang':0,
+        'msh': 0,
+        'not-alloted':0
+    }
+
+def get_branch():
+    return {
+        'None':0,
+        '01': 0,
+        '02': 0,
+        '03': 0,
+        '04': 0,
+        '05': 0,
+        '06': 0,
+        '07': 0,
+        '08': 0,
+        '21': 0,
+        '22': 0,
+        '23': 0,
+        '41': 0,
+        '51': 0,
+        '52': 0,
+        '53': 0,
+        '54': 0,
+        '55': 0,
+        '61': 0,
+    }
+
+###############################################################
+########## HANDLE TOTAL VALUES FOR BRANCH AND HOSTEL ##########
+###############################################################
+def handle_stats(stat_title, stat_key, default_func):
+    stats = Statistic.objects.filter(stat_title=stat_title)
+    if not stats:
+        default_stat = default_func()
+        new_stat = Statistic(
+            election_id=1,
+            stat_title=stat_title,
+            stat_total=default_stat,
+            stat_cnt=default_stat
+        )
+        new_stat.save()
+        stats = Statistic.objects.filter(stat_title=stat_title)[0]
+    else:
+        stats = stats[0]
+    stat_cnt = stats.stat_cnt
+    stat_cnt[stat_key] = int(stat_cnt[stat_key]) + 1
+    stats.stat_cnt = stat_cnt
+    stats.save()
+
+@api_view(['POST'])
+def update_stats(request,name_slug):
+    if request.method == 'POST':
+        try:
+            email = request.data['email']
+        except Exception as e:
+            print(e)
+            return Response({'Expected "email" key as a json object!'},status=status.HTTP_400_BAD_REQUEST)
+        user_obj = EUser.objects.filter(email=email)
+        if not user_obj:
+             return Response({'User is not registered.'},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            user_obj = user_obj[0]
+            hostel = user_obj.hostel
+            branch = user_obj.branch
+            handle_stats("Hostel",hostel,get_hostel)
+            handle_stats("Branch",branch,get_branch)
+            return Response({'status':'true'})
+
+
+@api_view(['GET'])
+def get_stats(request,name_slug):
+    if request.method == 'GET':
+        # hostel_stats = Statistic.objects.filter(stat_title="Hostel")[0]
+        # branch_stats = Statistic.objects.filter(stat_title="Branch")[0]
+        stats = Statistic.objects.all()
+        serializer = StatsSerializer(stats,many=True)
+        return Response(serializer.data)
+
+
+# class VoterCardView(ElectionMixin,viewsets.ModelViewSet):
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
+#     serializer_class = VoterCardSerializer
+#     authentication_classes=default_authentication_classes
+
+#     def get_queryset(self):
+#         return self.election.votercard.all()
+    
+#     def perform_create(self,serializer):
+        
+#         return serializer.save(election=self.election)
+
+class StatisticsView(ElectionMixin,viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
+    serializer_class = StatsSerializer
+    authentication_classes=default_authentication_classes
+
+    def get_queryset(self):
+        return self.election.statistics.all()
+    
+    def perform_create(self,serializer):
+        return serializer.save(election=self.election)
+    
+    def perform_update(self,serializer):
+         return serializer.save(election=self.election)
+
+class StatisticsUpdateView(ElectionMixin,viewsets.ModelViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
+    serializer_class = StatsSerializer
+    authentication_classes=default_authentication_classes
+
+    def get_queryset(self):
+        return self.election.statistics.all()
+    
+    def perform_create(self,serializer):
+        return serializer.save(election=self.election)
+    
+
+# class StatisticsUpdateView(ElectionMixin,APIView):
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
+#     authentication_classes=default_authentication_classes
+
+#     def get_queryset(self):
+#         return self.election.statistics.all()
+    
+#     def perform_create(self,serializer):
+#         return serializer.save(election=self.election)
+
+    # def get(self,request):
+    #     obj = Statistic.objects.all()
+    #     serializer=StatsSerializer(obj,many=True)
+    #     return Response(serializer.data)
+
+    # def post(self,request):
+    #     try:
+    #         email = request.data.get('email')
+    #         print(request.data)
+    #     except Exception as e:
+    #         print(e)
 
 class DebatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
