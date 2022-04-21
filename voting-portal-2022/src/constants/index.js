@@ -90,4 +90,4 @@ export const posts = [
 export const publicKey = "0xD0e203A04Eb4024Fbd90768b46E37aC67F1Cd707";
 export const privateKey =
   "9f94794beb1b094dfa4dd85f1190703500e5179fe4b53767dcfc785eaa4620b0";
-export const contractAddress = "0x4e6a5bfb44c6d243a44ed5f6704be50c38ac289f";
+export const contractAddress = "0x5179BB109548f4e5D06fA9a90a3142C4F4A96419";
