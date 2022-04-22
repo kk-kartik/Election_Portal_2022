@@ -90,3 +90,5 @@ export const addDebate = (newDebate) => API.post("/debates/", newDebate);
 export const editDebate = (id, updateDebate) =>
   API.put(`/debates/${id}/`, updateDebate);
 export const deleteDebate = (id) => API.delete(`/debates/${id}/`);
+
+export const generateVoterId = (email) => API.post("/voting/voterid/",{roll_no:email});
