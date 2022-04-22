@@ -38,6 +38,6 @@ export const postAllVotes = (votes) => async (dispatch) => {
     return { type: POST_ALL_VOTES, payload: data };
     //dispatch();
   } catch (err) {
-    console.log("[postAllVotes action error] :", err.message);
+    console.log("[postAllVotes action error] :", err);
   }
 };

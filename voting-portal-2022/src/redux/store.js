@@ -3,8 +3,9 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import candidates from "./reducers/candidates";
 import votes from "./reducers/votes";
+import voterInfo from "./reducers/voter";
 
-const reducer = combineReducers({ candidates, votes });
+const reducer = combineReducers({ candidates, votes, voterInfo });
 
 const initialState = {};
 const middleware = [thunk];

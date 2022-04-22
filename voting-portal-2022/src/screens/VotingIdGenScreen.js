@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import StatusScreen from "./StatusScreen";
 import { getVoterID } from "../api";
-
+import styles from "../components/buttons/buttons.module.css"
+import Timer from "../components/timer/timer";
 const VotingIdGenScreen = (props) => {
   const [success, setSuccess] = useState(false);
   const [otp, setOtp] = useState("");
-  const [errorMsg, setErrorMsg]  = useState("");
-
+  const [errorMsg, setErrorMsg] = useState("");
+  const [voterId, setVoterId] = useState("");
+  const [fill, setFill] = useState(100);
+  const [empty, setEmpty] = useState(0);
   const handleGetVoterId = (otp) => {
     console.log("xsxsxs");
     getVoterID(otp)
       .then((data) => {
+        setVoterId(data.data.voterid);
+        setSuccess(true);
         console.log("Voter id data: ", data);
       })
       .catch((e) => {
@@ -22,10 +27,33 @@ const VotingIdGenScreen = (props) => {
   return (
     <StatusScreen>
       {success ? (
-        <h1>Here is your Voter ID</h1>
+       <> 
+      <div className="w-96">
+        <div className="flex flex-col items-center justify-between p-4">
+          <div className="text-4xl font-atkinson">
+            <p className="text-gray-600">Here is your Voter ID</p>
+          </div>
+          <div className="mt-8">
+            <button
+              className={`${styles.voterId} w-96 h-20 font-extrabold font-roboto text-4xl text-white `}
+            > 
+            {/* <Timer fill={fill} empty={empty} /> */}
+              {voterId}
+            </button>
+
+          </div>
+          <div className="mt-6 text-center text-gray-700 w-full">
+            You may now write this down and enter this in your voting system
+          </div>
+          <div className={`${styles.pink} mt-2 text-center `}>
+            If you forget this ID you will not be able to cast votes
+          </div>
+        </div>
+      </div>
+      </>
       ) : (
-        <>
-          {/* <div className="flex flex-col justify-start">
+       <> 
+      {/* <div className="flex flex-col justify-start">
           <h1>Enter your OTP cdcdcd</h1>
           <div className="flex flex-col items-start">
             <input
@@ -38,7 +66,7 @@ const VotingIdGenScreen = (props) => {
             <button onClick={() => {handleGetVoterId(otp);console.log("sxsxs")}}>Continue</button>
           </div>
         </div> */}
-          <div className="w-80">
+      <div className="w-80">
             <div className="flex flex-col items-center justify-between p-4">
               <div className="text-4xl font-atkinson">
                 <p className="text-gray-600">Enter Your OTP</p>
@@ -65,7 +93,7 @@ const VotingIdGenScreen = (props) => {
             </div>
           </div>
         </>
-      )}
+      )} 
     </StatusScreen>
   );
 };

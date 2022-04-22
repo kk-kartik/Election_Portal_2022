@@ -72,3 +72,11 @@
   padding: 8px;
   color: #4b5563;
 }
+.voterId{
+  background: #34D058;
+  box-shadow: inset 0px 2px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 24px;
+}
+.pink {
+  color: #EC327E;
+}

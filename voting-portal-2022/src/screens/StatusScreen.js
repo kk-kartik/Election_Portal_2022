@@ -1,10 +1,18 @@
 import React from "react";
 import iitglogo from "../assets/iitglogo.png";
 
-
 const StatusScreen = (props) => {
   return (
-    <div className="w-full h-screen flex flex-row justify-around items-center">
+    <div
+      className="w-full h-screen flex flex-row justify-around items-center bg-white"
+      style={{
+        position: "fixed",
+        top: "0",
+        left: "0",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
       <div className="flex flex-col justify-around items-center w-1/2">
         <div>
           <div className="w-24 h-24">
