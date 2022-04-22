@@ -26,32 +26,37 @@ from django.views.generic.base import View
 import json
 from django.contrib.auth.models import User
 # from wkhtmltopdf.views import PDFTemplateResponse
-
+from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 # from .jdata import jdata
 import os
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
-def func():
+def populate_data(request,name_slug):
     path = settings.BASE_DIR/'main'/'static'/'new_file.json'
     jdata = open(path)
     data = json.load(jdata)
 
-    # i = 0
+    i = 0
     for key,values in data['IITG_Email_Updated'].items():
-        print(values)
-        # i += 1
-        # if i == 10:
-        #     break
-        user = User(email = values + "@iitg.ac.in",username=values + "@iitg.ac.in")
-        user.save()
-
+        i += 1
+        if i == 10:
+            break
+        email = values + "@iitg.ac.in"
+        try:
+            user = User.objects.get(email=email)
+            user.email = email
+            user.username = email
+        except ObjectDoesNotExist:
+            user = User(email = email ,username=email)
+            user.save()
+        except Exception as e:
+            print(e)
 
     dict_data = {}
 
     for key,value in data['Roll No'].items():
         dict_data[key] = {"roll_number":value}
-        # print(key,value)
 
     for key,value in data['Name'].items():
         dict_data[key]['name'] = value
@@ -63,12 +68,11 @@ def func():
     for key,value in data['Gender'].items():
         dict_data[key]["gender"] = value
 
-    # i = 0
+    i = 0
     for key,values in dict_data.items():
-        print(values)
-        # i += 1
-        # if i == 10:
-        #     break
+        i += 1
+        if i == 10:
+            break
         try:
             euser = EUser.objects.get(user__email=values['email'])
             euser.name = values['name']
@@ -79,6 +83,7 @@ def func():
 
         except Exception as e:
             print(e)
+    return HttpResponse("data populated kaam ho gya")
 
     
 
@@ -386,19 +391,21 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
          return serializer.save(election=self.election)
 
 
-def send_email(email,uniqueid_email):
+def send_email(remail,uniqueid_email):
     email = EmailMessage(
         subject='OTP for election',
         body=uniqueid_email,
-        from_email='swc@iitg.ac.in',
-        to=[email],
+        from_email='sgcelectionsiitg@gmail.com',
+        to=[remail],
     )
+    print(uniqueid_email)
+    print(remail)
     email.content_subtype = 'html'
     try:
         email.send(fail_silently=False)
-        return HttpResponseRedirect(reverse('apply:success'))
-    except Exception:
-        print('errorr')
+        # return HttpResponseRedirect(reverse('apply:success'))
+    except Exception as e:
+        print('mail not sent',e)
 
 @api_view(['POST'])
 def voter_card(request,name_slug):
@@ -412,22 +419,31 @@ def voter_card(request,name_slug):
             return Response({'Not a valid voting email!'},status=status.HTTP_400_BAD_REQUEST)
         voter_obj = Voter.objects.filter(user__email=email)
         if not voter_obj:
-             return Response({'Incomplete registration'},status=status.HTTP_400_BAD_REQUEST)
+            euser = EUser.objects.filter(email=email)
+            if not euser:
+                return Response({'Incomplete registration'},status=status.HTTP_400_BAD_REQUEST)
+            else:
+                euser = euser[0]
+                voter_obj = Voter(election_id=1,user=euser)
+                voter_obj.save()
+                voter_obj = Voter.objects.get(user__email=email)
         else:
             voter_obj = voter_obj[0]
-            is_voted = voter_obj.is_voted
-            if is_voted:
-                return Response({'Already Voted!'},status=status.HTTP_400_BAD_REQUEST)
-            voter_card = VoterCard.objects.filter(voter__id=voter_obj.id)
-            if not voter_card:
-                voter_card = VoterCard(voter=voter_obj)
-                voter_card.save()
-            else:
-                voter_card = voter_card[0]
-            uniqueid_email = voter_card.uniqueid_email
-            send_email(email,uniqueid_email)
-            serialized_voter = VoterSerializer(voter_obj)
-            return Response(serialized_voter.data)
+
+        is_voted = voter_obj.is_voted
+        if is_voted:
+            return Response({'Already Voted!'},status=status.HTTP_400_BAD_REQUEST)
+        voter_card = VoterCard.objects.filter(voter__id=voter_obj.id)
+        if not voter_card:
+            voter_card = VoterCard(voter=voter_obj)
+            voter_card.save()
+        else:
+            voter_card = voter_card[0]
+        uniqueid_email = voter_card.uniqueid_email
+        print(email)
+        send_email(email,uniqueid_email)
+        serialized_voter = VoterSerializer(voter_obj)
+        return Response(serialized_voter.data)
 
 @api_view(['POST'])
 def get_voter_id(request,name_slug):
