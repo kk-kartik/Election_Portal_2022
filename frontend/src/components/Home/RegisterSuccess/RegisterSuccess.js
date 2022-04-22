@@ -1,11 +1,21 @@
 import styles from "./RegisterSuccess.module.css"
 import Icon from "./icon.svg"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import DEPT from "../../../constants/depts"
+import getUserImg from "../../../actions/getUserImg";
+import {useEffect, useState} from "react";
+import DefaultIMG from "./default.svg"
 
 const RegisterSuccess = (props) => {
     const userData = useSelector((store) => store.auth);
+    const userImg = useSelector((store) => store.getUserImg);
+    const dispatch = useDispatch();
+    useEffect(() => {
+        let data = {"email":userData?.euser?.email}
+        dispatch(getUserImg(data));
+      }, [dispatch, userData]);
     // console.log("userData", userData);
+    console.log("userImg", userImg);
     let hid = ""
     if(userData == null || userData?.euser?.registration_complete == false){
         hid = "hidden";
@@ -18,13 +28,14 @@ const RegisterSuccess = (props) => {
         roll_no += userData?.euser?.roll_number[i]
     }
     let voter_type = "PG";
-    if(userData?.euser?.degree == "U"){
+    if(userData?.euser?.degree == "B"){
         voter_type = "UG";
     }
     return (
-    <div className={`${styles.cont} p-4 max-w-sm ml-auto mr-auto ${hid}`}>
+    <div className={`${styles.cont} p-4 max-w-md ml-auto mr-auto ${hid}`}>
         <div className={`grid ${styles.grid} gap-5`}>
-            <img src={Icon} className={`${styles.img} max-w-fit`}/>
+            {/* <img src={Icon} className={`${styles.img} max-w-fit`}/> */}
+            <img src={userImg?.img_url} className={`${styles.img} max-w-fit row-span-3`} alt={"Image"} onError={(th)=>{th.target.src = DefaultIMG}}/>
             <div className={`flex flex-col`}>
                 <div className={`${styles.small}`}>
                     Name
@@ -41,8 +52,7 @@ const RegisterSuccess = (props) => {
                     {roll_no}
                 </div>
             </div>
-            <div className={`flex flex-col`}>
-            </div>
+            
             <div className={`flex flex-col`}>
                 <div className={`${styles.small}`}>
                     Voter Type
@@ -58,8 +68,6 @@ const RegisterSuccess = (props) => {
                 <div className={`${styles.text}`}>
                     {userData?.euser?.hostel}
                 </div>
-            </div>
-            <div className={`flex flex-col`}>
             </div>
             <div className={`flex flex-col`}>
                 <div className={`${styles.small}`}>

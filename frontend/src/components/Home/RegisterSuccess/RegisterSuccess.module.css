@@ -23,9 +23,15 @@
 }
 
 .img{
-    width: 41px;
-    height: 39px;
+    width: 150px;
+    height: 200px;
 }
+/* @media only screen and (max-width: 600px) {
+    .img {
+        width: 100px;
+        height: 150px;
+    }
+  } */
 
 .grid{
     grid-template-columns: min-content auto auto;

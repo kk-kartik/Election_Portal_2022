@@ -13,6 +13,8 @@ export const DELETE_IMPORTANT_DATE = "DELETE_IMPORTANT_DATE";
 // Stats
 export const GET_STATS = "GET_STATS";
 
+// User Image
+export const GET_USER_IMG = "GET_USER_IMG";
 
 //FAQ Constants
 export const GET_FAQS = "GET_FAQS";
