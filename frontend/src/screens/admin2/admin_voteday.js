@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import GenerateOtpScreen from "./GenerateOtpScreen/GenerateOtpScreen";
-import ProgressScreen from "./ProgressScreen/ProgressScreen";
 import VotersScreen from "./VotersScreen/VotersScreen";
 const AdminVoteDay = () => {
   // let userData = useSelector((store) => store.auth);
@@ -31,11 +30,6 @@ const AdminVoteDay = () => {
                   exact
                   path={`/sendOtp`}
                   element={<GenerateOtpScreen />}
-                />
-                <Route
-                  exact
-                  path={`/progress`}
-                  element={<ProgressScreen />}
                 />
                 <Route
                   exact
