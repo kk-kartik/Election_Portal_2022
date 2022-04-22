@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StatusScreen from "./StatusScreen";
 import { getVoterID } from "../api";
 import styles from "../components/buttons/buttons.module.css"
-import Timer from "../components/timer/timer";
+//import Timer from "../components/Timer/timer";
 const VotingIdGenScreen = (props) => {
   const [success, setSuccess] = useState(false);
   const [otp, setOtp] = useState("");
