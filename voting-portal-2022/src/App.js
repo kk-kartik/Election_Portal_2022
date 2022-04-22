@@ -9,7 +9,8 @@ import Loading from "./components/Loader/Loading";
 import StartVotingButton from "./components/StartVotingButton/StartVotingButton";
 import VotingIdGenScreen from "./screens/VotingIdGenScreen";
 import EnterVoterIdScreen from "./screens/EnterVoterIdScreen";
-
+import VoterIdInput from "./components/VotesIdInput/VoterIdInput";
+import VoterId from "./components/VoterId/VoterId";	
 function App() {
   const dispatch = useDispatch();
 

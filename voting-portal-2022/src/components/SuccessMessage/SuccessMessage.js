@@ -18,6 +18,9 @@ const SuccessMessage = (props) => {
                     <div className="mt-2">Block_ID : {props.block_id}</div>
                     <div className="mt-2 mb-2">Gas : ${props.gas}</div>
                 </div>
+                <div className="text-sm text-center text-gray-500 text-roboto font-regular mt-2">
+                    You may now leave the system
+                </div>
             </div>
         </div>
     )
