@@ -5,7 +5,6 @@ import { notBlockChainKey } from "../constants";
 export const encryptFunction = (vote) => {
   const publicEncKey = notBlockChainKey;
   const encrypt = new JSEncrypt();
-  vote = "143,258,789";
   encrypt.setPublicKey(publicEncKey);
   var encrypted = encrypt.encrypt(vote);
   return encrypted;

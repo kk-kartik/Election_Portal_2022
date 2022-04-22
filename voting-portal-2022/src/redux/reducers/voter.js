@@ -12,8 +12,8 @@ const voterInfo = (voterId = initialState, action) => {
     case SET_VOTERID_VALID:
       return {
         ...voterId,
-        isVoterIdValid: action.isValid,
-        voterId: action.voterId,
+        isVoterIdValid: action.payload?.isValid,
+        voterId: action.payload?.voterId,
       };
     case CHECK_VOTERID:
       return {

@@ -1,7 +1,7 @@
 import SubmitVotesField from "../SubmitVotesField/SubmitVotesField";
 import styles from "./SubmitVotesModal.module.css";
 import { candidateIdToName } from "../../constants/index";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { postAllVotes } from "../../redux/actions/votes";
 import { votesToString } from "../../utils/voteValue";
 import StatusScreen from "../../screens/StatusScreen";
@@ -25,17 +25,22 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
   const dispatch = useDispatch();
   const [hasSendVote, setHasSendVote] = useState(false);
   const history = useHistory();
+  const voterInfo = useSelector(store=>store.voterInfo);
+
+    console.log("voterid sxnls: ", voterInfo);
+
 
   const submitHandler = () => {
+    console.log("voterid before submit: ",voterInfo);
     const strVotes = votesToString(votes);
     setHasSendVote(true);
-    dispatch(postAllVotes(strVotes)).then((data) => {
+    dispatch(postAllVotes(strVotes,voterInfo.voterId)).then((data) => {
       console.log("[ye abhi ka data]", data);
       history.push({
         pathname: "/response",
         state: {
           transaction_id: data.payload.transactionHash,
-          voter_id: "dlkfjaslkdf",
+          voter_id: voterInfo.voterId,
           block_id: data.payload.blockHash,
           gas: data.payload.gasUsed,
         },
