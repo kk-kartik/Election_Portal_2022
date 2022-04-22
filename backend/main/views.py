@@ -539,6 +539,8 @@ def get_branch():
     }
 
 def handle_stats(stat_title, stat_key, default_func):
+    if not stat_key:
+        return False
     stats = Statistic.objects.filter(stat_title=stat_title)
     if not stats:
         default_stat = default_func()
@@ -556,6 +558,7 @@ def handle_stats(stat_title, stat_key, default_func):
     stat_cnt[stat_key] = int(stat_cnt[stat_key]) + 1
     stats.stat_cnt = stat_cnt
     stats.save()
+    return True
 
 def update_stats(email):
     if not email in data:
@@ -569,9 +572,11 @@ def update_stats(email):
         user_obj = user_obj[0]
         hostel = user_obj.hostel
         branch = user_obj.branch
-        handle_stats("Hostel",hostel,get_hostel)
-        handle_stats("Branch",branch,get_branch)
-        return 200
+        hostel_ok = handle_stats("Hostel",hostel,get_hostel)
+        branch_ok = handle_stats("Branch",branch,get_branch)
+        if hostel_ok and branch_ok:
+            return 200
+        return 400
         # return Response({'status':'true'})
 
 @api_view(['POST'])
