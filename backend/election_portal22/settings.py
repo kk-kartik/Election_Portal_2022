@@ -392,4 +392,4 @@ JET_THEMES = [
 ]
 
 JET_SIDE_MENU_COMPACT = True
-SOCIALACCOUNT_ADAPTER = 'main.adapter.MySocialAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'authentication.adapter.MySocialAccountAdapter'
