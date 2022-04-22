@@ -15,7 +15,7 @@ import useAuthCheck from "./hooks/useAuthCheck";
 import LoginScreen from "./screens/loginScreen/LoginScreen";
 import RegistrationRoute from "./custom-routes/RegistrationRoute";
 import NominationRoute from "./custom-routes/NominationRoutes";
-
+import AdminVoteDay from "./screens/admin2/admin_voteday";
 function Pre() {
   return (
     <div className="min-h-screen">
@@ -87,6 +87,7 @@ function App() {
         <Route path="/*" exact element={<Pre />} />
         {/* <Route path="/election/*" exact element={<ElectionScreen />} /> */}
         <Route path="/admin/*" exact element={<AdminScreen />} />
+        <Route path="/admin/vote_day/*" exact element={<AdminVoteDay />} />
         <Route path="/login" exact element={<LoginScreen />} />
         {/* Route of the VOTING PORTAL */}
       </Routes>

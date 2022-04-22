@@ -270,6 +270,9 @@ class VoterCard(models.Model):
     uniqueid_email = models.CharField(max_length=10,default = create_id_email)
     vote = models.TextField(blank=True,null=True)
 
+    def __str__(self) -> str:
+        return str(self.voter)
+
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):
     if created:

@@ -25,7 +25,6 @@ urlpatterns = [
     path("voting/voterid/",views.voter_card,name="voterid"),
     path("voting/voterid_check/",views.voter_card_check,name="voter_card_check"),
     path("voting/store_vote/",views.store_vote,name="store_vote"),
-    path("voting/update_stats/",views.update_stats,name="update_stats"),
     path("voting/get_voter_id/",views.get_voter_id,name="get_voter_id"),
     path("get_stats/",views.get_stats,name="get_stats"),
     # path("statistics_update/",views.StatisticsUpdateView.as_view(),name="statistics_update"),

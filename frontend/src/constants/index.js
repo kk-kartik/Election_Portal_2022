@@ -10,6 +10,10 @@ export const ADD_IMPORTANT_DATE = "ADD_IMPORTANT_DATE";
 export const EDIT_IMPORTANT_DATE = "EDIT_IMPORTANT_DATE";
 export const DELETE_IMPORTANT_DATE = "DELETE_IMPORTANT_DATE";
 
+// Stats
+export const GET_STATS = "GET_STATS";
+
+
 //FAQ Constants
 export const GET_FAQS = "GET_FAQS";
 export const ADD_FAQ = "ADD_FAQ";

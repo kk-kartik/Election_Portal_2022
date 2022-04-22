@@ -12,7 +12,8 @@ module.exports = {
     },
 
     fontFamily: {
-      'atkinson': ['Atkinson Hyperlegible'], 
+      'atkinson': ['Atkinson Hyperlegible'],
+      'roboto': ['Roboto', 'sans-serif'], 
   },
  
   },
