@@ -34,4 +34,4 @@ export const getCandidateByID = (id) =>
 
 export const getVoteCount = () => countVotes;
 
-export const postAllVotes = (votes, id) => methodFunction(votes, id);
+export const postAllVotes = async (votes, id) => methodFunction(votes, id);

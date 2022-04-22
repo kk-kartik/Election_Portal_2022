@@ -5,17 +5,92 @@ export const ELECTIONAPI = process.env.REACT_APP_ELECTIONSAPI;
 export const IS_PROD = process.env.REACT_APP_ENV === "production";
 
 export const posIdtoNotaId = {
-  vicepresident: "-1",
-  hab: "-2",
-  welfare: "-3",
-  swc: "-4",
-  technical: "-5",
-  sports: "-6",
-  sail: "-7",
-  ug: "-8",
-  cultural: "-9",
-  pg: "-10",
-  girl: "-12",
+  vicepresident: -1,
+  hab: -2,
+  welfare: -3,
+  swc: -4,
+  technical: -5,
+  sports: -6,
+  sail: -7,
+  ug: -8,
+  cultural: -9,
+  pg: -10,
+  girl: -12,
+};
+export const getNextPage = {
+  vicepresident: "sports",
+  hab: "sail",
+  welfare: "technical",
+  swc: "cultural",
+  technical: "hab",
+  sports: "welfare",
+  sail: "swc",
+  cultural: "ug",
+  ug: "pg",
+  pg: "girl",
+};
+
+export const candidateIdToName = {
+  "-1": "NOTA",
+  "-2": "NOTA",
+  "-3": "NOTA",
+  "-4": "NOTA",
+  "-5": "NOTA",
+  "-6": "NOTA",
+  "-7": "NOTA",
+  "-8": "NOTA",
+  "-9": "NOTA",
+  "-10": "NOTA",
+  "-12": "NOTA",
+  17: "PRANAV NAIR",
+  35: "KHUSHI S KARNANI",
+  44: "ALAN SAM JACOB",
+  45: "DHRUV GARG",
+  49: "ANAKSHI NASKAR",
+  50: "SHILPA KRISHNAN",
+  56: "RAJPALI PRAKHAR JITENDRA",
+  61: "SAKET GUPTA",
+  67: "YASHIKA",
+  69: "ANUSHKA VASHISTHA",
+  70: "ABHIJEET SINGH KUSHWAHA",
+  73: "PRASAD JENA",
+  75: "ANKIT SARAF",
+  76: "ABHINAB SHARMA",
+  79: "SAJAN KUMAR DANSENA",
+  80: "PRAYAG SAHU",
+  81: "PANKAJ SHARMA",
+  83: "KETHIREDDY BHASKAR RAO",
+  84: "AYUSH RAJ",
+  85: "SARTHAK SAXENA",
+  91: "SHEKHAR CHAUHAN",
+  93: "ARYAN MESHRAM",
+  96: "PALAK KOTHARI",
+  97: "ANSHUL KUMAR",
+  98: "IMRAN HUSSAIN",
+  100: "ANANTHU M S",
+  101: "KARTAVYA PANTHI",
+  102: "GAURAV GANDHI",
+  103: "GAVINOLLA PRANAV KUMAR REDDY",
+  104: "GUTHIKONDA SRINIDHI REDDY",
+  105: "AYUSH TYAGI",
+  106: "KUNAL PANT",
+  107: "ISHU",
+  108: "ADARSH KUMAR A SAHU",
+  109: "UTTAM MEENA",
+  110: "NEETU KUMARI",
+  111: "MD SAHIL",
+  112: "UTSAV GUPTA",
+  113: "Rahul Aggarwal",
+  118: "DURGANALA SRIJANYA",
+  121: "JATOTHU VAMSHI",
+  124: "BANAVATHU SAMPATH KUMAR NAIK",
+  125: "NIHARIKA SINGH",
+  127: "SIDDHARTH MALVIYA",
+  131: "VEDANT JOSHI",
+  134: "CHARUL SHAHAREY",
+  136: "SARNAIK VISHWANIL VISHWANATH",
+  139: "PRAKHAR SHUKLA",
+  141: "RAJESH MUHAL",
 };
 export const pos2idMap = {
   vicepresident: "1",
@@ -91,3 +166,13 @@ export const publicKey = "0xD0e203A04Eb4024Fbd90768b46E37aC67F1Cd707";
 export const privateKey =
   "9f94794beb1b094dfa4dd85f1190703500e5179fe4b53767dcfc785eaa4620b0";
 export const contractAddress = "0x5179BB109548f4e5D06fA9a90a3142C4F4A96419";
+
+export const notBlockChainKey = `-----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoogsA5LkudlR2hLgTZ7H
+    mYTs5rPmuKslAjIX+sQNB50Nn9pgw3h63snQjJfQFTUN5nlWKNHURGeJY3cuWVoM
+    Xa4qbK+eHurE5PzEa0wCDnvvhx7ooqK3w07gN/WnHcNqXclg1pSfwhMCPLgopMv6
+    l9wuO/AErjLXwHhVcawIe7uY3rkSLrmAJGmCHoWG89uupderiJQw7CR5UQvOhLE2
+    lERdYvx2nnGBUFSYR8hFFKRclj575fW9XlFmDK3hxeywkxR5mCzLmYh+LMMGDIu9
+    3jZzgMY22InmcfbCkY7QSfzTChBzXflYfITMEuklwtIckM6Iy+YoIzfYNxCeT7NY
+    QQIDAQAB
+    -----END PUBLIC KEY-----`;

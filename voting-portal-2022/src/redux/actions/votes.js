@@ -13,11 +13,11 @@ export const addVote = (id, pos) => {
 
 export const deleteVote = (id, pos) => {
   //pos = vicepresident, ug, pg etc.
-  return { type: DELETE_VOTE, payload: id };
+  return { type: DELETE_VOTE, payload: { id, pos } };
 };
 
-export const deleteAllVotes = () => {
-  return { type: DELETE_ALL_VOTES, payload: [] };
+export const deleteAllVotes = (pos) => {
+  return { type: DELETE_ALL_VOTES, payload: { pos } };
 };
 export const getVoteCount = () => async (dispatch) => {
   try {
@@ -32,10 +32,11 @@ export const getVoteCount = () => async (dispatch) => {
 
 export const postAllVotes = (votes) => async (dispatch) => {
   try {
-    const res = await api.postAllVotes(votes); //votes is an string with candidate id sample - "1,2,10,33"
-    const data = await res.json();
-
-    dispatch({ type: POST_ALL_VOTES, payload: data });
+    const data = await api.postAllVotes(votes); //votes is an string with candidate id sample - "1,2,10,33"
+    // const data = await res.json();
+    console.log("[Post all votes response]", data);
+    return { type: POST_ALL_VOTES, payload: data };
+    //dispatch();
   } catch (err) {
     console.log("[postAllVotes action error] :", err.message);
   }

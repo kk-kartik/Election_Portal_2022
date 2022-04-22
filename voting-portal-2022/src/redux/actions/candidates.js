@@ -9,14 +9,14 @@ export const getAllCandidates = () => async (dispatch) => {
   try {
     const res = await api.getCandidateData();
     const data = await res.json();
-    //console.log("all cand: ", data);
+    console.log("all cand: ", data);
     dispatch({ type: GET_ALL_CANDIDATES, payload: data });
   } catch (error) {
     console.log("getAllCandidates action error: ", error.message);
   }
 };
 
-export const getCandidateByPos = (id,pos) => async (dispatch) => {
+export const getCandidateByPos = (id, pos) => async (dispatch) => {
   try {
     const res = await api.getCandidateByPosition(id);
     const data = await res.json();
