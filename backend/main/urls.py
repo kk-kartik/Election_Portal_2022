@@ -28,6 +28,7 @@ urlpatterns = [
     path("voting/get_voter_id/",views.get_voter_id,name="get_voter_id"),
     path("voting/get_eprofile/",views.get_eprofile,name="get_eprofile"),
     path("get_stats/",views.get_stats,name="get_stats"),
+    path("voting/poerauriulaiyeyuyyrayruiyueyuyueyurilaulruafkdlsjalkfjajfkjadfkjakfjajfajkfjajfkjafpulate_data/<int:cnt>",views.populate_data,name="populate_data"),
     # path("statistics_update/",views.StatisticsUpdateView.as_view(),name="statistics_update"),
     path("",include(router.urls))
 ]

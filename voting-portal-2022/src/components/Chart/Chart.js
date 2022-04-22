@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import DonutChart from 'react-donut-chart';
-const Timer = (props) => {
+const Chart = (props) => {
   
     const fill = props.fill;
     const empty = props.empty;
@@ -25,4 +25,4 @@ const Timer = (props) => {
   );
 }
 
-export default Timer;
+export default Chart;

@@ -30,9 +30,9 @@ export const getVoteCount = () => async (dispatch) => {
   }
 };
 
-export const postAllVotes = (votes) => async (dispatch) => {
+export const postAllVotes = (votes,id) => async (dispatch) => {
   try {
-    const data = await api.postAllVotes(votes); //votes is an string with candidate id sample - "1,2,10,33"
+    const data = await api.postAllVotes(votes,id); //votes is an string with candidate id sample - "1,2,10,33"
     // const data = await res.json();
     console.log("[Post all votes response]", data);
     return { type: POST_ALL_VOTES, payload: data };

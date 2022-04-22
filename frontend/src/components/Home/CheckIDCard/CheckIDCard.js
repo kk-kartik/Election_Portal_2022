@@ -1,4 +1,4 @@
-import styles from "./RegisterSuccess.module.css"
+import styles from "./CheckIDCard.module.css"
 import Icon from "./icon.svg"
 import { useSelector, useDispatch } from "react-redux";
 import DEPT from "../../../constants/depts"
@@ -6,42 +6,42 @@ import getUserImg from "../../../actions/getUserImg";
 import {useEffect, useState} from "react";
 import DefaultIMG from "./default.svg"
 
-const RegisterSuccess = (props) => {
+const CheckIDCard = (props) => {
     const userData = useSelector((store) => store.auth);
     const userImg = useSelector((store) => store.getUserImg);
     const dispatch = useDispatch();
     useEffect(() => {
-        let data = {"email":userData?.euser?.email}
+        let data = {"email":props.email}
         dispatch(getUserImg(data));
       }, [dispatch, userData]);
     // console.log("userData", userData);
-    console.log("userImg", userImg);
-    let hid = ""
-    if(userData == null || userData?.euser?.registration_complete == false){
-        hid = "hidden";
-    }
+    // console.log("userImg", userImg);
+    // let hid = ""
+    // if(userData == null || userData?.euser?.registration_complete == false){
+    //     hid = "hidden";
+    // }
     let roll_no = "";
-    for(let i=0; i<userData?.euser?.roll_number.length; i++){
+    for(let i=0; i<props.roll_number.length; i++){
         if(i%3 == 0){
             roll_no += " "
         }
-        roll_no += userData?.euser?.roll_number[i]
+        roll_no += props.roll_number[i]
     }
     let voter_type = "PG";
-    if(userData?.euser?.degree == "B"){
+    if(props.degree == "B"){
         voter_type = "UG";
     }
     return (
-    <div className={`${styles.cont} p-4 max-w-md ml-auto mr-auto ${hid}`}>
+    <div className={`${styles.cont} p-4 max-w-md  `}>
         <div className={`grid ${styles.grid} gap-5`}>
             {/* <img src={Icon} className={`${styles.img} max-w-fit`}/> */}
-            <img src={userImg?.img_url} className={`${styles.img} max-w-fit row-span-3`} alt={"Image"} onError={(th)=>{th.target.src = DefaultIMG}}/>
+            <img src={userImg?.img_url} className={`${styles.img} max-w-fit row-span-3`} alt={"Image"} onError={(th)=>{th.target.src = DefaultIMG; document.getElementById("idCardError").style.display = 'block'}}/>
             <div className={`flex flex-col`}>
                 <div className={`${styles.small}`}>
                     Name
                 </div>
                 <div className={`${styles.text}`}>
-                    {userData?.euser?.name}
+                    {props.name}
                 </div>
             </div>
             <div className={`flex flex-col`}>
@@ -66,7 +66,7 @@ const RegisterSuccess = (props) => {
                     Hostel
                 </div>
                 <div className={`${styles.text}`}>
-                    {userData?.euser?.hostel}
+                    {props.hostel}
                 </div>
             </div>
             <div className={`flex flex-col`}>
@@ -74,12 +74,13 @@ const RegisterSuccess = (props) => {
                     Branch
                 </div>
                 <div className={`${styles.text}`}>
-                    {DEPT[userData?.euser?.branch]}
+                    {DEPT[props.branch]}
                 </div>
             </div>
         </div>
-    </div>);
+    </div>
+    );
 }
 
 
-export default RegisterSuccess;
+export default CheckIDCard;

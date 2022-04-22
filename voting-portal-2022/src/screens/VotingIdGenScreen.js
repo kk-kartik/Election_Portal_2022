@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StatusScreen from "./StatusScreen";
 import { getVoterID } from "../api";
 import styles from "../components/buttons/buttons.module.css"
-import Timer from "../components/timer/timer";
+import Countdown from "../components/timer/countdown";
 const VotingIdGenScreen = (props) => {
   const [success, setSuccess] = useState(false);
   const [otp, setOtp] = useState("");
@@ -34,11 +34,19 @@ const VotingIdGenScreen = (props) => {
             <p className="text-gray-600">Here is your Voter ID</p>
           </div>
           <div className="mt-8">
-            <button
-              className={`${styles.voterId} w-96 h-20 font-extrabold font-roboto text-4xl text-white `}
+          <button
+              className={`${styles.voterId} w-96 h-20  text-white `}
             > 
-            {/* <Timer fill={fill} empty={empty} /> */}
+            <div className="flex items-center gap-4">
+            <div className="pl-4">
+
+            <Countdown fill={fill} empty={empty} className="ml-1 text-lg"/>
+            </div>
+            <div className="font-extrabold font-roboto text-4xl">
+
               {voterId}
+            </div>
+            </div>
             </button>
 
           </div>

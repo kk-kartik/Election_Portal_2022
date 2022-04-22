@@ -5,15 +5,15 @@ export const setVoterIdValid = (isValid, voterId) => {
   return { type: SET_VOTERID_VALID, payload: { isValid, voterId } };
 };
 
-export const checkVoterId = (voterid) => async (dispatch) => {
+export const checkVoterId = (id) => async (dispatch) => {
   try {
-    const data = await api.checkVoterID(voterid);
+    const data = await api.checkVoterID(id);
     console.log("check voterid: ", data);
-    const { degree, status, gender } = data.data;
+    const { degree, status, gender, voterid } = data.data;
     console.log({ degree, status, gender });
     dispatch({
       type: CHECK_VOTERID,
-      payload: { gender, isVoterIdValid: status, degree, voterId: "dkafjlkd" },
+      payload: { gender, isVoterIdValid: status, degree, voterId: voterid  },
     });
     return { degree, status, gender };
   } catch (error) {
