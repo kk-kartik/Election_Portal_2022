@@ -32,57 +32,58 @@ from django.template import Context
 import os
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
+
 def populate_data(request,name_slug,cnt):
-    path = settings.BASE_DIR/'main'/'static'/'new_file.json'
-    jdata = open(path)
-    data = json.load(jdata)
+    # path = settings.BASE_DIR/'main'/'static'/'new_file.json'
+    # jdata = open(path)
+    # data = json.load(jdata)
 
-    i = 0
-    for key,values in data['IITG_Email_Updated'].items():
-        i += 1
-        if i == cnt:
-            break
-        email = values + "@iitg.ac.in"
-        try:
-            user = User.objects.get(email=email)
-            user.email = email
-            user.username = email
-        except ObjectDoesNotExist:
-            user = User(email = email ,username=email)
-            user.save()
-        except Exception as e:
-            print(e)
+    # i = 0
+    # for key,values in data['IITG_Email_Updated'].items():
+    #     i += 1
+    #     if i == cnt:
+    #         break
+    #     email = values + "@iitg.ac.in"
+    #     try:
+    #         user = User.objects.get(email=email)
+    #         user.email = email
+    #         user.username = email
+    #     except ObjectDoesNotExist:
+    #         user = User(email = email ,username=email)
+    #         user.save()
+    #     except Exception as e:
+    #         print(e)
 
-    dict_data = {}
+    # dict_data = {}
 
-    for key,value in data['Roll No'].items():
-        dict_data[key] = {"roll_number":value}
+    # for key,value in data['Roll No'].items():
+    #     dict_data[key] = {"roll_number":value}
 
-    for key,value in data['Name'].items():
-        dict_data[key]['name'] = value
+    # for key,value in data['Name'].items():
+    #     dict_data[key]['name'] = value
 
-    for key,value in data['IITG_Email_Updated'].items():
-        dict_data[key]["email"] = value + "@iitg.ac.in"
+    # for key,value in data['IITG_Email_Updated'].items():
+    #     dict_data[key]["email"] = value + "@iitg.ac.in"
     
 
-    for key,value in data['Gender'].items():
-        dict_data[key]["gender"] = value
+    # for key,value in data['Gender'].items():
+    #     dict_data[key]["gender"] = value
 
-    i = 0
-    for key,values in dict_data.items():
-        i += 1
-        if i == cnt:
-            break
-        try:
-            euser = EUser.objects.get(user__email=values['email'])
-            euser.name = values['name']
-            euser.roll_number = values['roll_number']
-            euser.gender = values['gender']
-            euser.email = values['email']
-            euser.save() 
+    # i = 0
+    # for key,values in dict_data.items():
+    #     i += 1
+    #     if i == cnt:
+    #         break
+    #     try:
+    #         euser = EUser.objects.get(user__email=values['email'])
+    #         euser.name = values['name']
+    #         euser.roll_number = values['roll_number']
+    #         euser.gender = values['gender']
+    #         euser.email = values['email']
+    #         euser.save() 
 
-        except Exception as e:
-            print(e)
+    #     except Exception as e:
+    #         print(e)
     return HttpResponse("data populated kaam ho gya")
 
     
@@ -390,25 +391,37 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
     def perform_update(self,serializer):
          return serializer.save(election=self.election)
 
-
-def send_email(remail,uniqueid_email):
-    message = get_template("otp.html").render({
-        'otp':uniqueid_email
-    })
+def send_email(remail,subject,message):
     email = EmailMessage(
-        subject='OTP < ' + str(uniqueid_email) + ' >',
+        subject = subject,
         body=message,
         from_email='sgcelectionsiitg@gmail.com',
         to=[remail],
     )
-    print(uniqueid_email)
-    print(remail)
     email.content_subtype = 'html'
     try:
         email.send(fail_silently=False)
-        # return HttpResponseRedirect(reverse('apply:success'))
     except Exception as e:
-        print('mail not sent',e)
+        print('Erorr in sending mail, failed to send!',e)
+
+# def send_email(remail,uniqueid_email):
+#     message = get_template("otp.html").render({
+#         'otp':uniqueid_email
+#     })
+#     email = EmailMessage(
+#         subject='OTP < ' + str(uniqueid_email) + ' >',
+#         body=message,
+#         from_email='sgcelectionsiitg@gmail.com',
+#         to=[remail],
+#     )
+#     print(uniqueid_email)
+#     print(remail)
+#     email.content_subtype = 'html'
+#     try:
+#         email.send(fail_silently=False)
+#         # return HttpResponseRedirect(reverse('apply:success'))
+#     except Exception as e:
+#         print('mail not sent',e)
 
 @api_view(['POST'])
 def voter_card(request,name_slug):
@@ -433,6 +446,10 @@ def voter_card(request,name_slug):
         else:
             voter_obj = voter_obj[0]
 
+        hostel = voter_obj.user.hostel
+        branch = voter_obj.user.branch
+        if not (hostel and branch):
+            return Response({'Incomplete registration'},status=status.HTTP_400_BAD_REQUEST)
         is_voted = voter_obj.is_voted
         if is_voted:
             return Response({'Already Voted!'},status=status.HTTP_400_BAD_REQUEST)
@@ -443,8 +460,11 @@ def voter_card(request,name_slug):
         else:
             voter_card = voter_card[0]
         uniqueid_email = voter_card.uniqueid_email
-        print(email)
-        send_email(email,uniqueid_email)
+        message = get_template("otp.html").render({
+            'otp':uniqueid_email
+        })
+        subject='OTP [' + str(uniqueid_email) + ']'
+        send_email(email,subject,message)
         serialized_voter = VoterSerializer(voter_obj)
         return Response(serialized_voter.data)
 
@@ -531,10 +551,6 @@ def get_branch():
         '23': 0,
         '41': 0,
         '51': 0,
-        '52': 0,
-        '53': 0,
-        '54': 0,
-        '55': 0,
         '61': 0,
     }
 
@@ -555,7 +571,11 @@ def handle_stats(stat_title, stat_key, default_func):
     else:
         stats = stats[0]
     stat_cnt = stats.stat_cnt
-    stat_cnt[stat_key] = int(stat_cnt[stat_key]) + 1
+    others = ['52','53','54','55','None']
+    if stat_key in others:
+        stat_cnt['61'] = int(stat_cnt['61']) + 1
+    else:
+        stat_cnt[stat_key] = int(stat_cnt[stat_key]) + 1
     stats.stat_cnt = stat_cnt
     stats.save()
     return True
@@ -607,7 +627,13 @@ def store_vote(request,name_slug):
                 if status_stats == 400:
                     return Response({'User is not registered.'},status=status.HTTP_400_BAD_REQUEST)
                 voter.is_voted = True
+                voter_name = voter.user.name
                 voter.save()
+                message = get_template("congratulations.html").render({
+                    'name':voter_name
+                })
+                subject='Thanks for casting your vote!'
+                send_email(email,subject,message)
                 voter_card_obj.voter = None
                 voter_card_obj.uniqueid_email = "None"
                 voter_card_obj.save()
