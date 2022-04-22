@@ -276,6 +276,7 @@ class VoterCard(models.Model):
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):
     if created:
+        # euser = EUser.objects.filter(instance.email)
         euser = EUser.objects.create(
             user=instance,
             email=instance.email,
