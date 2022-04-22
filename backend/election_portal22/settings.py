@@ -31,10 +31,8 @@ SECRET_KEY = env("SECRET_KEY") # Raises django's ImproperlyConfigured exception 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
-print(DEBUG)
 DEBUG = not (DEBUG == 'false' or DEBUG == 'False') if isinstance(DEBUG, str) else True
 
-print(DEBUG)
 # Application definition
 
 INSTALLED_APPS = [
