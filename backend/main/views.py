@@ -1,4 +1,5 @@
 import csv
+from ctypes.wintypes import ULONG
 from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
@@ -22,7 +23,35 @@ from django.core.files.base import ContentFile
 from django.db.models import Q
 
 from django.views.generic.base import View
+import json
+from django.contrib.auth.models import User
 # from wkhtmltopdf.views import PDFTemplateResponse
+
+from .jdata import jdata
+import os
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+def func():
+    # Opening JSON file
+    # with open('new_file_final.json', 'r') as f:
+    #     my_json_obj = json.load(f)
+
+    # path = os.path.abspath(__file__)
+    # print(path)
+    # json_data = open(path).read() 
+    # print(json_data)
+    # f = open(path)
+
+    data = jdata
+    # data = json.load(jdata)
+    # print(data)
+
+    dict_data = {}
+
+    # for key,values in data['IITG_Email_Updated'].items():
+    #     user = User(email = values + "@iitg.ac.in")
+    #     user.save()
+
 
 BRANCH = {
     'None':"None",
@@ -47,7 +76,7 @@ BRANCH = {
 }
 
 DEGREE = {
-    'M':'Mtech',
+    'M':'Mtech', 
     'B':'Btech',
     'P':"PG",
     "Msc":"Msc",
@@ -537,6 +566,7 @@ def store_vote(request,name_slug):
 @api_view(['GET'])
 def get_stats(request,name_slug):
     if request.method == 'GET':
+        func()
         stats = Statistic.objects.all()
         serializer = StatsSerializer(stats,many=True)
         return Response(serializer.data)
@@ -555,7 +585,31 @@ def get_eprofile(request,name_slug):
         euser = EUser.objects.filter(email=email)
         if not euser:
             return Response({'User not registered!'},status=status.HTTP_400_BAD_REQUEST)
-        #### call api for photo and serialize entire data and send ###
+        else:
+            euser = euser[0]
+
+        if euser.degree == 'Bdes' or euser.degree == 'B':
+            voter_type_prefix = 'UG'
+        else:
+            voter_type_prefix = 'PG'
+        voter_type = f'{voter_type_prefix} ({euser.gender})'
+        year = f'20{euser.roll_number[:2]}'
+        img_url = f'https://online.iitg.ac.in/sprofile/GALLERY/{year}/PHOTO/{euser.roll_number}_P.jpg'
+        print(img_url)
+        print(year)
+        print(voter_type)
+        payload_data = {
+            'img_url': img_url,
+            'name': euser.name,
+            'roll_no': euser.roll_number,
+            'voter_type': voter_type,
+            'hostel': euser.hostel,
+            'branch': euser.branch,
+            'gender': euser.gender,
+            'degree': euser.degree,
+
+        }
+        return Response(payload_data)
 
 class StatisticsView(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
