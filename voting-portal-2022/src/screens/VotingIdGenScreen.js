@@ -14,7 +14,7 @@ const VotingIdGenScreen = (props) => {
     console.log("xsxsxs");
     getVoterID(otp)
       .then((data) => {
-        setVoterId(data);
+        setVoterId(data.data.voterid);
         setSuccess(true);
         console.log("Voter id data: ", data);
       })
