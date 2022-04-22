@@ -263,7 +263,7 @@ def create_id_email():
         return create_id()
     except Exception as e:
         print(e)
-        
+
 class VoterCard(models.Model):
     voter = models.OneToOneField(Voter,on_delete=models.CASCADE,related_name='voter',blank=True,null=True)
     uniqueid = models.CharField(max_length=10,default = create_id)
