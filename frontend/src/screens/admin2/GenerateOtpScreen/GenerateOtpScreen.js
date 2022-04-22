@@ -22,11 +22,13 @@ const GenerateOtpScreen = () => {
             
             console.log("data", data);
             if(data.data.user !=null){
-
                 if(data.data.is_voted==true) setVoted(true);
                 else setIsSuccess(true);
             }
-            else setIsSuccess(false);
+            else{
+                setIsSuccess(false);
+            }
+                
             setLoaded(data);
             
     
@@ -71,8 +73,12 @@ const GenerateOtpScreen = () => {
                     {isSuccess && 
                     <button className={styles3.button2}>Sent </button>
                     }
-                    {loaded!=null && !isSuccess && 
-                    <button className={styles3.error}>Error! </button>
+                    {loaded!=null && !isSuccess && !voted &&
+                    <div> 
+                    <button className={styles3.error}>Error! </button> 
+                    <div className="text-lg text-rose-600 py-2"> Something went wrong </div>
+                    </div>
+
                     }
                     {voted &&
                     <button className={styles3.button3}>Has Voted!</button>
@@ -92,6 +98,8 @@ const GenerateOtpScreen = () => {
                 </div>
                <div className="py-4 pl-8">
                {isSuccess && loaded!=null && <CheckIDCard  email={loaded?.data?.user?.email} name={loaded?.data?.user?.name} roll_number={loaded?.data?.user?.roll_number} degree={loaded?.data?.user?.degree} hostel={loaded?.data?.user?.hostel} branch={loaded?.data?.user?.branch}/>}
+                <div id="idCardError" style={{display: 'none'}}>Please carry your ID card / proof of branch change. </div>
+               
                </div>
                 <div className="flex flex-col my-3">
                    <div className="flex mb-2">

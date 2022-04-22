@@ -35,7 +35,7 @@ const CheckIDCard = (props) => {
     <div className={`${styles.cont} p-4 max-w-md  `}>
         <div className={`grid ${styles.grid} gap-5`}>
             {/* <img src={Icon} className={`${styles.img} max-w-fit`}/> */}
-            <img src={userImg?.img_url} className={`${styles.img} max-w-fit row-span-3`} alt={"Image"} onError={(th)=>{th.target.src = DefaultIMG}}/>
+            <img src={userImg?.img_url} className={`${styles.img} max-w-fit row-span-3`} alt={"Image"} onError={(th)=>{th.target.src = DefaultIMG; document.getElementById("idCardError").style.display = 'block'}}/>
             <div className={`flex flex-col`}>
                 <div className={`${styles.small}`}>
                     Name
@@ -78,7 +78,8 @@ const CheckIDCard = (props) => {
                 </div>
             </div>
         </div>
-    </div>);
+    </div>
+    );
 }
 
 
