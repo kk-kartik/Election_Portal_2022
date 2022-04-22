@@ -52,7 +52,7 @@ const VotingIdGenScreen = (props) => {
       </>
       ) : (
        <> 
-      <div className="flex flex-col justify-start">
+      {/* <div className="flex flex-col justify-start">
           <h1>Enter your OTP cdcdcd</h1>
           <div className="flex flex-col items-start">
             <input
@@ -64,7 +64,7 @@ const VotingIdGenScreen = (props) => {
             />
             <button onClick={() => {handleGetVoterId(otp);console.log("sxsxs")}}>Continue</button>
           </div>
-        </div>
+        </div> */}
       <div className="w-80">
             <div className="flex flex-col items-center justify-between p-4">
               <div className="text-4xl font-atkinson">
