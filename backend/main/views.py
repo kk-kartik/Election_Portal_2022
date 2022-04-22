@@ -13,7 +13,6 @@ from authentication.default_authentication_classes import default_authentication
 from rest_framework.views import APIView
 from django.core.mail import send_mail
 from django.core.mail import EmailMessage
-
 from .data_variable import data
 from io import BytesIO
 from xhtml2pdf import pisa
@@ -28,11 +27,12 @@ from django.contrib.auth.models import User
 # from wkhtmltopdf.views import PDFTemplateResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
+from django.template import Context
 # from .jdata import jdata
 import os
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
-def populate_data(request,name_slug):
+def populate_data(request,name_slug,cnt):
     path = settings.BASE_DIR/'main'/'static'/'new_file.json'
     jdata = open(path)
     data = json.load(jdata)
@@ -40,7 +40,7 @@ def populate_data(request,name_slug):
     i = 0
     for key,values in data['IITG_Email_Updated'].items():
         i += 1
-        if i == 10:
+        if i == cnt:
             break
         email = values + "@iitg.ac.in"
         try:
@@ -71,7 +71,7 @@ def populate_data(request,name_slug):
     i = 0
     for key,values in dict_data.items():
         i += 1
-        if i == 10:
+        if i == cnt:
             break
         try:
             euser = EUser.objects.get(user__email=values['email'])
@@ -392,9 +392,12 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
 
 
 def send_email(remail,uniqueid_email):
+    message = get_template("otp.html").render({
+        'otp':uniqueid_email
+    })
     email = EmailMessage(
-        subject='OTP for election',
-        body=uniqueid_email,
+        subject='OTP < ' + str(uniqueid_email) + ' >',
+        body=message,
         from_email='sgcelectionsiitg@gmail.com',
         to=[remail],
     )
