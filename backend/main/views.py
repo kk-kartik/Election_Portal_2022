@@ -27,31 +27,60 @@ import json
 from django.contrib.auth.models import User
 # from wkhtmltopdf.views import PDFTemplateResponse
 
-from .jdata import jdata
+from django.conf import settings
+# from .jdata import jdata
 import os
 # BASE_DIR = Path(__file__).resolve().parent.parent
 
 def func():
-    # Opening JSON file
-    # with open('new_file_final.json', 'r') as f:
-    #     my_json_obj = json.load(f)
+    path = settings.BASE_DIR/'main'/'static'/'new_file.json'
+    jdata = open(path)
+    data = json.load(jdata)
 
-    # path = os.path.abspath(__file__)
-    # print(path)
-    # json_data = open(path).read() 
-    # print(json_data)
-    # f = open(path)
+    # i = 0
+    for key,values in data['IITG_Email_Updated'].items():
+        print(values)
+        # i += 1
+        # if i == 10:
+        #     break
+        user = User(email = values + "@iitg.ac.in",username=values + "@iitg.ac.in")
+        user.save()
 
-    data = jdata
-    # data = json.load(jdata)
-    # print(data)
 
     dict_data = {}
 
-    # for key,values in data['IITG_Email_Updated'].items():
-    #     user = User(email = values + "@iitg.ac.in")
-    #     user.save()
+    for key,value in data['Roll No'].items():
+        dict_data[key] = {"roll_number":value}
+        # print(key,value)
 
+    for key,value in data['Name'].items():
+        dict_data[key]['name'] = value
+
+    for key,value in data['IITG_Email_Updated'].items():
+        dict_data[key]["email"] = value + "@iitg.ac.in"
+    
+
+    for key,value in data['Gender'].items():
+        dict_data[key]["gender"] = value
+
+    # i = 0
+    for key,values in dict_data.items():
+        print(values)
+        # i += 1
+        # if i == 10:
+        #     break
+        try:
+            euser = EUser.objects.get(user__email=values['email'])
+            euser.name = values['name']
+            euser.roll_number = values['roll_number']
+            euser.gender = values['gender']
+            euser.email = values['email']
+            euser.save() 
+
+        except Exception as e:
+            print(e)
+
+    
 
 BRANCH = {
     'None':"None",
@@ -440,6 +469,7 @@ def voter_card_check(request,name_slug):
                 return Response({
                         'gender': voter.user.gender,
                         'degree': voter.user.degree,
+                        'voterid': uniqueid,
                         'status':True,
                     })
             else:
@@ -566,7 +596,7 @@ def store_vote(request,name_slug):
 @api_view(['GET'])
 def get_stats(request,name_slug):
     if request.method == 'GET':
-        func()
+        # func()
         stats = Statistic.objects.all()
         serializer = StatsSerializer(stats,many=True)
         return Response(serializer.data)
