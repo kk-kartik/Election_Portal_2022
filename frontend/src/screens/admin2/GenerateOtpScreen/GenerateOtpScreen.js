@@ -5,30 +5,38 @@ import styles2 from "../../CandidatePositionForm/CandidatePositionForm.module.cs
 import styles3 from "../../Register/RegisterScreen.module.css";
 import { generateVoterId } from "../../../api";
 import Loader from "../../../components/Loading/Loading";
+import CheckIDCard from "../../../components/Home/CheckIDCard/CheckIDCard";
 const GenerateOtpScreen = () => {
     const [isSuccess, setIsSuccess] = useState(false);
     const [voted, setVoted] = useState(false);
     const [sent, setSent] = useState(false);
-    const [loaded, setLoaded] = useState(false);
+    const [loaded, setLoaded] = useState(null);
     const [email, setEmail] = useState("");
+    
     const handleSubmit = async () => {
         //if(isSuccess && !voted) setSent(true);
         try{
             setSent(true);
-            const data = await generateVoterId(email);
-            if(data.user !=null){
 
-                if(data.is_voted==true) setVoted(true);
+            const data = await generateVoterId(email +"@iitg.ac.in");
+            
+            console.log("data", data);
+            if(data.data.user !=null){
+
+                if(data.data.is_voted==true) setVoted(true);
                 else setIsSuccess(true);
             }
-            setLoaded(true);
+            else setIsSuccess(false);
+            setLoaded(data);
             
     
         }catch(e){
             console.log("error",e);
-            setIsSuccess(false);      
+            setIsSuccess(false);    
+            setLoaded(true);  
         }
     }
+    
 
     const handleClick = () => {window.location.reload();}
 
@@ -42,24 +50,28 @@ const GenerateOtpScreen = () => {
                     <div className="flex">
                         <Number number="1"></Number>
                         <div className={`${styles.bold} flex self-center ml-3.5`}>
-                                Enter voter’s Email ID
+                                Enter voter’s User ID
                         </div>
                     </div>
                     <div className="ml-12 mt-3">
                         <div className={`${styles.small}`}>
-                            Email ID
+                            User ID
                         </div>
+                        <div className="flex items-center gap-4">
+
                     <input className={styles2.input} value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                    <div>@iitg.ac.in</div>
+                        </div>
                     <br/>
                     <div className="pt-4">
                     {!sent &&
                     <button className={styles3.button} onClick={handleSubmit}>Send OTP</button>
                     }
-                    {sent && !loaded && <Loader text="Loading.. Please Wait"/> }
+                    {sent && loaded==null && <Loader text="Loading.. Please Wait"/> }
                     {isSuccess && 
                     <button className={styles3.button2}>Sent </button>
                     }
-                    {loaded && !isSuccess && 
+                    {loaded!=null && !isSuccess && 
                     <button className={styles3.error}>Error! </button>
                     }
                     {voted &&
@@ -74,9 +86,13 @@ const GenerateOtpScreen = () => {
                     <Number number="2"></Number>
                     <div className={`${styles.bold} flex self-center ml-3.5`}>
                         Verify ID Card
+                        {/* {isSuccess && console.log("data", loaded?.data?.user?.email)} */}
                     </div>
+
                 </div>
-               
+               <div className="py-4 pl-8">
+               {isSuccess && loaded!=null && <CheckIDCard  email={loaded?.data?.user?.email} name={loaded?.data?.user?.name} roll_number={loaded?.data?.user?.roll_number} degree={loaded?.data?.user?.degree} hostel={loaded?.data?.user?.hostel} branch={loaded?.data?.user?.branch}/>}
+               </div>
                 <div className="flex flex-col my-3">
                    <div className="flex mb-2">
                         <Number number="3"></Number>
