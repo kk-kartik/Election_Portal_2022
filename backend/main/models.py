@@ -263,7 +263,7 @@ def create_id_email():
         return create_id()
     except Exception as e:
         print(e)
-        
+
 class VoterCard(models.Model):
     voter = models.OneToOneField(Voter,on_delete=models.CASCADE,related_name='voter',blank=True,null=True)
     uniqueid = models.CharField(max_length=10,default = create_id)
@@ -276,6 +276,7 @@ class VoterCard(models.Model):
 @receiver(post_save,sender=User)
 def create_euser(sender,instance,created,*args,**kwargs):
     if created:
+        # euser = EUser.objects.filter(instance.email)
         euser = EUser.objects.create(
             user=instance,
             email=instance.email,

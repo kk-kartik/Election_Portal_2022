@@ -1,4 +1,5 @@
 import csv
+from ctypes.wintypes import ULONG
 from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
@@ -22,7 +23,64 @@ from django.core.files.base import ContentFile
 from django.db.models import Q
 
 from django.views.generic.base import View
+import json
+from django.contrib.auth.models import User
 # from wkhtmltopdf.views import PDFTemplateResponse
+
+from django.conf import settings
+# from .jdata import jdata
+import os
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+def func():
+    path = settings.BASE_DIR/'main'/'static'/'new_file.json'
+    jdata = open(path)
+    data = json.load(jdata)
+
+    # i = 0
+    for key,values in data['IITG_Email_Updated'].items():
+        print(values)
+        # i += 1
+        # if i == 10:
+        #     break
+        user = User(email = values + "@iitg.ac.in",username=values + "@iitg.ac.in")
+        user.save()
+
+
+    dict_data = {}
+
+    for key,value in data['Roll No'].items():
+        dict_data[key] = {"roll_number":value}
+        # print(key,value)
+
+    for key,value in data['Name'].items():
+        dict_data[key]['name'] = value
+
+    for key,value in data['IITG_Email_Updated'].items():
+        dict_data[key]["email"] = value + "@iitg.ac.in"
+    
+
+    for key,value in data['Gender'].items():
+        dict_data[key]["gender"] = value
+
+    # i = 0
+    for key,values in dict_data.items():
+        print(values)
+        # i += 1
+        # if i == 10:
+        #     break
+        try:
+            euser = EUser.objects.get(user__email=values['email'])
+            euser.name = values['name']
+            euser.roll_number = values['roll_number']
+            euser.gender = values['gender']
+            euser.email = values['email']
+            euser.save() 
+
+        except Exception as e:
+            print(e)
+
+    
 
 BRANCH = {
     'None':"None",
@@ -47,7 +105,7 @@ BRANCH = {
 }
 
 DEGREE = {
-    'M':'Mtech',
+    'M':'Mtech', 
     'B':'Btech',
     'P':"PG",
     "Msc":"Msc",
@@ -346,11 +404,13 @@ def send_email(email,uniqueid_email):
 def voter_card(request,name_slug):
     if request.method == 'POST':
         try:
-            roll_no = request.data['roll_no']
+            email = request.data['email']
         except Exception as e:
             print(e)
-            return Response({'Expected "roll_no" key as a json object!'},status=status.HTTP_400_BAD_REQUEST)
-        voter_obj = Voter.objects.filter(user__roll_number=roll_no)
+            return Response({'Expected "email" key as a json object!'},status=status.HTTP_400_BAD_REQUEST)
+        if not email in data:
+            return Response({'Not a valid voting email!'},status=status.HTTP_400_BAD_REQUEST)
+        voter_obj = Voter.objects.filter(user__email=email)
         if not voter_obj:
              return Response({'Incomplete registration'},status=status.HTTP_400_BAD_REQUEST)
         else:
@@ -364,7 +424,6 @@ def voter_card(request,name_slug):
                 voter_card.save()
             else:
                 voter_card = voter_card[0]
-            email = voter_obj.user.email
             uniqueid_email = voter_card.uniqueid_email
             send_email(email,uniqueid_email)
             serialized_voter = VoterSerializer(voter_obj)
@@ -386,9 +445,6 @@ def get_voter_id(request,name_slug):
             voterid = voter_card_obj.uniqueid
             return Response({'status':True,'voterid':voterid})
 
-#######################################
-###### VALIDATE EMAILS FROM LIST ######
-#######################################
 @api_view(['POST'])
 def voter_card_check(request,name_slug):
     if request.method == 'POST':
@@ -403,13 +459,17 @@ def voter_card_check(request,name_slug):
         else:
             voter_card_obj = voter_card_obj[0]
             voter = voter_card_obj.voter
-            roll_number = voter.user.roll_number
-            if not roll_number in data:
-                return Response({f"Not a valid roll number {roll_number}!"},status=status.HTTP_400_BAD_REQUEST)
+            if voter is None:
+                return Response({'Already voted!'},status=status.HTTP_400_BAD_REQUEST)
+            email = voter.user.email
+            if not email in data:
+                return Response({f"Not a valid email {email}!"},status=status.HTTP_400_BAD_REQUEST)
+
             if not voter.is_voted:
                 return Response({
                         'gender': voter.user.gender,
                         'degree': voter.user.degree,
+                        'voterid': uniqueid,
                         'status':True,
                     })
             else:
@@ -459,9 +519,6 @@ def get_branch():
         '61': 0,
     }
 
-###############################################################
-########## HANDLE TOTAL VALUES FOR BRANCH AND HOSTEL ##########
-###############################################################
 def handle_stats(stat_title, stat_key, default_func):
     stats = Statistic.objects.filter(stat_title=stat_title)
     if not stats:
@@ -481,9 +538,10 @@ def handle_stats(stat_title, stat_key, default_func):
     stats.stat_cnt = stat_cnt
     stats.save()
 
-
-
 def update_stats(email):
+    if not email in data:
+        return 400
+
     user_obj = EUser.objects.filter(email=email)
     if not user_obj:
         return 400
@@ -512,6 +570,13 @@ def store_vote(request,name_slug):
         else:
             voter_card_obj = voter_card_obj[0]
             voter = voter_card_obj.voter
+        
+        if voter is None:
+            return Response({'Already voted!'},status=status.HTTP_400_BAD_REQUEST)
+        email = voter.user.email
+        if not email in data:
+            return Response({'Not a valid voting email!'},status=status.HTTP_400_BAD_REQUEST)
+        else:
             if not voter.is_voted:
                 voter_card_obj.vote = vote
                 status_stats = update_stats(voter.user.email)
@@ -531,24 +596,50 @@ def store_vote(request,name_slug):
 @api_view(['GET'])
 def get_stats(request,name_slug):
     if request.method == 'GET':
-        # hostel_stats = Statistic.objects.filter(stat_title="Hostel")[0]
-        # branch_stats = Statistic.objects.filter(stat_title="Branch")[0]
+        # func()
         stats = Statistic.objects.all()
         serializer = StatsSerializer(stats,many=True)
         return Response(serializer.data)
 
-
-# class VoterCardView(ElectionMixin,viewsets.ModelViewSet):
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
-#     serializer_class = VoterCardSerializer
-#     authentication_classes=default_authentication_classes
-
-#     def get_queryset(self):
-#         return self.election.votercard.all()
-    
-#     def perform_create(self,serializer):
+@api_view(['POST'])
+def get_eprofile(request,name_slug):
+    if request.method == 'POST':
+        try:
+            email = request.data['email']
+        except Exception as e:
+            print(e)
+            return Response({'Expected "email" key as a json object!'},status=status.HTTP_400_BAD_REQUEST)
+        if not email in data:
+            return Response({'Not a valid voting email!'},status=status.HTTP_400_BAD_REQUEST)
         
-#         return serializer.save(election=self.election)
+        euser = EUser.objects.filter(email=email)
+        if not euser:
+            return Response({'User not registered!'},status=status.HTTP_400_BAD_REQUEST)
+        else:
+            euser = euser[0]
+
+        if euser.degree == 'Bdes' or euser.degree == 'B':
+            voter_type_prefix = 'UG'
+        else:
+            voter_type_prefix = 'PG'
+        voter_type = f'{voter_type_prefix} ({euser.gender})'
+        year = f'20{euser.roll_number[:2]}'
+        img_url = f'https://online.iitg.ac.in/sprofile/GALLERY/{year}/PHOTO/{euser.roll_number}_P.jpg'
+        print(img_url)
+        print(year)
+        print(voter_type)
+        payload_data = {
+            'img_url': img_url,
+            'name': euser.name,
+            'roll_no': euser.roll_number,
+            'voter_type': voter_type,
+            'hostel': euser.hostel,
+            'branch': euser.branch,
+            'gender': euser.gender,
+            'degree': euser.degree,
+
+        }
+        return Response(payload_data)
 
 class StatisticsView(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
@@ -574,29 +665,6 @@ class StatisticsUpdateView(ElectionMixin,viewsets.ModelViewSet):
     
     def perform_create(self,serializer):
         return serializer.save(election=self.election)
-    
-
-# class StatisticsUpdateView(ElectionMixin,APIView):
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
-#     authentication_classes=default_authentication_classes
-
-#     def get_queryset(self):
-#         return self.election.statistics.all()
-    
-#     def perform_create(self,serializer):
-#         return serializer.save(election=self.election)
-
-    # def get(self,request):
-    #     obj = Statistic.objects.all()
-    #     serializer=StatsSerializer(obj,many=True)
-    #     return Response(serializer.data)
-
-    # def post(self,request):
-    #     try:
-    #         email = request.data.get('email')
-    #         print(request.data)
-    #     except Exception as e:
-    #         print(e)
 
 class DebatesViewSet(ElectionMixin,viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,ElectionOrganizerWritePermission]
