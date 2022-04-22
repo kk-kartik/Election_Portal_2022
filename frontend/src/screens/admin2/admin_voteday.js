@@ -31,11 +31,6 @@ const AdminVoteDay = () => {
                   path={`/sendOtp`}
                   element={<GenerateOtpScreen />}
                 />
-                <Route
-                  exact
-                  path={`/voted`}
-                  element={<VotersScreen />}
-                />
               </Routes>
             </Sidebar>
           {/* ) : ( */}
