@@ -4,9 +4,10 @@ const initialState = {
   isVoterIdValid: false,
   voterId: "",
   gender: "",
+  degree: "",
 };
 
-const voterId = (voterId = initialState, action) => {
+const voterInfo = (voterId = initialState, action) => {
   switch (action.type) {
     case SET_VOTERID_VALID:
       return {
@@ -15,15 +16,16 @@ const voterId = (voterId = initialState, action) => {
         voterId: action.voterId,
       };
     case CHECK_VOTERID:
-        return {
-          ...voterId,
-          isVoterIdValid: action.isValid,
-          voterId: action.voterId,
-          gender: action.gender
-        };  
+      return {
+        ...voterId,
+        gender: action.payload?.gender,
+        isVoterIdValid: action.payload?.isVoterIdValid,
+        degree: action.payload?.degree,
+        voterId: action.payload?.voterId,
+      };
     default:
       return voterId;
   }
 };
 
-export default voterId;
+export default voterInfo;
