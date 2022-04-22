@@ -10,6 +10,6 @@ class MySocialAccountAdapter(DefaultSocialAccountAdapter):
         try:
             customer = User.objects.get(email=user.email)  # if user exists, connect the account to the existing account and login
             sociallogin.state['process'] = 'connect'                
-            perform_login(request, customer, 'none')
-        except Customer.DoesNotExist:
+            sociallogin.connect(request, user)
+        except User.DoesNotExist:
             pass
