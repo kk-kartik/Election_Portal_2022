@@ -1,6 +1,10 @@
+const degreeUg = (str)=> {
+  return str==='B' || str === 'Bdes';
+}
+
 export const postsToShow = (posts, voterInfo) => {
   if (voterInfo.gender) {
-    if (voterInfo.gender === "Male" && voterInfo.degree === "B") {
+    if (voterInfo.gender === "Male" && degreeUg(voterInfo.degree)) {
       return [
         posts[0],
         {
@@ -13,7 +17,7 @@ export const postsToShow = (posts, voterInfo) => {
           ],
         },
       ];
-    } else if (voterInfo.gender === "Female" && voterInfo.degree === "B") {
+    } else if (voterInfo.gender === "Female" && degreeUg(voterInfo.degree)) {
       return [
         posts[0],
         {
@@ -30,10 +34,7 @@ export const postsToShow = (posts, voterInfo) => {
           ],
         },
       ];
-    } else if (
-      voterInfo.gender === "Male" &&
-      (voterInfo.degree === "M" || voterInfo.degree === "P")
-    ) {
+    } else if (voterInfo.gender === "Male" && !degreeUg(voterInfo.degree)) {
       return [
         posts[0],
         {
@@ -46,10 +47,7 @@ export const postsToShow = (posts, voterInfo) => {
           ],
         },
       ];
-    } else if (
-      voterInfo.gender === "Female" &&
-      (voterInfo.degree === "M" || voterInfo.degree === "P")
-    ) {
+    } else if (voterInfo.gender === "Female" && !degreeUg(voterInfo.degree)) {
       return [
         posts[0],
         {
@@ -66,8 +64,8 @@ export const postsToShow = (posts, voterInfo) => {
           ],
         },
       ];
-    }else{
-        return posts;
+    } else {
+      return posts;
     }
   } else {
     return posts;
