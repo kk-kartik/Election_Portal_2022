@@ -435,33 +435,39 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
     def perform_update(self,serializer):
          return serializer.save(election=self.election)
 
-email_ind = 0
-emails_list = settings.EMAIL_HOST_USERS
+# email_ind = 0
+# emails_list = settings.EMAIL_HOST_USER
 def send_email(remail,subject,message):
-    global email_ind
-    global emails_list
-    print(emails_list)
+    # global email_ind
+    # global emails_list
+    # print(emails_list)
     email = EmailMessage(
         subject = subject,
         body=message,
-        from_email=emails_list[email_ind],
+        from_email="swc@iitg.ac.in",
         to=[remail],
     )
     email.content_subtype = 'html'
     try:
-        email.send()
-        email_ind += 1
-        email_ind %= len(emails_list)
-        settings.EMAIL_HOST_USER = emails_list[email_ind]
-        settings.EMAIL_HOST_PASSWORD = settings.EMAIL_HOST_PASSWORDS[email_ind]
+        email.send(fail_silently=False)
+        # return HttpResponseRedirect(reverse('apply:success'))
     except Exception as e:
-        print('Error in sending mail, trying next email!',e)
-        email_ind += 1
-        email_ind %= len(emails_list)
-        print(email_ind)
-        settings.EMAIL_HOST_USER = emails_list[email_ind]
-        settings.EMAIL_HOST_PASSWORD = settings.EMAIL_HOST_PASSWORDS[email_ind]
-        send_email(remail,subject,message)
+        print('mail not sent',e)
+    # email.content_subtype = 'html'
+    # try:
+    #     email.send()
+    #     email_ind += 1
+    #     email_ind %= len(emails_list)
+    #     settings.EMAIL_HOST_USER = emails_list[email_ind]
+    #     settings.EMAIL_HOST_PASSWORD = settings.EMAIL_HOST_PASSWORDS[email_ind]
+    # except Exception as e:
+    #     print('Error in sending mail, trying next email!',e)
+    #     email_ind += 1
+    #     email_ind %= len(emails_list)
+    #     print(email_ind)
+    #     settings.EMAIL_HOST_USER = emails_list[email_ind]
+    #     settings.EMAIL_HOST_PASSWORD = settings.EMAIL_HOST_PASSWORDS[email_ind]
+    #     send_email(remail,subject,message)
 
 
 # def send_email(remail,uniqueid_email):
