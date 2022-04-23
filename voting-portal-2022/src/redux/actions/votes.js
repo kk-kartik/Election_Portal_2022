@@ -57,11 +57,13 @@ export const postAllVotes = (votes, id) => async (dispatch) => {
 
 export const postVotes = (votes, id) => async (dispatch) => {
   try {
+    //throw Error("this is error");
     const data = await api.postVotes(votes, id);
     console.log("[post votes response] ", data);
     //dispatch({ type: POST_VOTES, payload: data });
     return { type: POST_VOTES, payload: data };
   } catch (err) {
-    console.log("[postVotes action error] ", err);
+    console.log("[postVotes action error] ", err.message);
+    return { type: POST_VOTES, payload: err.message };
   }
 };

@@ -26,8 +26,7 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
   const [hasSendVote, setHasSendVote] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const history = useHistory();
-  const voterInfo = useSelector(store=>store.voterInfo);
-
+  const voterInfo = useSelector((store) => store.voterInfo);
 
   console.log("voterid sxnls: ", voterInfo);
 
@@ -35,49 +34,41 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
     console.log("voterid before submit: ", voterInfo);
     const strVotes = votesToString(votes);
     setHasSendVote(true);
-    dispatch(postVotes(strVotes, voterInfo.voterId)).then((serverData) => {
-      console.log("[ye status data hai ]", serverData.payload.data.status);
+    dispatch(postVotes(strVotes, voterInfo.voterId))
+      .then((serverData) => {
+        console.log("[ye status data hai ]", serverData);
+        console.log("[ye status error hai ]", serverData);
 
-      // if (serverData || serverData.payload.status !== 200) {
-      //   history.push({
-      //     pathname: "/fail",
-      //     state: {
-      //       data: serverData?.payload?.data?.status,
-      //     },
-      //   });
-      // }
-      if (serverData && serverData.payload.status === 200) {
-        dispatch(postAllVotes(strVotes, voterInfo.voterId)).then((data) => {
-          console.log("[ye abhi ka data]", data);
+        if (serverData && serverData.payload.status === 200) {
+          dispatch(postAllVotes(strVotes, voterInfo.voterId)).then((data) => {
+            console.log("[ye abhi ka data]", data);
 
+            history.push({
+              pathname: "/response",
+              state: {
+                transaction_id: data.payload.transactionHash,
+                voter_id: voterInfo.voterId,
+                block_id: data.payload.blockHash,
+                gas: data.payload.gasUsed,
+                isShow: data.payload.isShow,
+              },
+            });
+          });
+        } else {
+          console.log("Ye checkkrna hai ", serverData?.payload?.data?.message);
           history.push({
-            pathname: "/response",
+            pathname: "/fail",
             state: {
-              transaction_id: data.payload.transactionHash,
-              voter_id: voterInfo.voterId,
-              block_id: data.payload.blockHash,
-              gas: data.payload.gasUsed,
-              isShow: data.payload.isShow,
+              data: serverData?.payload,
             },
           });
-        });
-      } else {
-        history.push({
-          pathname: "/fail",
-          state: {
-            data: serverData?.payload?.data?.status,
-          },
-        });
-      }
+        }
 
-      console.log("[I'm from here]");
-      // history.push({
-      //   pathname: "/fail",
-      //   state: {
-      //     data: serverData,
-      //   },
-      // });
-    });
+        console.log("[I'm from here]");
+      })
+      .catch((err) => {
+        console.log("me yaha hu hehe", err);
+      });
   };
   return (
     <>

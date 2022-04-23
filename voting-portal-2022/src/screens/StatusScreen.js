@@ -11,6 +11,7 @@ const StatusScreen = (props) => {
         left: "0",
         width: "100vw",
         height: "100vh",
+        zIndex: "1000",
       }}
     >
       <div className="flex flex-col justify-around items-center w-1/2">
