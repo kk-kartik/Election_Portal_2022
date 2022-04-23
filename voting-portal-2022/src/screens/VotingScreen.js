@@ -79,7 +79,7 @@ const VotingScreen = () => {
                   >
                     None of the above
                   </button>
-                  {position !== "girl" && (
+                  {/* {position !== "girl" && (
                     <button
                       disabled={!checkNext(vote, position)}
                       className={`${styles.button2} ${
@@ -90,7 +90,7 @@ const VotingScreen = () => {
                     >
                       Next
                     </button>
-                  )}
+                  )} */}
                 </div>
               </div>
             </div>
