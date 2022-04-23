@@ -8,7 +8,7 @@ import styles from "./buttons.module.css";
 import check from "./check.svg";
 import cancel from "./cancel.svg";
 
-export const SingleVote = ({ name, id, pos }) => {
+export const SingleVote = ({ name, id, pos, urlPara }) => {
   const [hover, setHover] = useState(false);
   const votes = useSelector((store) => store.votes);
   const dispatch = useDispatch();
@@ -35,7 +35,14 @@ export const SingleVote = ({ name, id, pos }) => {
             className={styles.button1}
             onClick={() => {
               addVoteHandler(id, pos);
-              notify(name);
+              console.log("button para: ", urlPara, votes[urlPara].length);
+              if ((urlPara === "ug" || urlPara === "pg") && votes[urlPara].length < 7) {
+                notify(name);
+              } else if (urlPara === "girl" && votes[urlPara].length < 3) {
+                notify(name);
+              } else if (typeof votes[urlPara] === "number") {
+                notify(name);
+              }
             }}
           >
             Vote

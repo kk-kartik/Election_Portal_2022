@@ -58,7 +58,7 @@ const RegisterSuccess = (props) => {
 
           <div className={`flex flex-col`}>
             <div className={`${styles.small}`}>Voter Type</div>
-            <div className={`${styles.text}`}>{voter_type} (M)</div>
+            <div className={`${styles.text}`}>{userImg.voter_type}</div>
           </div>
           <div className={`flex flex-col`}>
             <div className={`${styles.small}`}>Hostel</div>

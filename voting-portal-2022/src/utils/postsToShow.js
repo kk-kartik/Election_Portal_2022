@@ -3,6 +3,7 @@ const degreeUg = (str)=> {
 }
 
 export const postsToShow = (posts, voterInfo) => {
+  console.log("cdcsdc", voterInfo.gender, voterInfo.degree);
   if (voterInfo.gender) {
     if (voterInfo.gender === "Male" && degreeUg(voterInfo.degree)) {
       return [

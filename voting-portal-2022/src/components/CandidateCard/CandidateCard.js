@@ -5,7 +5,7 @@ const Agenda = (p) => {
   return <ol>{p.title}</ol>;
 };
 
-const CandidateCard = ({ candidate }) => {
+const CandidateCard = ({ candidate,urlPara }) => {
   function toPascalCase(string) {
     let b = string.split(" ");
     let string2 = "";
@@ -67,6 +67,7 @@ const CandidateCard = ({ candidate }) => {
             key={candidate.id}
             id={candidate.id}
             pos={candidate.pos}
+            urlPara={urlPara}
           />
         </div>
       </div>

@@ -32,6 +32,7 @@ const VotingScreen = () => {
   useEffect(() => {
     dispatch(getCandidateByPos(pos2idMap[position], position));
     console.log("side", postsToShow(posts, voterInfo), voterInfo);
+    console.log("bhalne",candidates[position]);
   }, [position]);
 
   return (
@@ -51,6 +52,7 @@ const VotingScreen = () => {
                         <CandidateCard
                           key={candidate.id}
                           candidate={candidate}
+                          urlPara={position}
                         />
                       );
                     })
