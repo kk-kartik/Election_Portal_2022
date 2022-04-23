@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Countdown from "../../components/timer/countdown2";
 import tick from "./tick.png";
 const SuccessMessage = (props) => {
   //   useEffect(() => {
@@ -10,6 +11,8 @@ const SuccessMessage = (props) => {
     <div className="w-80">
       <div className="flex flex-col">
         <div className="bg-greenBg flex flex-row justify-between items-center p-3 rounded-2xl">
+          <Countdown fill="100" empty="0" className="ml-1 text-lg" />
+
           <div className="text-white font-bold text-xl font-atkinson">
             Success
           </div>
