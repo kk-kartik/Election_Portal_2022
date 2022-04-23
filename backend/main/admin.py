@@ -49,7 +49,7 @@ class StatisticAdmin(admin.ModelAdmin):
 @admin.register(VoterCard)
 class StatisticAdmin(admin.ModelAdmin):
     search_fields = ['uniqueid',"voter__user__email"]
-    list_display = ['uniqueid',"unqiueid_email"]
+    list_display = ['uniqueid']
 
 
 
