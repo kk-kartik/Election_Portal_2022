@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Countdown from "../../components/timer/countdown2";
+import Countdown from "../Timer/countdown2";
 import tick from "./tick.png";
 const SuccessMessage = (props) => {
   //   useEffect(() => {
