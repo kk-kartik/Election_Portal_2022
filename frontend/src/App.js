@@ -18,6 +18,7 @@ import NominationRoute from "./custom-routes/NominationRoutes";
 import AdminVoteDay from "./screens/admin2/admin_voteday";
 function Pre() {
   return (
+    
     <div className="min-h-screen">
       <TopNav />
       <Routes>
@@ -30,7 +31,7 @@ function Pre() {
               <RegisterScreen />
             </RegistrationRoute>
           }
-        />
+          />
         <Route
           path="/nominate/*"
           exact
@@ -39,18 +40,18 @@ function Pre() {
               <CandidateNominateScreen />
             </NominationRoute>
           }
-        />
+          />
         <Route path="/login" exact element={<LoginScreen />} />
         <Route
           path="/nominate/post"
           exact
           element={<CandidatePositionForm />}
-        />
+          />
         <Route
           path="/candidate/:id"
           exact
           element={<CandidateNominationScreen />}
-        />
+          />
       </Routes>
     </div>
   );
@@ -80,7 +81,6 @@ function App() {
       dispatch({ type: SET_CANDIDATE_DATA, data: userData.candidates[0] });
     }
   }, [userData]);
-
   return (
     <BrowserRouter basename={BASEURL}>
       <Routes>

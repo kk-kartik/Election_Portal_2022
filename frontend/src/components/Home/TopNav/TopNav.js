@@ -84,7 +84,7 @@ const TopNav = ({}) => {
     setDropClick(!dropClick);
   };
   let loginComp = () => {
-    if (userData?.first_name) {
+    if (userData) {
       return (
         <div className={`sm:flex flex-col`}>
           <div className={`decoration-stone-800 flex items-center space-x-2`}>
@@ -92,7 +92,10 @@ const TopNav = ({}) => {
             <div className="ml-2 relative">
               <div className="flex flex-row space-x-2">
                 <span className="text-sm font-medium">
-                  {userData.first_name}
+                  {userData.first_name ||
+                    userData.euser?.name ||
+                    userData?.email ||
+                    `VOTER_${userData.id}`}
                 </span>
                 <img
                   src={dropdown}
@@ -104,14 +107,14 @@ const TopNav = ({}) => {
                 />
               </div>
               <span className="text-sm text-gray-800">
-                {userData.candidates.length !== 0 ? "Candidate" : "Voter"}
+                {userData.candidates?.length !== 0 ? "Candidate" : "Voter"}
               </span>
               <div
                 className={`decoration-gray-600 absolute z-10 font-bold bg-white rounded shadow-lg top-10 right-0 w-40 shadow ${
                   dropClick ? "flex flex-col" : "hidden"
                 }`}
               >
-                {userData?.candidates.length !== 0 && (
+                {userData?.candidates?.length !== 0 && (
                   <button className="hover:bg-blue-100 py-2">
                     <Link
                       to="/nominate/about"
