@@ -19,7 +19,16 @@ function poolColors(a) {
   return pool;
 }
 
+function calcTotVote(hostels){
+  let tot = 0;
+  hostels.forEach(hostel=>{
+    tot += hostel.count;
+  })
+  return tot;
+}
+
 const StatsChart = ({hostel, dept}) => {
+  const totalVotes = calcTotVote(hostel);
   const hostelData = {
       labels: hostel.map((d)=>{return d.name}),
       datasets: [
@@ -61,18 +70,19 @@ const StatsChart = ({hostel, dept}) => {
     if(active){
       data=deptData;
     }
+    console.log("hostels' data: ",hostel);
   return (
     <>
       <div className='w-full h-screen'>
             <span className={`${styles.head} hidden md:block`}>Vote Count</span>
             <div className={`flex ${styles.main} md:flex-row flex-col`}>
                 <div className="flex mt-4 md:my-0 md:flex-col md:self-center ml-8 pr-10 lg:pr-32">
-                  <div className="flex flex-col">
-                    <span className={`${styles.dhead} text-center`}>3002</span>
+                  <div className="flex flex-col sm:items-start sm:mb-3">
+                    <span className={`${styles.dhead} text-center`}>{totalVotes}</span>
                     <span className={styles.et}>Voters Count</span>   
                   </div>
-                  <div className="flex flex-col ml-auto mr-0 md:mx-0">
-                    <span className={`${styles.dhead} text-center`}>40%</span>
+                  <div className="flex flex-col sm:items-start ml-auto mr-0 md:mx-0">
+                    <span className={`${styles.dhead} text-center`}>{Math.round((100*totalVotes)/7500)}%</span>
                     <span className={styles.et}>Voters Turnout</span>   
                   </div>
                 </div>
