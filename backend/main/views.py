@@ -433,18 +433,33 @@ class FAQViewSet(ElectionMixin,viewsets.ModelViewSet):
     def perform_update(self,serializer):
          return serializer.save(election=self.election)
 
+email_ind = 0
+emails_list = settings.EMAIL_HOST_USERS
 def send_email(remail,subject,message):
+    global email_ind
+    global emails_list
+    print(emails_list)
     email = EmailMessage(
         subject = subject,
         body=message,
-        from_email='sgcelectionsiitg@gmail.com',
+        from_email=emails_list[email_ind],
         to=[remail],
     )
     email.content_subtype = 'html'
     try:
         email.send(fail_silently=False)
+        email_ind += 1
+        email_ind %= len(emails_list)
+        settings.EMAIL_HOST_USER = emails_list[email_ind]
+        settings.EMAIL_HOST_PASSWORD = settings.EMAIL_HOST_PASSWORDS[email_ind]
     except Exception as e:
-        print('Erorr in sending mail, failed to send!',e)
+        print('Error in sending mail, trying next email!',e)
+        email_ind += 1
+        email_ind %= len(emails_list)
+        settings.EMAIL_HOST_USER = emails_list[email_ind]
+        settings.EMAIL_HOST_PASSWORD = settings.EMAIL_HOST_PASSWORDS[email_ind]
+        send_email(remail,subject,message)
+
 
 # def send_email(remail,uniqueid_email):
 #     message = get_template("otp.html").render({
@@ -506,6 +521,7 @@ def voter_card(request,name_slug):
             'otp':uniqueid_email
         })
         subject='OTP [' + str(uniqueid_email) + ']'
+        print('email sent')
         send_email(email,subject,message)
         serialized_voter = VoterSerializer(voter_obj)
         return Response(serialized_voter.data)
