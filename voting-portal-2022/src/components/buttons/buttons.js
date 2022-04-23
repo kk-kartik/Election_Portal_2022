@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { addVote, deleteVote } from "../../redux/actions/votes";
 import { useDispatch, useSelector } from "react-redux";
 import { voteValue } from "../../utils/voteValue";
+import { ToastContainer, toast } from "react-toastify";
 
 import styles from "./buttons.module.css";
 import check from "./check.svg";
@@ -11,6 +12,7 @@ export const SingleVote = ({ name, id, pos }) => {
   const [hover, setHover] = useState(false);
   const votes = useSelector((store) => store.votes);
   const dispatch = useDispatch();
+  const notify = (name) => toast.info(`You've voted for ${name}`);
 
   const vote = voteValue(votes, pos, id);
   const addVoteHandler = (id, pos) => {
@@ -26,36 +28,41 @@ export const SingleVote = ({ name, id, pos }) => {
   };
 
   return (
-    <div>
-      {!vote && (
-        <button
-          className={styles.button1}
-          onClick={() => addVoteHandler(id, pos)}
-        >
-          Vote
-        </button>
-      )}
-      {vote && (
-        <button
-          className={styles.button2}
-          style={hover ? { background: "#ff6100" } : { background: "" }}
-          onClick={() => deleteVoteHandler(id, pos)}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-        >
-          <div className="flex justify-start items-center ">
-            <img
-              style={{ height: "20px", width: "auto" }}
-              src={hover ? cancel : check}
-              className="pr-2"
-              alt="BTN"
-            />
+    <>
+      <div>
+        {!vote && (
+          <button
+            className={styles.button1}
+            onClick={() => {
+              addVoteHandler(id, pos);
+              notify(name);
+            }}
+          >
+            Vote
+          </button>
+        )}
+        {vote && (
+          <button
+            className={styles.button2}
+            style={hover ? { background: "#ff6100" } : { background: "" }}
+            onClick={() => deleteVoteHandler(id, pos)}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+          >
+            <div className="flex justify-start items-center ">
+              <img
+                style={{ height: "20px", width: "auto" }}
+                src={hover ? cancel : check}
+                className="pr-2"
+                alt="BTN"
+              />
 
-            <div>{hover ? "Cancel" : "Voted"}</div>
-          </div>
-        </button>
-      )}
-    </div>
+              <div>{hover ? "Cancel" : "Voted"}</div>
+            </div>
+          </button>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { checkVoterId } from "../redux/actions/voter";
 import StatusScreen from "./StatusScreen";
+import { toast } from "react-toastify";
 
 const EnterVoterIdScreen = () => {
   const [voterId, setVoterId] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const history = useHistory();
+  const notify = (errorMsg) => toast.error(errorMsg);
 
   const dispatch = useDispatch();
 
@@ -18,6 +20,7 @@ const EnterVoterIdScreen = () => {
         if (res.message) {
           console.log("error");
           setErrorMsg(res.message);
+          notify(res.message);
         } else {
           setErrorMsg("");
           history.push("/vicepresident");
@@ -37,14 +40,12 @@ const EnterVoterIdScreen = () => {
             <input
               type="text"
               required
+              autoFocus
               style={{ border: "1.4px solid #2B00FF" }}
-              className="py-1 px-4 rounded-md w-3/4 focus:outline-none focus:border-8"
+              className="py-1 px-4 rounded-md w-full focus:outline-none focus:border-8"
               value={voterId}
               onChange={(e) => setVoterId(e.target.value)}
             />
-            {errorMsg.length !== 0 && (
-              <p className="text-sm text-red-500">{errorMsg}</p>
-            )}
           </div>
           <button className="rounded-md py-2 px-5 bg-blueBg text-white hover:bg-blue-900">
             Continue

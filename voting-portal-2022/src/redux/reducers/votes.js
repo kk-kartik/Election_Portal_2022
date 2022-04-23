@@ -4,6 +4,7 @@ import {
   DELETE_ALL_VOTES,
   POST_ALL_VOTES,
   GET_VOTE_COUNT,
+  POST_VOTES,
 } from "../constants";
 import { removeByValue } from "../../utils/removeByValue";
 import { posIdtoNotaId } from "../../constants";
@@ -32,13 +33,23 @@ const votes = (votes = initialState, action) => {
   switch (action.type) {
     case ADD_VOTE:
       if (pos === "ug" || pos === "pg" || pos === "girl") {
-        if (updatedVotes[pos].length < 7) {
-          if ([...updatedVotes[pos]].includes(posIdtoNotaId[pos]))
-            updatedVotes[pos] = [];
-          updatedVotes[pos] = [...updatedVotes[pos], id];
-        } else {
-          updatedVotes.err = "You can only vote for 7 candidates";
-        }
+        if (pos === "girl") {
+          if (updatedVotes[pos].length < 3) {
+            if ([...updatedVotes[pos]].includes(posIdtoNotaId[pos]))
+              updatedVotes[pos] = [];
+            updatedVotes[pos] = [...updatedVotes[pos], id];
+          } else {
+            updatedVotes.err = "You can only vote for 3 candidates";
+          }
+        } else{
+          if (updatedVotes[pos].length < 7) {
+            if ([...updatedVotes[pos]].includes(posIdtoNotaId[pos]))
+              updatedVotes[pos] = [];
+            updatedVotes[pos] = [...updatedVotes[pos], id];
+          } else {
+            updatedVotes.err = "You can only vote for 7 candidates";
+          }
+        } 
       } else {
         updatedVotes[pos] = id;
       }
@@ -66,10 +77,12 @@ const votes = (votes = initialState, action) => {
       return updatedVotes;
 
     case POST_ALL_VOTES:
-      return data;
+      return initialState;
 
     case GET_VOTE_COUNT:
-      return data;
+      return initialState;
+    case POST_VOTES:
+      return initialState;
     default:
       return votes;
   }

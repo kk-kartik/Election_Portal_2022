@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
@@ -152,6 +153,7 @@ def get_default_witness():
 class Candidate(models.Model):
     position = models.ForeignKey(Position,on_delete=models.DO_NOTHING,related_name='candidates_p')
     agenda_text = models.JSONField(null=True,blank=True)
+    top_4_agenda_text = models.JSONField(null=True,blank=True)
     image = models.ImageField(upload_to="candidate_profile/",blank=True,null=True)
     video = models.URLField(null=True,blank=True)
     about = models.TextField(null=True,blank=True)

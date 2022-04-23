@@ -2,7 +2,7 @@ import SubmitVotesField from "../SubmitVotesField/SubmitVotesField";
 import styles from "./SubmitVotesModal.module.css";
 import { candidateIdToName } from "../../constants/index";
 import { useDispatch, useSelector } from "react-redux";
-import { postAllVotes } from "../../redux/actions/votes";
+import { postAllVotes, postVotes } from "../../redux/actions/votes";
 import { votesToString } from "../../utils/voteValue";
 import StatusScreen from "../../screens/StatusScreen";
 import Loading from "../Loader/Loading.js";
@@ -24,27 +24,59 @@ const arrayToString = (ids) => {
 const SubmitVotesModal = ({ votes, setModalOpen }) => {
   const dispatch = useDispatch();
   const [hasSendVote, setHasSendVote] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const history = useHistory();
   const voterInfo = useSelector(store=>store.voterInfo);
 
-    console.log("voterid sxnls: ", voterInfo);
 
+  console.log("voterid sxnls: ", voterInfo);
 
   const submitHandler = () => {
-    console.log("voterid before submit: ",voterInfo);
+    console.log("voterid before submit: ", voterInfo);
     const strVotes = votesToString(votes);
     setHasSendVote(true);
-    dispatch(postAllVotes(strVotes,voterInfo.voterId)).then((data) => {
-      console.log("[ye abhi ka data]", data);
-      history.push({
-        pathname: "/response",
-        state: {
-          transaction_id: data.payload.transactionHash,
-          voter_id: voterInfo.voterId,
-          block_id: data.payload.blockHash,
-          gas: data.payload.gasUsed,
-        },
-      });
+    dispatch(postVotes(strVotes, voterInfo.voterId)).then((serverData) => {
+      console.log("[ye status data hai ]", serverData.payload.data.status);
+
+      // if (serverData || serverData.payload.status !== 200) {
+      //   history.push({
+      //     pathname: "/fail",
+      //     state: {
+      //       data: serverData?.payload?.data?.status,
+      //     },
+      //   });
+      // }
+      if (serverData && serverData.payload.status === 200) {
+        dispatch(postAllVotes(strVotes, voterInfo.voterId)).then((data) => {
+          console.log("[ye abhi ka data]", data);
+
+          history.push({
+            pathname: "/response",
+            state: {
+              transaction_id: data.payload.transactionHash,
+              voter_id: voterInfo.voterId,
+              block_id: data.payload.blockHash,
+              gas: data.payload.gasUsed,
+              isShow: data.payload.isShow,
+            },
+          });
+        });
+      } else {
+        history.push({
+          pathname: "/fail",
+          state: {
+            data: serverData?.payload?.data?.status,
+          },
+        });
+      }
+
+      console.log("[I'm from here]");
+      // history.push({
+      //   pathname: "/fail",
+      //   state: {
+      //     data: serverData,
+      //   },
+      // });
     });
   };
   return (
@@ -86,6 +118,16 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 cClass="text-orange-500"
               />
               <SubmitVotesField
+                post="SAIL"
+                candidate={candidateIdToName[votes["sail"]]}
+                cClass="text-orange-500"
+              />
+              <SubmitVotesField
+                post="Technical Board"
+                candidate={candidateIdToName[votes["technical"]]}
+                cClass="text-orange-500"
+              />
+              <SubmitVotesField
                 post="PG Senate"
                 candidate={arrayToString(votes["pg"])}
                 long={true}
@@ -107,6 +149,8 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 id="check"
                 name="check"
                 className={`${styles.checkBox} w-5 h-5`}
+                value={confirm}
+                onChange={(e) => setConfirm((prev) => !prev)}
               ></input>
               <label for="check" className="text-base ml-2">
                 I understand that I will not be able to change my votes after I
@@ -121,8 +165,11 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 Cancel
               </button>
               <button
-                className={`${styles.contBtn} py-2.5 px-5`}
+                className={`${styles.contBtn} py-2.5 px-5 ${
+                  !confirm && "opacity-50 cursor-not-allowed"
+                }`}
                 onClick={submitHandler}
+                disabled={!confirm}
               >
                 Continue
               </button>

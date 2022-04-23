@@ -1,7 +1,7 @@
 .model{
     /* display: none;  */
     position: fixed; 
-    z-index: 1; 
+    z-index: 100; 
     left: 0;
     top: 0;
     width: 100%; 
@@ -37,11 +37,11 @@
 
 .cancelBtn{
     background: #F9F9F9;
-    border: 1px solid rgba(27, 31, 35, 0.1);
+    border: 1px solid rgba(27, 31, 35, 0.3);
     box-sizing: border-box;
     box-shadow: 0px 1px 0px rgba(27, 31, 35, 0.1);
     border-radius: 6px;
-    color: #959DA5;
+    color: #000;
 }
 .contBtn{
     background: #2B00FF;

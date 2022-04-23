@@ -32,42 +32,47 @@ const RegisterSuccess = (props) => {
     voter_type = "UG";
   }
   return (
-    <div className={`${styles.cont} w-full md:w-4/6 p-2 ${hid}`}>
-      <div className={`grid ${styles.grid} gap-4`}>
-        {/* <img src={Icon} className={`${styles.img} max-w-fit`}/> */}
-        <img
-          src={userImg?.img_url}
-          className={`${styles.img} max-w-fit h-full object-cover rounded-lg row-span-3`}
-          alt={"Image"}
-          onError={(th) => {
-            th.target.src = DefaultIMG;
-          }}
-        />
-        <div className={`flex flex-col`}>
-          <div className={`${styles.small}`}>Name</div>
-          <div className={`${styles.text}`}>{userData?.euser?.name}</div>
-        </div>
-        <div className={`flex flex-col`}>
-          <div className={`${styles.small}`}>Roll No</div>
-          <div className={`${styles.text}`}>{roll_no}</div>
-        </div>
+    <>
+      <h1 className="font-normal text-2xl pt-8 pb-4 text-gray-800">
+        Voter ID
+      </h1>
+      <div className={`${styles.cont} w-full md:w-4/6 p-2 ${hid}`}>
+        <div className={`grid ${styles.grid} gap-4`}>
+          {/* <img src={Icon} className={`${styles.img} max-w-fit`}/> */}
+          <img
+            src={userImg?.img_url}
+            className={`${styles.img} max-w-fit h-full object-cover rounded-lg row-span-3`}
+            alt={"Image"}
+            onError={(th) => {
+              th.target.src = DefaultIMG;
+            }}
+          />
+          <div className={`flex flex-col`}>
+            <div className={`${styles.small}`}>Name</div>
+            <div className={`${styles.text}`}>{userData?.euser?.name}</div>
+          </div>
+          <div className={`flex flex-col`}>
+            <div className={`${styles.small}`}>Roll No</div>
+            <div className={`${styles.text}`}>{roll_no}</div>
+          </div>
 
-        <div className={`flex flex-col`}>
-          <div className={`${styles.small}`}>Voter Type</div>
-          <div className={`${styles.text}`}>{voter_type} (M)</div>
-        </div>
-        <div className={`flex flex-col`}>
-          <div className={`${styles.small}`}>Hostel</div>
-          <div className={`${styles.text}`}>{userData?.euser?.hostel}</div>
-        </div>
-        <div className={`flex flex-col`}>
-          <div className={`${styles.small}`}>Branch</div>
-          <div className={`${styles.text}`}>
-            {DEPT[userData?.euser?.branch]}
+          <div className={`flex flex-col`}>
+            <div className={`${styles.small}`}>Voter Type</div>
+            <div className={`${styles.text}`}>{voter_type} (M)</div>
+          </div>
+          <div className={`flex flex-col`}>
+            <div className={`${styles.small}`}>Hostel</div>
+            <div className={`${styles.text}`}>{userData?.euser?.hostel}</div>
+          </div>
+          <div className={`flex flex-col`}>
+            <div className={`${styles.small}`}>Branch</div>
+            <div className={`${styles.text}`}>
+              {DEPT[userData?.euser?.branch]}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

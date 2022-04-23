@@ -4,6 +4,7 @@ import {
   DELETE_ALL_VOTES,
   POST_ALL_VOTES,
   GET_VOTE_COUNT,
+  POST_VOTES,
 } from "../constants";
 import * as api from "../../api";
 
@@ -30,14 +31,37 @@ export const getVoteCount = () => async (dispatch) => {
   }
 };
 
-export const postAllVotes = (votes,id) => async (dispatch) => {
+export const postAllVotes = (votes, id) => async (dispatch) => {
   try {
-    const data = await api.postAllVotes(votes,id); //votes is an string with candidate id sample - "1,2,10,33"
+    //throw Error("this is error");
+    const data = await api.postAllVotes(votes, id); //votes is an string with candidate id sample - "1,2,10,33"
     // const data = await res.json();
     console.log("[Post all votes response]", data);
-    return { type: POST_ALL_VOTES, payload: data };
+    return { type: POST_ALL_VOTES, payload: { ...data, isShow: true } };
     //dispatch();
   } catch (err) {
-    console.log("[postAllVotes action error] :", err);
+    const data = {
+      transactionHash: "",
+      voterId: "",
+      blockHash: "",
+      gasUsed: "",
+      isShow: false,
+    };
+    console.log("[Post all votes response]", data);
+    return {
+      type: POST_ALL_VOTES,
+      payload: data,
+    };
+  }
+};
+
+export const postVotes = (votes, id) => async (dispatch) => {
+  try {
+    const data = await api.postVotes(votes, id);
+    console.log("[post votes response] ", data);
+    //dispatch({ type: POST_VOTES, payload: data });
+    return { type: POST_VOTES, payload: data };
+  } catch (err) {
+    console.log("[postVotes action error] ", err);
   }
 };
