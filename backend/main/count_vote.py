@@ -1,11 +1,12 @@
+import os
 import json
 from web3 import Web3
 from encryption.utils import decrypt
 from datetime import datetime
 
-publicKey = "0xD0e203A04Eb4024Fbd90768b46E37aC67F1Cd707"
-privateKey ="9f94794beb1b094dfa4dd85f1190703500e5179fe4b53767dcfc785eaa4620b0"
-contractAddress = "0x5179BB109548f4e5D06fA9a90a3142C4F4A96419"
+publicKey = os.environ.get("CONTRACT_PUBLIC_KEY")
+privateKey = os.environ.get("CONTRACT_PRIVATE_KEY")
+contractAddress = os.environ.get("CONTRACT_ADDRESS")
 
 infura_url = "https://rinkeby.infura.io/v3/8c6a3e46d78044648168f270509e1fdd"
 web3 = Web3(Web3.HTTPProvider(infura_url))
