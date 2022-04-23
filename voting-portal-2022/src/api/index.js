@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASEAPIURL } from "../constants";
 import { countVotes, methodFunction } from "../utils/countMethodFunction";
+import { encryptFunction } from "../utils/encryption";
 
 export const API = axios.create({
   baseURL: `${BASEAPIURL}`,
@@ -39,3 +40,9 @@ export const postAllVotes = async (votes, id) => methodFunction(votes, id);
 export const getVoterID = (otp) => API.post("/voting/get_voter_id/", { otp });
 export const checkVoterID = (voterid) =>
   API.post("/voting/voterid_check/", { voterid });
+
+export const postVotes = async (votes, id) =>
+  API.post("/voting/store_vote/", {
+    voterid: id,
+    vote: encryptFunction(votes),
+  });

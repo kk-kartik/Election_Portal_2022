@@ -10,10 +10,10 @@ export const checkVoterId = (id) => async (dispatch) => {
     const data = await api.checkVoterID(id);
     console.log("check voterid: ", data);
     const { degree, status, gender, voterid } = data.data;
-    console.log({ degree, status, gender });
+    //console.log({ degree, status, gender });
     dispatch({
       type: CHECK_VOTERID,
-      payload: { gender, isVoterIdValid: status, degree, voterId: voterid  },
+      payload: { gender, isVoterIdValid: status, degree, voterId: voterid },
     });
     return { degree, status, gender };
   } catch (error) {

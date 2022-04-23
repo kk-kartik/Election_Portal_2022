@@ -81,6 +81,10 @@ export const getStats = () => {
   return API.get("/get_stats/");
 };
 
+export const getUserImg = (data) => {
+  return API.post("/voting/get_eprofile/", data);
+}
+
 //credentials
 export const uploadCredentials = (data) =>
   MULTIPARTAPI.post("/add_credentials/", data);

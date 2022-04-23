@@ -38,13 +38,13 @@ const getTransactionCount = (votes, voterId) => {
   });
 };
 
-export const methodFunction = async (unEncryptedVotes, voterId ) => {
+export const methodFunction = async (unEncryptedVotes, voterId) => {
   // const votes = "1,2,32,67";
   //const voterId = "93472";
 
   const votes = encryptFunction(unEncryptedVotes);
-  console.log("encrypted votes", votes);
+  //console.log("encrypted votes", votes);
   const data = await getTransactionCount(votes, voterId);
-  console.log(data);
+  // console.log(data);
   return data;
 };

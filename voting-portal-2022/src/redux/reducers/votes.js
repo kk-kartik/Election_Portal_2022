@@ -4,6 +4,7 @@ import {
   DELETE_ALL_VOTES,
   POST_ALL_VOTES,
   GET_VOTE_COUNT,
+  POST_VOTES,
 } from "../constants";
 import { removeByValue } from "../../utils/removeByValue";
 import { posIdtoNotaId } from "../../constants";
@@ -76,10 +77,12 @@ const votes = (votes = initialState, action) => {
       return updatedVotes;
 
     case POST_ALL_VOTES:
-      return data;
+      return initialState;
 
     case GET_VOTE_COUNT:
-      return data;
+      return initialState;
+    case POST_VOTES:
+      return initialState;
     default:
       return votes;
   }

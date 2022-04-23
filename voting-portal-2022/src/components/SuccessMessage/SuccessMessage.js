@@ -17,16 +17,18 @@ const SuccessMessage = (props) => {
             <img src={tick} alt="" />
           </div>
         </div>
-        <div className="flex flex-col mt-5 shadow-xl rounded-2xl px-4">
-          <div className="mt-2">
-            Transaction_ID: {`#${props.transaction_id.substring(0, 15)}`}
+        {props.isShow && (
+          <div className="flex flex-col mt-5 shadow-xl rounded-2xl px-4">
+            <div className="mt-2">
+              Transaction_ID: {`#${props.transaction_id.substring(0, 15)}`}
+            </div>
+            <div className="mt-2">Voter_ID : {props.voter_id}</div>
+            <div className="mt-2">
+              Block_ID : {`#${props.block_id.substring(0, 20)}`}
+            </div>
+            <div className="mt-2 mb-2">Gas : ${props.gas}</div>
           </div>
-          <div className="mt-2">Voter_ID : {props.voter_id}</div>
-          <div className="mt-2">
-            Block_ID : {`#${props.block_id.substring(0, 20)}`}
-          </div>
-          <div className="mt-2 mb-2">Gas : ${props.gas}</div>
-        </div>
+        )}
       </div>
     </div>
   );

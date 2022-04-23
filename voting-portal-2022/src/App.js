@@ -10,7 +10,7 @@ import StartVotingButton from "./components/StartVotingButton/StartVotingButton"
 import VotingIdGenScreen from "./screens/VotingIdGenScreen";
 import EnterVoterIdScreen from "./screens/EnterVoterIdScreen";
 import { VotingResScreen } from "./screens/VotingResScreen";
-
+import { VotingFailScreen } from "./screens/VotingFailScreen";
 function App() {
   const dispatch = useDispatch();
 
@@ -34,6 +34,7 @@ function App() {
           <Route path="/enterid" exact component={EnterVoterIdScreen} />
           <Route path="/otp" exact component={VotingIdGenScreen} />
           <Route path="/response" exact component={VotingResScreen} />
+          <Route path="/fail" exact component={VotingFailScreen} />
           <Route
             path="/status"
             exact
