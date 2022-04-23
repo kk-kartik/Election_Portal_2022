@@ -1,3 +1,6 @@
+/**
+ * For checking if candidate have selected by user for vote
+ */
 export const voteValue = (votes, pos, id) => {
   if (pos === "ug" || pos === "pg" || pos === "girl") {
     return votes[pos].includes(id);
@@ -6,6 +9,9 @@ export const voteValue = (votes, pos, id) => {
   }
 };
 
+/**
+ * For checking if we can go to next or not
+ */
 export const checkNext = (vote, pos) => {
   if (pos === "ug" || pos === "pg" || pos === "girl") {
     if (pos === "girl") {

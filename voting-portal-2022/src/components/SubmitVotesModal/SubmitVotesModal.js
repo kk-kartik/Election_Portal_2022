@@ -131,21 +131,27 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 cClass="text-orange-500"
               />
 
-              <SubmitVotesField
-                post="PG Senate"
-                candidate={arrayToString(votes["pg"])}
-                long={true}
-              />
-              <SubmitVotesField
-                post="UG Senate"
-                candidate={arrayToString(votes["ug"])}
-                long={true}
-              />
-              <SubmitVotesField
-                post="Girls Senate"
-                candidate={arrayToString(votes["girl"])}
-                long={true}
-              />
+              {!(voterInfo?.degree === "B" || voterInfo?.degree === "Bdes") && (
+                <SubmitVotesField
+                  post="PG Senate"
+                  candidate={arrayToString(votes["pg"])}
+                  long={true}
+                />
+              )}
+              {(voterInfo?.degree === "B" || voterInfo?.degree === "Bdes") && (
+                <SubmitVotesField
+                  post="UG Senate"
+                  candidate={arrayToString(votes["ug"])}
+                  long={true}
+                />
+              )}
+              {voterInfo?.gender === "Female" && (
+                <SubmitVotesField
+                  post="Girls Senate"
+                  candidate={arrayToString(votes["girl"])}
+                  long={true}
+                />
+              )}
             </div>
             <div className="mr-11 ml-8 mt-5 mb-8 flex items-center">
               <input

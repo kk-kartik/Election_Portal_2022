@@ -11,6 +11,7 @@ import cancel from "./cancel.svg";
 export const SingleVote = ({ name, id, pos, urlPara }) => {
   const [hover, setHover] = useState(false);
   const votes = useSelector((store) => store.votes);
+  //console.log("I'm votes : ", votes);
   const dispatch = useDispatch();
   const notify = (name) => toast.info(`You've voted for ${name}`);
 
@@ -35,8 +36,11 @@ export const SingleVote = ({ name, id, pos, urlPara }) => {
             className={styles.button1}
             onClick={() => {
               addVoteHandler(id, pos);
-              console.log("button para: ", urlPara, votes[urlPara].length);
-              if ((urlPara === "ug" || urlPara === "pg") && votes[urlPara].length < 7) {
+              //  console.log("button para: ", urlPara, votes[urlPara]?.length);
+              if (
+                (urlPara === "ug" || urlPara === "pg") &&
+                votes[urlPara].length < 7
+              ) {
                 notify(name);
               } else if (urlPara === "girl" && votes[urlPara].length < 3) {
                 notify(name);

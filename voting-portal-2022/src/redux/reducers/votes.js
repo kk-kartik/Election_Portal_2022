@@ -12,7 +12,7 @@ import { posIdtoNotaId } from "../../constants";
 const initialState = {
   vicepresident: 0,
   sports: 0,
-  welfare: -3,
+  // welfare: -3,
   technical: 0,
   hab: 0,
   sail: 0,

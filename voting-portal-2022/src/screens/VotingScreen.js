@@ -21,6 +21,7 @@ const VotingScreen = () => {
   let history = useHistory();
   const { position } = useParams();
   let candidates = useSelector((store) => store.candidates);
+  console.log("WE are candidate", candidates[position]);
   const voterInfo = useSelector((store) => store.voterInfo);
   const vote = useSelector((store) => store.votes[position]);
   const notify = () => toast.info(`You've voted NOTA.`);
