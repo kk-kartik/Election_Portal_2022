@@ -34,9 +34,51 @@ import os
 
 
 def populate_data(request,name_slug,cnt):
-    # path = settings.BASE_DIR/'main'/'static'/'new_file.json'
-    # jdata = open(path)
-    # data = json.load(jdata)
+
+
+    path = settings.BASE_DIR/'main'/'static'/'agenda.json'
+    jdata = open(path)
+    data = json.load(jdata)
+
+
+    dict_data = {}
+
+    for key,value in data['Name2'].items():
+        dict_data[key] = {"name":value}
+
+    for key,value in data['Agenda 1'].items():
+        dict_data[key]['1'] = value
+
+    for key,value in data['Agenda 2'].items():
+        dict_data[key]['2'] = value
+
+    for key,value in data['Agenda 3'].items():
+        dict_data[key]['3'] = value
+
+    for key,value in data['Agenda 4'].items():
+        dict_data[key]['4'] = value
+
+    i=0
+    for key,values in dict_data.items():
+        i += 1
+        if i == cnt:
+            break
+        try:
+            candidate = Candidate.objects.get(user__name__iexact=values['name'])
+            candidate.top_4_agenda_text = {
+                '1':'',
+                '2':'',
+                '3':'',
+                '4':''
+            }
+            candidate.top_4_agenda_text['1'] = values['1']
+            candidate.top_4_agenda_text['2'] = values['2']
+            candidate.top_4_agenda_text['3'] = values['3']
+            candidate.top_4_agenda_text['4'] = values['4']
+            candidate.save() 
+
+        except Exception as e:
+            print(e)
 
     # i = 0
     # for key,values in data['IITG_Email_Updated'].items():
