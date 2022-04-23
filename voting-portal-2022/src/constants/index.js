@@ -162,10 +162,9 @@ export const posts = [
   },
 ];
 
-export const publicKey = "0xD0e203A04Eb4024Fbd90768b46E37aC67F1Cd707";
-export const privateKey =
-  "9f94794beb1b094dfa4dd85f1190703500e5179fe4b53767dcfc785eaa4620b0";
-export const contractAddress = "0x5179BB109548f4e5D06fA9a90a3142C4F4A96419";
+export const publicKey = process.env.REACT_APP_CONTRACT_PUBLIC_KEY;
+export const privateKey = process.env.REACT_APP_CONTRACT_PRIVATE_KEY;
+export const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
 
 export const notBlockChainKey = `-----BEGIN PUBLIC KEY-----
     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoogsA5LkudlR2hLgTZ7H
