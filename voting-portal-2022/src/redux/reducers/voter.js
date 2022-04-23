@@ -18,9 +18,9 @@ const voterInfo = (voterId = initialState, action) => {
     case CHECK_VOTERID:
       return {
         ...voterId,
-        gender: action.payload?.gender,
+        //gender: action.payload?.gender,
         isVoterIdValid: action.payload?.isVoterIdValid,
-        degree: action.payload?.degree,
+        //degree: action.payload?.degree,
         voterId: action.payload?.voterId,
       };
     default:

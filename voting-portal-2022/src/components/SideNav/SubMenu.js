@@ -5,7 +5,7 @@ const SubMenu = ({ item, index }) => {
   const {position} = useParams();
   return (
     <>
-      {item.subposts.length === 1 ? (
+      {/* {item.subposts.length === 1 ? (
         // <NavLink
         //   className={
         //     position === item.subposts[0].path
@@ -22,7 +22,7 @@ const SubMenu = ({ item, index }) => {
         //   </div>
         // </NavLink>
         <></>
-      ) : (
+      ) : ( */}
         <div
           // className={
           //   subnav
@@ -38,7 +38,7 @@ const SubMenu = ({ item, index }) => {
             <span className={`${styles.sidebarLabel}`}>{item.title}</span>
           </div>
         </div>
-      )}
+      {/* )} */}
 
       {item.subposts.map((item, index) => {
         return (

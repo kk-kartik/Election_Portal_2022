@@ -33,13 +33,23 @@ const votes = (votes = initialState, action) => {
   switch (action.type) {
     case ADD_VOTE:
       if (pos === "ug" || pos === "pg" || pos === "girl") {
-        if (updatedVotes[pos].length < 7) {
-          if ([...updatedVotes[pos]].includes(posIdtoNotaId[pos]))
-            updatedVotes[pos] = [];
-          updatedVotes[pos] = [...updatedVotes[pos], id];
-        } else {
-          updatedVotes.err = "You can only vote for 7 candidates";
-        }
+        if (pos === "girl") {
+          if (updatedVotes[pos].length < 3) {
+            if ([...updatedVotes[pos]].includes(posIdtoNotaId[pos]))
+              updatedVotes[pos] = [];
+            updatedVotes[pos] = [...updatedVotes[pos], id];
+          } else {
+            updatedVotes.err = "You can only vote for 3 candidates";
+          }
+        } else{
+          if (updatedVotes[pos].length < 7) {
+            if ([...updatedVotes[pos]].includes(posIdtoNotaId[pos]))
+              updatedVotes[pos] = [];
+            updatedVotes[pos] = [...updatedVotes[pos], id];
+          } else {
+            updatedVotes.err = "You can only vote for 7 candidates";
+          }
+        } 
       } else {
         updatedVotes[pos] = id;
       }

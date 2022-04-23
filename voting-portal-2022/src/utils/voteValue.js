@@ -8,7 +8,11 @@ export const voteValue = (votes, pos, id) => {
 
 export const checkNext = (vote, pos) => {
   if (pos === "ug" || pos === "pg" || pos === "girl") {
-    return vote[0] < 0 || vote.length === 7;
+    if(pos==="girl"){
+      return vote[0] < 0 || vote.length === 3;
+    }else{
+      return vote[0] < 0 || vote.length === 7;
+    }
   } else {
     return vote !== 0;
   }

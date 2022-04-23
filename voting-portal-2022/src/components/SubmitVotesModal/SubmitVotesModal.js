@@ -24,8 +24,10 @@ const arrayToString = (ids) => {
 const SubmitVotesModal = ({ votes, setModalOpen }) => {
   const dispatch = useDispatch();
   const [hasSendVote, setHasSendVote] = useState(false);
+  const [confirm, setConfirm] = useState(false);
   const history = useHistory();
-  const voterInfo = useSelector((store) => store.voterInfo);
+  const voterInfo = useSelector(store=>store.voterInfo);
+
 
   console.log("voterid sxnls: ", voterInfo);
 
@@ -116,6 +118,16 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 cClass="text-orange-500"
               />
               <SubmitVotesField
+                post="SAIL"
+                candidate={candidateIdToName[votes["sail"]]}
+                cClass="text-orange-500"
+              />
+              <SubmitVotesField
+                post="Technical Board"
+                candidate={candidateIdToName[votes["technical"]]}
+                cClass="text-orange-500"
+              />
+              <SubmitVotesField
                 post="PG Senate"
                 candidate={arrayToString(votes["pg"])}
                 long={true}
@@ -137,6 +149,8 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 id="check"
                 name="check"
                 className={`${styles.checkBox} w-5 h-5`}
+                value={confirm}
+                onChange={(e) => setConfirm((prev) => !prev)}
               ></input>
               <label for="check" className="text-base ml-2">
                 I understand that I will not be able to change my votes after I
@@ -151,8 +165,11 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 Cancel
               </button>
               <button
-                className={`${styles.contBtn} py-2.5 px-5`}
+                className={`${styles.contBtn} py-2.5 px-5 ${
+                  !confirm && "opacity-50 cursor-not-allowed"
+                }`}
                 onClick={submitHandler}
+                disabled={!confirm}
               >
                 Continue
               </button>

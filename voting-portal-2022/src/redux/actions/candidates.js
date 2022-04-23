@@ -4,6 +4,7 @@ import {
   GET_CANDIDATE_BY_POS,
 } from "../constants";
 import * as api from "../../api";
+import { shuffle } from "../../utils/shuffleArray";
 
 export const getAllCandidates = () => async (dispatch) => {
   try {
@@ -20,8 +21,9 @@ export const getCandidateByPos = (id, pos) => async (dispatch) => {
   try {
     const res = await api.getCandidateByPosition(id);
     const data = await res.json();
+    const shuffledData = shuffle(data);
     //console.log("BY position: ", data);
-    dispatch({ type: GET_CANDIDATE_BY_POS, payload: { data, pos } });
+    dispatch({ type: GET_CANDIDATE_BY_POS, payload: { data:shuffledData, pos } });
   } catch (error) {
     console.log("getCandidateByPos action error: ", error.message);
   }
