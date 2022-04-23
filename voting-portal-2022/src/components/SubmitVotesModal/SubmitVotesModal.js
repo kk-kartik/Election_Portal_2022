@@ -2,7 +2,7 @@ import SubmitVotesField from "../SubmitVotesField/SubmitVotesField";
 import styles from "./SubmitVotesModal.module.css";
 import { candidateIdToName } from "../../constants/index";
 import { useDispatch, useSelector } from "react-redux";
-import { postAllVotes } from "../../redux/actions/votes";
+import { postAllVotes, postVotes } from "../../redux/actions/votes";
 import { votesToString } from "../../utils/voteValue";
 import StatusScreen from "../../screens/StatusScreen";
 import Loading from "../Loader/Loading.js";
@@ -25,26 +25,56 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
   const dispatch = useDispatch();
   const [hasSendVote, setHasSendVote] = useState(false);
   const history = useHistory();
-  const voterInfo = useSelector(store=>store.voterInfo);
+  const voterInfo = useSelector((store) => store.voterInfo);
 
-    console.log("voterid sxnls: ", voterInfo);
-
+  console.log("voterid sxnls: ", voterInfo);
 
   const submitHandler = () => {
-    console.log("voterid before submit: ",voterInfo);
+    console.log("voterid before submit: ", voterInfo);
     const strVotes = votesToString(votes);
     setHasSendVote(true);
-    dispatch(postAllVotes(strVotes,voterInfo.voterId)).then((data) => {
-      console.log("[ye abhi ka data]", data);
-      history.push({
-        pathname: "/response",
-        state: {
-          transaction_id: data.payload.transactionHash,
-          voter_id: voterInfo.voterId,
-          block_id: data.payload.blockHash,
-          gas: data.payload.gasUsed,
-        },
-      });
+    dispatch(postVotes(strVotes, voterInfo.voterId)).then((serverData) => {
+      console.log("[ye status data hai ]", serverData.payload.data.status);
+
+      // if (serverData || serverData.payload.status !== 200) {
+      //   history.push({
+      //     pathname: "/fail",
+      //     state: {
+      //       data: serverData?.payload?.data?.status,
+      //     },
+      //   });
+      // }
+      if (serverData && serverData.payload.status === 200) {
+        dispatch(postAllVotes(strVotes, voterInfo.voterId)).then((data) => {
+          console.log("[ye abhi ka data]", data);
+
+          history.push({
+            pathname: "/response",
+            state: {
+              transaction_id: data.payload.transactionHash,
+              voter_id: voterInfo.voterId,
+              block_id: data.payload.blockHash,
+              gas: data.payload.gasUsed,
+              isShow: data.payload.isShow,
+            },
+          });
+        });
+      } else {
+        history.push({
+          pathname: "/fail",
+          state: {
+            data: serverData?.payload?.data?.status,
+          },
+        });
+      }
+
+      console.log("[I'm from here]");
+      // history.push({
+      //   pathname: "/fail",
+      //   state: {
+      //     data: serverData,
+      //   },
+      // });
     });
   };
   return (

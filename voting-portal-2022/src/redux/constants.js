@@ -11,6 +11,7 @@ export const DELETE_VOTE = "DELETE_VOTE";
 export const DELETE_ALL_VOTES = "DELETE_ALL_VOTES";
 export const POST_ALL_VOTES = "POST_ALL_VOTES";
 export const GET_VOTE_COUNT = "GET_VOTE_COUNT";
+export const POST_VOTES = "POST_VOTES";
 
 export const SET_VOTERID_VALID = "SET_VOTERID_VALID";
 export const CHECK_VOTERID = "CHECK_VOTERID";

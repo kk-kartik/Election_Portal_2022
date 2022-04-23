@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./SubmitVotesField.module.css";
 
 const SubmitVotesField = (props) => {
-  console.log(props.post, props.candidate);
+  //console.log(props.post, props.candidate);
   const [clicked, setClicked] = useState(false);
   let shortCand =
     props.candidate?.length > 26
