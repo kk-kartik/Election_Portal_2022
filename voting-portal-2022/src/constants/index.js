@@ -105,6 +105,21 @@ export const pos2idMap = {
   pg: "10",
   girl: "12",
 };
+
+export const url2Post = {
+  vicepresident: "Vice President",
+  hab: "HAB",
+  welfare: "Welfare Board",
+  swc: "SWC",
+  technical: "Technical Board",
+  sports: "Sports Board",
+  sail: "SAIL",
+  ug: "UG Senator",
+  cultural: "Cultural Board",
+  pg: "PG Senator",
+  girl: "Girl Senator",
+};
+
 export const posts = [
   {
     title: "Executives",

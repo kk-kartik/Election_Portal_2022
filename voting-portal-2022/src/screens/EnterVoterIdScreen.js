@@ -37,8 +37,9 @@ const EnterVoterIdScreen = () => {
             <input
               type="text"
               required
+              autoFocus
               style={{ border: "1.4px solid #2B00FF" }}
-              className="py-1 px-4 rounded-md w-3/4 focus:outline-none focus:border-8"
+              className="py-1 px-4 rounded-md w-full focus:outline-none focus:border-8"
               value={voterId}
               onChange={(e) => setVoterId(e.target.value)}
             />

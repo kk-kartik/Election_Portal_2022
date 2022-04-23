@@ -38,7 +38,7 @@ const CandidateCard = ({ candidate }) => {
   }
   return (
     <div
-      className={`${styles.card} m-10 w-3/4 h-fit flex flex-col md:flex-row`}
+      className={`${styles.card} m-10 w-3/4 h-fit flex flex-col md:flex-row hover:shadow-lg transition duration-200 ease-in`}
     >
       <div className="pr-8 self-center">
         <img
