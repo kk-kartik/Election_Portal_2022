@@ -449,7 +449,7 @@ def send_email(remail,subject,message):
     )
     email.content_subtype = 'html'
     try:
-        email.send(fail_silently=False)
+        email.send()
         email_ind += 1
         email_ind %= len(emails_list)
         settings.EMAIL_HOST_USER = emails_list[email_ind]
@@ -458,6 +458,7 @@ def send_email(remail,subject,message):
         print('Error in sending mail, trying next email!',e)
         email_ind += 1
         email_ind %= len(emails_list)
+        print(email_ind)
         settings.EMAIL_HOST_USER = emails_list[email_ind]
         settings.EMAIL_HOST_PASSWORD = settings.EMAIL_HOST_PASSWORDS[email_ind]
         send_email(remail,subject,message)
@@ -487,6 +488,8 @@ def voter_card(request,name_slug):
     if request.method == 'POST':
         try:
             email = request.data['email']
+            email = email.lower()
+            print(email)
         except Exception as e:
             print(e)
             return Response({'Expected "email" key as a json object!'},status=status.HTTP_400_BAD_REQUEST)

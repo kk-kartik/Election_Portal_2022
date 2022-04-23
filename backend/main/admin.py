@@ -9,7 +9,8 @@ class EuserAdnmin(admin.ModelAdmin):
 @admin.register(Voter)
 class VoterAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Voter._meta.get_fields()]
-    search_fields=["user__email","user__name"]
+    search_fields=["user__email","user__name","is_voted"]
+    list_filter = ('is_voted',)
 
 @admin.register(Election)
 class ElectionAdmin(admin.ModelAdmin):
