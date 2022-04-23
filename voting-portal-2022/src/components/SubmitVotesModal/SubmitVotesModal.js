@@ -108,6 +108,13 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 candidate={candidateIdToName[votes["sports"]]}
                 cClass="text-orange-500"
               />
+
+              <SubmitVotesField
+                post="Welfare Board"
+                candidate={candidateIdToName[votes["welfare"]]}
+                cClass="text-orange-500"
+              />
+
               <SubmitVotesField
                 post="SAIL"
                 candidate={candidateIdToName[votes["sail"]]}
@@ -118,6 +125,12 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 candidate={candidateIdToName[votes["technical"]]}
                 cClass="text-orange-500"
               />
+              <SubmitVotesField
+                post="Cultural Board"
+                candidate={candidateIdToName[votes["cultural"]]}
+                cClass="text-orange-500"
+              />
+
               <SubmitVotesField
                 post="PG Senate"
                 candidate={arrayToString(votes["pg"])}

@@ -8,7 +8,7 @@ const Countdown = () => (
     colorsTime={[10, 6, 3, 0]}
     size={60}
     strokeWidth={8}
-    onComplete={() => window.location.replace("/")}
+    onComplete={() => window.location.replace("/voting_portal")}
   >
     {({ remainingTime }) => remainingTime}
   </CountdownCircleTimer>

@@ -38,7 +38,7 @@ const VotingScreen = () => {
   return (
     <>
       <Topbar position={position} vote={vote} />
-      {voterInfo.isVoterIdValid ? (
+      {  voterInfo.isVoterIdValid ? (
         <>
           <div className="">
             <SideBarSection posts={postsToShow(posts, voterInfo)} />

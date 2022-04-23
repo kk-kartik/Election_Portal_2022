@@ -1,5 +1,7 @@
-export const checkVotedAll = (votes) => {
+export const checkVotedAll = (votes,voterInfo) => {
   let done = true;
+console.log("I'm votes", votes)
+
   Object.keys(votes).forEach((pos) => {
     if (pos !== "err") {
       if (pos === "ug" || pos === "pg") {

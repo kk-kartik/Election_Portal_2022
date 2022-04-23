@@ -9,6 +9,7 @@ import { checkVotedAll } from "../../utils/checkVotedAll";
 const Sidebar = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const votes = useSelector((store) => store.votes);
+  const voterInfo = useSelector((store) => store.voterInfo);
   return (
     <>
       <div
@@ -32,8 +33,8 @@ const Sidebar = (props) => {
           style={{ zIndex: "1" }}
         >
           <button
-            disabled={!checkVotedAll(votes)}
-            className={`${styles.button} ${!checkVotedAll(votes) && 'opacity-50 cursor-not-allowed'}`}
+            //disabled={!checkVotedAll(props.posts,voterInfo)}
+            className={`${styles.button}`}
             onClick={() => setModalOpen(true)}
           >
             Seal and Submit
