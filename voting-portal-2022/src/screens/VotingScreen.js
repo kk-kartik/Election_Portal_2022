@@ -14,7 +14,7 @@ import { getNextPage } from "../constants";
 import Topbar from "../components/Topbar/Topbar";
 import { postsToShow } from "../utils/postsToShow";
 import { Spinner } from "@primer/react";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 
 const VotingScreen = () => {
   const dispatch = useDispatch();
@@ -93,7 +93,6 @@ const VotingScreen = () => {
               </div>
             </div>
           </div>
-          <ToastContainer position="bottom-right" autoClose={3000} />
         </>
       ) : (
         <Redirect to="/" />
