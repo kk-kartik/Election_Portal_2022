@@ -182,11 +182,8 @@ export const privateKey = process.env.REACT_APP_CONTRACT_PRIVATE_KEY;
 export const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
 
 export const notBlockChainKey = `-----BEGIN PUBLIC KEY-----
-    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoogsA5LkudlR2hLgTZ7H
-    mYTs5rPmuKslAjIX+sQNB50Nn9pgw3h63snQjJfQFTUN5nlWKNHURGeJY3cuWVoM
-    Xa4qbK+eHurE5PzEa0wCDnvvhx7ooqK3w07gN/WnHcNqXclg1pSfwhMCPLgopMv6
-    l9wuO/AErjLXwHhVcawIe7uY3rkSLrmAJGmCHoWG89uupderiJQw7CR5UQvOhLE2
-    lERdYvx2nnGBUFSYR8hFFKRclj575fW9XlFmDK3hxeywkxR5mCzLmYh+LMMGDIu9
-    3jZzgMY22InmcfbCkY7QSfzTChBzXflYfITMEuklwtIckM6Iy+YoIzfYNxCeT7NY
-    QQIDAQAB
-    -----END PUBLIC KEY-----`;
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKZrbaxJGXdba5WHcSnR6ISt5v
+ghJwbSVDgv8ffb2S+81CFTZU+9pJRd76cxBexOSm8rmNgW6nfnRIbtGEeCxeniXM
+ntbSd00loaNBio7ZX+N9DlaMMvbBD+w3givUBoylomawtO8DAiMjy/Z+vAmZ7jxa
+Rmgw5bXY7WaLrNnvLQIDAQAB
+-----END PUBLIC KEY-----`;
