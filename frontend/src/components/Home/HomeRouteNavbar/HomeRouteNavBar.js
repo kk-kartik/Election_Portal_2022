@@ -29,7 +29,7 @@ const HomeRouteNavBar = () => {
       <h1 className="font-normal text-2xl ml-1 md:text-3xl md:ml-0">
         Gymkhana Elections 2022
       </h1>
-      {/* <Datebox></Datebox> */}
+      <Datebox></Datebox>
     </RouteNavbar>
   );
 };
