@@ -109,11 +109,11 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 cClass="text-orange-500"
               />
 
-              <SubmitVotesField
+              {/* <SubmitVotesField
                 post="Welfare Board"
                 candidate={candidateIdToName[votes["welfare"]]}
                 cClass="text-orange-500"
-              />
+              /> */}
 
               <SubmitVotesField
                 post="SAIL"

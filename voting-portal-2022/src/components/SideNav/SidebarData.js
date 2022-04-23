@@ -20,10 +20,10 @@ export const SidebarData = [
         title: "Sports",
         path: "sports",
       },
-      {
-        title: "Welfare",
-        path: "welfare",
-      },
+      // {
+      //   title: "Welfare",
+      //   path: "welfare",
+      // },
     ],
   },
   {

@@ -21,7 +21,7 @@ const RegisterSuccess = (props) => {
     hid = "hidden";
   }
   let roll_no = "";
-  for (let i = 0; i < userData?.euser?.roll_number.length; i++) {
+  for (let i = 0; i < userData?.euser?.roll_number?.length; i++) {
     if (i % 3 == 0) {
       roll_no += " ";
     }
@@ -33,9 +33,7 @@ const RegisterSuccess = (props) => {
   }
   return (
     <>
-      <h1 className="font-normal text-2xl pt-8 pb-4 text-gray-800">
-        Voter ID
-      </h1>
+      <h1 className="font-normal text-2xl pt-8 pb-4 text-gray-800">Voter ID</h1>
       <div className={`${styles.cont} w-full md:w-4/6 p-2 ${hid}`}>
         <div className={`grid ${styles.grid} gap-4`}>
           {/* <img src={Icon} className={`${styles.img} max-w-fit`}/> */}

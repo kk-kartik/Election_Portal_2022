@@ -20,10 +20,10 @@ export const posIdtoNotaId = {
 export const getNextPage = {
   vicepresident: "sports",
   hab: "sail",
-  welfare: "technical",
+  // welfare: "technical",
   swc: "cultural",
   technical: "hab",
-  sports: "welfare",
+  sports: "technical",
   sail: "swc",
   cultural: "ug",
   ug: "pg",
@@ -132,10 +132,10 @@ export const posts = [
         title: "Sports",
         path: "sports",
       },
-      {
-        title: "Welfare",
-        path: "welfare",
-      },
+      // {
+      //   title: "Welfare",
+      //   path: "welfare",
+      // },
       {
         title: "Technical",
         path: "technical",
