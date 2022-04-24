@@ -14,13 +14,14 @@ import { getNextPage } from "../constants";
 import Topbar from "../components/Topbar/Topbar";
 import { postsToShow } from "../utils/postsToShow";
 import { Spinner } from "@primer/react";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const VotingScreen = () => {
   const dispatch = useDispatch();
   let history = useHistory();
   const { position } = useParams();
   let candidates = useSelector((store) => store.candidates);
+  console.log("WE are candidate", candidates[position]);
   const voterInfo = useSelector((store) => store.voterInfo);
   const vote = useSelector((store) => store.votes[position]);
   const notify = () => toast.info(`You've voted NOTA.`);
@@ -32,13 +33,13 @@ const VotingScreen = () => {
   useEffect(() => {
     dispatch(getCandidateByPos(pos2idMap[position], position));
     console.log("side", postsToShow(posts, voterInfo), voterInfo);
-    console.log("bhalne",candidates[position]);
+    console.log("bhalne", candidates[position]);
   }, [position]);
-
+  //voterInfo.isVoterIdValid
   return (
     <>
       <Topbar position={position} vote={vote} />
-      {  voterInfo.isVoterIdValid ? (
+      {voterInfo.isVoterIdValid ? (
         <>
           <div className="">
             <SideBarSection posts={postsToShow(posts, voterInfo)} />

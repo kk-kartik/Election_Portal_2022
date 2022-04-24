@@ -12,7 +12,7 @@ import { posIdtoNotaId } from "../../constants";
 const initialState = {
   vicepresident: 0,
   sports: 0,
-  welfare: 0,
+  // welfare: -3,
   technical: 0,
   hab: 0,
   sail: 0,
@@ -41,7 +41,7 @@ const votes = (votes = initialState, action) => {
           } else {
             updatedVotes.err = "You can only vote for 3 candidates";
           }
-        } else{
+        } else {
           if (updatedVotes[pos].length < 7) {
             if ([...updatedVotes[pos]].includes(posIdtoNotaId[pos]))
               updatedVotes[pos] = [];
@@ -49,7 +49,7 @@ const votes = (votes = initialState, action) => {
           } else {
             updatedVotes.err = "You can only vote for 7 candidates";
           }
-        } 
+        }
       } else {
         updatedVotes[pos] = id;
       }
