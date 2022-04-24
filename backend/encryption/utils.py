@@ -52,8 +52,11 @@ def decrypt(encrypted_data):
     key = RSA.import_key(key_pem,passphrase)
     stel = None
     decryptor = PKCS1_v1_5.new(key)
-
-    decrypted_data_bs4 = decryptor.decrypt(base64.b64decode(encrypted_data),stel)
+    decode_data = base64.b64decode(encrypted_data)
+    if len(decode_data) == 127:
+        hex_fixed = '00' + decode_data.hex()
+        decode_data = base64.b16decode(hex_fixed.upper())
+    decrypted_data_bs4 = decryptor.decrypt(decode_data,stel)
     if stel:
         raise Exception("Error decrypting data")
     
