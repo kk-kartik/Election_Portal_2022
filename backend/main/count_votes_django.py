@@ -21,6 +21,7 @@ def count_votes():
     except Exception as err:
       print("Failed Decryption")
       print(repr(err))
+      failed+=[voter.uniqueid]
       
   print("Failed: ",len(failed))
   print(failed)
