@@ -301,8 +301,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.office365.com'
 EMAIL_PORT = 587  
-EMAIL_HOST_USER = 'swc@iitg.ac.in'
-EMAIL_HOST_PASSWORD = "India$Rising"
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 
 
 LOGGING = {
