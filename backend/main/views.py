@@ -955,7 +955,7 @@ for p in positions:
     group_map[p]={}
 rv_map={}
 
-conting_done = False
+counting_done = False
 
 def event_stream():
     if not counting_done:
@@ -993,7 +993,7 @@ def event_stream():
 
     counting_done=True
     while True:
-        yield "\ndata: {}\n\n".format(json.dumps(group_map))
+        pass
             
         
 
