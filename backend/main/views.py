@@ -981,13 +981,13 @@ def event_stream():
 
                     yield "\ndata: {}\n\n".format(json.dumps(group_map))
                     print("Count complete: ",i)
+                    print(group_map)
                     i+=1
             except Exception as err:
                 print(repr(err))
                 failed+=[voter.uniqueid]
             
-        print("Faield: ",len(failed))
-        print(failed)
+        
 
     
         
