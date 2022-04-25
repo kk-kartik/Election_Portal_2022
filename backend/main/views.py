@@ -982,6 +982,10 @@ def event_stream():
         except Exception as err:
             print(repr(err))
             failed+=[voter.uniqueid]
+        
+        print("Faield: ",len(failed))
+        print(failed)
+
     
         
 from django.contrib.auth.decorators import user_passes_test,login_required
