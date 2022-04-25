@@ -90,8 +90,8 @@ def count_votes():
   print(no_vote_voters)
 
   rv_map = {}
-    for k in votes.keys():
-        rv_map[c_inv_map[k]]=votes[k]
+  for k in votes.keys():
+      rv_map[c_inv_map[k]]=votes[k]
   group_map={}
   for p in positions:
       group_map[p]={}
