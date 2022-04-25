@@ -19,7 +19,7 @@
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row mat-evelation-z6">
                 <!-- Title -->
-                <span class="mdl-layout-title">Enter private key to start counting</span>
+                <span class="mdl-layout-title">SGC Elections vote counting</span>
                 <!-- Add spacer, to align navigation to the right -->
                 <div class="mdl-layout-spacer"></div>
                 <!-- Navigation. We hide it in small screens. -->
@@ -28,7 +28,16 @@
                 </nav>
             </div>
         </header>
-        <main class="mdl-layout__content">
+        <main class="mdl-layout__content mx-auto">
+            {% if not start_count %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <textarea name="private_key" placeholder="Enter your private key" rows="20" cols="100"
+                    style="display:block;">
+                </textarea>
+                <button type="submit">Start Counting</button>
+            </form>
+            {% endif %}
             <div class="page-content">
                 <div id="stream-content" class="stream-content"></div>
             </div>
@@ -41,19 +50,29 @@
 
 <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 <script>
+    var is_count = "{{ start_count }}";
+    function startCount() {
+        if (is_count) {
+            url = "/elections_api/sgc/result_stream"
+        } else {
+            url = "/"
+        }
+        var eventSource = new EventSource(url);
+        eventSource.onopen = function () {
+            console.log('Yay! its open?');
+        }
 
-    var eventSource = new EventSource("/elections_api/sgc/result_stream");
+        eventSource.onmessage = function (e) {
+            document.getElementById('stream-content').innerHTML = e.data;
+        }
 
-    eventSource.onopen = function () {
-        console.log('Yay! its open?');
+        eventSource.onerror = function (e) {
+            console.log(`error ${e}`);
+        }
     }
-
-    eventSource.onmessage = function (e) {
-        document.getElementById('stream-content').innerHTML = e.data;
-    }
-
-    eventSource.onerror = function (e) {
-        console.log(`error ${e}`);
+    if (is_count == "True") {
+        console.log(is_count)
+        startCount()
     }
 
 </script>

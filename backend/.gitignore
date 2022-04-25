@@ -23,4 +23,3 @@ google-creds.json
 assets/*
 # Local files #
 activate.sh
-encryption/keys/*
