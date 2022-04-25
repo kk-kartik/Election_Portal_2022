@@ -1014,9 +1014,9 @@ def result_stream(request,name_slug):
 @user_passes_test(lambda u: u.is_superuser)
 def download_votes(request,name_slug):
     file_data=None
-    with open(BASE_DIR/"final_votes.json","r") as f:
+    with open(settings.BASE_DIR/"final_votes.json","r") as f:
         file_data = f.read() 
-        
+
     response = HttpResponse(file_data,content_type='application/json')  
     response['Content-Disposition'] = 'attachment; filename="votes.json"'
     return response
