@@ -984,12 +984,14 @@ def event_stream():
             print(repr(err))
             failed+=[voter.uniqueid]
 
-    for pos in group_map.keys():
-        vote_count = 0
-        for candidate in group_map[pos]:
-            vote_count +=group_map[pos][candidate]
-        nota = 4047-vote_count
-        group_map[pos]["NOTA"]=nota
+    # for pos in group_map.keys():
+    #     vote_count = 0
+    #     total=4047
+        
+    #     for candidate in group_map[pos]:
+    #         vote_count +=group_map[pos][candidate]
+    #     nota =  total-vote_count
+    #     group_map[pos]["NOTA"]=nota
     
     with open(BASE_DIR/"final_votes.json","w") as f:
         json.dump(group_map,f)
