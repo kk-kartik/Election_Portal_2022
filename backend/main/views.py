@@ -1004,7 +1004,7 @@ def event_stream():
 from django.contrib.auth.decorators import user_passes_test,login_required
 
 @login_required
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def result_stream(request,name_slug):
     response = StreamingHttpResponse(event_stream())
     response['Content-Type'] = 'text/event-stream'
@@ -1022,7 +1022,7 @@ def download_votes(request,name_slug):
     return response
 
 @login_required
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_staff)
 def result_view(request,name_slug):
     if request.method=="POST":
         key = request.POST.get("private_key")
