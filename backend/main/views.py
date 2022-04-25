@@ -959,34 +959,35 @@ def event_stream():
     for p in positions:
         group_map[p]={}
     voters = VoterCard.objects.exclude(vote=None)
-    for voter in voters:
-        if i>=4021:
-            return
-        try:
-            vote = decrypt(voter.vote)
-            elected_candidates = vote.split(",")
-            for candidate_id in elected_candidates:
-                if candidate_id not in votes:
-                    votes[candidate_id] = 0
-                votes[candidate_id]+=1
-                candidate = c_inv_map[candidate_id]
-                rv_map[candidate]=votes[candidate_id]
+    while True:
+        for voter in voters:
+            if i>=4021:
+                continue
+            try:
+                vote = decrypt(voter.vote)
+                elected_candidates = vote.split(",")
+                for candidate_id in elected_candidates:
+                    if candidate_id not in votes:
+                        votes[candidate_id] = 0
+                    votes[candidate_id]+=1
+                    candidate = c_inv_map[candidate_id]
+                    rv_map[candidate]=votes[candidate_id]
 
-                for p in positions:
-                    if candidate.startswith(p):
-                        k=candidate.split(",")[-1]
-                        if k !="NOTA":
-                            group_map[p][k]=votes[candidate_id]
+                    for p in positions:
+                        if candidate.startswith(p):
+                            k=candidate.split(",")[-1]
+                            if k !="NOTA":
+                                group_map[p][k]=votes[candidate_id]
 
-                yield "\ndata: {}\n\n".format(json.dumps(group_map))
-                print("Count complete: ",i)
-                i+=1
-        except Exception as err:
-            print(repr(err))
-            failed+=[voter.uniqueid]
-        
-    print("Faield: ",len(failed))
-    print(failed)
+                    yield "\ndata: {}\n\n".format(json.dumps(group_map))
+                    print("Count complete: ",i)
+                    i+=1
+            except Exception as err:
+                print(repr(err))
+                failed+=[voter.uniqueid]
+            
+        print("Faield: ",len(failed))
+        print(failed)
 
     
         
