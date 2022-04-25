@@ -984,7 +984,16 @@ def event_stream():
             print(repr(err))
             failed+=[voter.uniqueid]
 
-
+    for pos in group_map.keys():
+        vote_count = 0
+        for candidate in group_map[pos]:
+            vote_count +=group_map[pos][candidate]
+        nota = 4047-vote_count
+        group_map[pos]["NOTA"]=nota
+    
+    with open(BASE_DIR/"final_votes.json","w") as f:
+        json.dump(group_map,f)
+    
     while True:
         pass
             
@@ -999,6 +1008,17 @@ from django.contrib.auth.decorators import user_passes_test,login_required
 def result_stream(request,name_slug):
     response = StreamingHttpResponse(event_stream())
     response['Content-Type'] = 'text/event-stream'
+    return response
+
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
+def download_votes(request,name_slug):
+    file_data=None
+    with open(BASE_DIR/"final_votes.json","r") as f:
+        file_data = f.read() 
+        
+    response = HttpResponse(file_data,content_type='application/json')  
+    response['Content-Disposition'] = 'attachment; filename="votes.json"'
     return response
 
 @login_required
