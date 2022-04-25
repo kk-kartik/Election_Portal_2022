@@ -49,9 +49,7 @@
     }
 
     eventSource.onmessage = function (e) {
-        console.log(e)
         document.getElementById('stream-content').innerHTML = e.data;
-        console.log(content)
     }
 
     eventSource.onerror = function (e) {
