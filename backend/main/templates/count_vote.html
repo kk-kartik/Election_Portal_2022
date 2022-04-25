@@ -39,10 +39,10 @@
             </form>
             {% endif %}
             <div class="page-content">
-                <div id="stream-content" class="stream-content"></div>
+                <pre id="stream-content" class="stream-content"></pre>
             </div>
             {% if  start_count %}
-            <a href="/sgc/download_final_votes" target="_blank">Download final Votes</button>
+            <a href="/elections_api/sgc/download_final_votes" target="_blank">Download final Votes</button>
                 {% endif %}
 
         </main>
@@ -67,7 +67,8 @@
         }
 
         eventSource.onmessage = function (e) {
-            document.getElementById('stream-content').innerHTML = e.data;
+            const data = JSON.parse(e.data)
+            document.getElementById('stream-content').innerHTML = JSON.stringify(data, undefined, 2);
         }
 
         eventSource.onerror = function (e) {
