@@ -955,6 +955,7 @@ def event_stream():
     failed=[]
     rv_map = {}
     group_map={}
+    i=1
     for p in positions:
         group_map[p]={}
     voters = VoterCard.objects.exclude(vote=None)
@@ -968,7 +969,7 @@ def event_stream():
                 votes[candidate_id]+=1
                 candidate = c_inv_map[candidate_id]
                 rv_map[candidate]=votes[candidate_id]
-                
+
                 for p in positions:
                     if candidate.startswith(p):
                         k=candidate.split(",")[-1]
@@ -976,6 +977,8 @@ def event_stream():
                             group_map[p][k]=votes[candidate_id]
 
                 yield "\ndata: {}\n\n".format(json.dumps(group_map))
+                print("Count complete: ",i)
+                i+=1
         except Exception as err:
             print(repr(err))
             failed+=[voter.uniqueid]
