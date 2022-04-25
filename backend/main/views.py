@@ -955,11 +955,11 @@ def event_stream():
     failed=[]
     rv_map = {}
     group_map={}
-    i=1
     for p in positions:
         group_map[p]={}
     voters = VoterCard.objects.exclude(vote=None)
     while True:
+        i=1
         for voter in voters:
             if i>=4021:
                 continue
@@ -981,6 +981,7 @@ def event_stream():
 
                     yield "\ndata: {}\n\n".format(json.dumps(group_map))
                     print("Count complete: ",i)
+                    print(votes)
                     print(group_map)
                     i+=1
             except Exception as err:
