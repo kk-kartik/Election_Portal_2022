@@ -958,35 +958,33 @@ def event_stream():
     for p in positions:
         group_map[p]={}
     voters = VoterCard.objects.exclude(vote=None)
-    while True:
-        i=1
-        for voter in voters:
-            if i>=4021:
-                continue
-            try:
-                vote = decrypt(voter.vote)
-                elected_candidates = vote.split(",")
-                for candidate_id in elected_candidates:
-                    if candidate_id not in votes:
-                        votes[candidate_id] = 0
-                    votes[candidate_id]+=1
-                    candidate = c_inv_map[candidate_id]
-                    rv_map[candidate]=votes[candidate_id]
+    i=0
+    for voter in voters:
+        if i>4021:
+            yield "\ndata: {}\n\n".format(json.dumps(group_map))
+            continue
+        try:
+            vote = decrypt(voter.vote)
+            elected_candidates = vote.split(",")
+            for candidate_id in elected_candidates:
+                if candidate_id not in votes:
+                    votes[candidate_id] = 0
+                votes[candidate_id]+=1
+                candidate = c_inv_map[candidate_id]
+                rv_map[candidate]=votes[candidate_id]
 
-                    for p in positions:
-                        if candidate.startswith(p):
-                            k=candidate.split(",")[-1]
-                            if k !="NOTA":
-                                group_map[p][k]=votes[candidate_id]
+                for p in positions:
+                    if candidate.startswith(p):
+                        k=candidate.split(",")[-1]
+                        if k !="NOTA":
+                            group_map[p][k]=votes[candidate_id]
 
-                    yield "\ndata: {}\n\n".format(json.dumps(group_map))
-                    print("Count complete: ",i)
-                    print(votes)
-                    print(group_map)
-                    i+=1
-            except Exception as err:
-                print(repr(err))
-                failed+=[voter.uniqueid]
+                yield "\ndata: {}\n\n".format(json.dumps(group_map))
+                i+=1
+                print("Count complete: ",i," ",voter.id," ",voter.uniqueid)
+        except Exception as err:
+            print(repr(err))
+            failed+=[voter.uniqueid]
             
         
 
@@ -1004,4 +1002,15 @@ def result_stream(request,name_slug):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def result_view(request,name_slug):
-    return render(request,"count_vote.html")
+    if request.method=="POST":
+        key = request.POST.get("private_key")
+        with open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem","w") as f:
+            f.write(key)
+            f.close()
+
+    is_key=[]
+    with open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem","r") as f:
+            is_key=f.readlines()
+            f.close()
+
+    return render(request,"count_vote.html",{"start_count":len(is_key)>10})
