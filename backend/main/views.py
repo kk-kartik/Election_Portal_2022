@@ -949,49 +949,42 @@ c_inv_map = {
 
 
 
-votes={}
-group_map={}
-for p in positions:
-    group_map[p]={}
-rv_map={}
-
-counting_done = False
 
 def event_stream():
-    if not counting_done:
-        votes={}
-        failed=[]
-        rv_map = {}
-        group_map={}
+    votes={}
+    failed=[]
+    rv_map = {}
+    group_map={}
+    for p in positions:
+        group_map[p]={}
 
     voters = VoterCard.objects.exclude(vote=None)
     i=0
-    if not counting_done:
-        for voter in voters:
-            try:
-                vote = decrypt(voter.vote)
-                elected_candidates = vote.split(",")
-                for candidate_id in elected_candidates:
-                    if candidate_id not in votes:
-                        votes[candidate_id] = 0
-                    votes[candidate_id]+=1
-                    candidate = c_inv_map[candidate_id]
-                    rv_map[candidate]=votes[candidate_id]
+    for voter in voters:
+        try:
+            vote = decrypt(voter.vote)
+            elected_candidates = vote.split(",")
+            for candidate_id in elected_candidates:
+                if candidate_id not in votes:
+                    votes[candidate_id] = 0
+                votes[candidate_id]+=1
+                candidate = c_inv_map[candidate_id]
+                rv_map[candidate]=votes[candidate_id]
 
-                    for p in positions:
-                        if candidate.startswith(p):
-                            k=candidate.split(",")[-1]
-                            if k !="NOTA":
-                                group_map[p][k]=votes[candidate_id]
+                for p in positions:
+                    if candidate.startswith(p):
+                        k=candidate.split(",")[-1]
+                        if k !="NOTA":
+                            group_map[p][k]=votes[candidate_id]
 
-                    yield "\ndata: {}\n\n".format(json.dumps(group_map))
-                    i+=1
-                    print("Count complete: ",i," ",voter.id," ",voter.uniqueid)
-            except Exception as err:
-                print(repr(err))
-                failed+=[voter.uniqueid]
+                yield "\ndata: {}\n\n".format(json.dumps(group_map))
+                i+=1
+                print("Count complete: ",i," ",voter.id," ",voter.uniqueid)
+        except Exception as err:
+            print(repr(err))
+            failed+=[voter.uniqueid]
 
-    counting_done=True
+
     while True:
         pass
             
