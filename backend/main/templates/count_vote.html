@@ -50,9 +50,7 @@
 
     eventSource.onmessage = function (e) {
         console.log(e)
-        final_data = JSON.parse(e.data)
-        content = "";
-        document.getElementById('stream-content').innerHTML = final_data;
+        document.getElementById('stream-content').innerHTML = e.data;
         console.log(content)
     }
 

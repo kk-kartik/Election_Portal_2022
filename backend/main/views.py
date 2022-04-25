@@ -960,6 +960,8 @@ def event_stream():
         group_map[p]={}
     voters = VoterCard.objects.exclude(vote=None)
     for voter in voters:
+        if i>=4021:
+            return
         try:
             vote = decrypt(voter.vote)
             elected_candidates = vote.split(",")
@@ -983,8 +985,8 @@ def event_stream():
             print(repr(err))
             failed+=[voter.uniqueid]
         
-        print("Faield: ",len(failed))
-        print(failed)
+    print("Faield: ",len(failed))
+    print(failed)
 
     
         
