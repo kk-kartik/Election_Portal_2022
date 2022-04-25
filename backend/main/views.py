@@ -966,9 +966,9 @@ def event_stream():
                 if candidate_id not in votes:
                     votes[candidate_id] = 0
                 votes[candidate_id]+=1
-                candidate = rv_map[candidate_id]
+                candidate = c_inv_map[candidate_id]
                 rv_map[candidate]=votes[candidate_id]
-
+                
                 for p in positions:
                     if candidate.startswith(p):
                         k=candidate.split(",")[-1]
