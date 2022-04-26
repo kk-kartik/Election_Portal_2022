@@ -996,6 +996,9 @@ def event_stream():
     with open(BASE_DIR/"final_votes.json","w") as f:
         json.dump(group_map,f)
     
+    with open(BASE_DIR/"final_votes_nota.json","w") as f:
+        json.dump(rv_map,f)
+    
     while True:
         pass
             
