@@ -993,13 +993,13 @@ def event_stream():
     #     nota =  total-vote_count
     #     group_map[pos]["NOTA"]=nota
     
-    with open(BASE_DIR/"final_votes.json","w") as f:
+    with open("/final_votes.json","w") as f:
         json.dump(group_map,f)
     
-    with open(BASE_DIR/"final_votes_nota.json","w") as f:
+    with open("/final_votes_nota.json","w") as f:
         json.dump(rv_map,f)
     
-    with open(BASE_DIR/"final_votes_raw.json","w") as f:
+    with open("/final_votes_raw.json","w") as f:
         json.dump(votes,f)
     
     while True:
