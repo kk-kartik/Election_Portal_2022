@@ -10,6 +10,8 @@ const Sidebar = (props) => {
   const [modalOpen, setModalOpen] = useState(false);
   const votes = useSelector((store) => store.votes);
   const voterInfo = useSelector((store) => store.voterInfo);
+  const isVoted = checkVotedAll(votes, voterInfo);
+
   return (
     <>
       <div
@@ -33,8 +35,12 @@ const Sidebar = (props) => {
           style={{ zIndex: "1" }}
         >
           <button
-            //disabled={!checkVotedAll(props.posts,voterInfo)}
-            className={`${styles.button}`}
+            disabled={!isVoted}
+            className={
+              isVoted
+                ? `${styles.button} ${styles.button2}`
+                : `${styles.button} cursor-not-allowed`
+            }
             onClick={() => setModalOpen(true)}
           >
             Seal and Submit

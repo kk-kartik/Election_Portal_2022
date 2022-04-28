@@ -36,10 +36,11 @@ const VotingScreen = () => {
     console.log("bhalne", candidates[position]);
   }, [position]);
   //voterInfo.isVoterIdValid
+
   return (
     <>
       <Topbar position={position} vote={vote} />
-      {voterInfo.isVoterIdValid ? (
+      {true ? (
         <>
           <div className="">
             <SideBarSection posts={postsToShow(posts, voterInfo)} />
