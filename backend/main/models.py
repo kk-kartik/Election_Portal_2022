@@ -285,11 +285,11 @@ class VoterCardOld(models.Model):
         return str(self.voter)
 
 class VoterOld(models.Model):
-    user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='voter_ids')
+    user = models.ForeignKey(EUser,null=True,on_delete=models.SET_NULL,related_name='voter_ids_old')
     is_voted = models.BooleanField(default=False)
-    election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='voters')
-    election_organizers = models.ForeignKey(Election,blank=True,null=True,on_delete=models.DO_NOTHING,related_name='organizers') # change the name of field to election
-    election_creator = models.OneToOneField(Election,blank=True,null=True,on_delete=models.DO_NOTHING,related_name='created_by')
+    election = models.ForeignKey(Election,on_delete=models.CASCADE,related_name='voters_old')
+    election_organizers = models.ForeignKey(Election,blank=True,null=True,on_delete=models.DO_NOTHING,related_name='organizers_old') # change the name of field to election
+    election_creator = models.OneToOneField(Election,blank=True,null=True,on_delete=models.DO_NOTHING,related_name='created_by_old')
 
     class Meta:
         unique_together = (('user', 'election'), ('user', 'election_organizers'))
