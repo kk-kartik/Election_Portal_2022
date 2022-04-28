@@ -6,12 +6,12 @@
 }
 
 .sidebarLabel {
-   color: #2D333B;
-   font-size: 1rem;
+  color: #2d333b;
+  font-size: 1rem;
 }
 
 .dropdownLink {
-  background: #F9F9F9;
+  background: #f9f9f9;
   height: 2.8rem;
   padding-left: 1rem;
   display: flex;
@@ -23,15 +23,14 @@
   transition: all 0.1s ease-in-out;
 }
 .dropdownLink:hover {
-  background: #EDEEEF;
-
+  background: #edeeef;
 }
 
 .selected {
   border-left: solid #2b00ff;
   border-left-width: 4px;
   color: #2b00ff;
-  background: #DBDDE0;
+  background: #dbdde0;
 }
 
 .electionBlue {
@@ -55,7 +54,7 @@
   font-size: 1.025rem;
 }
 
-.button:hover {
+.button2:hover {
   background: #2b00ff;
   color: #f9f9f9;
   transition: ease-in-out 0.4s;

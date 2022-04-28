@@ -10,17 +10,17 @@ import { removeByValue } from "../../utils/removeByValue";
 import { posIdtoNotaId } from "../../constants";
 
 const initialState = {
-  vicepresident: 0,
-  sports: 0,
-  // welfare: -3,
-  technical: 0,
-  hab: 0,
-  sail: 0,
-  swc: 0,
-  cultural: 0,
-  ug: [],
-  pg: [],
-  girl: [],
+  // vicepresident: 0,
+  // sports: 0,
+  welfare: 0,
+  // technical: 0,
+  // hab: 0,
+  // sail: 0,
+  // swc: 0,
+  // cultural: 0,
+  // ug: [],
+  // pg: [],
+  // girl: [],
   err: "",
 };
 
