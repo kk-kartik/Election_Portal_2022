@@ -279,7 +279,7 @@ class VoterCardOld(models.Model):
     voter = models.EmailField(null=True,blank=True)
     uniqueid = models.CharField(max_length=10,default = create_id)
     uniqueid_email = models.CharField(max_length=10,default = create_id_email)
-    vote = models.TextField(blank=True,null=True)
+    vote = models.TextField(blank=True,null=True,editable=False)
 
     def __str__(self) -> str:
         return str(self.voter)
