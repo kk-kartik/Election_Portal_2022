@@ -52,8 +52,6 @@ class StatisticAdmin(admin.ModelAdmin):
     search_fields = ['uniqueid',"voter__user__email"]
     list_display = ['uniqueid']
 
-admin.site.register(VoterCardOld)
-admin.site.register(VoterOld)
 
 from django.contrib.admin import AdminSite
 
