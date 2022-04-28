@@ -242,7 +242,6 @@ class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
     
     def get_queryset(self):
         position = get_object_or_404(Position,pk=self.kwargs.get("position_id"))
-
         return self.election.candidates_e.filter(position__id=position.id).exclude(
                     Q(cpi=None)|
                     Q(user__roll_number=None)|
@@ -255,8 +254,7 @@ class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
                     Q(video=None)|
                     Q(image=None)|
                     Q(agenda_text=None)|
-                    Q(user__name=None) |
-                    Q(position__id = 3)
+                    Q(user__name=None)
                 )
 
 class RegistrationCompleteView(ElectionMixin,generics.UpdateAPIView):
