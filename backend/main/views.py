@@ -1000,6 +1000,8 @@ def event_stream():
     with open("/final_votes_raw.json","w") as f:
         json.dump(votes,f)
     
+    open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
+    
     while True:
         pass
             
