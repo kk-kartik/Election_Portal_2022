@@ -16,8 +16,8 @@ router.register("statistics_update",viewset=views.StatisticsUpdateView,basename=
 
 urlpatterns = [
     path("download_votes/",views.download_votes,name="download_votes"),
-    path("result_stream",views.result_stream,name="result_stream"),
-    path("result_view",views.result_view,name="result_view"),
+    path("result_stream/",views.result_stream,name="result_stream"),
+    path("result_view/",views.result_view,name="result_view"),
     path("<int:position_id>/candidates/",views.PositionCandidatesView.as_view(),name="position_candidates"),
     path("candidate_pdf/<int:id>/",views.CandidateAgendaPdf.as_view(),name="position_candidate_pdf"),
     path("registration/complete/",views.RegistrationCompleteView.as_view(),name="candidate_profile"),
