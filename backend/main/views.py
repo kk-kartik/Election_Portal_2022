@@ -242,8 +242,8 @@ class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
     
     def get_queryset(self):
         position = int(self.kwargs.get("position_id"))
-        if position != 3:
-            raise Http404("No Access!!")
+        # if position != 3:
+        #     raise Http404("No Access!!")
         position = get_object_or_404(Position,pk=position)
         return self.election.candidates_e.filter(position__id=position.id).exclude(
                     Q(cpi=None)|
