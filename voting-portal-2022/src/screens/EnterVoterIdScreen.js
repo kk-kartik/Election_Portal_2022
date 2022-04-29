@@ -23,7 +23,7 @@ const EnterVoterIdScreen = () => {
           notify(res.message);
         } else {
           setErrorMsg("");
-          history.push("/vicepresident");
+          history.push("/welfare");
         }
       })
       .catch((e) => {

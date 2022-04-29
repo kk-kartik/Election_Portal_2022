@@ -14,7 +14,7 @@ const WelcomeScreen = () => {
           Icon of IITG
         </div>
         <div className="flex w-1/2 justify-center items-center">
-          <Link to="/vicepresident" className="p-3 bg-blue-600 text-white">
+          <Link to="/welfare" className="p-3 bg-blue-600 text-white">
             Start Voting
           </Link>
         </div>
