@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink, useParams } from "react-router-dom";
 import styles from "./Sidebar.module.css";
 const SubMenu = ({ item, index }) => {
-  const {position} = useParams();
+  const { position } = useParams();
   return (
     <>
       {/* {item.subposts.length === 1 ? (
@@ -23,24 +23,25 @@ const SubMenu = ({ item, index }) => {
         // </NavLink>
         <></>
       ) : ( */}
-        <div
-          // className={
-          //   subnav
-          //     ? `${styles.sidebarLabel} cursor-pointer p-3 text-lg flex justify-between text-black rounded-md border font-bold md:border-blue-700 md:border-l-4 md:border-b-0 md:border-t-0 md:border-r-0 md:text-blue-700 ${styles.electionBlue}`
-          //     : `${styles.sidebarLabel} cursor-pointer p-3 text-lg flex justify-between text-black rounded-md font-bold border md:flex`
-          // }
-          className={`${styles.sidebarLabel} p-3 text-lg ml-1 flex justify-between font-semibold md:flex`}
-          style={{
-            transition: "all 0.4s ease-out",
-          }}
-        >
-          <div>
-            <span className={`${styles.sidebarLabel}`}>{item.title}</span>
-          </div>
+      <div
+        // className={
+        //   subnav
+        //     ? `${styles.sidebarLabel} cursor-pointer p-3 text-lg flex justify-between text-black rounded-md border font-bold md:border-blue-700 md:border-l-4 md:border-b-0 md:border-t-0 md:border-r-0 md:text-blue-700 ${styles.electionBlue}`
+        //     : `${styles.sidebarLabel} cursor-pointer p-3 text-lg flex justify-between text-black rounded-md font-bold border md:flex`
+        // }
+        className={`${styles.sidebarLabel} p-3 text-lg ml-1 flex justify-between font-semibold md:flex`}
+        style={{
+          transition: "all 0.4s ease-out",
+        }}
+      >
+        <div>
+          <span className={`${styles.sidebarLabel}`}>{item.title}</span>
         </div>
+      </div>
       {/* )} */}
 
       {item.subposts.map((item, index) => {
+        console.log(item);
         return (
           <NavLink
             className={() =>

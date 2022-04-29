@@ -1,6 +1,6 @@
-const degreeUg = (str)=> {
-  return str==='B' || str === 'Bdes';
-}
+const degreeUg = (str) => {
+  return str === "B" || str === "Bdes";
+};
 
 export const postsToShow = (posts, voterInfo) => {
   console.log("cdcsdc", voterInfo.gender, voterInfo.degree);
@@ -8,15 +8,15 @@ export const postsToShow = (posts, voterInfo) => {
     if (voterInfo.gender === "Male" && degreeUg(voterInfo.degree)) {
       return [
         posts[0],
-        {
-          title: "Senate",
-          subposts: [
-            {
-              title: "UG Senator",
-              path: "ug",
-            },
-          ],
-        },
+        // {
+        //   title: "Senate",
+        //   subposts: [
+        //     {
+        //       title: "UG Senator",
+        //       path: "ug",
+        //     },
+        //   ],
+        // },
       ];
     } else if (voterInfo.gender === "Female" && degreeUg(voterInfo.degree)) {
       return [
