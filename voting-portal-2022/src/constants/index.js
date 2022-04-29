@@ -20,10 +20,10 @@ export const posIdtoNotaId = {
 export const getNextPage = {
   vicepresident: "sports",
   hab: "sail",
-  // welfare: "technical",
+  welfare: "technical",
   swc: "cultural",
   technical: "hab",
-  sports: "technical",
+  sports: "welfare",
   sail: "swc",
   cultural: "ug",
   ug: "pg",
@@ -124,57 +124,57 @@ export const posts = [
   {
     title: "Executives",
     subposts: [
-      {
-        title: "Vice President",
-        path: "vicepresident",
-      },
-      {
-        title: "Sports",
-        path: "sports",
-      },
       // {
-      //   title: "Welfare",
-      //   path: "welfare",
+      //   title: "Vice President",
+      //   path: "vicepresident",
+      // },
+      // {
+      //   title: "Sports",
+      //   path: "sports",
       // },
       {
-        title: "Technical",
-        path: "technical",
+        title: "Welfare",
+        path: "welfare",
       },
-      {
-        title: "HAB",
-        path: "hab",
-      },
-      {
-        title: "Sail",
-        path: "sail",
-      },
-      {
-        title: "SWC",
-        path: "swc",
-      },
-      {
-        title: "Cultural",
-        path: "cultural",
-      },
+      // {
+      //   title: "Technical",
+      //   path: "technical",
+      // },
+      // {
+      //   title: "HAB",
+      //   path: "hab",
+      // },
+      // {
+      //   title: "Sail",
+      //   path: "sail",
+      // },
+      // {
+      //   title: "SWC",
+      //   path: "swc",
+      // },
+      // {
+      //   title: "Cultural",
+      //   path: "cultural",
+      // },
     ],
   },
-  {
-    title: "Senate",
-    subposts: [
-      {
-        title: "UG Senator",
-        path: "ug",
-      },
-      {
-        title: "PG Senator",
-        path: "pg",
-      },
-      {
-        title: "Girl Senator",
-        path: "girl",
-      },
-    ],
-  },
+  // {
+  //   title: "Senate",
+  //   subposts: [
+  //     {
+  //       title: "UG Senator",
+  //       path: "ug",
+  //     },
+  //     {
+  //       title: "PG Senator",
+  //       path: "pg",
+  //     },
+  //     {
+  //       title: "Girl Senator",
+  //       path: "girl",
+  //     },
+  //   ],
+  // },
 ];
 
 export const publicKey = process.env.REACT_APP_CONTRACT_PUBLIC_KEY;

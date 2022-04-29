@@ -36,6 +36,7 @@ const VotingScreen = () => {
     console.log("bhalne", candidates[position]);
   }, [position]);
   //voterInfo.isVoterIdValid
+
   return (
     <>
       <Topbar position={position} vote={vote} />

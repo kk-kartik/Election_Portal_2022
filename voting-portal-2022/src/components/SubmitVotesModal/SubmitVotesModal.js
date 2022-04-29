@@ -85,7 +85,7 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
               Submit your Votes
             </div>
             <div className={`${styles.form} flex flex-col ml-8 mt-5 mr-11`}>
-              <SubmitVotesField
+              {/* <SubmitVotesField
                 post="Post"
                 pClass="font-medium"
                 candidate="Candidate"
@@ -107,15 +107,15 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                 post="Sports Board"
                 candidate={candidateIdToName[votes["sports"]]}
                 cClass="text-orange-500"
-              />
-
-              {/* <SubmitVotesField
-                post="Welfare Board"
-                candidate={candidateIdToName[votes["welfare"]]}
-                cClass="text-orange-500"
               /> */}
 
               <SubmitVotesField
+                post="Welfare Board"
+                candidate={candidateIdToName[votes["welfare"]]}
+                cClass="text-orange-500"
+              />
+
+              {/* <SubmitVotesField
                 post="SAIL"
                 candidate={candidateIdToName[votes["sail"]]}
                 cClass="text-orange-500"
@@ -151,7 +151,7 @@ const SubmitVotesModal = ({ votes, setModalOpen }) => {
                   candidate={arrayToString(votes["girl"])}
                   long={true}
                 />
-              )}
+              )} */}
             </div>
             <div className="mr-11 ml-8 mt-5 mb-8 flex items-center">
               <input
