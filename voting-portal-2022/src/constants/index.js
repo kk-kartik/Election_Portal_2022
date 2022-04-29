@@ -182,8 +182,8 @@ export const privateKey = process.env.REACT_APP_CONTRACT_PRIVATE_KEY;
 export const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
 
 export const notBlockChainKey = `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKZrbaxJGXdba5WHcSnR6ISt5v
-ghJwbSVDgv8ffb2S+81CFTZU+9pJRd76cxBexOSm8rmNgW6nfnRIbtGEeCxeniXM
-ntbSd00loaNBio7ZX+N9DlaMMvbBD+w3givUBoylomawtO8DAiMjy/Z+vAmZ7jxa
-Rmgw5bXY7WaLrNnvLQIDAQAB
+MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgHze96ha28eqmKfbZxOqy/2Y+gWz
+/rVQULffG6tzTOdcbm+m2oCpxOHoqcrC9m5CDMzQbPp3we2nOH/PBcgZP5lIc/Rz
+kZjONwV5ePpmG3hiLof4Dy3Qf9c1H297oecyTJhy/JEW0i1q6FYeVTq9Ha68DuGj
+bn9HFRni64swRZo1AgMBAAE=
 -----END PUBLIC KEY-----`;
