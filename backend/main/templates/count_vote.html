@@ -72,7 +72,10 @@
         }
 
         eventSource.onerror = function (e) {
+            console.log(JSON.stringify(e))
+            console.log(e)
             console.log(`error ${e}`);
+            console.log(e.message)
             eventSource.close()
         }
     }
