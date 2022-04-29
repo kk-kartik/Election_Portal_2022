@@ -999,7 +999,10 @@ def event_stream():
     
     with open("/final_votes_raw.json","w") as f:
         json.dump(votes,f)
-        
+    
+    with open("/failed_votes.json","w") as f:
+        json.dump(failed,f)
+     
     try:
         open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
     except Exception as err:
