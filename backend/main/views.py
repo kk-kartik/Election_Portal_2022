@@ -1,6 +1,6 @@
 import csv
 import time
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse,Http404
 from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
@@ -241,6 +241,8 @@ class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
     authentication_classes =default_authentication_classes
     
     def get_queryset(self):
+        if position != 3:
+            raise Http404("No Access!!")
         position = get_object_or_404(Position,pk=self.kwargs.get("position_id"))
         return self.election.candidates_e.filter(position__id=position.id).exclude(
                     Q(cpi=None)|
