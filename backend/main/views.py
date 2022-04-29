@@ -445,7 +445,7 @@ def send_email(remail,subject,message):
     email = EmailMessage(
         subject = subject,
         body=message,
-        from_email="swc@iitg.ac.in",
+        from_email=settings.EMAIL_HOST_USER,
         to=[remail],
     )
     email.content_subtype = 'html'
