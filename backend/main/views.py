@@ -1,6 +1,6 @@
 import csv
 import time
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse,Http404
 from django.shortcuts import get_object_or_404
 from .serializers import *
 from .models import *
@@ -241,7 +241,10 @@ class PositionCandidatesView(ElectionMixin,generics.ListAPIView):
     authentication_classes =default_authentication_classes
     
     def get_queryset(self):
-        position = get_object_or_404(Position,pk=self.kwargs.get("position_id"))
+        position = int(self.kwargs.get("position_id"))
+        # if position != 3:
+        #     raise Http404("No Access!!")
+        position = get_object_or_404(Position,pk=position)
         return self.election.candidates_e.filter(position__id=position.id).exclude(
                     Q(cpi=None)|
                     Q(user__roll_number=None)|
@@ -445,7 +448,7 @@ def send_email(remail,subject,message):
     email = EmailMessage(
         subject = subject,
         body=message,
-        from_email="swc@iitg.ac.in",
+        from_email=settings.EMAIL_HOST_USER,
         to=[remail],
     )
     email.content_subtype = 'html'
@@ -999,6 +1002,14 @@ def event_stream():
     
     with open("/final_votes_raw.json","w") as f:
         json.dump(votes,f)
+    
+    with open("/failed_votes.json","w") as f:
+        json.dump(failed,f)
+     
+    try:
+        open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
+    except Exception as err:
+        print(repr(err))
     
     while True:
         pass
