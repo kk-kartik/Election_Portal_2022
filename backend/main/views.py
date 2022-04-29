@@ -1008,10 +1008,10 @@ def event_stream():
     with open("/failed_votes.json","w") as f:
         json.dump(failed,f)
      
-    # try:
-    #     open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
-    # except Exception as err:
-    #     print(repr(err))
+    try:
+        open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
+    except Exception as err:
+        print(repr(err))
     
     while True:
         pass
