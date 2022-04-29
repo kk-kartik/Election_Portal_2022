@@ -961,7 +961,7 @@ def event_stream():
 
     voters = VoterCard.objects.exclude(vote=None)
     i=0
-    yield "\ndata: Start couting\n"
+    yield "\ndata: {}\n\n".format(json.dumps(group_map))
     for voter in voters:
         try:
             vote = decrypt(voter.vote)
@@ -979,7 +979,7 @@ def event_stream():
                         if k !="NOTA":
                             group_map[p][k]=votes[candidate_id]
                 print(group_map)
-                yield "\ndata: {}\n".format(json.dumps(group_map))
+                yield "\ndata: {}\n\n".format(json.dumps(group_map))
                 i+=1
                 print("Count complete: ",i," ",voter.id," ",voter.uniqueid)
                 time.sleep(0.1)
@@ -995,18 +995,20 @@ def event_stream():
     #         vote_count +=group_map[pos][candidate]
     #     nota =  total-vote_count
     #     group_map[pos]["NOTA"]=nota
-    
-    with open("/final_votes.json","w") as f:
-        json.dump(group_map,f)
-    
-    with open("/final_votes_nota.json","w") as f:
-        json.dump(rv_map,f)
-    
-    with open("/final_votes_raw.json","w") as f:
-        json.dump(votes,f)
-    
-    with open("/failed_votes.json","w") as f:
-        json.dump(failed,f)
+    try:
+        with open("/final_votes.json","w") as f:
+            json.dump(group_map,f)
+        
+        with open("/final_votes_nota.json","w") as f:
+            json.dump(rv_map,f)
+        
+        with open("/final_votes_raw.json","w") as f:
+            json.dump(votes,f)
+        
+        with open("/failed_votes.json","w") as f:
+            json.dump(failed,f)
+    except Exception as err:
+        print(repr(err))
      
     try:
         open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
