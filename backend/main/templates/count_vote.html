@@ -57,7 +57,7 @@
     var is_count = "{{ start_count }}";
     function startCount() {
         if (is_count) {
-            url = "/elections_api/sgc/result_stream"
+            url = "/elections_api/sgc/result_stream/"
         } else {
             url = "/"
         }
@@ -72,7 +72,10 @@
         }
 
         eventSource.onerror = function (e) {
+            console.log(JSON.stringify(e))
+            console.log(e)
             console.log(`error ${e}`);
+            console.log(e.message)
             eventSource.close()
         }
     }
