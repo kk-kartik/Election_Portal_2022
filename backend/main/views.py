@@ -445,7 +445,7 @@ def send_email(remail,subject,message):
     email = EmailMessage(
         subject = subject,
         body=message,
-        from_email="swc@iitg.ac.in",
+        from_email=settings.EMAIL_HOST_USER,
         to=[remail],
     )
     email.content_subtype = 'html'
@@ -999,6 +999,14 @@ def event_stream():
     
     with open("/final_votes_raw.json","w") as f:
         json.dump(votes,f)
+    
+    with open("/failed_votes.json","w") as f:
+        json.dump(failed,f)
+     
+    try:
+        open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
+    except Exception as err:
+        print(repr(err))
     
     while True:
         pass
