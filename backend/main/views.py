@@ -961,6 +961,7 @@ def event_stream():
 
     voters = VoterCard.objects.exclude(vote=None)
     i=0
+    yield "\ndata: Start couting\n\n"
     for voter in voters:
         try:
             vote = decrypt(voter.vote)
@@ -977,10 +978,11 @@ def event_stream():
                         k=candidate.split(",")[-1]
                         if k !="NOTA":
                             group_map[p][k]=votes[candidate_id]
-
+                print(group_map)
                 yield "\ndata: {}\n\n".format(json.dumps(group_map))
                 i+=1
                 print("Count complete: ",i," ",voter.id," ",voter.uniqueid)
+                time.sleep(0.1)
         except Exception as err:
             print(repr(err))
             failed+=[voter.uniqueid]
