@@ -1,5 +1,5 @@
 #!/bin/bash
 
-python manage.py collectstatic --no-input  && gunicorn $app.wsgi:application --bind 0.0.0.0:8000 --log-level=debug --timeout 180  --workers 100  --capture-output
+python manage.py collectstatic --no-input  && gunicorn $app.wsgi:application --bind 0.0.0.0:8000 --log-level=debug --timeout 180  --workers 50  --capture-output
 
 
