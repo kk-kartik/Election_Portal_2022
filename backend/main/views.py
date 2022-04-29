@@ -1006,10 +1006,10 @@ def event_stream():
     with open("/failed_votes.json","w") as f:
         json.dump(failed,f)
      
-    try:
-        open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
-    except Exception as err:
-        print(repr(err))
+    # try:
+    #     open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem", 'w').close()
+    # except Exception as err:
+    #     print(repr(err))
     
     while True:
         pass
@@ -1051,5 +1051,5 @@ def result_view(request,name_slug):
     with open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem","r") as f:
             is_key=f.readlines()
             f.close()
-
+    print(is_key)
     return render(request,"count_vote.html",{"start_count":len(is_key)>10})
