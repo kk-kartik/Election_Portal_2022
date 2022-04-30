@@ -982,7 +982,6 @@ def event_stream():
                 yield "\ndata: {}\n\n".format(json.dumps(group_map))
                 i+=1
                 print("Count complete: ",i," ",voter.id," ",voter.uniqueid)
-                time.sleep(0.1)
         except Exception as err:
             print(repr(err))
             failed+=[voter.uniqueid]
@@ -996,17 +995,9 @@ def event_stream():
     #     nota =  total-vote_count
     #     group_map[pos]["NOTA"]=nota
     try:
-        with open("/final_votes.json","w") as f:
-            json.dump(group_map,f)
-        
         with open("/final_votes_nota.json","w") as f:
             json.dump(rv_map,f)
         
-        with open("/final_votes_raw.json","w") as f:
-            json.dump(votes,f)
-        
-        with open("/failed_votes.json","w") as f:
-            json.dump(failed,f)
     except Exception as err:
         print(repr(err))
      
@@ -1035,8 +1026,13 @@ def result_stream(request,name_slug):
 @user_passes_test(lambda u: u.is_superuser)
 def download_votes(request,name_slug):
     file_data=None
-    with open(settings.BASE_DIR/"final_votes.json","r") as f:
+    with open("/final_votes_nota.json","r") as f:
         file_data = f.read() 
+    
+    try:
+        open("/final_votes_nota.json", 'w').close()
+    except Exception as err:
+        print(repr(err))
 
     response = HttpResponse(file_data,content_type='application/json')  
     response['Content-Disposition'] = 'attachment; filename="votes.json"'
