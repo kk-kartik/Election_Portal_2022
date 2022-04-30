@@ -978,7 +978,6 @@ def event_stream():
                         k=candidate.split(",")[-1]
                         if k !="NOTA":
                             group_map[p][k]=votes[candidate_id]
-                print(group_map)
                 yield "\ndata: {}\n\n".format(json.dumps(group_map))
                 i+=1
                 print("Count complete: ",i," ",voter.id," ",voter.uniqueid)
@@ -1051,5 +1050,4 @@ def result_view(request,name_slug):
     with open(settings.BASE_DIR/"encryption"/"keys"/"private_key.pem","r") as f:
             is_key=f.readlines()
             f.close()
-    print(is_key)
     return render(request,"count_vote.html",{"start_count":len(is_key)>10})
