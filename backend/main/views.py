@@ -1006,7 +1006,7 @@ def event_stream():
         print(repr(err))
     
     while True:
-        pass
+        yield "\ndata: {}\n\n".format(json.dumps(group_map))
             
         
 
