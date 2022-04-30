@@ -8,6 +8,7 @@ const HomeRouteNavBar = () => {
         "About",
         "Nominations",
         "Statistics",
+        "Winners",
         "Rules and Regulations",
         "Organizers",
       ]}
@@ -15,6 +16,7 @@ const HomeRouteNavBar = () => {
         "",
         "nominations/vicepresident",
         "stats",
+        "results",
         "rules",
         "organisers",
       ]}
