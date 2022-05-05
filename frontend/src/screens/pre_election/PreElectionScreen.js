@@ -141,7 +141,7 @@ const PreElectionScreen = () => {
             />
             <Route path="stats" exact element={<StatsScreen />} />
             <Route
-              path="/onlyfortestingresults/*"
+              path="results/*"
               exact
               element={<ResultsScreen posts={posts} />}
             />
