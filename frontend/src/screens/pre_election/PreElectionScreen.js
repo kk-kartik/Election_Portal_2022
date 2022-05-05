@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 import AboutScreen from "./AboutScreen";
 import Footer from "../../components/Footer/Footer";
@@ -26,21 +26,23 @@ const Layout = () => {
   );
 };
 
-const position_ids = [1,2,3,4,5,6,7,8,9,10,12]
+const position_ids = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12];
 const PreElectionScreen = () => {
-
-  
   const positions = useSelector((store) => store.positions);
-  console.log("Positions: ",positions);
+  console.log("Positions: ", positions);
   const dispatch = useDispatch();
   useEffect(() => {
-    position_ids.forEach((pos)=>{dispatch(getCandidateFromPosition(pos))});
+    position_ids.forEach((pos) => {
+      dispatch(getCandidateFromPosition(pos));
+    });
   }, []);
   // console.log("--positions--");
   // console.log(positions);
-  
+
   let all_positions = {};
-  positions.forEach((pos)=>{all_positions[`${pos.id}`] = pos.data});
+  positions.forEach((pos) => {
+    all_positions[`${pos.id}`] = pos.data;
+  });
   // console.log("all-positions");
   // console.log(all_positions);
   let posts = [
@@ -50,7 +52,7 @@ const PreElectionScreen = () => {
         {
           title: "",
           path: "vicepresident",
-          persons: all_positions['1'],
+          persons: all_positions["1"],
         },
       ],
     },
@@ -60,37 +62,37 @@ const PreElectionScreen = () => {
         {
           title: "Sports",
           path: "sports",
-          persons: all_positions['6'],
+          persons: all_positions["6"],
         },
         {
           title: "Welfare",
           path: "welfare",
-          persons: all_positions['3'],
+          persons: all_positions["3"],
         },
         {
           title: "Technical",
           path: "technical",
-          persons: all_positions['5'],
+          persons: all_positions["5"],
         },
         {
           title: "HAB",
           path: "hab",
-          persons: all_positions['2'],
+          persons: all_positions["2"],
         },
         {
           title: "Sail",
           path: "sail",
-          persons: all_positions['7'],
+          persons: all_positions["7"],
         },
         {
           title: "SWC",
           path: "swc",
-          persons: all_positions['4'],
+          persons: all_positions["4"],
         },
         {
           title: "Cultural",
           path: "cultural",
-          persons: all_positions['9'],
+          persons: all_positions["9"],
         },
       ],
     },
@@ -100,21 +102,21 @@ const PreElectionScreen = () => {
         {
           title: "UG Senator",
           path: "ug",
-          persons: all_positions['8'],
+          persons: all_positions["8"],
         },
         {
           title: "PG Senator",
           path: "pg",
-          persons: all_positions['10'],
+          persons: all_positions["10"],
         },
         {
           title: "Girl Senator",
           path: "girl",
-          persons: all_positions['12'],
+          persons: all_positions["12"],
         },
-
-      ]
-    }]  
+      ],
+    },
+  ];
   return (
     <>
       <div
@@ -135,17 +137,14 @@ const PreElectionScreen = () => {
             <Route
               path="nominations/*"
               exact
-              element={
-                <NominationScreen
-                  posts={posts}
-                  faq={[
-                    
-                  ]}
-                />
-              }
+              element={<NominationScreen posts={posts} faq={[]} />}
             />
             <Route path="stats" exact element={<StatsScreen />} />
-            <Route path="results/*" exact element={<ResultsScreen posts={posts} />} />
+            <Route
+              path="/onlyfortestingresults/*"
+              exact
+              element={<ResultsScreen posts={posts} />}
+            />
             <Route path="rules" exact element={<RulesScreen />} />
             <Route path="organisers" exact element={<OrganisersScreen />} />
           </Route>

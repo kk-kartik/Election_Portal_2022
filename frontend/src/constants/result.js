@@ -1,0 +1,85 @@
+const results = {
+  vicepresident: {
+    "Sarthak Saxena": 2223,
+    "Imran Hussain": 653,
+    "Ayush Raj": 1032,
+    NOTA: 139,
+  },
+  hab: {
+    "Rajesh Muhal": 516,
+    "Aryan Meshram": 1445,
+    Ishu: 1716,
+    NOTA: 370,
+  },
+  swc: {
+    "Rahul Aggarwal": 3138,
+    NOTA: 909,
+  },
+  technical: {
+    "Rajpali Prakhar Jitendra": 1843,
+    "Anshul Kumar": 1716,
+    NOTA: 488,
+  },
+  sports: {
+    "Uttam Meena": 1527,
+    "Banavathu Sampath Kumar Naik": 735,
+    "Prayag Sahu": 1470,
+    NOTA: 315,
+  },
+  sail: {
+    "Khushi S Karnani": 3026,
+    NOTA: 1021,
+  },
+  ug: {
+    "Guthikonda Srinidhi Reddy": 1159,
+    "Gavinolla Pranav Kumar Reddy": 1126,
+    "Jatothu Vamshi": 1005,
+    "Pranav Nair": 1325,
+    "Abhijeet Singh Kushwaha": 770,
+    "Utsav Gupta": 768,
+    "Md Sahil": 672,
+    "Prakhar Shukla": 541,
+    "Siddharth Malviya": 1026,
+    "Pankaj Sharma": 1038,
+    NOTA: 283,
+  },
+  cultural: {
+    "Vedant Joshi": 3151,
+    NOTA: 896,
+  },
+  pg: {
+    "Sarnaik Vishwanil Vishwanath": 141,
+    "Alan Sam Jacob": 462,
+    "Saket Gupta": 294,
+    "Anushka Vashistha": 537,
+    "Dhruv Garg": 441,
+    "Abhinab Sharma": 431,
+    "Adarsh Kumar A Sahu": 238,
+    Yashika: 358,
+    "Ayush Tyagi": 297,
+    "Kethireddy Bhaskar Rao": 344,
+    "Sajan Kumar Dansena": 234,
+    "Prasad Jena": 295,
+    "Shekhar Chauhan": 215,
+    "Kartavya Panthi": 203,
+    "Gaurav Gandhi": 268,
+    "Ananthu M S": 342,
+    "Kunal Pant": 252,
+    NOTA: 128,
+  },
+  girl: {
+    "Charul Shaharey": 242,
+    "Anakshi Naskar": 196,
+    "Neetu Kumari": 332,
+    "Durganala Srijanya": 357,
+    NOTA: 115,
+  },
+
+  welfare: {
+    "Palak Kothari": 662,
+    "Ankit Saraf": 734,
+    NOTA: "44",
+  },
+};
+
+export default results;
