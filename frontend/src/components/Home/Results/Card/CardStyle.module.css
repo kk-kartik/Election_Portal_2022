@@ -27,17 +27,11 @@
   font-style: italic;
 }
 
-@media only screen and (min-width: 600px) {
-  .front:hover {
-    transform: scale(1.02);
-  }
-}
-
 .name {
   font-family: "Atkinson Hyperlegible";
   font-style: normal;
   font-weight: 700;
-  font-size: 3rem;
+  font-size: 2rem;
   color: #2d333b;
 }
 
@@ -59,4 +53,13 @@
   font-size: 18px;
   line-height: 20px;
   color: #959da5;
+}
+
+@media only screen and (min-width: 600px) {
+  .front:hover {
+    transform: scale(1.02);
+  }
+  .name {
+    font-size: 3rem;
+  }
 }

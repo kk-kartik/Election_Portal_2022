@@ -86,18 +86,18 @@ const ResultsScreen = (props) => {
             </StickyBox>
           </div>
           <div className="flex flex-col">
-            <div className={`${styles.title} ml-8`}>
+            {/* <div className={`${styles.title} ml-8`}>
               Vice President, SGC ‘22
-            </div>
+            </div> */}
             {currPage === "ug" || currPage === "pg" || currPage === "girl" ? (
               winner.map((wnr) => (
                 <div className="flex mt-3 ml-8">
-                  <Card person={wnr} />
+                  <Card person={wnr} isSenator={true} />
                 </div>
               ))
             ) : (
-              <div className="flex mt-3 md:ml-8 ml-0">
-                <Card person={winner} />
+              <div className="flex mt-3 md:ml-8 ml-0 justify-center">
+                <Card person={winner} isSenator={false} />
               </div>
             )}
             <div className={`${styles.title} ml-8 mt-8 mb-8`}>Vote Count</div>
