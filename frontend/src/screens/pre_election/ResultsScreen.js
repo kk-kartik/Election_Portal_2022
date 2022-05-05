@@ -79,8 +79,8 @@ const ResultsScreen = (props) => {
       </Helmet>
       <div>
         <div className={`${styles.win} ml-3`}>Winners</div>
-        <div className="flex">
-          <div className="w-5/12 md:w-3/12">
+        <div className="md:flex">
+          <div className="w-full md:w-3/12">
             <StickyBox offsetTop={20} offsetBottom={20}>
               <SideBarSection posts={props.posts} />
             </StickyBox>
@@ -96,7 +96,7 @@ const ResultsScreen = (props) => {
                 </div>
               ))
             ) : (
-              <div className="flex mt-3 ml-8">
+              <div className="flex mt-3 md:ml-8 ml-0">
                 <Card person={winner} />
               </div>
             )}

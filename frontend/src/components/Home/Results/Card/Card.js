@@ -20,12 +20,12 @@ const Card = ({ person }) => {
 
   return (
     // <Link to={`/candidate/${person.id}`}>
-    <div className="flex items-center">
-      <div className={`!rounded-md ${styles.front} shadow-lg`} style={config}>
+    <div className="md:flex items-center ">
+      <div className={`!rounded-md ${styles.front} shadow-lg ml-auto mr-auto`} style={config}>
         {/* <div className="title text-xl font-bold">{capital_name}</div> */}
         {/* <div className="title smallTitle">{person.tagline}</div> */}
       </div>
-        <div className="flex flex-col pl-10">
+        <div className="flex flex-col md:pl-10 pl-5 mb-4 md:mb-0">
             <div className={`${styles.name}`}>
                 {person.name}
             </div>
